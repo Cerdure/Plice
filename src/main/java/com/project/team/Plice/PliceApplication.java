@@ -1,13 +1,13 @@
-package com.project.team.Flow;
+package com.project.team.Plice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FlowApplication {
+public class PliceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FlowApplication.class, args);
+		SpringApplication.run(PliceApplication.class, args);
 	}
 
 }

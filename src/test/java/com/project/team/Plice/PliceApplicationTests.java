@@ -1,10 +1,10 @@
-package com.project.team.Flow;
+package com.project.team.Plice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FlowApplicationTests {
+class PliceApplicationTests {
 
 	@Test
 	void contextLoads() {
