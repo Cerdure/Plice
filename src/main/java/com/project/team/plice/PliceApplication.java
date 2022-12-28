@@ -1,4 +1,4 @@
-package com.project.team.Plice;
+package com.project.team.plice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

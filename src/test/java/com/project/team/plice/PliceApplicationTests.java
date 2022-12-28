@@ -1,4 +1,4 @@
-package com.project.team.Plice;
+package com.project.team.plice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
