@@ -1,0 +1,231 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+body {
+    overflow-x: hidden;
+    margin: 0;
+    font-family: 'Pretendard-Regular';
+}
+body::-webkit-scrollbar {
+    width: 15px;
+    background-color: white;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: white;
+    box-shadow: 0px 0px 50px 0px black;
+    border: 3px solid #e3e3e3;
+    border-radius: 10px;
+}
+header {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    z-index: 10;
+    border-bottom: 1px solid lightgray;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+.top-space {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    flex: none;
+}
+
+
+.contents-wrapper {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: row;
+}
+
+.left-side {
+    position: relative;
+    width: 370px;
+    height: 100%;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid silver;
+}
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    border-bottom: 1px solid silver;
+}
+.search-wrapper .search-input {
+    position: relative;
+    flex-grow: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    text-indent: 20px;
+    font-size: 20px;
+}
+.search-wrapper .search-input::placeholder {
+    font-size: 16px;
+}
+.search-wrapper .icon {
+    position: relative;
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 1;
+    display: flex;
+    width: 25px;
+    opacity: 0.6;
+}
+.search-wrapper .reset {
+    position: relative;
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 1;
+    display: flex;
+    margin-right: 10px;
+    width: 15px;
+    opacity: 0.2;
+}
+.null-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.null {
+    flex-shrink: 1;
+    font-size: 20px;
+    font-weight: 600;
+    color: darkgray;
+}
+
+
+.right-side {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(247, 247, 247);
+}
+
+
+.top3-wrapper {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.top3-wrapper .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.top3-wrapper .head .title {
+    height: 36px;
+    font-size: 25px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+}
+.top3-wrapper .head .title .icon {
+    width: 30px;
+    margin-right: 10px;
+}
+.top3-wrapper .head .title strong {
+    font-size: 30px;
+}
+.top3-wrapper .head .sort {
+    display: flex;
+}
+.top3-wrapper .head .sort .text {
+    margin: 10px 20px;
+}
+.title-popular {
+    color: rgb(56, 126, 255);
+    font-weight: 900;
+}
+.title-lastest {
+    color: dimgray;
+    font-weight: 900;
+}
+.top3-wrapper .body {
+    width: 100%;
+}
+.popular {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.room {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    border: 15px solid rgb(196, 209, 238);
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
+}
+.room .title {
+    height: 34px;
+    display: flex;
+    font-size: 20px;
+    font-weight: 900;
+}
+.room .title .number {
+    color: cornflowerblue;
+    margin-right: 20px;
+    font-size: 30px;
+}
+.room .title .name {
+    line-height: 34px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.room .info {
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 18px;
+}
+.room .info .icon {
+    width: 30px;
+    margin-right: 10px;
+    opacity: 0.5;
+}
+.room .info .text {
+    margin-right: 10px;
+}
+.room .info .data {
+  color: cornflowerblue;
+}
+
+.lastest {
+    display: none;
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-evenly;
+}
