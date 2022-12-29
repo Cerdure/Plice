@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: scott
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 1000
+    database: oracle
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
+
+thymeleaf:
+  cache: false
+  check-template-location: true
+  prefix: classpath:templates/
+  suffix: .html
+  enabled: true
+
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
+  port: 8081
