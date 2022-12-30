@@ -228,7 +228,7 @@ body {
 }
 .trend-wrapper li .number {
     margin-right: 20px;
-    color: cornflowerblue;
+    color: #5575ff;
     font-weight: 900;
 }
 .trend-wrapper li .data {
@@ -266,7 +266,7 @@ body {
     display: flex;
 }
 .chart-wrapper .data {
-    color: cornflowerblue;
+    color: #5575ff;
     font-weight: 900;
     margin-right: 5px;
 }
@@ -284,7 +284,7 @@ body {
     width: 3px;
 }
 .item-wrapper::-webkit-scrollbar-thumb {
-    background-color: cornflowerblue;
+    background-color: #5575ff;
 }
 .item {
     position: relative;

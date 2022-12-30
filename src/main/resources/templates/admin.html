@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="../static/bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+    <link href="../static/css/admin.css" rel="stylesheet">
+    <script src="../static/js/admin.js"></script>
+
+    <title>Plice | 관리페이지</title>
+</head>
+
+<body>
+    <header></header>
+
+    <div class="top-space"></div>
+
+    <div class="content-wrapper">
+
+        <div class="left-side">
+
+            <div class="site-chart-title title">
+                <div class="icon-wrapper">
+                    <img src="../static/img/icon/chart.svg">
+                </div>
+                <div class="text">사이트 통계</div>
+            </div>
+
+            <div class="user-management-title title">
+                <div class="icon-wrapper">
+                    <img src="../static/img/icon/people-fill.svg">
+                </div>
+                <div class="text">회원 관리</div>
+            </div>
+
+            <div class="chat-management-title title">
+                <div class="icon-wrapper">
+                    <img src="../static/img/icon/chat-text.svg">
+                </div>
+                <div class="text">채팅 관리</div>
+            </div>
+
+            <div class="post-management-title title">
+                <div class="icon-wrapper">
+                    <img src="../static/img/icon/board.svg">
+                </div>
+                <div class="text">게시판 관리</div>
+            </div>
+
+        </div>
+
+
+        <div class="right-side">
+
+            <div class="user-management">
+                <div class="head">ㅣ 회원 관리</div>
+                <div class="body">
+                    <div class="search-wrapper">
+                        <form class="search">
+                            <img class="icon" src="../static/img/icon/search-icon.svg">
+                            <input class="search-input" type="text">
+                            <img class="reset" src="../static/img/icon/x-circle.svg">
+                        </form>
+                    </div>
+                    <div class="contents">
+                        <div class="top">
+                            <div class="id">회원 관리 ID</div>
+                            <div class="phone">전화번호</div>
+                            <div class="name">이름</div>
+                            <div class="nickname">닉네임</div>
+                            <div class="birth">생년월일</div>
+                            <div class="email">이메일</div>
+                            <div class="role">권한</div>
+                            <div class="reg-date">가입일</div>
+                            <div class="del-date">탈퇴일</div>
+                        </div>
+
+                        <div class="user-info">
+                            <div class="id">1</div>
+                            <div class="phone">010-1234-5678</div>
+                            <div class="name">테스트</div>
+                            <div class="nickname">유저11</div>
+                            <div class="birth">19910101</div>
+                            <div class="email">user11@plice.com</div>
+                            <div class="role">USER</div>
+                            <div class="reg-date">2022-12-01</div>
+                            <div class="del-date">-</div>
+                        </div>
+
+                        <div class="user-info">
+                            <div class="id">2</div>
+                            <div class="phone">010-1234-5678</div>
+                            <div class="name">테스트</div>
+                            <div class="nickname">유저11</div>
+                            <div class="birth">19910101</div>
+                            <div class="email">user11@plice.com</div>
+                            <div class="role">USER</div>
+                            <div class="reg-date">2022-12-01</div>
+                            <div class="del-date">-</div>
+                        </div>
+
+                        <div class="user-info">
+                            <div class="id">3</div>
+                            <div class="phone">010-1234-5678</div>
+                            <div class="name">테스트</div>
+                            <div class="nickname">유저11</div>
+                            <div class="birth">19910101</div>
+                            <div class="email">user11@plice.com</div>
+                            <div class="role">USER</div>
+                            <div class="reg-date">2022-12-01</div>
+                            <div class="del-date">-</div>
+                        </div>
+
+                        <div class="user-info">
+                            <div class="id">4</div>
+                            <div class="phone">010-1234-5678</div>
+                            <div class="name">테스트</div>
+                            <div class="nickname">유저11</div>
+                            <div class="birth">19910101</div>
+                            <div class="email">user11@plice.com</div>
+                            <div class="role">USER</div>
+                            <div class="reg-date">2022-12-01</div>
+                            <div class="del-date">-</div>
+                        </div>
+
+                        <div class="user-info">
+                            <div class="id">5</div>
+                            <div class="phone">010-1234-5678</div>
+                            <div class="name">테스트</div>
+                            <div class="nickname">유저11</div>
+                            <div class="birth">19910101</div>
+                            <div class="email">user11@plice.com</div>
+                            <div class="role">USER</div>
+                            <div class="reg-date">2022-12-01</div>
+                            <div class="del-date">-</div>
+                        </div>
+
+                        <div class="user-info">
+                            <div class="id">6</div>
+                            <div class="phone">010-1234-5678</div>
+                            <div class="name">테스트</div>
+                            <div class="nickname">유저11</div>
+                            <div class="birth">19910101</div>
+                            <div class="email">user11@plice.com</div>
+                            <div class="role">USER</div>
+                            <div class="reg-date">2022-12-01</div>
+                            <div class="del-date">-</div>
+                        </div>
+
+                        <div class="user-info">
+                            <div class="id">7</div>
+                            <div class="phone">010-1234-5678</div>
+                            <div class="name">테스트</div>
+                            <div class="nickname">유저11</div>
+                            <div class="birth">19910101</div>
+                            <div class="email">user11@plice.com</div>
+                            <div class="role">USER</div>
+                            <div class="reg-date">2022-12-01</div>
+                            <div class="del-date">-</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>
