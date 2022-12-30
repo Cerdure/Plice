@@ -68,9 +68,25 @@
                 <div class="body">
                     <div class="search-wrapper">
                         <form class="search">
-                            <img class="icon" src="../static/img/icon/search-icon.svg">
-                            <input class="search-input" type="text">
-                            <img class="reset" src="../static/img/icon/x-circle.svg">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox"> 탈퇴 회원 제외
+                            </div>
+                            <div class="input-wrapper">
+                                <select class="search-by" name="search-by">
+                                    <option value="id">회원 관리 ID</option>
+                                    <option value="phone">전화번호</option>
+                                    <option value="name">이름</option>
+                                    <option value="nickname">닉네임</option>
+                                    <option value="birth">생년월일</option>
+                                    <option value="email">이메일</option>
+                                    <option value="role">권한</option>
+                                    <option value="reg-date">가입일</option>
+                                    <option value="del-date">탈퇴일</option>
+                                </select>
+                                <input class="search-input" type="text">
+                                <img class="reset" src="../static/img/icon/x-circle.svg">
+                                <img class="icon" src="../static/img/icon/search-icon.svg">
+                            </div>
                         </form>
                     </div>
                     <div class="contents">
@@ -86,91 +102,237 @@
                             <div class="del-date">탈퇴일</div>
                         </div>
 
-                        <div class="user-info">
-                            <div class="id">1</div>
-                            <div class="phone">010-1234-5678</div>
-                            <div class="name">테스트</div>
-                            <div class="nickname">유저11</div>
-                            <div class="birth">19910101</div>
-                            <div class="email">user11@plice.com</div>
-                            <div class="role">USER</div>
-                            <div class="reg-date">2022-12-01</div>
-                            <div class="del-date">-</div>
-                        </div>
+                        <form class="user-info">
+                            <div><input class="id" value="1" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
 
-                        <div class="user-info">
-                            <div class="id">2</div>
-                            <div class="phone">010-1234-5678</div>
-                            <div class="name">테스트</div>
-                            <div class="nickname">유저11</div>
-                            <div class="birth">19910101</div>
-                            <div class="email">user11@plice.com</div>
-                            <div class="role">USER</div>
-                            <div class="reg-date">2022-12-01</div>
-                            <div class="del-date">-</div>
-                        </div>
+                        <form class="user-info">
+                            <div><input class="id" value="2" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
 
-                        <div class="user-info">
-                            <div class="id">3</div>
-                            <div class="phone">010-1234-5678</div>
-                            <div class="name">테스트</div>
-                            <div class="nickname">유저11</div>
-                            <div class="birth">19910101</div>
-                            <div class="email">user11@plice.com</div>
-                            <div class="role">USER</div>
-                            <div class="reg-date">2022-12-01</div>
-                            <div class="del-date">-</div>
-                        </div>
+                        <form class="user-info">
+                            <div><input class="id" value="3" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
 
-                        <div class="user-info">
-                            <div class="id">4</div>
-                            <div class="phone">010-1234-5678</div>
-                            <div class="name">테스트</div>
-                            <div class="nickname">유저11</div>
-                            <div class="birth">19910101</div>
-                            <div class="email">user11@plice.com</div>
-                            <div class="role">USER</div>
-                            <div class="reg-date">2022-12-01</div>
-                            <div class="del-date">-</div>
-                        </div>
+                        <form class="user-info">
+                            <div><input class="id" value="4" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
 
-                        <div class="user-info">
-                            <div class="id">5</div>
-                            <div class="phone">010-1234-5678</div>
-                            <div class="name">테스트</div>
-                            <div class="nickname">유저11</div>
-                            <div class="birth">19910101</div>
-                            <div class="email">user11@plice.com</div>
-                            <div class="role">USER</div>
-                            <div class="reg-date">2022-12-01</div>
-                            <div class="del-date">-</div>
-                        </div>
+                        <form class="user-info">
+                            <div><input class="id" value="5" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
 
-                        <div class="user-info">
-                            <div class="id">6</div>
-                            <div class="phone">010-1234-5678</div>
-                            <div class="name">테스트</div>
-                            <div class="nickname">유저11</div>
-                            <div class="birth">19910101</div>
-                            <div class="email">user11@plice.com</div>
-                            <div class="role">USER</div>
-                            <div class="reg-date">2022-12-01</div>
-                            <div class="del-date">-</div>
-                        </div>
+                        <form class="user-info">
+                            <div><input class="id" value="6" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
 
-                        <div class="user-info">
-                            <div class="id">7</div>
-                            <div class="phone">010-1234-5678</div>
-                            <div class="name">테스트</div>
-                            <div class="nickname">유저11</div>
-                            <div class="birth">19910101</div>
-                            <div class="email">user11@plice.com</div>
-                            <div class="role">USER</div>
-                            <div class="reg-date">2022-12-01</div>
-                            <div class="del-date">-</div>
-                        </div>
+                        <form class="user-info">
+                            <div><input class="id" value="7" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
+
+                        <form class="user-info">
+                            <div><input class="id" value="8" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
+
+                        <form class="user-info">
+                            <div><input class="id" value="9" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
+
+                        <form class="user-info">
+                            <div><input class="id" value="10" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
+
+                        <form class="user-info">
+                            <div><input class="id" value="11" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
+
+                        <form class="user-info">
+                            <div><input class="id" value="12" disabled></div>
+                            <div><input class="phone" value="010-1234-5678"></div>
+                            <div><input class="name" value="테스트"></div>
+                            <div><input class="nickname" value="유저11"></div>
+                            <div><input class="birth" value="19910101"></div>
+                            <div><input class="email" value="user11@plice.com"></div>
+                            <div>
+                                <select class="role">
+                                    <option value="USER">USER</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+                            <div><input class="reg-date" value="2022-12-01" disabled></div>
+                            <div><input class="del-date" value="-" disabled></div>
+                                <div class="btn modify">수정</div>
+                                <div class="btn delete">탈퇴</div>
+                        </form>
 
                     </div>
+
+                    <div></div>
                 </div>
             </div>
         </div>

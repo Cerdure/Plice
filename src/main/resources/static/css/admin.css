@@ -25,7 +25,8 @@ a {
     text-decoration: none;
 }
 body {
-    overflow-x: hidden;
+    overflow-x: scroll;
+    overflow-y: hidden;
     margin: 0;
     font-family: 'Pretendard-Regular';
 }
@@ -84,7 +85,10 @@ body {
 }
 .left-side .title:nth-child(2) {
     background-color: rgb(82, 142, 255);
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+    border: 1px solid silver;
+    border-right: none;
+    border-left: 10px solid white;
 }
 .left-side .title:nth-child(2) .icon-wrapper {
     border: 1px solid white;
@@ -121,75 +125,137 @@ body {
 
 .right-side {
     width: 100%;
+    height: calc(100vh - 60px);
 }
 
 .user-management {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    overflow-y: scroll;
+}
+.user-management::-webkit-scrollbar {
+    width: 5px;
+}
+.user-management::-webkit-scrollbar-thumb {
+    background-color: cornflowerblue;
+    border-radius: 10px;
 }
 .user-management .head {
     width: 100%;
     font-size: 40px;
     font-weight: 900;
     padding: 20px;
+    padding-bottom: 0;
 }
 .user-management .body {
     width: 100%;
-    padding: 20px;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
 }
 .search-wrapper {
-    width: 100%;
+    width: 50%;
     display: flex;
-    align-items: flex-end;
     justify-content: end;
     margin-bottom: 20px;
 }
 .search {
     position: relative;
-    width: 400px;
+    width: 100%;
     height: 40px;
-    border: 1px solid silver;
     display: flex;
 }
-.search-wrapper .icon {
-    width: 20px;
-    margin: 0 10px;
+.checkbox-wrapper {
+    width: 150px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
 }
+.checkbox-wrapper input {
+    margin: 10px;
+}
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    border: 1px solid silver;
+}
+.search-by {
+    border: none;
+    outline: none;
+    padding: 0 10px;
+}
+
 .search-input {
     width: 100%;
     border: none;
     outline: none;
 }
 .search-wrapper .reset {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
     width: 15px;
     opacity: 0.2;
+}
+.search-wrapper .icon {
+    width: 20px;
+    margin: 0 10px;
 }
 
 .user-management .contents {
     width: 100%;
-   
     border-top: 1px solid silver;
+    border-bottom: 1px solid silver;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
 }
 .user-management .contents .top {
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
     justify-items: center;
     border-bottom: 1px solid silver;
+    margin-bottom: 10px;
 }
 .user-management .user-info {
     width: 100%;
-    padding: 20px;
+    padding: 10px 20px;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr;
-    justify-items: center;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
+    align-items: center;
 }
+.user-management .user-info div {
+    text-align: center;
+}
+.user-management .user-info input,
+.user-management .user-info select {
+    width: 90%;
+    height: 30px;
+    text-align: center;
+    outline: none;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+.user-management .user-info .btn {
+    width: 90%;
+    height: 30px;
+    line-height: 30px;
+    background-color: lightgray;
+    border-radius: 5px;
+    border: 1px solid silver;
+    margin-left: 10px;
+}
+.user-management .user-info .delete {
+    background-color: dimgray;
+    color: white;
+}
+
+@media only screen and (max-width:1400px) {
+    body {
+       width: 1385px;
+    }
+  }
