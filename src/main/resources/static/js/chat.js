@@ -27,18 +27,26 @@ $(function () {
     });
 
     $(".my-room").click(function(){
+        $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
+        $(".my-room").removeClass("active-room");
+        $(this).addClass("active-room");
         $(".right-side").css({'flex-direction':'row','align-items':'center'});
-        $(".top3-wrapper").stop().animate({'width':'40%'});
+        $(".top3-wrapper").hide();
+        $(".top3-wrapper .head").stop().animate({'margin-bottom':'0px'},300);
+        $(".top3-wrapper").css({'width':'40%','margin-top':'0px'}).show();
         $(".popular, .lastest").css('flex-direction','column');
         $(".chat-wrapper").css('display','flex');
-        $(".room").stop().animate({'height':'200px','margin':'20px 20px'},300);
+        $(".room").css({'height':'10%','margin':'20px 20px'});
     });
     $(".chat-wrapper .chat .head .close").click(function(){
+        $(".my-room").removeClass("active-room");
         $(".right-side").css({'flex-direction':'column','align-items':'center'});
-        $(".top3-wrapper").stop().animate({'width':'100%'});
+        $(".top3-wrapper").hide();
+        $(".top3-wrapper .head").stop().animate({'margin-bottom':'40px'},300);
+        $(".top3-wrapper").css({'width':'100%','margin-top':'80px'}).show();
         $(".popular, .lastest").css('flex-direction','row');
         $(".chat-wrapper").hide();
-        $(".room").stop().animate({'height':'250px','margin':'0px 20px'},300);
+        $(".room").css({'height':'200px','margin':'0px 20px'});
     });
 
 });

@@ -1,19 +1,19 @@
 @font-face {
-    font-family: 'Pretendard-lighter';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 200;
-    font-style: normal;
-}
-@font-face {
     font-family: 'Pretendard-Regular';
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
 }
 @font-face {
-    font-family: 'Pretendard-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 900;
+    font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'KOHIBaeumOTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KOHIBaeumOTF.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
 }
 * {
@@ -26,15 +26,17 @@ a {
 }
 body {
     overflow-x: hidden;
+    overflow-y: scroll;
     margin: 0;
     font-family: 'Pretendard-Regular';
+    color: #3b5987;
 }
 body::-webkit-scrollbar {
     width: 15px;
     background-color: white;
 }
 body::-webkit-scrollbar-thumb {
-    background-color: white;
+    background-color: #3b5987;
     box-shadow: 0px 0px 50px 0px black;
     border: 3px solid #e3e3e3;
     border-radius: 10px;
@@ -129,7 +131,6 @@ body {
     flex-shrink: 1;
     font-size: 20px;
     font-weight: 600;
-    color: darkgray;
 }
 
 
@@ -145,8 +146,10 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgb(247, 247, 247);
-    background-image: url("../img/images/background.jpg");
+    background: 
+    linear-gradient( rgba(255, 255, 255, 0), rgb(255, 255, 255)), 
+    url("../img/images/background.jpg");
+    background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
@@ -167,7 +170,8 @@ body {
     height: 80%;
     background-color: white;
     border: 1px solid silver;
-    border-radius: 10px;
+    border-radius: 5px;
+    overflow: hidden;
     margin-right: 10%;
     display: flex;
     flex-direction: column;
@@ -177,7 +181,10 @@ body {
     position: relative;
     width: 100%;
     height: 80px;
-    background-color: rgb(73 107 255);
+    background: 
+        linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)), 
+        url("../img/images/bg.png");
+    background-size: 50%;
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -192,12 +199,11 @@ body {
 .chat-wrapper .chat .head .exit {
     position: absolute;
     left: 40px;
-    font-family: 'Pretendard-Bold';
+    font-size: 12px;
     color: white;
 }
 .chat-wrapper .chat .head .title {
     text-align: center;
-    font-family: 'Pretendard-Bold';
     font-size: 20px;
     color: white;
     display: flex;
@@ -223,111 +229,101 @@ body {
 .chat-wrapper .chat .body {
     height: 100%;
     padding: 0 20px;
+    overflow-y: scroll;
 }
-.other-chat {
+.content-wrapper {
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 .profile-wrapper {
-    
-}
-.profile-wrapper img {
-    width: 40px;
-    border-radius: 25px;
-    border: 1px solid gray;
-    margin: 10px;
-}
-.content-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-self: center;
-}
-.content-wrapper .above {
-    margin-bottom: 5px;
-}
-.content-wrapper .below {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
-.content-wrapper .content {
-    border-radius: 0px 25px 25px 25px;
-    border: 1px solid gray;
-    padding: 5px 20px;
-    margin-right: 10px;
-}
-.content-wrapper .date {
-    font-size: 12px;
-    align-self: flex-end;
-}
-
-
-.my-chat {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-}
-.my-chat .profile-wrapper {
-    
-}
-.my-chat .profile-wrapper img {
-    width: 40px;
+.profile-wrapper img {
+    align-self: flex-start;
+    width: 30px;
     border-radius: 25px;
     border: 1px solid gray;
-    margin: 10px;
+    margin-right: 10px;
 }
-.my-chat .content-wrapper {
-    align-items: flex-end;
+.content {
+    font-size: 14px;
 }
-.my-chat .content-wrapper .content {
-    border-radius: 25px 0px 25px 25px;
-    border: 1px solid rgb(42, 116, 255);
-    margin-right: 0;
-    margin-left: 10px;
+.content strong {
+    margin-right: 10px;
+    font-weight: 900;
+    white-space: nowrap;
+    color: #719bd6;
 }
+
+.content .date {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #85a6d5;
+}
+
+
+.my-chat strong {
+    color: #315dff;
+}
+
+
 
 .chat-wrapper .chat .input-wrapper {
     width: 100%;
-    background-color: aliceblue;
-    border-top: 1px solid cornflowerblue;
     display: flex;
     align-items: center;
     justify-content:flex-start;
+    box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.1);
 } 
 .chat-input {
     width: 80%;
-    min-height: 50px;
+    min-height: 60px;
     margin: 20px;
     margin-right: 0;
     border: 1px solid silver;
     border-radius: 5px;
     outline: none;
-    text-indent: 20px;
 }
 .chat-input::placeholder {
     color: silver;
+}
+.chat-input::-webkit-scrollbar {
+    width: 3px;
+}
+.chat-input::-webkit-scrollbar-thumb {
+    background-color: #5575ff;
 }
 
 .chat-wrapper .regist-btn {
     width: 20%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 .chat-wrapper .regist-btn .btn {
-    width: 70px;
-    height: 50px;
-    background-color: #5575ff;
-    margin: 20px;
+    width: 60%;
+    height: 34px;
+    background: 
+        linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)), 
+        url("../img/images/bg.png");
+    background-size: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 5px;
+    margin-bottom: 10px;
+}
+.chat-wrapper .regist-btn .count {
+    font-size: 12px;
 }
 .chat-wrapper .regist-btn img {
     filter: invert(100%) sepia(10%) saturate(7425%) hue-rotate(295deg) brightness(119%) contrast(104%);
-    width: 25px;
+    width: 20px;
 }
 
 .top3-wrapper {
@@ -346,13 +342,17 @@ body {
 .top3-wrapper .head .title {
     height: 36px;
     font-size: 25px;
-    font-weight: 900;
     display: flex;
     align-items: center;
+    font-family: 'KOHIBaeumOTF';
 }
 .top3-wrapper .head .title .icon {
-    width: 30px;
+    filter: invert(30%) sepia(30%) saturate(879%) hue-rotate(177deg) brightness(98%) contrast(89%);
+    width: 40px;
     margin-right: 10px;
+}
+.top3-wrapper .head .title .text {
+    padding-top: 8px;
 }
 .top3-wrapper .head .title strong {
     font-size: 30px;
@@ -368,40 +368,89 @@ body {
     font-weight: 900;
 }
 .title-lastest {
-    color: dimgray;
     font-weight: 900;
 }
 
 .top3-wrapper .body {
+    position: relative;
     width: 100%;
+    height: 100%;
 }
 .popular {
+    position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
 }
 .room {
-    width: 300px;
-    height: 250px;
+    position: relative;
+    width: 200px;
+    height: 200px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 20px;
     background-color: white;
-    border: 15px solid rgb(119 161 255);
+    border: 1px solid #ced6ff;
+    border-radius: 5px;
     box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
     margin: 0 20px;
+}
+.room::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #4169fc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
+    z-index: -1;
+}
+.room:hover {
+    background-color: #4169fc;
+    color: white;
+    transition: 0.5s;
+}
+.room:hover .name{
+    color: #fff389;
+    transition: 0.5s;
+}
+.room:hover .info .data{
+    color: #fff389;
+    transition: 0.5s;
+}
+.room:hover .info .icon{
+    filter: invert(100%) sepia(10%) saturate(7425%) hue-rotate(295deg) brightness(119%) contrast(104%);
+    opacity: 1;
+    transition: 0.5s;
+}
+.room:hover::before{
+    background-color: white;
+    border: 1px solid #ced6ff;
+    transition: 0.5s;
 }
 .room .title {
     height: 34px;
     display: flex;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 900;
+    margin-top: 20px;
 }
 .room .title .number {
-    color: cornflowerblue;
-    margin-right: 20px;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ced6ff;
+    border-radius: 5px;
+    background-color: white;
+    color: #4169fc;
+    margin-right: 10px;
     font-size: 30px;
+    text-align: center;
+    line-height: 40px;
 }
 .room .title .name {
     line-height: 34px;
@@ -414,10 +463,9 @@ body {
     align-items: center;
     justify-content: center;
     display: flex;
-    font-size: 18px;
 }
 .room .info .icon {
-    width: 30px;
+    width: 25px;
     margin-right: 10px;
     opacity: 0.5;
 }
@@ -427,7 +475,7 @@ body {
 .room .info .data {
   color: cornflowerblue;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 18px;
 }
 .room .info .unit {
 }
@@ -438,12 +486,11 @@ body {
     justify-content: center;
 }
 .lastest .room .info .data {
-    font-size: 25px;
+    font-size: 18px;
     margin-right: 10px;
 }
 .lastest .room .info .unit {
     font-weight: 900;
-    color: dimgray;
 }
 
 .my-room {
@@ -452,6 +499,12 @@ body {
     display: flex;
     align-items: center;
     justify-content:first baseline;
+}
+.my-room:not(.active-room):hover {
+    background-color: #f1f7ff;
+    border: 1px solid #4169fc;
+    color: #4169fc;
+    transition: 0.5s;
 }
 .my-room .profiles {
     width: 100px;
@@ -489,5 +542,28 @@ body {
 .my-room .info .title .number{
 }
 .my-room .info .content{
-    color: gray;
 }
+.active-room {
+    background: 
+    linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)), 
+    url("../img/images/bg.png");
+    background-size: 50%;
+    color: white;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+.active-room .info .title .text {
+    color: #fff389;
+}
+@media only screen and (max-width:1400px) {
+    body {
+       width: 1385px;
+    }
+  }
+
+ 
+@media only screen and (max-width:1350px) {
+    body {
+        overflow-x: scroll;
+    }
+  } 
