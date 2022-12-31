@@ -18,26 +18,6 @@ $(function () {
   });
 
 
-  $(".story-tag-wrapper").click(function () {
-    if (!$(this).hasClass("active-tag-wrapper")) {
-      $(".notice-title").hide();
-      $(".story-title").show();
-      $(".tag-wrapper").removeClass("active-tag-wrapper");
-      $(this).addClass("active-tag-wrapper");
-      $(".notice-content").stop().hide();
-      $(".story-content").stop().fadeIn(300);
-    }
-  });
-  $(".notice-tag-wrapper").click(function () {
-    if (!$(this).hasClass("active-tag-wrapper")) {
-      $(".story-title").hide();
-      $(".notice-title").show();
-      $(".tag-wrapper").removeClass("active-tag-wrapper");
-      $(this).addClass("active-tag-wrapper");
-      $(".story-content").stop().hide();
-      $(".notice-content").stop().fadeIn(300);
-    }
-  });
 
 
 

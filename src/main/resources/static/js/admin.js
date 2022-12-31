@@ -15,4 +15,9 @@ $(function () {
         $(".trend-wrapper").css('overflow','hidden');
     }
    });
+
+   $(".index").click(function(){
+    $(".index").removeClass("active-index");
+    $(this).addClass("active-index");
+   });
 });
