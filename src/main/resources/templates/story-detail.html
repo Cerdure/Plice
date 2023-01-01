@@ -64,18 +64,30 @@
   <!-- 수정 폼   끝-->
 
 
-  <!-- 취소 알림창  시작-->
-  <div class="close-alert-wrapper">
-    <div class="close-alert">
-      <div class="text">
-        작성한 내용은 저장되지 않습니다.<br>
-        취소하겠습니까?
-      </div>
-      <button class="cancel" onclick="hideAlert()">취소</button>
-      <button class="okay" onclick="formClose()">확인</button>
+ <div class="modal-background"></div>
+  <div class="alert-window close-alert">
+    <div class="text">
+      글 수정을 취소하겠습니까?
     </div>
+    <button class="cancel" onclick="hideAlert(this)">취소</button>
+    <button class="okay" onclick="formClose(this)">확인</button>
   </div>
-  <!-- 취소 알림창  끝-->
+
+  <div class="alert-window delete-alert">
+    <div class="text">
+      글을 삭제하시겠습니까?
+    </div>
+    <button class="cancel" onclick="hideAlert(this)">취소</button>
+    <button class="okay" onclick="postDelete(this)">확인</button>
+  </div>
+
+  <div class="alert-window reply-delete-alert">
+    <div class="text">
+      댓글을 삭제하시겠습니까?
+    </div>
+    <button class="cancel" onclick="hideAlert(this)">취소</button>
+    <button class="okay" onclick="replyDelete(this)">확인</button>
+  </div>
 
 
   <div class="meta-wrapper">
@@ -189,8 +201,6 @@
               </div>
 
             </div>
-
-
 
           </div>
 

@@ -14,7 +14,8 @@ $(function () {
   });
 
   $(".modify-form .close").click(function () {
-    $(".close-alert-wrapper").fadeIn(300);
+    $(".modal-background").fadeIn(200);
+    $(".close-alert").fadeIn(300);
   });
 
 
@@ -75,7 +76,7 @@ $(function () {
       form.setAttribute('class', 'inner-comment');
       form.innerHTML =
         '<input id="parentId" type="hidden" value="' + parentId + '">' +
-        '<img src="/img/icon/arrow-return-right.svg">' +
+        '<img src="../static/img/icon/arrow-return-right.svg">' +
         '<textarea class="comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
         'onkeyup="resize(this)" onclick="commentClick(this)" onfocusout="commentFocusout(this)" ' +
         'placeholder="내용을 입력해주세요."></textarea>' +
@@ -115,8 +116,8 @@ $(function () {
 
     $(document).on("click", ".my-comment .remove", function () {
       replyId = $(this).closest(".my-comment").find("#replyId").val();
-      $(".write-wrapper-back").addClass("modal-background");
-      $(".reply-delete-alert").show();
+      $(".modal-background").fadeIn(200);
+      $(".reply-delete-alert").fadeIn(300);
     });
 
   });
@@ -147,7 +148,7 @@ function registCheck(...passed){
 }
 
 function formClose() {
-  $(".close-alert-wrapper").fadeOut(100);
+  hideAlert();
   $(".modify-form-wrapper").fadeOut(100);
   $(".modify-form input").val("");
   $(".modify-form .count").text("0/3000");
@@ -156,7 +157,8 @@ function formClose() {
 }
 
 function hideAlert() {
-  $(".close-alert-wrapper").fadeOut(100);
+  $(".modal-background").fadeOut(100);
+  $(".alert-window").fadeOut(100);
 }
 
 function resize(_this) {
@@ -184,6 +186,57 @@ function commentCancel(_this) {
 }
 
 function myCommentCancel(_this) {
-  origin.text(originText);
+  location.reload();
   $(_this).parent().remove();
+}
+
+
+function postDelete() {
+  // $.ajax({
+  //     url: "/post-delete/"+inquireId,
+  //     type: "post",
+  //     error: function (xhr, status, error) {
+  //         console.log(error);
+  //     }
+  // }).done(function(result){
+  //     document.location.replace("/inquire");
+  // });
+}
+
+
+function replyModify(_this){
+  let data = {
+      replyId: $(_this).closest(".my-comment").find("#replyId").val(),
+      content: $(_this).parent().find(".mod-comment").val(),
+  };
+  $.ajax({
+      url: "/reply-modify/" + $("#inquireId").val(),
+      type: "post",
+      data: data,
+      dataType: "html",
+      async: true,
+      error: function (xhr, status, error) {
+          console.log(error);
+      }
+  }).done(function (replies) {
+      document.location.replace("/inquire-detail/"+$("#inquireId").val());
+  });
+}
+
+function replyDelete(_this){
+  let data = {
+      replyId: replyId,
+  };
+  $.ajax({
+      url: "/reply-delete/" + $("#inquireId").val(),
+      type: "post",
+      data: data,
+      dataType: "html",
+      async: true,
+      error: function (xhr, status, error) {
+          console.log(error);
+      }
+  }).done(function (replies) {
+      document.location.replace("/inquire-detail/"+$("#inquireId").val());
+  });
 }
