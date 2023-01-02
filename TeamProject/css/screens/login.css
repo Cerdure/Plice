@@ -1,0 +1,74 @@
+.login_container {
+  width: 310px;
+  height: 460px;
+  margin: 100px auto;
+}
+
+.login_header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.login_header .login_logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+#loginForm .input-group {
+  width: 100%;
+}
+
+#loginForm .login_btn {
+  width: 100%;
+  margin-top: 20px;
+}
+
+#loginForm .form-control {
+  border-radius: 10px;
+}
+
+#loginForm .login_control,
+#loginForm .form-control {
+  padding: 25px;
+}
+
+#loginForm .login_control {
+  padding: 15px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: var(--main-color);
+}
+
+#loginForm .login_control:hover {
+  background-color: var(--main-hover-color);
+}
+
+/* login_join */
+#login_Join {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#login_Join .join_btn:first-child {
+  margin-right: 10px;
+}
+
+#login_Join .join_btn {
+  color: var(--main-color);
+  text-decoration: none;
+}
+
+#login_Join .join_btn:hover {
+  color: var(--main-hover-color);
+}
+
+/* small info */
+.login_sns {
+  text-align: center;
+  margin: 50px 0px 20px 0px;
+}
