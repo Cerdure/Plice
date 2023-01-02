@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+input,
+select {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+small {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+button {
+  border: none;
+  background-color: inherit;
+}
+
+:root {
+  --main-color: #09addb;
+  --main-hover-color: #00c8ff;
+  --main-border: 1px solid rgba(0, 0, 0, 0.2);
+}
