@@ -69,7 +69,8 @@
 .member_join_phone_btn {
   position: relative;
   border: var(--main-border);
-  background-color: var(--main-color);
+  background-color: #1e41d0;
+  color: white;
   width: 30%;
   border-radius: 10px;
   transition: all 0.5s ease-in-out;
@@ -82,7 +83,7 @@
 }
 
 .member_join_phone_btn:hover {
-  background-color: var(--main-hover-color);
+  background-color: #0e2169;
 }
 
 .timer {
@@ -120,13 +121,13 @@
   margin-bottom: -50px;
   font-size: 19px;
   font-weight: normal;
-  background-color: var(--main-color);
-  transition: all 1s ease-in-out;
+  background-color: #1e41d0;
+  transition: all 0.5s ease-in-out;
+  color: white;
 }
 
 .member_join_group .member_join_btn:hover {
-  background-color: var(--main-hover-color);
-  color: red;
+  background-color: #152e91;
 }
 
 #pwd {
@@ -135,7 +136,8 @@
 
 .pwd_text {
   font-weight: bold;
-  font-size: 13px;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 
 .pwd_suc,

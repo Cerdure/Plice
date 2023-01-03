@@ -209,6 +209,7 @@ $(function () {
     if (!ddReg.test(dd)) {
       $(".dd").css("border", "1px solid red");
       $(".dd_mis").css("display", "block");
+      $(".all_mis").css("display", "none");
     } else {
       $(".dd").css("border", "1px solid blue");
       $(".dd_mis").css("display", "none");

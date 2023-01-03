@@ -23,19 +23,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <title>예쁜 집들이 모여있는 우리집</title>
   </head>
-  <body class="show_bg">
-    <div class="change_container">
-      <div class="change_icons">
-        <div class="change_icon">
-          <i class="fas fa-moon fa-2x"></i>
-        </div>
-        <div class="change_icon">
-          <i class="fas fa-sun fa-2x"></i>
-        </div>
-      </div>
-      <div class="change_circle"></div>
-    </div>
-
+  <body>
     <div class="login_container">
       <!-- Login Header -->
       <div class="login_header">
@@ -73,10 +61,28 @@
         </div>
         <!-- password_find & Join -->
         <section name="login_find" id="login_Join">
-          <a class="join_btn" href="#">비밀번호 찾기</a>
+          <a class="join_btn repwd" href="#">비밀번호 재설정</a>
           <a class="join_btn" href="join.html">회원가입</a>
         </section>
       </form>
+
+      <!-- password find -->
+      <div class="pos_fix">
+        <form action="#" class="pwd_find">
+          <div class="pwd_find_header">
+            <h3 class="pwd_find_title">비밀번호 재설정</h3>
+            <i class="fas fa-times fa-2x"></i>
+          </div>
+          <hr />
+          <h5 class="pwd_find_subtitle">
+            가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.
+          </h5>
+          <div class="check_container">
+            <input class="check_email" type="email" placeholder="이메일" />
+            <input class="check_submit" type="submit" value="인증메일 받기" />
+          </div>
+        </form>
+      </div>
 
       <!-- small info -->
       <section class="sns_container">
