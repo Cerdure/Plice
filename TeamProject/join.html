@@ -9,7 +9,6 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://kit.fontawesome.com/6b7a2f6a5d.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="js/join.js"></script>
     <link rel="stylesheet" href="css/styles.css" />
     <title>부동산의 고민을 해결한다</title>
   </head>
@@ -50,7 +49,7 @@
           </div>
 
           <div class="member_join_group verify">
-            <label for="code_number">인증번호</label>
+            <label>인증번호</label>
             <input id="code_number" class="code" placeholder="인증번호입력" />
             <div class="code-check">확인</div>
           </div>
@@ -62,11 +61,13 @@
             type="password"
             id="pwd"
             name="pwd"
-            placeholder="비밀번호 입력해주세요(8~15자)"
+            placeholder="하나 이상의 문자,숫자로 8~15자 입력"
             minlength="8"
             maxlength="15"
             required
           />
+          <span class="pwd_suc pwd_text">조건에 부합니다.</span>
+          <span class="pwd_mis pwd_text">조건에 부합하지 않습니다.</span>
           <input
             type="password"
             id="repwd"
@@ -76,6 +77,8 @@
             maxlength="15"
             required
           />
+          <span class="repwd_suc pwd_text">비밀번호가 일치합니다.</span>
+          <span class="repwd_mis pwd_text">비밀번호가 일치하지 않습니다.</span>
         </div>
 
         <div class="member_join_group clear_parent">
@@ -83,11 +86,17 @@
           <input
             id="nickname"
             name="nickname"
-            placeholder="닉네임 입력"
-            maxlength="20"
-            spellcheck="false"
+            placeholder="닉네임은 한글, 영문, 숫자만 가능하며 4-15자리 가능."
+            minlength="4"
+            maxlength="15"
             required
           />
+          <span class="en_nick_alert pwd_text"
+            >닉네임을 다시 작성해주세요.</span
+          >
+          <span class="nick_success_alert pwd_text"
+            >정상적으로 입력하셨습니다.</span
+          >
           <span class="clear_btn long_clear_btn">
             <i class="fas fa-times-circle fa-lg"></i>
           </span>
@@ -103,6 +112,10 @@
             maxlength="40"
             required
           />
+          <span class="email_mis pwd_text"
+            >이메일 정보를 다시 확인해주세요.</span
+          >
+          <span class="email_suc pwd_text">정상 확인 되었습니다.</span>
           <span class="clear_btn long_clear_btn">
             <i class="fas fa-times-circle fa-lg"></i>
           </span>
@@ -120,9 +133,10 @@
               placeholder="년"
               minlength="4"
               maxlength="4"
+              required
             />
-            <select name="birthday" name="mm" class="mm sel birth_box">
-              <option value="" selected>월</option>
+            <select name="birthday" name="mm" class="mm sel birth_box" required>
+              <option value="00" selected>월</option>
               <option value="01">1</option>
               <option value="02">2</option>
               <option value="03">3</option>
@@ -142,14 +156,22 @@
               placeholder="일"
               minlength="1"
               maxlength="2"
+              required
             />
           </div>
         </div>
+        <span class="yy_mis pwd_text">
+          태어난 년도 4자리를 정확히 입력하세요.
+        </span>
+        <span class="mm_mis pwd_text">월을 선택하세요.</span>
+        <span class="dd_mis pwd_text">일을 입력하세요.</span>
+        <span class="all_mis pwd_text">정상 입력 확인하였습니다.</span>
 
         <div class="member_join_group">
           <input class="member_join_btn" type="submit" value="가입하기" />
         </div>
       </form>
     </main>
+    <script src="js/join.js"></script>
   </body>
 </html>

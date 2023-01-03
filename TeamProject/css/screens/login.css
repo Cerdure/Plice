@@ -42,10 +42,14 @@
   font-size: 20px;
   color: white;
   background-color: var(--main-color);
+  border: none;
+  transition: all 0.5s ease-in-out;
 }
 
 #loginForm .login_control:hover {
   background-color: var(--main-hover-color);
+  color: rgb(17, 17, 17);
+  font-weight: bold;
 }
 
 /* login_join */
@@ -71,4 +75,44 @@
 .login_sns {
   text-align: center;
   margin: 50px 0px 20px 0px;
+}
+
+/* change bg */
+.change_container {
+  background-color: tomato;
+  width: 90px;
+  height: 40px;
+  padding: 10px 0px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  top: 100px;
+  left: 750px;
+}
+
+.change_icons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.change_circle {
+  width: 37px;
+  height: 38px;
+  background-color: black;
+  border-radius: 50%;
+  position: absolute;
+  transition: all 0.5s ease-in-out;
+}
+
+.moving {
+  transform: translateX(53px);
+}
+
+.show_bg {
+  background-color: black;
+  color: white;
 }

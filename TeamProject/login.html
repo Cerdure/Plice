@@ -23,7 +23,19 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <title>예쁜 집들이 모여있는 우리집</title>
   </head>
-  <body>
+  <body class="show_bg">
+    <div class="change_container">
+      <div class="change_icons">
+        <div class="change_icon">
+          <i class="fas fa-moon fa-2x"></i>
+        </div>
+        <div class="change_icon">
+          <i class="fas fa-sun fa-2x"></i>
+        </div>
+      </div>
+      <div class="change_circle"></div>
+    </div>
+
     <div class="login_container">
       <!-- Login Header -->
       <div class="login_header">
@@ -62,7 +74,7 @@
         <!-- password_find & Join -->
         <section name="login_find" id="login_Join">
           <a class="join_btn" href="#">비밀번호 찾기</a>
-          <a class="join_btn" href="#">회원가입</a>
+          <a class="join_btn" href="join.html">회원가입</a>
         </section>
       </form>
 
@@ -103,5 +115,6 @@
 
     <!-- JavaScript -->
     <script src="js/loginAlert.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>

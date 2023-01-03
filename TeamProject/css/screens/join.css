@@ -119,10 +119,42 @@
   margin-top: 50px;
   margin-bottom: -50px;
   font-size: 19px;
+  font-weight: normal;
   background-color: var(--main-color);
-  transition: 0.3s;
+  transition: all 1s ease-in-out;
 }
 
 .member_join_group .member_join_btn:hover {
   background-color: var(--main-hover-color);
+  color: red;
+}
+
+#pwd {
+  transition: all 0.5s ease-in-out;
+}
+
+.pwd_text {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.pwd_suc,
+.repwd_suc,
+.nick_success_alert,
+.email_suc,
+.all_mis {
+  color: blue;
+  display: none;
+}
+
+.pwd_mis,
+.repwd_mis,
+.en_nick_alert,
+.kr_nick_alert,
+.email_mis,
+.yy_mis,
+.mm_mis,
+.dd_mis {
+  color: red;
+  display: none;
 }
