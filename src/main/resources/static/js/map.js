@@ -21,117 +21,66 @@ $(function () {
 
 
 
-    $(document).ready(function () {
+    // $(document).ready(function () {
 
-        let regionCodes = [];
-        let tradeDatas = {};
+    //     let regionCodes = [];
 
-        for (let i = 0; i < 22; i++) {
-            $.ajax({
-                type: "post",
-                url: "http://apis.data.go.kr/1741000/StanReginCd/getStanReginCdList?"
-                    + "ServiceKey=t6FF%2FNmZ7E6CgombvVgPJl7z0Yv5oDesGF%2Bm78Hv%2BT5IMNGTDRd53t0wkPd9%2FoEx7X522aovCygHADH31fbWTg%3D%3D"
-                    + "&type=json"
-                    + "&pageNo=" + i
-                    + "&numOfRows=1000"
-                    + "&flag=Y",
-            }).done(function (data) {
-                JSON.parse(data).StanReginCd[1].row.forEach(element => {
-                    let regionCode = element.region_cd.substr(0, 5);
-                    if (regionCodes.indexOf(regionCode) == -1) {
-                        regionCodes.push(regionCode);
-                    }
-                });
-                if (i == 21) {
-                    console.log(regionCodes[0]);
-                    aptTradeSearch(regionCodes[0], 202201, 202212);
-                }
-            });
-        }
+    //     for (let i = 0; i < 22; i++) {
+    //         $.ajax({
+    //             type: "post",
+    //             url: "http://apis.data.go.kr/1741000/StanReginCd/getStanReginCdList?"
+    //                 + "ServiceKey=t6FF%2FNmZ7E6CgombvVgPJl7z0Yv5oDesGF%2Bm78Hv%2BT5IMNGTDRd53t0wkPd9%2FoEx7X522aovCygHADH31fbWTg%3D%3D"
+    //                 + "&type=json"
+    //                 + "&pageNo=" + i
+    //                 + "&numOfRows=1000"
+    //                 + "&flag=Y",
+    //         }).done(function (data) {
+    //             JSON.parse(data).StanReginCd[1].row.forEach(element => {
+    //                 let regionCode = element.region_cd.substr(0, 5);
+    //                 if (regionCodes.indexOf(regionCode) == -1) {
+    //                     regionCodes.push(regionCode);
+    //                 }
+    //             });
+    //             if (i == 21) {
+    //                 regionCodes.forEach(regionCode => aptTradeSearch(regionCode, 202212, 202212));
+    //             }
+    //         });
+    //     }
 
 
-    });
+    // });
     
 
-    function aptTradeSearch(_regionCode, startDate, endDate) {
-        for (let i = startDate; i < endDate + 1; i++) {
-            let params = {
-                LAWD_CD: _regionCode,
-                DEAL_YMD: i,
-                serviceKey: "t6FF%2FNmZ7E6CgombvVgPJl7z0Yv5oDesGF%2Bm78Hv%2BT5IMNGTDRd53t0wkPd9%2FoEx7X522aovCygHADH31fbWTg%3D%3D"
-            }
-            $.ajax({
-                type: "post",
-                url: "/map/trade-search",
-                data: params,
-                dataType: "json"
-            }).done(function (data) {
-              console.log(data);
-            });
-        }
-    }
+    // function aptTradeSearch(_regionCode, startDate, endDate) {
+    //     for (let i = startDate; i < endDate + 1; i++) {
+    //         let params = {
+    //             LAWD_CD: _regionCode,
+    //             DEAL_YMD: i,
+    //             serviceKey: "t6FF%2FNmZ7E6CgombvVgPJl7z0Yv5oDesGF%2Bm78Hv%2BT5IMNGTDRd53t0wkPd9%2FoEx7X522aovCygHADH31fbWTg%3D%3D"
+    //         }
+    //         $.ajax({
+    //             type: "post",
+    //             url: "/map/trade-search",
+    //             data: params,
+    //             dataType: "json"
+    //         }).done(function (data) {
+    //           console.log(data);
+    //         });
+    //     }
+    // }
 
-
-
-
-    var container = document.getElementById('map');
     var options = {
         center: new kakao.maps.LatLng(37.5338259242698, 126.896882129276),
         level: 4
     };
-
-    var map = new kakao.maps.Map(container, options);
-
-    var mapTypeControl = new kakao.maps.MapTypeControl();
-    var zoomControl = new kakao.maps.ZoomControl();
-    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-
-
-    var geocoder = new kakao.maps.services.Geocoder();
-
-    let tradeDatas = [
-        {
-            address: '서울특별시 영등포구 선유동2로 57',
-            price: '12억'
-        }, {
-            address:'서울 영등포구 당산로47길 11',
-            price: '18억'
-        }, {
-            address: '서울 영등포구 당산로49길 14',
-            price: '19억'
-        }, {
-            address: '서울 영등포구 영신로 247',
-            price: '8억'
-        }, {
-            address: '서울 영등포구 양평로 8',
-            price: '11억'
-        }, {
-            address: '서울 영등포구 양평로 68',
-            price: '28억'
-        }, {
-            address: '서울 영등포구 국회대로34길',
-            price: '17억'
-        }, {
-            address: '서울 영등포구 당산로31길 20',
-            price: '6억'
-        }, {
-            address: '서울 영등포구 당산로47길 14',
-            price: '14억'
-        }, {
-            address: '서울 영등포구 당산로 244',
-            price: '22억'
-        }, {
-            address: '서울 영등포구 당산로45길 1',
-            price: '26억'
-        }
-    ]
+    var map = new kakao.maps.Map(document.getElementById('map'), options);
+    map.addControl(new kakao.maps.MapTypeControl(), kakao.maps.ControlPosition.TOPRIGHT);
+    map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
 
     var clusterer = new kakao.maps.MarkerClusterer({
         map: map,
         averageCenter: true,
-        minLevel: 6,
+        minLevel: 14,
         calculator: [3, 4],
         styles: [
             {
@@ -173,6 +122,10 @@ $(function () {
         ]
     });
 
+    const firstFind = fetch("/find-data/first")
+        .then(res => res.json());
+
+    var geocoder = new kakao.maps.services.Geocoder();
 
     const addressSearch = tradeData => {
         return new Promise((resolve, reject) => {
@@ -189,29 +142,35 @@ $(function () {
     // async-await
     (async () => {
         try {
-            const positions = [];
-    
-            for(const tradeData of tradeDatas) {
-                const result = await addressSearch(tradeData);
-                positions.push(result)
-            }
-    
-            var markers = positions.map(function(position) {
-                return new kakao.maps.Marker({
-                    position : new kakao.maps.LatLng(position.lat, position.lng),
-                    opacity: 1
-                });
-            }); 
-            markers.forEach(marker => marker.setOpacity(0));
-            clusterer.addMarkers(markers);
-    
-            var customOverlaies = positions.map(function(position) {
-                return new kakao.maps.CustomOverlay({
-                position: new kakao.maps.LatLng(position.lat, position.lng),
-                content: '<div class ="custom-overlay">'+position.price+'</div>'   
-                });
-            });
-            customOverlaies.forEach(CustomOverlay => CustomOverlay.setMap(map));
+            let firstFindData = await firstFind;
+            console.log(firstFindData);
+
+            // let tradeDataList = [{address: "", price: ""}];
+            // const positions = [];
+            //
+            //
+            //
+            // for(const tradeData of tradeDataList) {
+            //     const result = await addressSearch(tradeData);
+            //     positions.push(result)
+            // }
+            //
+            // var markers = positions.map(function(position) {
+            //     return new kakao.maps.Marker({
+            //         position : new kakao.maps.LatLng(position.lat, position.lng),
+            //         opacity: 1
+            //     });
+            // });
+            // markers.forEach(marker => marker.setOpacity(0));
+            // clusterer.addMarkers(markers);
+            //
+            // var customOverlaies = positions.map(function(position) {
+            //     return new kakao.maps.CustomOverlay({
+            //     position: new kakao.maps.LatLng(position.lat, position.lng),
+            //     content: '<div class ="custom-overlay">'+position.price+'</div>'
+            //     });
+            // });
+            // customOverlaies.forEach(CustomOverlay => CustomOverlay.setMap(map));
 
         } catch (e) {
             console.log(e);
