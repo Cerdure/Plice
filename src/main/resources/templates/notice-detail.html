@@ -10,29 +10,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
-  <link href="../static/bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/" rel="stylesheet">
+  <link href="/bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
-  <link href="../static/css/notice-detail.css" rel="stylesheet">
-  <script src="../static/js/notice-detail.js"></script>
+  <link href="/css/notice-detail.css" rel="stylesheet">
+  <script src="/js/notice-detail.js"></script>
 
   <title>Plice | 커뮤니티</title>
 </head>
 
 <body>
   <header>
-    <div class="logo-wrapper" onclick="location.href='../templates/home.html'">
-      <img src="../static/img/logo/plice.png">
+    <div class="logo-wrapper" onclick="location.href='/'">
+      <img src="/img/logo/plice.png">
       <div class="text">PLICE</div>
     </div>
-    <span class="map" onclick="location.href='../templates/map.html'">지도</span>
-    <span class="chat" onclick="location.href='../templates/chat.html'">채팅</span>
-    <span class="post" onclick="location.href='../templates/post.html'">이야기</span>
-    <span class="contents" onclick="location.href='../templates/contents.html'">컨텐츠</span>
-    <span class="my-page" onclick="location.href='../templates/my-page.html'">마이페이지</span>
+    <span class="map" onclick="location.href='/map'">지도</span>
+    <span class="chat" onclick="location.href='/chat'">채팅</span>
+    <span class="post" onclick="location.href='/post'">이야기</span>
+    <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
+    <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
     <div class="login-wrapper">
-      <div class="login-btn" onclick="location.href='../templates/login.html'">로그인</div>
+      <div class="login-btn" onclick="location.href='/login'">로그인</div>
     </div>
   </header>
   <div class="top-space"></div>
@@ -43,7 +43,7 @@
     <form action="" method="post" class="modify-form">
       <div class="head">
         <span class="text">공지 수정</span>
-        <img class="close" src="../static/img/icon/close.png">
+        <img class="close" src="/img/icon/close.png">
       </div>
       <div class="body">
         <div class="title-wrapper">
@@ -84,7 +84,7 @@
       <div class="notice-title">공지사항</div>
     </div>
 
-    <div class="tag-wrapper story-tag-wrapper" onclick="location.href='../templates/post.html'">
+    <div class="tag-wrapper story-tag-wrapper" onclick="location.href='/post'">
       <div class="tag story-tag"></div>
       <div class="text">이야기</div>
     </div>
@@ -99,16 +99,16 @@
       <div class="story-frame">
         <div class="head">
           <div class="back">
-            <img class="icon" src="../static/img/icon/chevron-left.svg">
-            <div class="text" onclick="location.href='../templates/post.html'">목록으로</div>
+            <img class="icon" src="/img/icon/chevron-left.svg">
+            <div class="text" onclick="location.href='/post'">목록으로</div>
           </div>
           <div class="btn-wrapper">
             <div class="modify-btn btn">
-              <img src="../static/img/icon/pencil-square.svg">
+              <img src="/img/icon/pencil-square.svg">
               <div class="text">수정</div>
             </div>
             <div class="delete-btn btn">
-              <img src="../static/img/icon/x-square.svg">
+              <img src="/img/icon/x-square.svg">
               <div class="text">삭제</div>
             </div>
           </div>
@@ -135,7 +135,7 @@
             <div class="next-detail">
               <span class="next">다음글</span>
               <input class="inquireId" th:value="${nextInquire.id}" type="hidden">
-              <img class="icon" src="../static/img/icon/chevron-up.svg">
+              <img class="icon" src="/img/icon/chevron-up.svg">
               <a class="title" th:if="${nextInquire.id==null}">다음글이 없습니다.</a>
               <a class="title" th:if="${nextInquire.id!=null}" onclick="inquireDetail(this)"
                 th:text="${nextInquire.title}"></a>
@@ -144,14 +144,14 @@
             <div class="prev-detail">
               <span class="prev">이전글</span>
               <input class="inquireId" th:value="${prevInquire.id}" type="hidden">
-              <img class="icon" src="../static/img/icon/chevron-up.svg">
+              <img class="icon" src="/img/icon/chevron-up.svg">
               <a class="title" th:if="${prevInquire.id==null}">이전글이 없습니다.</a>
               <a class="title" th:if="${prevInquire.id!=null}" onclick="inquireDetail(this)"
                 th:text="${prevInquire.title}"></a>
             </div>
           </div>
 
-          <div class="back-btn" onclick="location.href='../templates/post.html'">목록으로</div>
+          <div class="back-btn" onclick="location.href='/post'">목록으로</div>
         </div>
       </div>
 
@@ -172,11 +172,11 @@
       PLICE, Inc. All rights reserved.
     </p>
     <div class="icons">
-      <img src="../static/img/icon/instagram_mono.png">
-      <img src="../static/img/icon/facebook_mono.png">
-      <img src="../static/img/icon/blog_mono.png">
-      <img src="../static/img/icon/naverpost_mono.png">
-      <img src="../static/img/icon/youtube_mono.png">
+      <img src="/img/icon/instagram_mono.png">
+      <img src="/img/icon/facebook_mono.png">
+      <img src="/img/icon/blog_mono.png">
+      <img src="/img/icon/naverpost_mono.png">
+      <img src="/img/icon/youtube_mono.png">
     </div>
   </footer>
 </body>
