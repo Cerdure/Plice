@@ -1,8 +1,8 @@
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: scott
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/plice?serverTimezone=Asia/Seoul
+    username: root
     password: 1234
 
   jpa:
@@ -13,9 +13,6 @@ spring:
         show_sql: true
         format_sql: true
         default_batch_fetch_size: 1000
-    database: oracle
-    database-platform: org.hibernate.dialect.Oracle10gDialect
-
 
   data:
     web:
@@ -42,4 +39,4 @@ server:
   servlet:
     session:
       tracking-modes: cookie
-  port: 8081
+  port: 8080

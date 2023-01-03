@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/img/**",
             "/css/**",
             "/js/**",
-            "/upload-img/**",
+            "/upload-img/**"
     };
 
     @Bean
@@ -50,7 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
 
                     // 로그인 필요 없는 페이지들 여기에 추가
-                    .antMatchers("/", "/login/**", "/join/**").permitAll()
+                    .antMatchers("/", "/login/**", "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**",
+                            "/map/**", "/markers/**", "/dapi.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
+                            "/chat/**", "/post/**", "/story-detail/**", "/notice-detail/**",
+                            "/contents/**", "/my-page/**").permitAll()
 
                     .antMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated()
