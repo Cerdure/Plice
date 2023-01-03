@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9618200a7e0720f89b127c7968c0bb75&libraries=services,clusterer"></script>
+
+    <link href="/css/map.css" rel="stylesheet">
+    <script src="/js/map.js"></script>
+
+    <title>Plice | 지도</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo-wrapper" onclick="location.href='/'">
+            <img src="/img/logo/plice.png">
+            <div class="text">PLICE</div>
+        </div>
+        <span class="map" onclick="location.href='/map'">지도</span>
+        <span class="chat" onclick="location.href='/chat'">채팅</span>
+        <span class="post" onclick="location.href='/post'">이야기</span>
+        <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
+        <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
+        <div class="login-wrapper">
+            <div class="login-btn" onclick="location.href='/login'">로그인</div>
+        </div>
+    </header>
+
+    <div class="top-space"></div>
+
+    <form class="top-wrapper">
+        <div class="left-box">
+            <img class="icon" src="/img/icon/search-icon.svg">
+            <input class="search-input" type="text" placeholder="아파트, 지역으로 검색">
+            <img class="reset" src="/img/icon/x-circle.svg">
+        </div>
+        <div class="right-box">
+            <div class="left">
+                <select name="거래일자" class="date">
+                    <option value="">2022.12.25</option>
+                </select>
+                <select name="거래가" class="price">
+                    <option value="">5억 이상</option>
+                </select>
+                <select name="세대수" class="households">
+                    <option value="">1000세대 이상</option>
+                </select>
+                <select name="승인일자" class="use-date">
+                    <option value="">2018년 이후</option>
+                </select>
+            </div>
+            <div class="right">
+                <div class="reset-btn">초기화</div>
+            </div>
+        </div>
+    </form>
+
+    <div class="contents-warpper">
+        <div class="left-box">
+            <div class="trend-wrapper">
+                <img class="fold" src="/img/icon/chevron-down.svg">
+                <ul>
+                    <li>
+                        <div class="number">1</div>
+                        <div class="data">검색어1</div>
+                    </li>
+                    <li>
+                        <div class="number">2</div>
+                        <div class="data">검색어2</div>
+                    </li>
+                    <li>
+                        <div class="number">3</div>
+                        <div class="data">검색어3</div>
+                    </li>
+                    <li>
+                        <div class="number">4</div>
+                        <div class="data">검색어4</div>
+                    </li>
+                    <li>
+                        <div class="number">5</div>
+                        <div class="data">검색어5</div>
+                    </li>
+                    <li>
+                        <div class="number">6</div>
+                        <div class="data">검색어6</div>
+                    </li>
+                    <li>
+                        <div class="number">7</div>
+                        <div class="data">검색어7</div>
+                    </li>
+                    <li>
+                        <div class="number">8</div>
+                        <div class="data">검색어8</div>
+                    </li>
+                    <li>
+                        <div class="number">9</div>
+                        <div class="data">검색어9</div>
+                    </li>
+                    <li>
+                        <div class="number">10</div>
+                        <div class="data">검색어10</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="date-chart-back">
+                <div class="date-wrapper">
+                    <div>
+                        <span class="data">2022년 12월</span>
+                        <span class="text">기준</span>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <div class="chart">
+                        <span class="text">거래수</span>
+                        <span class="data">523</span>
+                        <span class="unit">건</span>
+                    </div>
+                    <div class="chart">
+                        <span class="text">최저 거래가</span>
+                        <span class="data">71,235,000</span>
+                        <span class="unit">원</span>
+                    </div>
+                    <div class="chart">
+                        <span class="text">최고 거래가</span>
+                        <span class="data">2,378,467,000</span>
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-wrapper">
+
+                <div class="item">
+                    <div class="left">
+                        <img src="/img/icon/building-fill.svg">
+                    </div>
+                    <div class="right">
+                        <div class="detail">
+                            <span class="text">상세정보</span>
+                            <img src="/img/icon/chevron-right.svg">
+                        </div>
+                        <div class="name">LH강남힐스테이트아파트</div>
+                        <div class="address">서울특별시 강남구 자곡로3길 21</div>
+                        <div class="data-wrapper">
+                            <span class="text">거래가</span>
+                            <span class="data">1,266,850,000</span>
+                            <span class="unit">원</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">세대수</span>
+                            <span class="data">1339</span>
+                            <span class="unit">세대</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">사용승인일</span>
+                            <span class="data">2015년 6월 2일</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="left">
+                        <img src="/img/icon/building-fill.svg">
+                    </div>
+                    <div class="right">
+                        <div class="detail">
+                            <span class="text">상세정보</span>
+                            <img src="/img/icon/chevron-right.svg">
+                        </div>
+                        <div class="name">LH강남힐스테이트아파트</div>
+                        <div class="address">서울특별시 강남구 자곡로3길 21</div>
+                        <div class="data-wrapper">
+                            <span class="text">거래가</span>
+                            <span class="data">1,266,850,000</span>
+                            <span class="unit">원</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">세대수</span>
+                            <span class="data">1339</span>
+                            <span class="unit">세대</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">사용승인일</span>
+                            <span class="data">2015년 6월 2일</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="left">
+                        <img src="/img/icon/building-fill.svg">
+                    </div>
+                    <div class="right">
+                        <div class="detail">
+                            <span class="text">상세정보</span>
+                            <img src="/img/icon/chevron-right.svg">
+                        </div>
+                        <div class="name">LH강남힐스테이트아파트</div>
+                        <div class="address">서울특별시 강남구 자곡로3길 21</div>
+                        <div class="data-wrapper">
+                            <span class="text">거래가</span>
+                            <span class="data">1,266,850,000</span>
+                            <span class="unit">원</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">세대수</span>
+                            <span class="data">1339</span>
+                            <span class="unit">세대</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">사용승인일</span>
+                            <span class="data">2015년 6월 2일</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="left">
+                        <img src="/img/icon/building-fill.svg">
+                    </div>
+                    <div class="right">
+                        <div class="detail">
+                            <span class="text">상세정보</span>
+                            <img src="/img/icon/chevron-right.svg">
+                        </div>
+                        <div class="name">LH강남힐스테이트아파트</div>
+                        <div class="address">서울특별시 강남구 자곡로3길 21</div>
+                        <div class="data-wrapper">
+                            <span class="text">거래가</span>
+                            <span class="data">1,266,850,000</span>
+                            <span class="unit">원</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">세대수</span>
+                            <span class="data">1339</span>
+                            <span class="unit">세대</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">사용승인일</span>
+                            <span class="data">2015년 6월 2일</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="left">
+                        <img src="/img/icon/building-fill.svg">
+                    </div>
+                    <div class="right">
+                        <div class="detail">
+                            <span class="text">상세정보</span>
+                            <img src="/img/icon/chevron-right.svg">
+                        </div>
+                        <div class="name">LH강남힐스테이트아파트</div>
+                        <div class="address">서울특별시 강남구 자곡로3길 21</div>
+                        <div class="data-wrapper">
+                            <span class="text">거래가</span>
+                            <span class="data">1,266,850,000</span>
+                            <span class="unit">원</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">세대수</span>
+                            <span class="data">1339</span>
+                            <span class="unit">세대</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">사용승인일</span>
+                            <span class="data">2015년 6월 2일</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="left">
+                        <img src="/img/icon/building-fill.svg">
+                    </div>
+                    <div class="right">
+                        <div class="detail">
+                            <span class="text">상세정보</span>
+                            <img src="/img/icon/chevron-right.svg">
+                        </div>
+                        <div class="name">LH강남힐스테이트아파트</div>
+                        <div class="address">서울특별시 강남구 자곡로3길 21</div>
+                        <div class="data-wrapper">
+                            <span class="text">거래가</span>
+                            <span class="data">1,266,850,000</span>
+                            <span class="unit">원</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">세대수</span>
+                            <span class="data">1339</span>
+                            <span class="unit">세대</span>
+                        </div>
+                        <div class="data-wrapper">
+                            <span class="text">사용승인일</span>
+                            <span class="data">2015년 6월 2일</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-box">
+            <div id="map"></div>
+        </div>
+    </div>
+
+
+    <div class="apart-detail-wrapper">
+        <div class="inner-wrapper">
+            <div class="apart-detail">
+                <div class="top">
+                    <img class="close-btn" src="/img/icon/close.png">
+                    <span class="title">아파트 상세정보</span>
+                </div>
+                <div class="body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            (주)플라이스<br>
+            사업자 번호: 000-00-00000&nbsp&nbsp&nbsp&nbsp통신판매업신고번호 : 제2023-서울 영등포-00000호<br>
+            주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩<br><br>
+
+            고객센터 : 02-0000-0000 | 평일 10:00 ~ 18:30, 점심시간 : 12:00 ~ 13:00 (토·일요일, 공휴일 휴무)<br>
+            팩스 : 02-000-0000&nbsp&nbsp&nbsp&nbsp프로모션/사업 제휴문의 : cerdure@gmail.com<br>
+            PLICE, Inc. All rights reserved.
+        </p>
+        <div class="icons">
+            <img src="/img/icon/instagram_mono.png">
+            <img src="/img/icon/facebook_mono.png">
+            <img src="/img/icon/blog_mono.png">
+            <img src="/img/icon/naverpost_mono.png">
+            <img src="/img/icon/youtube_mono.png">
+        </div>
+    </footer>
+</body>
+
+</html>
