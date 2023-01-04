@@ -42,8 +42,4 @@ public class TradeDataDto {
         this.tradeType = tradeType;
         this.tradeYearMonth = tradeYearMonth;
     }
-
-    public void refineTradeYearMonth(){
-        this.tradeYearMonth = this.tradeYearMonth.substring(0,6);
-    }
 }
