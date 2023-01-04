@@ -13,15 +13,15 @@ public class SurveyElementDto {
     private Survey survey;
     private Member member;
     private String content;
-    private Integer select;
+    private Integer selects;
 
     @Builder
-    public SurveyElementDto(Long id, Survey survey, Member member, String content, Integer select) {
+    public SurveyElementDto(Long id, Survey survey, Member member, String content, Integer selects) {
         this.id = id;
         this.survey = survey;
         this.member = member;
         this.content = content;
-        this.select = select;
+        this.selects = selects;
     }
 
     public SurveyElement toEntity(){
@@ -30,7 +30,7 @@ public class SurveyElementDto {
                 .survey(this.survey)
                 .member(this.member)
                 .content(this.content)
-                .select(this.select)
+                .selects(this.selects)
                 .build();
     }
 }

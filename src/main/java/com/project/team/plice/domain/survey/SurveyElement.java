@@ -25,14 +25,14 @@ public class SurveyElement {
 
     private String content;
 
-    private Integer select;
+    private Integer selects;
 
     @Builder
-    public SurveyElement(Long id, Survey survey, Member member, String content, Integer select) {
+    public SurveyElement(Long id, Survey survey, Member member, String content, Integer selects) {
         this.id = id;
         this.survey = survey;
         this.member = member;
         this.content = content;
-        this.select = select;
+        this.selects = selects;
     }
 }
