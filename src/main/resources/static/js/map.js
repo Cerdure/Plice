@@ -71,7 +71,7 @@ $(function () {
 
     var options = {
         center: new kakao.maps.LatLng(37.5338259242698, 126.896882129276),
-        level: 4
+        level: 3
     };
     var map = new kakao.maps.Map(document.getElementById('map'), options);
     map.addControl(new kakao.maps.MapTypeControl(), kakao.maps.ControlPosition.TOPRIGHT);
@@ -80,7 +80,7 @@ $(function () {
     var clusterer = new kakao.maps.MarkerClusterer({
         map: map,
         averageCenter: true,
-        minLevel: 14,
+        minLevel: 5,
         calculator: [3, 4],
         styles: [
             {
@@ -122,55 +122,49 @@ $(function () {
         ]
     });
 
-    const firstFind = fetch("/find-data/first")
+    const firstFind = fetch("/find-data"
+        + "?neLng=" + map.getBounds().getNorthEast().getLng() + "&neLat=" + map.getBounds().getNorthEast().getLat()
+        + "&swLng=" + map.getBounds().getSouthWest().getLng() + "&swLat=" + map.getBounds().getSouthWest().getLat())
         .then(res => res.json());
 
     var geocoder = new kakao.maps.services.Geocoder();
 
-    const addressSearch = tradeData => {
-        return new Promise((resolve, reject) => {
-            geocoder.addressSearch(tradeData.address, function(result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                    resolve({"lat": result[0].y, "lng": result[0].x, "price": tradeData.price});
-                } else {
-                    reject(status);
-                }
-            });
-        });
-    };
+    // const addressSearch = tradeData => {
+    //     return new Promise((resolve, reject) => {
+    //         geocoder.addressSearch(tradeData.address, function(result, status) {
+    //             if (status === kakao.maps.services.Status.OK) {
+    //                 console.log(result[0].y,  result[0].x);
+    //                 resolve({"lat": result[0].y, "lng": result[0].x, "price": tradeData.price});
+    //             } else {
+    //                 reject(status);
+    //             }
+    //         });
+    //     });
+    // };
     
     // async-await
     (async () => {
         try {
-            let firstFindData = await firstFind;
-            console.log(firstFindData);
-
-            // let tradeDataList = [{address: "", price: ""}];
-            // const positions = [];
-            //
-            //
-            //
-            // for(const tradeData of tradeDataList) {
-            //     const result = await addressSearch(tradeData);
-            //     positions.push(result)
-            // }
-            //
-            // var markers = positions.map(function(position) {
-            //     return new kakao.maps.Marker({
-            //         position : new kakao.maps.LatLng(position.lat, position.lng),
+            let firstFindDataList = await firstFind;
+            console.log(firstFindDataList);
+            console.log("southWest lat lng " + map.getBounds().getSouthWest().getLat() + " " + map.getBounds().getSouthWest().getLng());
+            console.log("northEast lat lng " + map.getBounds().getNorthEast().getLat() + " " + map.getBounds().getNorthEast().getLng());
+            const positions = [];
+            let markers = [];
+            let customOverlaies = [];
+            // for(const tradeData of firstFindDataList) {
+            //     markers.push(new kakao.maps.Marker({
+            //         position : new kakao.maps.LatLng(tradeData.y, tradeData.x),
             //         opacity: 1
-            //     });
-            // });
-            // markers.forEach(marker => marker.setOpacity(0));
-            // clusterer.addMarkers(markers);
-            //
-            // var customOverlaies = positions.map(function(position) {
-            //     return new kakao.maps.CustomOverlay({
-            //     position: new kakao.maps.LatLng(position.lat, position.lng),
-            //     content: '<div class ="custom-overlay">'+position.price+'</div>'
-            //     });
-            // });
-            // customOverlaies.forEach(CustomOverlay => CustomOverlay.setMap(map));
+            //     }))
+            //     customOverlaies.push(new kakao.maps.CustomOverlay({
+            //         position: new kakao.maps.LatLng(tradeData.y, tradeData.x),
+            //         content: '<div class ="custom-overlay">'+tradeData.price+'</div>'
+            //     }))
+            // }
+            markers.forEach(marker => marker.setOpacity(0));
+            clusterer.addMarkers(markers);
+            customOverlaies.forEach(CustomOverlay => CustomOverlay.setMap(map));
 
         } catch (e) {
             console.log(e);

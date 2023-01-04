@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TradeDataRepository extends JpaRepository<TradeData, Long> {
-    public List<TradeData> findByTradeYearMonthBetween(String startYearMonth, String endYearMonth);
+    public List<TradeData> findByLngBetweenAndLatBetween(String startLng, String endLng, String startLat, String endLat);
 }

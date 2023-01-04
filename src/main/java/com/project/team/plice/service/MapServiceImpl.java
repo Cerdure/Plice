@@ -17,7 +17,7 @@ public class MapServiceImpl implements MapService {
     private final TradeDataRepository tradeDataRepository;
 
     @Override
-    public List<TradeData> tradeDataBetweenYearMonth(String startYearMonth, String endYearMonth) {
-        return tradeDataRepository.findByTradeYearMonthBetween(startYearMonth, String.valueOf(Integer.parseInt(endYearMonth)+1));
+    public List<TradeData> findTradeDataInBounds(String startLng, String endLng, String startLat, String endLat) {
+        return tradeDataRepository.findByLngBetweenAndLatBetween(startLng, endLng, startLat, endLat);
     }
 }

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MapService {
 
-    public List<TradeData> tradeDataBetweenYearMonth(String startYearMonth, String endYearMonth);
+    public List<TradeData> findTradeDataInBounds(String startLng, String endLng, String startLat, String endLat);
 
 }

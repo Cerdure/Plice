@@ -17,34 +17,38 @@ public class TradeData {
     @Id
     @Column(name = "tradeData_id")
     private Long id;
-    private String siGunGu;
-    private String mainNum;
-    private String subNum;
-    private String name;
+    private String lng;
+    private String lat;
+    private String address;
     private String area;
-    private String tradeYearMonth;
-    private String tradeDay;
-    private String price;
-    private String floor;
     private String buildYear;
-    private String roadName;
+    private String floor;
+    private String mainNum;
+    private String name;
+    private String price;
+    private String subNum;
+    private String tradeDay;
     private String tradeType;
+    private String tradeYearMonth;
+
+
 
     public TradeDataDto toDto(){
         return TradeDataDto.builder()
                 .id(this.id)
-                .siGunGu(this.siGunGu)
-                .mainNum(this.mainNum)
-                .subNum(this.subNum)
-                .name(this.name)
+                .lng(this.lng)
+                .lat(this.lat)
+                .address(this.address)
                 .area(this.area)
-                .tradeYearMonth(this.tradeYearMonth)
-                .tradeDay(this.tradeDay)
-                .price(this.price)
-                .floor(this.floor)
                 .buildYear(this.buildYear)
-                .roadName(this.roadName)
+                .floor(this.floor)
+                .mainNum(this.mainNum)
+                .name(this.name)
+                .price(this.price)
+                .subNum(this.subNum)
+                .tradeDay(this.tradeDay)
                 .tradeType(this.tradeType)
+                .tradeYearMonth(this.tradeYearMonth)
                 .build();
     }
 }
