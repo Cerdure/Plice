@@ -2,10 +2,7 @@ package com.project.team.plice.domain;
 
 
 import com.project.team.plice.dto.TradeDataDto;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,21 +14,37 @@ public class TradeData {
     @Id
     @Column(name = "tradeData_id")
     private Long id;
-    private String lng;
-    private String lat;
+    private double lng;
+    private double lat;
     private String address;
-    private String area;
-    private String buildYear;
-    private String floor;
-    private String mainNum;
+    private float area;
+    private Integer buildYear;
+    private Integer floor;
+    private Integer mainNum;
     private String name;
-    private String price;
-    private String subNum;
+    private Integer price;
+    private Integer subNum;
     private String tradeDay;
     private String tradeType;
     private String tradeYearMonth;
 
-
+    @Builder
+    public TradeData(Long id, double lng, double lat, String address, float area, Integer buildYear, Integer floor, Integer mainNum, String name, Integer price, Integer subNum, String tradeDay, String tradeType, String tradeYearMonth) {
+        this.id = id;
+        this.lng = lng;
+        this.lat = lat;
+        this.address = address;
+        this.area = area;
+        this.buildYear = buildYear;
+        this.floor = floor;
+        this.mainNum = mainNum;
+        this.name = name;
+        this.price = price;
+        this.subNum = subNum;
+        this.tradeDay = tradeDay;
+        this.tradeType = tradeType;
+        this.tradeYearMonth = tradeYearMonth;
+    }
 
     public TradeDataDto toDto(){
         return TradeDataDto.builder()

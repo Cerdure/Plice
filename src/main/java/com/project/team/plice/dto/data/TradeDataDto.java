@@ -6,16 +6,16 @@ import lombok.Data;
 @Data
 public class TradeDataDto {
     private Long id;
-    private String lng;
-    private String lat;
+    private double lng;
+    private double lat;
     private String address;
-    private String area;
-    private String buildYear;
-    private String floor;
-    private String mainNum;
+    private float area;
+    private Integer buildYear;
+    private Integer floor;
+    private Integer mainNum;
     private String name;
-    private String price;
-    private String subNum;
+    private Integer price;
+    private Integer subNum;
     private String tradeDay;
     private String tradeType;
     private String tradeYearMonth;
@@ -26,7 +26,7 @@ public class TradeDataDto {
     private String northEastLng;
 
     @Builder
-    public TradeDataDto(Long id, String lng, String lat, String address, String area, String buildYear, String floor, String mainNum, String name, String price, String subNum, String tradeDay, String tradeType, String tradeYearMonth) {
+    public TradeDataDto(Long id, double lng, double lat, String address, float area, Integer buildYear, Integer floor, Integer mainNum, String name, Integer price, Integer subNum, String tradeDay, String tradeType, String tradeYearMonth, String southWestLat, String southWestLng, String northEastLat, String northEastLng) {
         this.id = id;
         this.lng = lng;
         this.lat = lat;
@@ -41,5 +41,9 @@ public class TradeDataDto {
         this.tradeDay = tradeDay;
         this.tradeType = tradeType;
         this.tradeYearMonth = tradeYearMonth;
+        this.southWestLat = southWestLat;
+        this.southWestLng = southWestLng;
+        this.northEastLat = northEastLat;
+        this.northEastLng = northEastLng;
     }
 }
