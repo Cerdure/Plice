@@ -1,7 +1,7 @@
-package com.project.team.plice.domain;
+package com.project.team.plice.domain.data;
 
 
-import com.project.team.plice.dto.TradeDataDto;
+import com.project.team.plice.dto.data.TradeDataDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class TradeData {
 
     @Id
-    @Column(name = "tradeData_id")
+    @Column(name = "trade_data_id")
     private Long id;
     private double lng;
     private double lat;

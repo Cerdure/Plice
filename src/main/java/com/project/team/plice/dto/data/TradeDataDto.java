@@ -1,4 +1,4 @@
-package com.project.team.plice.dto;
+package com.project.team.plice.dto.data;
 
 import lombok.Builder;
 import lombok.Data;

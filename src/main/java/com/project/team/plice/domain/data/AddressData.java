@@ -1,51 +1,34 @@
-package com.project.team.plice.domain;
+package com.project.team.plice.domain.data;
 
+import com.project.team.plice.dto.data.AddressDataDto;
 import lombok.*;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class LegalCode {
+public class AddressData {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "legalCode_id")
+    @Id @Column(name = "address_data_id")
     private Long id;
-
-    private Integer legalCode;
-
-    private String siDo;
-
-    private String siGunGu;
-
-    private String eupMyeonDong;
-
-    private String dongLi;
-
-    private LocalDateTime regDate;
-
-    private LocalDateTime delDate;
-
-    private Integer areaCode;
-
-    @PrePersist
-    public void prePersist() {
-        this.regDate = this.regDate == null ? LocalDateTime.now() : this.regDate;
-        this.areaCode = this.areaCode == null ? this.legalCode/100000 : this.areaCode;
-    }
+    private String address;
+    private String legalCode;
 
     @Builder
-    public LegalCode(Long id, Integer legalCode, String siDo, String siGunGu, String eupMyeonDong, String dongLi, LocalDateTime regDate, LocalDateTime delDate, Integer areaCode) {
+    public AddressData(Long id, String address, String legalCode) {
         this.id = id;
+        this.address = address;
         this.legalCode = legalCode;
-        this.siDo = siDo;
-        this.siGunGu = siGunGu;
-        this.eupMyeonDong = eupMyeonDong;
-        this.dongLi = dongLi;
-        this.regDate = regDate;
-        this.delDate = delDate;
-        this.areaCode = areaCode;
+    }
+
+    public AddressDataDto toDto(){
+        return AddressDataDto.builder()
+                .id(this.id)
+                .legalCode(this.legalCode)
+                .address(this.address)
+                .build();
     }
 }

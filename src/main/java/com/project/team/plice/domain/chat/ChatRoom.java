@@ -1,8 +1,6 @@
 package com.project.team.plice.domain.chat;
 
-import com.project.team.plice.domain.Apart;
-import com.project.team.plice.domain.inquire.Answer;
-import com.project.team.plice.domain.inquire.Inquire;
+import com.project.team.plice.domain.data.ApartData;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +18,7 @@ public class ChatRoom {
 
     @OneToOne
     @JoinColumn(name = "apart_id")
-    private Apart apart;
+    private ApartData apartData;
 
     @OneToMany(mappedBy = "chatRoom")
     private List<Chat> chats;
@@ -32,9 +30,9 @@ public class ChatRoom {
     private LocalDateTime regDate;
 
     @Builder
-    public ChatRoom(Long id, Apart apart, List<Chat> chats, Integer memberCount, Integer chatCount, LocalDateTime regDate) {
+    public ChatRoom(Long id, ApartData apartData, List<Chat> chats, Integer memberCount, Integer chatCount, LocalDateTime regDate) {
         this.id = id;
-        this.apart = apart;
+        this.apartData = apartData;
         this.chats = chats;
         this.memberCount = memberCount;
         this.chatCount = chatCount;

@@ -1,48 +1,40 @@
-package com.project.team.plice.dto;
+package com.project.team.plice.dto.data;
 
-import com.project.team.plice.domain.LegalCode;
+import com.project.team.plice.domain.data.AddressData;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class LegalCodeDto {
+public class AddressDataDto {
 
     private Long id;
-    private Integer legalCode;
-    private String siDo;
-    private String siGunGu;
-    private String eupMyeonDong;
-    private String dongLi;
-    private LocalDateTime regDate;
-    private LocalDateTime delDate;
-    private Integer areaCode;
+    private String legalCode;
+    private String address;
+    private String highlightAddress;
 
     @Builder
-    public LegalCodeDto(Long id, Integer legalCode, String siDo, String siGunGu, String eupMyeonDong, String dongLi, LocalDateTime regDate, LocalDateTime delDate, Integer areaCode) {
+    public AddressDataDto(Long id, String legalCode, String address) {
         this.id = id;
         this.legalCode = legalCode;
-        this.siDo = siDo;
-        this.siGunGu = siGunGu;
-        this.eupMyeonDong = eupMyeonDong;
-        this.dongLi = dongLi;
-        this.regDate = regDate;
-        this.delDate = delDate;
-        this.areaCode = areaCode;
+        this.address = address;
     }
 
-    public LegalCode toEntity(){
-        return LegalCode.builder()
+    public AddressData toEntity(){
+        return AddressData.builder()
                 .id(this.id)
                 .legalCode(this.legalCode)
-                .siDo(this.siDo)
-                .siGunGu(this.siGunGu)
-                .eupMyeonDong(this.eupMyeonDong)
-                .dongLi(this.dongLi)
-                .regDate(this.regDate)
-                .delDate(this.delDate)
-                .areaCode(this.areaCode)
+                .address(this.address)
                 .build();
+    }
+
+    public void coincidenceHighlight(String inputVal){
+        int startIndex = this.address.indexOf(inputVal);
+        int endIndex = startIndex + inputVal.length();
+        String coincidenceStr = "<strong>" + this.address.substring(startIndex, endIndex) + "</strong>";
+        String prevStr = this.address.substring(0, startIndex);
+        String nextStr = this.address.substring(endIndex);
+        this.highlightAddress = prevStr + coincidenceStr + nextStr;
     }
 }
