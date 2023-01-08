@@ -716,7 +716,7 @@ header .post {
 }
 
 .table-row {
-  width: calc(100%-80px);
+  width: calc(100% - 80px);
   height: 60px;
   display: grid;
   grid-template-columns: 1fr 5fr 1.5fr 1.5fr 1fr;
