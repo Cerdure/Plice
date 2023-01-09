@@ -1,37 +1,35 @@
 package com.project.team.plice.dto.chat;
 
-import com.project.team.plice.domain.data.ApartData;
 import com.project.team.plice.domain.chat.ChatRoom;
+import com.project.team.plice.domain.chat.MemberChatRoom;
+import com.project.team.plice.domain.data.ApartData;
+import com.project.team.plice.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-public class ChatRoomDto {
+public class MemberChatRoomDto {
 
-    private String id;
-    private ApartData apartData;
-    private Integer memberCount;
-    private Integer chatCount;
-    private LocalDateTime regDate;
+    private Long id;
+    private Member member;
+    private ChatRoom chatRoom;
 
     @Builder
-    public ChatRoomDto(String id, ApartData apartData, Integer memberCount, Integer chatCount, LocalDateTime regDate) {
+    public MemberChatRoomDto(Long id, Member member, ChatRoom chatRoom) {
         this.id = id;
-        this.apartData = apartData;
-        this.memberCount = memberCount;
-        this.chatCount = chatCount;
-        this.regDate = regDate;
+        this.member = member;
+        this.chatRoom = chatRoom;
     }
 
-    public ChatRoom toEntity(){
-        return ChatRoom.builder()
+    public MemberChatRoom toEntity(){
+        return MemberChatRoom.builder()
                 .id(this.id)
-                .apartData(this.apartData)
-                .memberCount(this.memberCount)
-                .chatCount(this.chatCount)
-                .regDate(this.regDate)
+                .member(this.member)
+                .chatRoom(this.chatRoom)
                 .build();
     }
 }

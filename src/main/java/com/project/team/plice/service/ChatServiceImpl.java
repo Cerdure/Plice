@@ -1,64 +1,49 @@
 package com.project.team.plice.service;
 
-import com.project.team.plice.domain.data.AddressData;
-import com.project.team.plice.domain.data.ApartData;
-import com.project.team.plice.domain.data.TradeData;
-import com.project.team.plice.dto.data.AddressDataDto;
-import com.project.team.plice.dto.data.ApartDataDto;
-import com.project.team.plice.repository.data.AddressDataRepository;
-import com.project.team.plice.repository.data.ApartDataRepository;
-import com.project.team.plice.repository.data.TradeDataRepository;
-import com.project.team.plice.service.interfaces.MapService;
+import com.project.team.plice.domain.chat.Chat;
+import com.project.team.plice.domain.chat.ChatMessage;
+import com.project.team.plice.domain.chat.ChatRoom;
+import com.project.team.plice.domain.chat.MemberChatRoom;
+import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.repository.chat.ChatRepository;
+import com.project.team.plice.repository.chat.ChatRoomRepository;
+import com.project.team.plice.repository.chat.MemberChatRoomRepository;
+import com.project.team.plice.repository.member.MemberRepository;
+import com.project.team.plice.service.interfaces.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MapServiceImpl implements MapService {
+public class ChatServiceImpl implements ChatService {
 
-    private final AddressDataRepository addressDataRepository;
-    private final ApartDataRepository apartDataRepository;
-    private final TradeDataRepository tradeDataRepository;
+    private final MemberRepository memberRepository;
+    private final MemberChatRoomRepository memberChatRoomRepository;
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatRepository chatRepository;
 
     @Override
-    public List<TradeData> findTradeData() {
-        return tradeDataRepository.findAll();
+    public List<ChatRoom> findChatRoomsByMember(Member member) {
+        return memberChatRoomRepository.findByMember(member).stream().map(e -> e.getChatRoom()).collect(Collectors.toList());
     }
 
     @Override
-    public List<TradeData> findTradeData(Double startLng, Double endLng, Double startLat, Double endLat) {
-        return tradeDataRepository.findByLngBetweenAndLatBetween(startLng,endLng,startLat,endLat);
+    public Chat chatSave(ChatMessage message) {
+        Chat chat = Chat.builder()
+                .chatRoom(chatRoomRepository.findById(message.getChatRoomId()).get())
+                .member(memberRepository.findByPhone(message.getPhone()).get())
+                .content(message.getMessage())
+                .regDate(LocalDateTime.now())
+                .build();
+        chatRepository.save(chat);
+        return chat;
     }
 
-    @Override
-    public List<TradeData> findAllTradeDataOrderByPriceDesc() {
-        return tradeDataRepository.findAllByOrderByPriceDesc();
-    }
 
-    @Override
-    public List<TradeData> findAllTradeDataOrderByPriceAsc() {
-        return tradeDataRepository.findAllByOrderByPriceAsc();
-    }
-
-    @Override
-    public TradeData findTradeDataByAddress(String address) {
-        return tradeDataRepository.findByAddressContainsIgnoreCase(address);
-    }
-
-    @Override
-    public List<AddressDataDto> findAddressDataByAddress(String val) {
-        return addressDataRepository.findByAddressContainingIgnoreCase(val).stream().map(e -> e.toDto())
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ApartDataDto> findApartByAddressOrName(String address, String name) {
-        return apartDataRepository.findByAddressContainingIgnoreCaseAndNameContainingIgnoreCase(address, name).stream().map(e -> e.toDto())
-                .collect(Collectors.toList());
-    }
 }

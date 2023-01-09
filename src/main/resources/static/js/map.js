@@ -165,7 +165,7 @@ $(function () {
                             position : new kakao.maps.LatLng(tradeData.lat, tradeData.lng),
                             opacity: 1,
                             range: 100
-                        }))
+                        }));
                         customOverlaies.push(new kakao.maps.CustomOverlay({
                             position: new kakao.maps.LatLng(tradeData.lat, tradeData.lng),
                             content: '<div class ="custom-overlay" data-id="'+ idx +'">'
@@ -180,7 +180,22 @@ $(function () {
                                 +'</div>'
                                 +'</div>'
                                 +'</div>'
-                        })) 
+                        }));
+                        rvCustomOverlaies.push(new kakao.maps.CustomOverlay({
+                            position: new kakao.maps.LatLng(tradeData.lat, tradeData.lng),
+                            content: '<div class ="custom-overlay" data-id="'+ idx +'">'
+                                + '<div class = info>'
+                                + '<div class = "area">'
+                                + Math.floor(tradeData.area) + '평' 
+                                + '</div>'
+                                + '<div class = "price">'
+                                + ((tradeData.price / 10000) < 1 ? '' : Math.floor(tradeData.price / 10000) + '억')
+                                + ((tradeData.price % 10000) / 1000 < 1 ? '' : Math.floor((tradeData.price % 10000) / 1000) + '천')
+                                + (tradeData.price < 1000 ? tradeData.price + '만' : '')
+                                +'</div>'
+                                +'</div>'
+                                +'</div>'
+                        }));
                         idx++;
                     }
                 }
@@ -283,12 +298,16 @@ $(function () {
                 apartDetailXmls.push(xml);
 
                 const place = await coordResolver(address);
-                const overlay = new kakao.maps.CustomOverlay({
+                apartOverlaies.push(new kakao.maps.CustomOverlay({
                     position: new kakao.maps.LatLng(place[0].y, place[0].x),
-                    content: '<div class ="custom-overlay-apart" data-id="' + i + '"></div>'
-                });
-                overlay.setMap(map);
-                apartOverlaies.push(overlay);
+                    content: '<div class ="custom-overlay-apart" data-id="' + i + '"></div>',
+                    map: map
+                }));
+                rvApartOverlaies.push(new kakao.maps.CustomOverlay({
+                    position: new kakao.maps.LatLng(place[0].y, place[0].x),
+                    content: '<div class ="custom-overlay-apart" data-id="' + i + '"></div>',
+                    map: map
+                }));
                 apartCoords.push(place);
 
                 $(".item-wrapper .loading").text(((i - currentItemsIdx + 1) / 12 * 100).toFixed(1) + '%'); 
@@ -297,7 +316,6 @@ $(function () {
                     currentItemsIdx = i + 1;
                     beforeLoad = true;
                     loadComplete = i >= apartDataList.length - 1 ? true : false;
-                    scrollEnd = update ? 1125 : 1125 + 1670 * ((i - 11) / 12); 
                     $(".item-wrapper .loading").fadeOut(300, function(){
                         $(".item-wrapper .loading").text('0%');
                     });
@@ -344,7 +362,7 @@ $(function () {
                         position : new kakao.maps.LatLng(tradeData.lat, tradeData.lng),
                         opacity: 1,
                         range: 100
-                    }))
+                    }));
                     customOverlaies.push(new kakao.maps.CustomOverlay({
                         position: new kakao.maps.LatLng(tradeData.lat, tradeData.lng),
                         content: '<div class ="custom-overlay" data-id="'+ idx +'">'
@@ -359,7 +377,22 @@ $(function () {
                             +'</div>'
                             +'</div>'
                             +'</div>'
-                    })) 
+                    }));
+                    rvCustomOverlaies.push(new kakao.maps.CustomOverlay({
+                        position: new kakao.maps.LatLng(tradeData.lat, tradeData.lng),
+                        content: '<div class ="custom-overlay" data-id="'+ idx +'">'
+                            + '<div class = info>'
+                            + '<div class = "area">'
+                            + Math.floor(tradeData.area) + '평' 
+                            + '</div>'
+                            + '<div class = "price">'
+                            + ((tradeData.price / 10000) < 1 ? '' : Math.floor(tradeData.price / 10000) + '억')
+                            + ((tradeData.price % 10000) / 1000 < 1 ? '' : Math.floor((tradeData.price % 10000) / 1000) + '천')
+                            + (tradeData.price < 1000 ? tradeData.price + '만' : '')
+                            +'</div>'
+                            +'</div>'
+                            +'</div>'
+                    })); 
                     idx++;
                 }
             }
@@ -375,12 +408,15 @@ $(function () {
  
     let update = true,
         beforeLoad = true,
-        loadComplete = false,
-        scrollEnd;
+        loadComplete = false;
 
     $("#items").scroll(function(){
-        const st = $(this).scrollTop();
-        if(st > scrollEnd && beforeLoad && !loadComplete){
+        let st = $(this).scrollTop();
+        let ih = $(this).innerHeight();
+        let sh = document.querySelector("#items").scrollHeight;
+        console.log(st + ih + "sh = " + sh)
+
+        if((st + ih >= sh -1) && beforeLoad && !loadComplete){ 
             update = false;
             appendApartList();
         }
@@ -623,8 +659,8 @@ function toggleRoadview(position){
             if (panoId === null) {
                 rvContainer.style.display = 'none';
             } else {
-                customOverlaies.forEach(e => {e.setMap(rv); e.setRange(300);});
-                apartOverlaies.forEach(e => {e.setMap(rv); e.setRange(300);});
+                rvCustomOverlaies.forEach(e => {e.setMap(rv); e.setRange(300);});
+                rvApartOverlaies.forEach(e => {e.setMap(rv); e.setRange(300);});
                 var rMarker = new kakao.maps.Marker({position: position});
                 var projection = rv.getProjection(); 
                 var viewpoint = projection.viewpointFromCoords(rMarker.getPosition(), rMarker.getAltitude());
@@ -644,7 +680,6 @@ function toggleRoadview(position){
                     'z-index':'3'
                 });
                 map.relayout();
-
                 marker.setMap(map);
             }
         });
@@ -707,6 +742,7 @@ $(".roadview-close").click(function(){
 
 let options, map, searchType, keyword, 
     customOverlaies = [], apartOverlaies = [], regionOverlaies = [], pinOverlaies = [],
+    rvCustomOverlaies = [], rvApartOverlaies = [],
     ps = new kakao.maps.services.Places(), currentCenterAddr,
     geocoder = new kakao.maps.services.Geocoder(), apartCoords,
     findDataList, tradeDataList, apartDataList, apartDetailXmls, currentItemsIdx;

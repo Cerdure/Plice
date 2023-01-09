@@ -1,7 +1,7 @@
 package com.project.team.plice.dto.chat;
 
-import com.project.team.plice.domain.data.ApartData;
 import com.project.team.plice.domain.chat.ChatRoom;
+import com.project.team.plice.domain.data.ApartData;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @Data
 public class ChatRoomDto {
 
-    private Long id;
+    private String id;
     private ApartData apartData;
     private Integer memberCount;
     private Integer chatCount;
     private LocalDateTime regDate;
 
     @Builder
-    public ChatRoomDto(Long id, ApartData apartData, Integer memberCount, Integer chatCount, LocalDateTime regDate) {
+    public ChatRoomDto(String id, ApartData apartData, Integer memberCount, Integer chatCount, LocalDateTime regDate) {
         this.id = id;
         this.apartData = apartData;
         this.memberCount = memberCount;

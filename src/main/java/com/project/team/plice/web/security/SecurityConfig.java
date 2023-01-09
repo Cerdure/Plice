@@ -52,8 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // 로그인 필요 없는 페이지들 여기에 추가
                     .antMatchers("/", "/login/**", "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**",
                             "/map/**", "/markers/**", "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
-                            "/find-data/**", "/find-apart/**",
-                            "/chat/**", "/post/**", "/story-detail/**", "/notice-detail/**",
+                            "/find-data/**", "/find-apart/**", "/webjars/**", "/ws/**",
+                            "/chat/**", "**/websocket/**", "/post/**", "/story-detail/**", "/notice-detail/**",
                             "/contents/**", "/my-page/**").permitAll()
 
                     .antMatchers("/admin").hasRole("ADMIN")

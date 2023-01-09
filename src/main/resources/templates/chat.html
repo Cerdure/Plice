@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -9,11 +12,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link href="/bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 
     <link href="/css/chat.css" rel="stylesheet">
     <script src="/js/chat.js"></script>
@@ -51,7 +53,7 @@
                 <div class="null">현재 참여중인 채팅방이 없습니다.</div>
             </div>
 
-            <div class="my-room">
+            <div class="my-room" th:each="chatRoom : ${chatRooms}" th:data-id="${chatRoom.id}">
                 <div class="profiles">
                     <div class="img-wrapper">
                         <img src="/img/icon/profile.png">
@@ -65,54 +67,13 @@
                 </div>
                 <div class="info">
                     <div class="title">
-                        <div class="text">반포1동 반포자이 채팅방</div>
-                        <div class="number">132명</div>
+                        <div class="text" th:text="${chatRoom.apartData.name}"></div>
+                        <div class="number" th:text="${chatRoom.memberCount} + '명'">132명</div>
                     </div>
                     <div class="content">안녕하세요.</div>
                 </div>
             </div>
 
-            <div class="my-room">
-                <div class="profiles">
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="title">
-                        <div class="text">잠실동 리센츠 채팅방</div>
-                        <div class="number">78명</div>
-                    </div>
-                    <div class="content">안녕하세요.</div>
-                </div>
-            </div>
-
-            <div class="my-room">
-                <div class="profiles">
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="title">
-                        <div class="text">여의도동 아크로여의도더원 채팅방</div>
-                        <div class="number">53명</div>
-                    </div>
-                    <div class="content">안녕하세요.</div>
-                </div>
-            </div>
 
         </div>
 
@@ -121,7 +82,7 @@
         <div class="right-side">
 
             <div class="chat-wrapper">
-                <div class="chat">
+                <div class="chat" data-id="" data-member-phone="">
                     <div class="head">
                         <img class="exit-icon" src="/img/icon/chevron-left.svg">
                         <div class="exit">채팅방<br>나가기</div>
@@ -132,136 +93,14 @@
                         <img class="close" src="/img/icon/close.png">
                     </div>
 
-                    <div class="body">
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper my-chat">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>플라이스</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper my-chat">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>플라이스</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper my-chat">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>플라이스</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-
+                    <div class="body" id="chat-box">
+                        
                     </div>
 
                     <form class="input-wrapper">
                         <textarea class="chat-input" type="text" placeholder="메시지를 입력하세요."></textarea>
                         <div class="regist-btn">
-                            <div class="btn">
+                            <div class="btn" id="chat-send">
                                 <img src="/img/icon/send-fill.svg">
                             </div>
                             <div class="count">0/300</div>
