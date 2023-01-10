@@ -756,7 +756,7 @@ body {
     background-image: url("/img/icon/loading-circle.gif");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 150%;
+    background-size: 100%;
     mix-blend-mode: darken;
     filter: brightness(1.2);
     z-index: 2;

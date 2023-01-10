@@ -158,12 +158,14 @@
                 <div class="chart-wrapper">
                     <div class="chart">
                         <span class="text">전국 거래수</span>
-                        <span class="data" th:text="${dataUtils.tradeCount}"></span>
+                        <span class="data" th:text="${#numbers.formatInteger(dataUtils.tradeCount, 3, 'COMMA')}"></span>
                         <span class="unit">건</span>
                     </div>
                     <div class="chart">
                         <span class="text">최저 거래가</span>
-                        <span class="data topData" th:text="${#numbers.formatInteger(dataUtils.tradeMin.price*10, 3, 'COMMA') + ',000'}"
+                        <span class="data topData" th:text="${((dataUtils.tradeMin.price / 10000) < 1 ? '' : #numbers.formatInteger((dataUtils.tradeMin.price / 10000),1) + ' 억')
+                            + ((dataUtils.tradeMin.price % 10000) / 1000 < 1 ? '' : #numbers.formatInteger(((dataUtils.tradeMin.price % 10000) / 1000),1) + ' 천')
+                            + (dataUtils.tradeMin.price < 1000 ? dataUtils.tradeMin.price + ' 만' : '만')}"
                               th:data-lat="${dataUtils.tradeMin.lat}" th:data-lng="${dataUtils.tradeMin.lng}">
                               <div class="move">이동 &gt;</div>
                         </span>
@@ -171,7 +173,9 @@
                     </div>
                     <div class="chart">
                         <span class="text">최고 거래가</span>
-                        <span class="data topData" th:text="${#numbers.formatInteger(dataUtils.tradeMax.price*10, 3, 'COMMA') + ',000'}"
+                        <span class="data topData" th:text="${((dataUtils.tradeMax.price / 10000) < 1 ? '' : #numbers.formatInteger((dataUtils.tradeMax.price / 10000),1) + ' 억')
+                        + ((dataUtils.tradeMax.price % 10000) / 1000 < 1 ? '' : ' ' + #numbers.formatInteger(((dataUtils.tradeMax.price % 10000) / 1000),1) + ' 천')
+                        + (dataUtils.tradeMax.price < 1000 ? dataUtils.tradeMax.price + ' 만' : '만')}"
                               th:data-lat="${dataUtils.tradeMax.lat}" th:data-lng="${dataUtils.tradeMax.lng}">
                               <div class="move">이동 &gt;</div>
                         </span>
