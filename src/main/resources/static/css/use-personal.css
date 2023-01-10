@@ -1,0 +1,53 @@
+.personal_info {
+  width: 1200px;
+  margin: 100px auto;
+}
+.info_header {
+  margin-bottom: 20px;
+}
+.personal_table {
+  margin: 0 auto;
+  font-size: 17px;
+  border: var(--login-border);
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+.personal_table th,
+td {
+  border: var(--login-border);
+  padding: 5px;
+}
+.join_delete span {
+  border-bottom: 1px solid black;
+  font-weight: bold;
+  transition: all 1s;
+}
+.join_delete span:hover {
+  color: red;
+}
+.personal_text {
+  font-size: 14px;
+  margin-top: 30px;
+  text-align: center;
+}
+.personal_accept {
+  text-align: end;
+  margin-top: 30px;
+}
+.term_accept {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.term_text {
+  font-size: 13px;
+  margin-left: 5px;
+}
+.personal_close {
+  background-color: #dfdfdf;
+  color: white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-top: 20px;
+}

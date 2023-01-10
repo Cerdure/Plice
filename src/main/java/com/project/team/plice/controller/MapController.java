@@ -1,29 +1,16 @@
 package com.project.team.plice.controller;
 
-import com.project.team.plice.dto.Params;
-import com.project.team.plice.dto.TradeData;
+import com.project.team.plice.domain.TradeData;
+import com.project.team.plice.dto.TradeDataDto;
 import com.project.team.plice.service.MapServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -37,10 +24,26 @@ public class MapController {
         return "map";
     }
 
-    @PostMapping("/map/trade-search")
+    @GetMapping("/find-data")
     @ResponseBody
-    public List<TradeData> callAPI(@ModelAttribute Params params) throws Exception {
-        log.info(params.toString());
-        return mapService.tradeDataSearch(params);
+    public List<TradeDataDto> firstFindData(@RequestParam(name = "neLng") String neLng,
+                                            @RequestParam(name = "neLat") String neLat,
+                                            @RequestParam(name = "swLng") String swLng,
+                                            @RequestParam(name = "swLat") String swLat, Model model) {
+
+        System.out.println("neLng = " + neLng);
+        System.out.println("neLat = " + neLat);
+        System.out.println("swLng = " + swLng);
+        System.out.println("swLat = " + swLat);
+
+        List<TradeData> tradeDataList = mapService.findTradeDataInBounds(swLng, neLng, neLat, swLat);
+        System.out.println("tradeDataList.size() = " + tradeDataList.size());
+        List<TradeDataDto> tradeDataDtoList = new ArrayList<>();
+        for (TradeData tradeData : tradeDataList) {
+            tradeDataDtoList.add(tradeData.toDto());
+        }
+        tradeDataDtoList.forEach(e -> e.refineTradeYearMonth());
+        System.out.println("tradeDataDtoList.size() = " + tradeDataDtoList.size());
+        return tradeDataDtoList;
     }
 }
