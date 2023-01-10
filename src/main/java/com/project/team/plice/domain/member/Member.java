@@ -1,5 +1,6 @@
 package com.project.team.plice.domain.member;
 
+import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.enums.MemberRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -47,15 +49,17 @@ public class Member implements UserDetails {
     @JoinColumn(name = "favorite_id")
     private Favorite favorite;
 
+    private String profileImgPath;
 
     @PrePersist                  // null일 때 default 값
     public void prePersist() {
         this.role = this.role == null ? MemberRole.USER : this.role;
+        this.profileImgPath = this.profileImgPath == null ? "/img/icon/profile.png" : this.profileImgPath;
         this.regDate = this.regDate == null ? LocalDate.now() : this.regDate;
     }
 
     @Builder
-    public Member(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, MemberRole role, Favorite favorite) {
+    public Member(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, MemberRole role, Favorite favorite, String profileImgPath) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
@@ -68,6 +72,7 @@ public class Member implements UserDetails {
         this.delDate = delDate;
         this.role = role;
         this.favorite = favorite;
+        this.profileImgPath = profileImgPath;
     }
 
     @Override

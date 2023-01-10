@@ -1,46 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/default}">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<th:block layout:fragment="css"><link rel="stylesheet" href="/css/chat.css"></th:block>
+<th:block layout:fragment="script"><script src="/js/chat.js"></script></th:block>
+<th:block layout:fragment="title"><title>PLICE ㅣ 채팅</title></th:block>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link href="/bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-
-    <link href="/css/chat.css" rel="stylesheet">
-    <script src="/js/chat.js"></script>
-
-    <title>Plice | 채팅</title>
-</head>
-
-<body>
-    <header>
-        <div class="logo-wrapper" onclick="location.href='/'">
-            <img src="/img/logo/plice.png">
-            <div class="text">PLICE</div>
-        </div>
-        <span class="map" onclick="location.href='/map'">지도</span>
-        <span class="chat" onclick="location.href='/chat'">채팅</span>
-        <span class="post" onclick="location.href='/post'">이야기</span>
-        <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
-        <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
-        <div class="login-wrapper">
-            <div class="login-btn" onclick="location.href='/login'">로그인</div>
-        </div>
-    </header>
-
-    <div class="top-space"></div>
-
+<div layout:fragment="content">
+  <div class="top-space"></div>
     <div class="contents-wrapper">
-
         <div class="left-side">
             <form class="search-wrapper">
                 <img class="icon" src="/img/icon/search-icon.svg">
@@ -50,8 +21,7 @@
             <div class="null-wrapper">
                 <div class="null">현재 참여중인 채팅방이 없습니다.</div>
             </div>
-
-            <div class="my-room">
+            <div class="my-room" th:each="chatRoom : ${chatRooms}" th:data-id="${chatRoom.id}">
                 <div class="profiles">
                     <div class="img-wrapper">
                         <img src="/img/icon/profile.png">
@@ -65,63 +35,16 @@
                 </div>
                 <div class="info">
                     <div class="title">
-                        <div class="text">반포1동 반포자이 채팅방</div>
-                        <div class="number">132명</div>
+                        <div class="text" th:text="${chatRoom.apartData.name}"></div>
+                        <div class="number" th:text="${chatRoom.memberCount} + '명'">132명</div>
                     </div>
                     <div class="content">안녕하세요.</div>
                 </div>
             </div>
-
-            <div class="my-room">
-                <div class="profiles">
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="title">
-                        <div class="text">잠실동 리센츠 채팅방</div>
-                        <div class="number">78명</div>
-                    </div>
-                    <div class="content">안녕하세요.</div>
-                </div>
-            </div>
-
-            <div class="my-room">
-                <div class="profiles">
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="title">
-                        <div class="text">여의도동 아크로여의도더원 채팅방</div>
-                        <div class="number">53명</div>
-                    </div>
-                    <div class="content">안녕하세요.</div>
-                </div>
-            </div>
-
         </div>
-
-
-
         <div class="right-side">
-
             <div class="chat-wrapper">
-                <div class="chat">
+                <div class="chat" data-id="" data-member-phone="">
                     <div class="head">
                         <img class="exit-icon" src="/img/icon/chevron-left.svg">
                         <div class="exit">채팅방<br>나가기</div>
@@ -131,137 +54,12 @@
                         </div>
                         <img class="close" src="/img/icon/close.png">
                     </div>
-
-                    <div class="body">
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper my-chat">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>플라이스</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper my-chat">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>플라이스</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper my-chat">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>플라이스</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-                        <div class="content-wrapper">
-                            <div class="profile-wrapper">
-                                <img src="/img/icon/profile.png">
-                            </div>
-                            <div class="content">
-                                <strong>유저11</strong>
-                                안녕하세요.안녕하세요.안녕하세요.<br>안녕하세요.안녕하세요.안녕하세요.안녕하세요.
-                                <div class="date">오전 11:26</div>
-                            </div>
-                        </div>
-
-
+                    <div class="body" id="chat-box">
                     </div>
-
                     <form class="input-wrapper">
                         <textarea class="chat-input" type="text" placeholder="메시지를 입력하세요."></textarea>
                         <div class="regist-btn">
-                            <div class="btn">
+                            <div class="btn" id="chat-send">
                                 <img src="/img/icon/send-fill.svg">
                             </div>
                             <div class="count">0/300</div>
@@ -269,9 +67,7 @@
                     </form>
                 </div>
             </div>
-
             <div class="top3-wrapper">
-
                 <div class="head">
                     <div class="title">
                         <img class="icon" src="/img/icon/chat-text.svg">
@@ -282,9 +78,7 @@
                         <div class="text title-lastest">최신순</div>
                     </div>
                 </div>
-
                 <div class="body">
-
                     <div class="popular">
                         <div class="room">
                             <div class="back"></div>
@@ -326,7 +120,6 @@
                             <div class="enter">입장하기 &gt;</div>
                         </div>
                     </div>
-
                     <div class="lastest">
                         <div class="room">
                             <div class="back"></div>
@@ -366,30 +159,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-
-    <footer>
-        <p>
-            (주)플라이스<br>
-            사업자 번호: 000-00-00000&nbsp&nbsp&nbsp&nbsp통신판매업신고번호 : 제2023-서울 영등포-00000호<br>
-            주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩<br><br>
-
-            고객센터 : 02-0000-0000 | 평일 10:00 ~ 18:30, 점심시간 : 12:00 ~ 13:00 (토·일요일, 공휴일 휴무)<br>
-            팩스 : 02-000-0000&nbsp&nbsp&nbsp&nbsp프로모션/사업 제휴문의 : cerdure@gmail.com<br>
-            PLICE, Inc. All rights reserved.
-        </p>
-        <div class="icons">
-            <img src="/img/icon/instagram_mono.png">
-            <img src="/img/icon/facebook_mono.png">
-            <img src="/img/icon/blog_mono.png">
-            <img src="/img/icon/naverpost_mono.png">
-            <img src="/img/icon/youtube_mono.png">
-        </div>
-    </footer>
-</body>
-
+</div>
 </html>
