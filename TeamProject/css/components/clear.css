@@ -1,0 +1,22 @@
+.clear_parent {
+  position: relative;
+}
+
+.clear_btn {
+  position: absolute;
+  right: 130px;
+  top: 10px;
+  opacity: 0.5;
+  transition: all 0.5s linear;
+  display: none;
+}
+
+.long_clear_btn {
+  position: absolute;
+  right: 10px;
+  top: 37px;
+}
+
+.clear_btn:hover {
+  opacity: 1;
+}

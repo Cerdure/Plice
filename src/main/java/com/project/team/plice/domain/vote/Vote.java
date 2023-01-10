@@ -1,7 +1,6 @@
 package com.project.team.plice.domain.vote;
 
-import com.project.team.plice.domain.Apart;
-import com.project.team.plice.domain.post.Post;
+import com.project.team.plice.domain.data.ApartData;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +17,7 @@ public class Vote {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apart_id")
-    private Apart apart;
+    private ApartData apartData;
 
     private Integer memberCount;
 
@@ -32,9 +31,9 @@ public class Vote {
     }
 
     @Builder
-    public Vote(Long id, Apart apart, Integer memberCount, LocalDateTime regDate, LocalDateTime deadLine) {
+    public Vote(Long id, ApartData apartData, Integer memberCount, LocalDateTime regDate, LocalDateTime deadLine) {
         this.id = id;
-        this.apart = apart;
+        this.apartData = apartData;
         this.memberCount = memberCount;
         this.regDate = regDate;
         this.deadLine = deadLine;

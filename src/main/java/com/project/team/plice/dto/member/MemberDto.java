@@ -24,14 +24,14 @@ public class MemberDto {
     private String email;
     private LocalDate regDate;
     private LocalDate delDate;
+    private Favorite favorite;
+    private String profileImgPath;
 
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
-    private Favorite favorite;
-
     @Builder
-    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, MemberRole role, Favorite favorite) {
+    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, Favorite favorite, String profileImgPath, MemberRole role) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
@@ -42,8 +42,9 @@ public class MemberDto {
         this.email = email;
         this.regDate = regDate;
         this.delDate = delDate;
-        this.role = role;
         this.favorite = favorite;
+        this.profileImgPath = profileImgPath;
+        this.role = role;
     }
 
     public Member createMember(PasswordEncoder passwordEncoder){
@@ -60,6 +61,7 @@ public class MemberDto {
                 .delDate(this.delDate)
                 .role(this.role)
                 .favorite(this.favorite)
+                .profileImgPath(this.profileImgPath)
                 .build();
     }
 }
