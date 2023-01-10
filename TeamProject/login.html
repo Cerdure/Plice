@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="shortcut icon" href="img/plice.png" />
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <title>예쁜 집들이 모여있는 우리집</title>
+  </head>
+  <body>
+    <div class="login_container">
+      <!-- Login Header -->
+      <div class="login_header">
+        <div class="login_logo">
+          <img src="img/plice.png" alt="logo" />
+        </div>
+        <div class="login_text">
+          <h1 class="login_title">우리의 집</h1>
+        </div>
+      </div>
+
+      <!-- Login form -->
+      <form id="loginForm" action="" method="post">
+        <div class="input-group">
+          <input
+            type="email"
+            id="email"
+            type="text"
+            class="form-control"
+            name="email"
+            placeholder="Email"
+          />
+        </div>
+        <div class="input-group">
+          <input
+            id="password"
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Password"
+          />
+        </div>
+        <div class="login_btn input-group">
+          <input class="login_control" type="submit" value="로그인" />
+        </div>
+        <!-- password_find & Join -->
+        <section name="login_find" id="login_Join">
+          <a class="join_btn repwd" href="#">비밀번호 재설정</a>
+          <a class="join_btn" href="join.html">회원가입</a>
+        </section>
+      </form>
+
+      <!-- password find -->
+      <div class="pos_fix">
+        <form action="#" class="pwd_find">
+          <div class="pwd_find_header">
+            <h3 class="pwd_find_title">비밀번호 재설정</h3>
+            <i class="fas fa-times fa-2x"></i>
+          </div>
+          <hr />
+          <h5 class="pwd_find_subtitle">
+            가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.
+          </h5>
+          <div class="check_container">
+            <input class="check_email" type="email" placeholder="이메일" />
+            <input class="check_submit" type="submit" value="인증메일 받기" />
+          </div>
+        </form>
+      </div>
+
+      <!-- small info -->
+      <section class="sns_container">
+        <div class="login_sns">
+          <small>SNS계정으로 간편 로그인/회원가입</small>
+        </div>
+        <div class="sns_option">
+          <a class="sns_link" href="" target="_blank" rel="noopener noreferrer">
+            <img src="img/facebook.png" alt="그림" />
+          </a>
+          <a
+            class="sns_link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="img/kakao.png" alt="그림" />
+          </a>
+        </div>
+      </section>
+      <hr />
+
+      <!-- footer -->
+      <footer class="opp_info">
+        <small>
+          &#169;&nbsp;
+          <a href="#" target="_blank" rel="noopener noreferrer"
+            >bucketplace, Co., Ltd.</a
+          >All Rights Reserved</small
+        >
+      </footer>
+    </div>
+
+    <!-- Personal Kits -->
+    <script src="https://kit.fontawesome.com/6b7a2f6a5d.js"></script>
+
+    <!-- JavaScript -->
+    <script src="js/loginAlert.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

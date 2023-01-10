@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/css/contents.css">
+</th:block>
+<th:block layout:fragment="script">
+  <script src="/js/contents.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+  <title>PLICE ㅣ 컨텐츠</title>
+</th:block>
+
+<div layout:fragment="content">
+  <div class="top-space"></div>
+  <div class="contents-wrapper">
+    <div class="left-side">
+      <div class="article-index index active-index">
+        <img src="/img/icon/article.svg">
+        <div class="text">아티클</div>
+      </div>
+      <div class="youtube-index index">
+        <img src="/img/icon/play.svg">
+        <div class="text">유튜브</div>
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="article-wrapper">
+        <div class="head">
+          <div class="title">
+            <div class="text">ㅣ 아티클</div>
+          </div>
+          <div class="sort">
+            <div class="text sort-sale active-sort">아파트 분양</div>
+            <div class="text sort-subs">청약</div>
+            <div class="text sort-redev">재개발</div>
+            <div class="text sort-new">신축</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="article">
+            <div class="title">
+              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
+            </div>
+            <div class="description">
+              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
+              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
+              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
+              472억원이 들어오고 598억원이 펀드...
+            </div>
+            <div class="date">SEP 6, 2022</div>
+          </div>
+          <div class="article">
+            <div class="title">
+              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
+            </div>
+            <div class="description">
+              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
+              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
+              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
+              472억원이 들어오고 598억원이 펀드...
+            </div>
+            <div class="date">SEP 6, 2022</div>
+          </div>
+          <div class="article">
+            <div class="title">
+              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
+            </div>
+            <div class="description">
+              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
+              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
+              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
+              472억원이 들어오고 598억원이 펀드...
+            </div>
+            <div class="date">SEP 6, 2022</div>
+          </div>
+          <div class="article">
+            <div class="title">
+              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
+            </div>
+            <div class="description">
+              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
+              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
+              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
+              472억원이 들어오고 598억원이 펀드...
+            </div>
+            <div class="date">SEP 6, 2022</div>
+          </div>
+        </div>
+      </div>
+      <div class="youtube-wrapper">
+        <div class="head">
+          <div class="title">
+            <div class="text">ㅣ 유튜브</div>
+          </div>
+          <div class="sort">
+            <div class="text sort-sale active-sort">아파트 분양</div>
+            <div class="text sort-subs">청약</div>
+            <div class="text sort-redev">재개발</div>
+            <div class="text sort-new">신축</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="row-1">
+            <div class="youtube" onclick="location.href='/youtube-detail'">
+              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                xml:space="preserve">
+                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+                C97.3,23.7,75.7,2.3,49.9,2.5" />
+                <path class="icon" fill="#ddbe72"
+                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+              </svg>
+            </div>
+            <div class="youtube" onclick="location.href='/youtube-detail'">
+              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                xml:space="preserve">
+                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+                C97.3,23.7,75.7,2.3,49.9,2.5" />
+                <path class="icon" fill="#ddbe72"
+                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+              </svg>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="youtube" onclick="location.href='/youtube-detail'">
+              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                xml:space="preserve">
+                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+                C97.3,23.7,75.7,2.3,49.9,2.5" />
+                <path class="icon" fill="#ddbe72"
+                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+              </svg>
+            </div>
+            <div class="youtube" onclick="location.href='/youtube-detail'">
+              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
+                xml:space="preserve">
+                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+                C97.3,23.7,75.7,2.3,49.9,2.5" />
+                <path class="icon" fill="#ddbe72"
+                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</html>
