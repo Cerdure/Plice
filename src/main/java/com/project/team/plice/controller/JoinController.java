@@ -15,8 +15,33 @@ public class JoinController {
 
     private final MemberServiceImpl memberService;
 
+    @GetMapping("/sign-up")
+    public String signUpForm(){
+        return "sign-up";
+    }
+
     @GetMapping("/join")
     public String joinForm(){
         return "join";
+    }
+
+    @GetMapping("/term-service")
+    public String termServiceForm(){
+        return "term-service";
+    }
+
+    @GetMapping("/use-personal")
+    public String usePersonalForm(){
+        return "use-personal";
+    }
+
+    @GetMapping("/marketing")
+    public String marketingForm(){
+        return "marketing";
+    }
+
+    @GetMapping("/term-of-service")
+    public String termOfServiceForm(){
+        return "term-of-service";
     }
 }

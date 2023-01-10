@@ -1,0 +1,176 @@
+.login_container {
+  width: 600px;
+  margin: 120px auto;
+  border: var(--login-border);
+  padding: 50px 45px;
+  position: relative;
+}
+
+.login_title {
+  font-size: 40px;
+  padding-bottom: 30px;
+  border-bottom: var(--login-border);
+}
+
+.login_subtitle {
+  font-size: 15px;
+  padding: 30px 0px 40px 0px;
+}
+
+.login_user {
+  display: flex;
+  flex-direction: column;
+}
+
+.login_info label {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.login_info .user {
+  border: var(--login-border);
+  padding: 8px 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  transition: all 1s;
+}
+
+.login_join {
+  text-align: end;
+  margin-bottom: 40px;
+}
+
+.login_join .login_join_btn::after {
+  content: "|";
+  margin: 0px 0px 0px 3px;
+}
+
+.login_btn {
+  padding: 20px 0px;
+  font-size: 20px;
+  width: 100%;
+  border: none;
+  color: white;
+  background-color: var(--login-color);
+  transition: all 0.7s;
+}
+
+.login_btn:hover {
+  background-color: var(--login-hover);
+  color: white;
+}
+
+.login_sns {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.naver {
+  margin: 0 30px;
+}
+
+/* find password */
+.pwd_find_container {
+  width: 500px;
+  height: 400px;
+  border: var(--login-border);
+  padding: 30px 20px;
+  position: relative;
+  display: none;
+}
+
+.pwd_find_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: var(--login-border);
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+}
+
+.pwd_find_email {
+  width: 386px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pwd_find_check_input {
+  width: 100%;
+  padding: 20px 10px;
+  margin-bottom: 7px;
+}
+
+.pwd_find_subtitle {
+  font-size: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.pwd_find_check_input {
+  border: var(--login-border);
+}
+
+.pwd_find_btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0px;
+  background-color: var(--login-color);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 1s;
+}
+
+.pwd_find_btn:hover {
+  color: white;
+  background-color: var(--login-hover);
+}
+
+.fa-times:hover {
+  color: var(--login-hover);
+}
+
+/* 가입한 이메일 확인 시 */
+.accept_opt {
+  /* display: none; */
+}
+
+#accept_code {
+  padding: 15px 10px;
+  border: var(--login-border);
+}
+#code_text {
+  font-size: 15px;
+}
+
+.accept_btn {
+  background-color: var(--login-color);
+  color: white;
+  padding: 15px 10px;
+  font-size: 12px;
+  border-radius: 10px;
+  transition: all 1s;
+}
+
+.accept_btn:hover {
+  background-color: var(--login-hover);
+  color: white;
+}
+
+/* JavaScript 기능 구현 도움 */
+.bg_black {
+  background-color: rgb(122, 122, 122);
+  border: none;
+}
+
+.bg_white {
+  background-color: white;
+  border: none;
+  transform: translateY(-400px);
+  position: absolute;
+  left: 47px;
+}

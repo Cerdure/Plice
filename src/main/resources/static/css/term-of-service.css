@@ -1,0 +1,31 @@
+.service_container {
+  margin-top: 70px;
+}
+
+.service_title {
+  border-bottom: var(--login-border);
+  padding: 10px 16px;
+  margin-bottom: 20px;
+}
+
+.service_section {
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.service_content {
+  margin-bottom: 5px;
+}
+.service_subtitle {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+.service_order_list {
+  padding: 0px 16px;
+}
+.service_list {
+  list-style: decimal;
+  margin-bottom: 5px;
+  font-size: 12px;
+}

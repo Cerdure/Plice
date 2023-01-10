@@ -1,0 +1,23 @@
+.term_serivce {
+  margin: 100px 0px;
+  padding: 0px 100px;
+}
+
+.term_title {
+  font-size: 15px;
+}
+
+.term_subtitle {
+  margin-bottom: 10px;
+}
+
+.term_list {
+  padding: 0px 16px;
+  margin-bottom: 10px;
+}
+
+.term_list li {
+  list-style: decimal;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
