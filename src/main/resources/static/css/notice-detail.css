@@ -371,12 +371,6 @@ header .post {
   border: none;
   outline: none;
 }
-
-.disable {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 .close-alert-wrapper {
   position: fixed;
   top: 0;

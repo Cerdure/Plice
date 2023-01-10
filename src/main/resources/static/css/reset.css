@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -14,9 +14,6 @@ a:visited {
   color: #326cf9;
 }
 
-li {
-  list-style: none;
-}
 
 .btn {
   transition: all 1s;
@@ -28,4 +25,4 @@ li {
 
 .logout_btn {
   display: none;
-}
+} */

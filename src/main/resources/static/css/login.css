@@ -1,7 +1,7 @@
 .login_container {
   width: 600px;
   margin: 120px auto;
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
   padding: 50px 45px;
   position: relative;
 }
@@ -9,7 +9,7 @@
 .login_title {
   font-size: 40px;
   padding-bottom: 30px;
-  border-bottom: var(--login-border);
+  border-bottom: 1px solid #c9d5ff;
 }
 
 .login_subtitle {
@@ -28,7 +28,7 @@
 }
 
 .login_info .user {
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
   padding: 8px 10px;
   margin-bottom: 20px;
   font-size: 16px;
@@ -51,12 +51,12 @@
   width: 100%;
   border: none;
   color: white;
-  background-color: var(--login-color);
+  background-color: #4169fc;
   transition: all 0.7s;
 }
 
 .login_btn:hover {
-  background-color: var(--login-hover);
+  background-color: #224ce6;
   color: white;
 }
 
@@ -74,7 +74,7 @@
 .pwd_find_container {
   width: 500px;
   height: 400px;
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
   padding: 30px 20px;
   position: relative;
   display: none;
@@ -84,7 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: var(--login-border);
+  border-bottom: 1px solid #c9d5ff;
   margin-bottom: 30px;
   padding-bottom: 30px;
 }
@@ -109,7 +109,7 @@
 }
 
 .pwd_find_check_input {
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
 }
 
 .pwd_find_btn {
@@ -118,7 +118,7 @@
   left: 0;
   width: 100%;
   padding: 20px 0px;
-  background-color: var(--login-color);
+  background-color: 1px solid #c9d5ff;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -127,11 +127,11 @@
 
 .pwd_find_btn:hover {
   color: white;
-  background-color: var(--login-hover);
+  background-color: #224ce6;
 }
 
 .fa-times:hover {
-  color: var(--login-hover);
+  color: #224ce6;
 }
 
 /* 가입한 이메일 확인 시 */
@@ -141,14 +141,15 @@
 
 #accept_code {
   padding: 15px 10px;
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
 }
+
 #code_text {
   font-size: 15px;
 }
 
 .accept_btn {
-  background-color: var(--login-color);
+  background-color: #224ce6;
   color: white;
   padding: 15px 10px;
   font-size: 12px;
@@ -157,14 +158,8 @@
 }
 
 .accept_btn:hover {
-  background-color: var(--login-hover);
+  background-color: #224ce6;
   color: white;
-}
-
-/* JavaScript 기능 구현 도움 */
-.bg_black {
-  background-color: rgb(122, 122, 122);
-  border: none;
 }
 
 .bg_white {

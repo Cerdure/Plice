@@ -1,13 +1,13 @@
 .sign_container {
   width: 600px;
   margin: 120px auto;
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
   padding: 50px 45px;
   position: relative;
 }
 .sign_title {
   font-size: 30px;
-  border-bottom: var(--login-border);
+  border-bottom: 1px solid #c9d5ff;
   padding-bottom: 30px;
   margin-bottom: 30px;
 }
@@ -21,7 +21,7 @@
   font-size: 16px;
   padding-bottom: 20px;
   margin-bottom: 20px;
-  border-bottom: var(--login-border);
+  border-bottom: 1px solid #c9d5ff;
 }
 .term_check {
   margin-right: 5px;
@@ -47,10 +47,4 @@
   padding: 20px 0px;
   width: 100%;
   margin-top: 30px;
-}
-
-/* JavaScript 반응형 */
-.disable {
-  pointer-events: none;
-  cursor: pointer;
 }
