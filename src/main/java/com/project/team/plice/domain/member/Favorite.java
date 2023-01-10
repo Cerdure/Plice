@@ -1,6 +1,6 @@
 package com.project.team.plice.domain.member;
 
-import com.project.team.plice.domain.Apart;
+import com.project.team.plice.domain.data.ApartData;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,12 +20,12 @@ public class Favorite {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apart_id")
-    private Apart apart;
+    private ApartData apartData;
 
     @Builder
-    public Favorite(Long id, Member member, Apart apart) {
+    public Favorite(Long id, Member member, ApartData apartData) {
         this.id = id;
         this.member = member;
-        this.apart = apart;
+        this.apartData = apartData;
     }
 }

@@ -49,14 +49,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
-                // 로그인 필요 없는 페이지들 여기에 추가
-                .antMatchers("/", "/login/**", "/sign-up/**", "/term-service/**", "/marketing/**", "/use-personal/**", "/term-of-service/**", "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**",
-                        "/map/**", "/markers/**", "/dapi.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico", "/find-data/**",
-                        "/chat/**", "/post/**", "/story-detail/**", "/notice-detail/**",
-                        "/contents/**", "/my-page/**").permitAll()
+                    // 로그인 필요 없는 페이지들 여기에 추가
+                    .antMatchers("/", "/login/**", "/sign-up/**", "/term-service/**", "/marketing/**", "/use-personal/**", "/term-of-service/**", 
+                            "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**",
+                            "/map/**", "/markers/**", "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
+                            "/find-data/**", "/find-apart/**", "/webjars/**", "/ws/**",
+                            "/chat/**", "**/websocket/**", "/post/**", "/story-detail/**", "/notice-detail/**",
+                            "/contents/**", "/my-page/**").permitAll()
 
-                .antMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                    .antMatchers("/admin").hasRole("ADMIN")
+                    .anyRequest().authenticated()
+
                 .and()
                 .formLogin()
                 .loginPage("/login")

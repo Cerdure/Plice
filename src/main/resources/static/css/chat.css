@@ -92,13 +92,17 @@ header {
 
 .logo-wrapper img {
     width: 30px;
+    margin-right: 2px;
+    position: relative;
 }
 
 .logo-wrapper .text {
     height: 100%;
-    font-size: 30px;
+    font-size: 26px;
     font-family: 'Tenada';
     line-height: 70px;
+    position: relative;
+    bottom: 1px;
 }
 
 header span {
@@ -339,7 +343,6 @@ body {
         linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
         url("../img/images/bg.png");
     background-size: 50%;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -397,14 +400,23 @@ body {
 .chat-wrapper .chat .body::-webkit-scrollbar-thumb {
     background-color: #6781a8;
 }
-
+.info-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+    font-size: 14px;
+    color: silver;
+}
 .content-wrapper {
     width: 100%;
     display: flex;
     justify-content: flex-start;
     margin: 10px 0;
 }
-
+.content-wrapper:first-child {
+    margin-top: 20px;
+}
 .profile-wrapper {
     display: flex;
     align-items: center;
@@ -421,6 +433,7 @@ body {
 
 .content {
     font-size: 14px;
+    word-break: break-all;
 }
 
 .content strong {

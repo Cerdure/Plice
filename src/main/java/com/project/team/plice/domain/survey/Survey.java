@@ -1,6 +1,6 @@
 package com.project.team.plice.domain.survey;
 
-import com.project.team.plice.domain.Apart;
+import com.project.team.plice.domain.data.ApartData;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class Survey {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apart_id")
-    private Apart apart;
+    private ApartData apartData;
 
     private Integer memberCount;
 
@@ -31,9 +31,9 @@ public class Survey {
     }
 
     @Builder
-    public Survey(Long id, Apart apart, Integer memberCount, LocalDateTime regDate, LocalDateTime deadLine) {
+    public Survey(Long id, ApartData apartData, Integer memberCount, LocalDateTime regDate, LocalDateTime deadLine) {
         this.id = id;
-        this.apart = apart;
+        this.apartData = apartData;
         this.memberCount = memberCount;
         this.regDate = regDate;
         this.deadLine = deadLine;
