@@ -3,6 +3,7 @@ header .map {
 }
 
 body {
+    overflow-y: hidden !important;
     display: flex !important;
     flex-direction: column !important;
 }

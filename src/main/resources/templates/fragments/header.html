@@ -15,7 +15,7 @@
     <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
     <div class="login-wrapper">
         <div class="login-btn" onclick="location.href='/login'" sec:authorize="!isAuthenticated()">로그인</div>
-        <div class="login-btn" onclick="location.href='/login'" sec:authorize="hasRole('ADMIN')">관리페이지</div>
-        <div class="login-btn" onclick="location.href='/login'" sec:authorize="isAuthenticated()">로그아웃</div>
+        <div class="admin-btn" onclick="location.href='/admin'" sec:authorize="hasRole('ADMIN')">관리페이지</div>
+        <div class="logout-btn" onclick="location.href='/logout'" sec:authorize="isAuthenticated()">로그아웃</div>
     </div>
 </header>

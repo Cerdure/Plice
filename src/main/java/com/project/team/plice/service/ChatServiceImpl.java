@@ -5,9 +5,12 @@ import com.project.team.plice.domain.chat.ChatMessage;
 import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.dto.chat.ChatRoomDto;
+import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.repository.chat.ChatRepository;
 import com.project.team.plice.repository.chat.ChatRoomRepository;
 import com.project.team.plice.repository.chat.MemberChatRoomRepository;
+import com.project.team.plice.repository.data.ApartDataRepository;
 import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ public class ChatServiceImpl implements ChatService {
     private final MemberChatRoomRepository memberChatRoomRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRepository chatRepository;
+    private final ApartDataRepository apartDataRepository;
 
     @Override
     public List<ChatRoom> findChatRoomsByMember(Member member) {
@@ -45,5 +49,12 @@ public class ChatServiceImpl implements ChatService {
         return chat;
     }
 
+    @Override
+    public List<ChatRoomDto> findChatRoomsByAddressOrName(String address, String name) {
+        return apartDataRepository.findByAddressContainingIgnoreCaseAndNameContainingIgnoreCase(address, name)
+                .stream().map(apartData -> apartData.toDto()).collect(Collectors.toList())
+                .stream().map(apartDataDto -> chatRoomRepository.findByApartDataId(apartDataDto.getId()))
+                .map(chatRoom -> chatRoom.toDto()).collect(Collectors.toList());
+    }
 
 }

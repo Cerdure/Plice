@@ -1,6 +1,7 @@
 package com.project.team.plice.domain.chat;
 
 import com.project.team.plice.domain.data.ApartData;
+import com.project.team.plice.dto.chat.ChatRoomDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,6 +47,17 @@ public class ChatRoom {
         this.memberCount = memberCount;
         this.chatCount = chatCount;
         this.regDate = regDate;
+    }
+
+    public ChatRoomDto toDto(){
+        return ChatRoomDto.builder()
+                .id(this.id)
+                .apartData(this.apartData)
+                .chats(this.chats)
+                .chatCount(this.chatCount)
+                .memberCount(this.memberCount)
+                .regDate(this.regDate)
+                .build();
     }
 
 }

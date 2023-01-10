@@ -4,7 +4,6 @@ import com.project.team.plice.dto.LoginDto;
 import com.project.team.plice.service.LoginServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +14,13 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class LoginController {
+public class AdminController {
 
-    private final LoginServiceImpl loginService;
+//    private final AdminServiceImpl adminService;
 
-    @GetMapping("/login")
-    public String login(@Valid @ModelAttribute("loginDto") LoginDto loginDto, BindingResult bindingResult){
-        return "login";
+    @GetMapping("/admin")
+    public String login(){
+        return "admin";
     }
 
 }

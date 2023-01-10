@@ -1,5 +1,64 @@
 $(function () {
 
+    $(document).ready(function(){
+        $(document).on("click", ".my-room, .search-result-chat-room", function(){
+            $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
+            $(".my-room").removeClass("active-room");
+            if($(this).hasClass("my-room")) $(this).addClass("active-room");
+            $(".right-side").css({'flex-direction':'row','align-items':'center'});
+            $(".top3-wrapper").hide();
+            $(".top3-wrapper .head").stop().animate({'margin-bottom':'0px'},300);
+            $(".top3-wrapper").css({'width':'auto','margin-top':'0px', 'margin-right':'10%'}).show();
+            $(".popular, .lastest").css('flex-direction','column');
+            $(".chat-wrapper").css('display','flex');
+            $(".chat").attr("data-id",$(this).data("id"));
+            $(".chat").attr("data-member-phone","01012345678");
+            $(".chat-wrapper .chat .head .title .data").text($(this).data("name"));
+            $(".chat-wrapper .chat .head .title .member-count").text('참여인원' + $(this).data("member-count") + '명');
+            $(".room").css({'height':'10%','margin':'20px 20px'});
+            $(".search-result-outer-wrapper").hide();
+            wsConnect();
+        });
+    });
+
+    $(".search-input").keyup(function(){
+        let inputVal = $(this).val();
+        if(inputVal != '' && inputVal.length > 1){
+            keySearch(inputVal);
+        } else {
+            $(".search-result-apart").remove();
+            $(".search-result-outer-wrapper").hide();
+        }
+    }).click(function(){
+        if($(this).val()!='') $(".search-result-outer-wrapper").show();
+    });
+
+    
+    $(".search-wrapper .reset").click(function () {
+        $('.search-input').val('');
+        $(".search-result-chat-room").remove();
+        $(".search-result-outer-wrapper").hide();
+    });
+
+    const resResult = inputVal => fetch("/chat/input-search?inputVal=" + inputVal).then(res => res.text());     
+    let prevResult;
+
+    function keySearch(inputVal){
+        (async () => {
+            try {
+                let result = await resResult(inputVal);
+                $('#search-input-results').replaceWith(result);
+                $(".search-result-apart-wrapper").css('display',$(".search-result-apart-wrapper").children().length == 0 ? 'none' : 'flex');
+                if(result != prevResult){
+                    $(".search-result-outer-wrapper").show();
+                    prevResult = result;
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })();
+    }
+
     $(".title-popular").click(function(){
         if(!$(this).hasClass("clicked")){
             $(".top3-wrapper .body").fadeOut(100);
@@ -26,21 +85,7 @@ $(function () {
         }
     });
 
-    $(".my-room").click(function(){
-        $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
-        $(".my-room").removeClass("active-room");
-        $(this).addClass("active-room");
-        $(".right-side").css({'flex-direction':'row','align-items':'center'});
-        $(".top3-wrapper").hide();
-        $(".top3-wrapper .head").stop().animate({'margin-bottom':'0px'},300);
-        $(".top3-wrapper").css({'width':'40%','margin-top':'0px'}).show();
-        $(".popular, .lastest").css('flex-direction','column');
-        $(".chat-wrapper").css('display','flex');
-        $(".chat").attr("data-id",$(this).data("id"));
-        $(".chat").attr("data-member-phone","01012345678");
-        $(".room").css({'height':'10%','margin':'20px 20px'});
-        wsConnect();
-    });
+    
     $(".chat-wrapper .chat .head .close").click(function(){
         $(".my-room").removeClass("active-room");
         $(".right-side").css({'flex-direction':'column','align-items':'center'});
