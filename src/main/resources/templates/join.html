@@ -33,19 +33,32 @@
     <h3 class="join_subtitle">
         Plice 서비스 이용을 위해 아래 정보를 입력해주세요.
     </h3>
-    <form id="join_form" action="#" method="post">
+    <form id="join_form" action="/join" method="post">
         <label for="join_id" class="join_id_label">
-            아이디
-            <input
-                    id="join_id"
-                    placeholder="전화번호(-제외 11자) 입력"
-                    onKeyup="joinId(this)"
-                    minlength="11"
-                    maxlength="11"
-            />
-            <span class="id_success_text hidden_text">정상 확인 되었습니다.</span>
-            <span class="id_failed_text hidden_text">다시 작성해주세요.</span>
+            아이디<span class="id_success_text hidden_text"></span
+        ><span class="id_failed_text hidden_text"></span>
+            <div class="phone_accept">
+                <input
+                        id="join_id"
+                        placeholder="전화번호(-제외 11자) 입력"
+                        onKeyup="joinId(this)"
+                        minlength="11"
+                        maxlength="11"
+                        name="phone"
+                />
+                <button class="id_btn disable">인증번호</button>
+            </div>
         </label>
+
+        <label class="accept_number">
+            인증번호
+            <div class="accept_container">
+                <span id="timer">00:00</span>
+                <input class="accept_input" placeholder="인증번호" />
+                <button class="accept_btn">확인</button>
+            </div>
+        </label>
+
         <label for="join_name" class="join_name_label">
             이름
             <input
@@ -54,6 +67,7 @@
                     onKeyup="joinName(this)"
                     minlength="2"
                     maxlength="3"
+                    name="name"
             />
             <span class="name_success_text hidden_text">
             정상 확인 되었습니다.
@@ -68,6 +82,7 @@
                     onKeyup="joinNick(this)"
                     minlength="3"
                     maxlength="10"
+                    name="nickname"
             />
             <span class="nick_success_text hidden_text">
             정상 확인 되었습니다.
@@ -82,6 +97,7 @@
                     placeholder="문자, 숫자, 특수문자 포함(8~16자)"
                     minlength="8"
                     maxlength="16"
+                    name="pw"
             />
             <span class="pwd_success_text hidden_text"></span>
             <span class="pwd_failed_text hidden_text"></span>
@@ -108,6 +124,7 @@
                             onKeyup="joinYY(this)"
                             minlength="4"
                             maxlength="4"
+                            name="birth"
                     />
                     <span class="yy_success_text hidden_text"></span>
                     <span class="yy_failed_text hidden_text"></span>

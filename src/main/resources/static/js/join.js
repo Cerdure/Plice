@@ -21,19 +21,72 @@ function joinDD(obj) {
 
 // 아이디 - 전화번호
 $("#join_id").on("keyup", function () {
-  const idRgx = /^[0-9]{11}$/;
+  const idRgx = /01[016789][^0][0-9]{3,4}[0-9]{3,4}/;
   const idInput = document.querySelector("#join_id").value;
   if (idRgx.test(idInput)) {
-    $(".id_success_text").css("display", "inline");
+    $(".id_success_text").css("display", "inline").html("정상 확인");
     $(".id_failed_text").css("display", "none");
+    $(".join_id_label .id_btn").removeClass("disable");
+    $(".join_id_label .id_btn").addClass("able");
   } else {
     $(".id_success_text").css("display", "none");
-    $(".id_failed_text").css("display", "inline");
+    $(".id_failed_text").css("display", "inline").html("다시 작성해주세요.");
+    $(".join_id_label .id_btn").removeClass("able");
+    $(".join_id_label .id_btn").addClass("disable");
   }
   if (idInput == "") {
     $(".id_success_text").css("display", "none");
     $(".id_failed_text").css("display", "inline").html("번호를 입력해주세요.");
+    $(".join_id_label .id_btn").removeClass("able");
+    $(".join_id_label .id_btn").addClass("disable");
   }
+});
+
+// 인증번호 버튼 클릭
+$(".join_id_label .id_btn").click(function (e) {
+  e.preventDefault();
+  $("#join_form .accept_number").fadeIn(500);
+  $(".join_id_label .id_btn")
+    .html("전송중")
+    .css({ "background-color": "rgb(172, 0, 92)" });
+  // 타이머
+  let time = 180; // 기준 시간
+  let min = ""; // 분
+  let sec = ""; // 초
+
+  let timer = setInterval(function () {
+    min = String(parseInt(time / 60)).padStart(2, "0"); // 몫을 계산
+    sec = String(time % 60).padStart(2, "0"); // 나머지 계산
+
+    document.querySelector("#timer").innerHTML = min + ":" + sec;
+    time--;
+
+    $("#join_form .accept_btn").click(function () {
+      clearInterval(timer);
+    });
+
+    // 타임 아웃 시
+    if (time < 0) {
+      clearInterval(timer); // setInterval() 실행을 끝냄
+      document.querySelector(".join_id_label .id_btn").innerHTML = "시간초과";
+      $(".join_id_label .id_btn").css({ "background-color": "black" });
+      $("#join_form .accept_btn").addClass("disable");
+    }
+  }, 100);
+  $(".join_id_label .id_btn").css({ "pointer-events": "none" });
+  $("#join_form #join_id").attr("readonly", true);
+});
+
+// 인증번호 확인 버튼
+$("#join_form .accept_btn").click(function (e) {
+  e.preventDefault();
+  $("#join_form .accept_number").fadeOut(500);
+  $(".join_id_label .id_btn").removeClass("able");
+  $(".join_id_label .id_btn")
+    .html("인증완료")
+    .css({ backgroundColor: "#326cf9", color: "white" })
+    .addClass("disable");
+  $("#join_form #join_id").attr("readonly", true);
 });
 
 // 이름
