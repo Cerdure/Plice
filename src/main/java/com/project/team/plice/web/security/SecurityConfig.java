@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             "/contents/**", "/my-page/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**").permitAll()
 
                     .antMatchers("/", "/login/**", "/sign-up/**", "/term-service/**", "/marketing/**", "/use-personal/**", "/term-of-service/**", 
-                            "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**",
+                            "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**", "/search/**",
                             "/map/**", "/markers/**", "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
                             "/find-data/**", "/find-apart/**", "/webjars/**", "/ws/**",
                             "/chat/**", "**/websocket/**", "/post/**", "/story-detail/**", "/notice-detail/**",
