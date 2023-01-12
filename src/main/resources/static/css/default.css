@@ -160,6 +160,7 @@ header {
 
 header span {
   width: 10%;
+  min-width: 78px;
   height: 100%;
   text-align: center;
   line-height: 60px;
@@ -204,7 +205,8 @@ header span:active:before {
   justify-content: end;
 }
 
-.login-btn {
+.login-btn,
+.admin-btn {
   position: relative;
   width: 100px;
   height: 34px;
@@ -220,8 +222,11 @@ header span:active:before {
   font-size: 16px;
   font-weight: 400;
 }
-
-.login-btn:before {
+.admin-btn {
+  margin-right: 10px;
+}
+.login-btn:before,
+.admin-btn:before {
   content: '';
   position: absolute;
   border: #5575ff solid 3px;
@@ -232,17 +237,57 @@ header span:active:before {
   left: 0;
 }
 
+.logout-btn {
+  position: relative;
+  width: 100px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  color: white;
+  background-color: #0b406fcc;
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  font-size: 16px;
+  font-weight: 400;
+}
+.logout-btn:before {
+  content: '';
+  position: absolute;
+  border: #316ea5cc solid 3px;
+  border-radius: 5px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .login-btn:hover:before,
 .login-btn:focus:before,
-.login-btn:active:before {
+.login-btn:active:before,
+.logout-btn:hover:before,
+.logout-btn:focus:before,
+.logout-btn:active:before,
+.admin-btn:hover:before,
+.admin-btn:focus:before,
+.admin-btn:active:before {
   -webkit-animation: hvr-ripple-out 1s both;
   animation: hvr-ripple-out 1s both;
 }
 
-.login-btn:hover {
+.login-btn:hover,
+.admin-btn:hover {
   background-color: white;
   color: #5575ff;
   border: 1px solid #9bb2ff;
+  transition: 1s;
+}
+.logout-btn:hover {
+  background-color: white;
+  color: #0b406fcc;
+  border: 1px solid #488cc8cc;
   transition: 1s;
 }
 

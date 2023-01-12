@@ -534,7 +534,6 @@ $(function () {
         $(".search-result-outer-wrapper").show();
     }
   });
-  $
 
 
 

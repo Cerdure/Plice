@@ -67,19 +67,10 @@ public class InitDb {
             em.persist(member1);
             em.persist(member2);
 
-
             List<ChatRoom> chatRooms = apartDataRepository.findAll().stream().map(apartData ->
                     ChatRoom.builder().apartData(apartData).build()).collect(Collectors.toList());
-            chatRooms.forEach(e -> em.persist(e));
+                    chatRooms.forEach(e -> em.persist(e));
 
-
-            MemberChatRoom[] memberChatRooms = new MemberChatRoom[3];
-            memberChatRooms[0] = MemberChatRoom.builder().member(member1).chatRoom(chatRooms.get(12556)).build();
-            memberChatRooms[1] = MemberChatRoom.builder().member(member1).chatRoom(chatRooms.get(13251)).build();
-            memberChatRooms[2] = MemberChatRoom.builder().member(member1).chatRoom(chatRooms.get(13826)).build();
-            for (MemberChatRoom memberChatRoom : memberChatRooms) {
-                em.persist(memberChatRoom);
-            }
         }
     }
 }
