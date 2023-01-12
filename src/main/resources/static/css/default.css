@@ -256,7 +256,7 @@ header span:active:before {
 .logout-btn:before {
   content: '';
   position: absolute;
-  border: #0b406fcc solid 3px;
+  border: #316ea5cc solid 3px;
   border-radius: 5px;
   top: 0;
   right: 0;

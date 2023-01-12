@@ -33,20 +33,84 @@ public class ChatServiceImpl implements ChatService {
     private final ApartDataRepository apartDataRepository;
 
     @Override
+    public ChatRoom findChatRoomById(String roomId) {
+        return chatRoomRepository.findById(roomId).get();
+    }
+
+    @Override
     public List<ChatRoom> findChatRoomsByMember(Member member) {
         return memberChatRoomRepository.findByMember(member).stream().map(e -> e.getChatRoom()).collect(Collectors.toList());
     }
 
     @Override
-    public Chat chatSave(ChatMessage message) {
+    public List<MemberChatRoom> findMemberChatRoomByRoom(ChatRoom chatRoom) {
+        return memberChatRoomRepository.findByChatRoom(chatRoom);
+    }
+
+    @Override
+    public List<MemberChatRoom> findMemberChatRoomByMember(Member member) {
+        return memberChatRoomRepository.findByMember(member);
+    }
+
+
+    @Override
+    public Chat chatSave(ChatMessage message, Member member) {
         Chat chat = Chat.builder()
                 .chatRoom(chatRoomRepository.findById(message.getChatRoomId()).get())
-                .member(memberRepository.findByPhone(message.getPhone()).get())
+                .member(member)
                 .content(message.getMessage())
                 .regDate(LocalDateTime.now())
                 .build();
         chatRepository.save(chat);
         return chat;
+    }
+
+    @Override
+    public void chatRoomSave(ChatRoom chatRoom) {
+        chatRoomRepository.save(chatRoom);
+    }
+
+    @Override
+    public void memberChatRoomSave(MemberChatRoom memberChatRoom) {
+        memberChatRoomRepository.save(memberChatRoom);
+    }
+
+    @Override
+    public String chatRoomJoin(Member member, String roomId) throws Exception {
+        ChatRoom chatRoom = findChatRoomById(roomId);
+        if(!isJoined(member, chatRoom)){
+            chatRoom.memberCountPlus();
+            MemberChatRoom memberChatRoom = MemberChatRoom.builder().chatRoom(chatRoom).member(member).build();
+            chatRoomSave(chatRoom);
+            memberChatRoomSave(memberChatRoom);
+            return chatRoom.getMemberCount().toString();
+        }
+        throw new Exception("isJoined");
+    }
+
+    @Override
+    public boolean isJoined(Member member, ChatRoom chatRoom) {
+        List<MemberChatRoom> memberChatRooms = findMemberChatRoomByRoom(chatRoom);
+        if(memberChatRooms.stream().filter(mcr -> mcr.getMember().getPhone().equals(member.getPhone())).count() == 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    @Override
+    public void chatRoomExit(Member member, String roomId) {
+        System.out.println("chatRoomExit  roomId = " + roomId);
+        ChatRoom chatRoom = findChatRoomById(roomId);
+        chatRoom.memberCountMinus();
+        chatRoomRepository.save(chatRoom);
+        List<MemberChatRoom> memberChatRooms = findMemberChatRoomByMember(member);
+        memberChatRooms.forEach(m -> {
+            if(m.getChatRoom().getId().equals(roomId)){
+                memberChatRoomRepository.delete(m);
+            }
+        });
     }
 
     @Override

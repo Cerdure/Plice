@@ -60,4 +60,11 @@ public class ChatRoom {
                 .build();
     }
 
+    public void memberCountPlus(){
+        this.memberCount++;
+    }
+
+    public void memberCountMinus(){
+        this.memberCount--;
+    }
 }

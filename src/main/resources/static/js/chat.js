@@ -1,25 +1,81 @@
 $(function () {
-
     $(document).ready(function(){
+
         $(document).on("click", ".my-room, .search-result-chat-room", function(){
-            $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
-            $(".my-room").removeClass("active-room");
-            if($(this).hasClass("my-room")) $(this).addClass("active-room");
-            $(".right-side").css({'flex-direction':'row','align-items':'center'});
-            $(".top3-wrapper").hide();
-            $(".top3-wrapper .head").stop().animate({'margin-bottom':'0px'},300);
-            $(".top3-wrapper").css({'width':'auto','margin-top':'0px', 'margin-right':'10%'}).show();
-            $(".popular, .lastest").css('flex-direction','column');
-            $(".chat-wrapper").css('display','flex');
-            $(".chat").attr("data-id",$(this).data("id"));
-            $(".chat").attr("data-member-phone","01012345678");
-            $(".chat-wrapper .chat .head .title .data").text($(this).data("name"));
-            $(".chat-wrapper .chat .head .title .member-count").text('참여인원' + $(this).data("member-count") + '명');
-            $(".room").css({'height':'10%','margin':'20px 20px'});
-            $(".search-result-outer-wrapper").hide();
-            wsConnect();
+            (async () => {
+                const loginCheck = await fetch("/chat/login-check").then(res => res.text());
+                if(loginCheck == "ok"){
+                    if($(this).hasClass("my-room")) {
+                        $(".my-room").removeClass("active-room");
+                        $(this).addClass("active-room");
+                        newJoin = false;
+                        chatRoomOpen(this);
+                    } else {
+                        const myRoomCount = await fetch("/chat/my-rooms/count").then(res => res.text());
+                        if(myRoomCount == '5'){
+                            alert("채팅방은 최대 5개까지 참여할 수 있습니다.");
+                        } else {
+                            $(".my-room").removeClass("active-room");
+                            const memberCount = await fetch("/chat/in?roomId=" + $(this).data("id")).then(res => res.text());
+                            $(this).attr("data-member-count", memberCount);
+                            const update = await fetch("/chat/my-rooms").then(res => res.text());
+                            $("#my-rooms").replaceWith(update);
+                            $(".my-room:last-child").addClass("active-room"); 
+                            newJoin = true;
+                            chatRoomOpen(this);
+                        }
+                    }
+                } else {
+                    alert('로그인 후 이용 가능합니다.');
+                    location.href = "/login";
+                }
+            })();
+        });
+
+        $(document).on("click", ".chat-wrapper .chat .head .close", chatRoomClose);
+
+        $(document).on("click", ".room-exit", function(){
+            (async () => {
+                let roomId = '';
+                roomId = $(".active-room").data("id");
+                await fetch("/chat/room-exit?roomId=" + roomId).then(res => console.log(res.text()));
+                chatRoomClose();
+                const update = await fetch("/chat/my-rooms").then(res => res.text());
+                $("#my-rooms").replaceWith(update);
+            })();
         });
     });
+
+    function chatRoomOpen(_this){
+        $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
+        $(".right-side").css({'flex-direction':'row','align-items':'center'});
+        $(".top3-wrapper").hide();
+        $(".top3-wrapper .head").stop().animate({'margin-bottom':'0px'},300);
+        $(".top3-wrapper").css({'width':'auto','margin-top':'0px', 'margin-right':'10%'}).show();
+        $(".popular, .lastest").css('flex-direction','column');
+        $(".chat-wrapper").css('display','flex');
+        $(".chat-wrapper .chat .head .title .data").text($(_this).data("name"));
+        $(".chat-wrapper .chat .head .title .member-count").text('참여인원 ' + $(_this).data("member-count") + '명');
+        $(".room").css({'height':'10%','margin':'20px 20px'});
+        $(".search-result-outer-wrapper").hide();
+        $(".chat-wrapper .regist-btn .btn").remove();
+        const div = document.createElement("div");
+        div.setAttribute("class","btn send-btn-" + $(_this).data("id"));
+        div.innerHTML = "<img src='/img/icon/send-fill.svg'>";
+        $(".chat-wrapper .regist-btn .count").before(div);
+        subscribe($(_this).data("id"));
+    }
+
+    function chatRoomClose(){
+        $(".my-room").removeClass("active-room");
+        $(".right-side").css({'flex-direction':'column','align-items':'center'});
+        $(".top3-wrapper").hide();
+        $(".top3-wrapper .head").stop().animate({'margin-bottom':'40px'},300);
+        $(".top3-wrapper").css({'width':'100%','margin-top':'80px', 'margin-right':'0'}).show();
+        $(".popular, .lastest").css('flex-direction','row');
+        $(".chat-wrapper").hide();
+        $(".room").css({'height':'200px','margin':'0px 20px'});
+    }
 
     $(".search-input").keyup(function(){
         let inputVal = $(this).val();
@@ -85,37 +141,53 @@ $(function () {
         }
     });
 
-    
-    $(".chat-wrapper .chat .head .close").click(function(){
-        $(".my-room").removeClass("active-room");
-        $(".right-side").css({'flex-direction':'column','align-items':'center'});
-        $(".top3-wrapper").hide();
-        $(".top3-wrapper .head").stop().animate({'margin-bottom':'40px'},300);
-        $(".top3-wrapper").css({'width':'100%','margin-top':'80px'}).show();
-        $(".popular, .lastest").css('flex-direction','row');
-        $(".chat-wrapper").hide();
-        $(".room").css({'height':'200px','margin':'0px 20px'});
-    });
+   
+   
 
     $(".chat-input").keyup(function(){
         $(".chat-wrapper .regist-btn .count").text($(this).val().length + '/300');
     });
 
+    $('html').click(function (e) {
+        if (!$(e.target).is(".search-result-wrapper,"
+                            +".search-result-wrapper div,"
+                            +".search-result-wrapper span,"
+                            +".search-result-wrapper strong,"
+                            +".search-result-wrapper img,"
+                            +".search-result-wrapper input,"
+                            +".search-input")) {
+          $(".search-result-outer-wrapper").hide();
+        }
+      });
+      $(".search-input").click(function(){
+        if($(this).val()!=''){
+            $(".search-result-wrapper").show();
+            $(".search-result-outer-wrapper").show();
+        }
+      });
+
+      console.log(sessionStorage)
 });
 
+let newJoin = false;
+let client, sock;
+let currentSubscribe;
 
-function wsConnect() {
+function subscribe(_roomId) {
     var messageInput = $('.chat-input');
-    var sendBtn = $('#chat-send');
-    var roomId = $('.chat').data('id');
-    var memberPhone = $('.chat').data('member-phone');
+    var sendBtn = $('.send-btn-' + _roomId);
+    var roomId = _roomId;
+    sock = new SockJS("/ws");
+    client = Stomp.over(sock); 
 
-    var sock = new SockJS("/ws");
-    var client = Stomp.over(sock);    
-
-    client.connect({}, function () {
-        client.send('/publish/chat/in', {}, JSON.stringify({chatRoomId: roomId, phone: memberPhone})); 
-        client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
+    client.connect({},function(){
+        if(newJoin) {
+            client.send('/publish/chat/in-message', {}, JSON.stringify({chatRoomId: roomId})); 
+        }
+        if(currentSubscribe != null){
+            currentSubscribe.unsubscribe();
+        }
+        currentSubscribe =  client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
             const content = JSON.parse(chat.body);
             if(content.type == 'INFO'){
                 let messagebox = document.createElement("div");
@@ -123,30 +195,30 @@ function wsConnect() {
                 messagebox.innerHTML = content.message;
                 document.getElementById("chat-box").appendChild(messagebox);
             } else {
-                let hour = new Date(content.regDate).getHours();
-                hour = hour <= 12 ? '오전 ' + hour : '오후' + (Number(hour) - 12);
-                let minute = new Date(content.regDate).getMinutes();
-                minute = minute < 10 ? '0' + minute : minute;
-                let messagebox = document.createElement("div");
-                messagebox.setAttribute('class','content-wrapper');
-                messagebox.innerHTML = 
-                "<div class='profile-wrapper'>"
-                    + "<img src='" + content.member.profileImgPath + "'>"
-                + "</div>"
-                + "<div class='content'>"
-                    + "<strong>" + content.member.nickname + "</strong>"
-                    + content.message
-                    + "<div class='date'>" + hour + ":" + minute + "</div>"
-                + "</div>"
-                document.getElementById("chat-box").appendChild(messagebox);
+                    let hour = new Date(content.regDate).getHours();
+                    let minute = new Date(content.regDate).getMinutes();
+                    let messagebox = document.createElement("div");
+                    hour = hour <= 12 ? '오전 ' + hour : '오후' + (Number(hour) - 12);
+                    minute = minute < 10 ? '0' + minute : minute;
+                    messagebox.setAttribute('class','content-wrapper');
+                    messagebox.innerHTML = 
+                    "<div class='profile-wrapper'>"
+                        + "<img src='" + content.member.profileImgPath + "'>"
+                    + "</div>"
+                    + "<div class='content'>"
+                        + "<strong>" + content.member.nickname + "</strong>"
+                        + content.message
+                        + "<div class='date'>" + hour + ":" + minute + "</div>"
+                    + "</div>"
+                    document.getElementById("chat-box").appendChild(messagebox);
             }
         });
-    });
-
-    sendBtn.click(function () {
-        var message = messageInput.val();
-        client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, message: message, phone: memberPhone}));
-        messageInput.val('');
-        $(".chat-wrapper .regist-btn .count").text('0/300');
+    
+        sendBtn.click(function () {
+            var message = messageInput.val();
+            client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, message: message}));
+            messageInput.val('');
+            $(".chat-wrapper .regist-btn .count").text('0/300');
+        });
     });
 }

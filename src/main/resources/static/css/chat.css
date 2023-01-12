@@ -52,6 +52,7 @@ body {
     padding: 0 20px;
     display: flex;
     border-bottom: 1px solid silver;
+    background-color: white;
 }
 
 .search-wrapper .search-input {
@@ -172,7 +173,7 @@ body {
 .search-result-chat-room .join {
     white-space: nowrap;
 }
-.search-result-chat-room:hover .join-room {
+.search-result-chat-room:hover .join {
     color: #4169fc;
     transition: 0.5s;
 }
@@ -201,7 +202,6 @@ body {
 .null {
     flex-shrink: 1;
     font-size: 20px;
-    font-weight: 600;
 }
 
 
@@ -380,7 +380,7 @@ body {
 
 
 .my-chat strong {
-    color: #315dff;
+    color: #7a96fd;
 }
 
 
@@ -668,7 +668,9 @@ body {
     text-align: end;
     z-index: 1;
 }
-
+#my-rooms {
+    width: 100%;
+}
 .my-room {
     width: 100%;
     height: 100px;
