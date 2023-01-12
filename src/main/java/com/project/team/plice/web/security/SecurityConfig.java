@@ -47,47 +47,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-
-                    // 로그인 필요 없는 페이지들 여기에 추가
-<<<<<<< HEAD
-                    .antMatchers("/", "/login/**", "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**",
-                            "/map/**", "/markers/**", "/dapi.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
-                            "/chat/**", "/post/**", "/story-detail/**", "/notice-detail/**",
-                            "/contents/**", "/my-page/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**").permitAll()
-=======
+    
+        http.authorizeRequests()    // 로그인 필요 없는 페이지들 여기에 추가
                     .antMatchers("/", "/login/**", "/sign-up/**", "/term-service/**", "/marketing/**", "/use-personal/**", "/term-of-service/**", 
                             "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**",
                             "/map/**", "/markers/**", "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
                             "/find-data/**", "/find-apart/**", "/webjars/**", "/ws/**",
                             "/chat/**", "**/websocket/**", "/post/**", "/story-detail/**", "/notice-detail/**",
-                            "/contents/**", "/my-page/**").permitAll()
->>>>>>> 65c8704fa6ac02431ad37b65f159cdf02b74b094
+                            "/contents/**", "/my-page/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**").permitAll()
 
                     .antMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated()
-
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("phone")
-                .passwordParameter("pw")
-                .loginProcessingUrl("/loginProc")
-                .defaultSuccessUrl("/")
-                .failureUrl("/login/error")
+                    .formLogin()
+                    .loginPage("/login")
+                    .usernameParameter("phone")
+                    .passwordParameter("pw")
+                    .loginProcessingUrl("/loginProc")
+                    .defaultSuccessUrl("/")
+                    .failureUrl("/login/error")
                 .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/")
                 .and()
-                .rememberMe()
-                .key("rememberMe")
-                .tokenValiditySeconds(3600)
-                .alwaysRemember(false)
-                .userDetailsService(loginService)
-                .tokenRepository(tokenRepository())
+                    .rememberMe()
+                    .key("rememberMe")
+                    .tokenValiditySeconds(3600)
+                    .alwaysRemember(false)
+                    .userDetailsService(loginService)
+                    .tokenRepository(tokenRepository())
                 .and()
-                .csrf().disable();
+                    .csrf().disable();
 
         //중복 로그인
         http.sessionManagement()
@@ -105,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("admin").password(passwordEncoder().encode("1234")).roles("ADMIN");
+                .withUser("00099990000").password(passwordEncoder().encode("1234")).roles("ADMIN");
         auth
                 .userDetailsService(loginService).passwordEncoder(passwordEncoder());
     }

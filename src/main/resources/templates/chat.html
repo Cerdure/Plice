@@ -1,56 +1,85 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/default}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
 
-<th:block layout:fragment="css"><link rel="stylesheet" href="/css/chat.css"></th:block>
-<th:block layout:fragment="script"><script src="/js/chat.js"></script></th:block>
-<th:block layout:fragment="title"><title>PLICE ㅣ 채팅</title></th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/chat.css">
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/js/chat.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 채팅</title>
+</th:block>
 
 <div layout:fragment="content">
-  <div class="top-space"></div>
+    <div class="top-space"></div>
     <div class="contents-wrapper">
         <div class="left-side">
-            <form class="search-wrapper">
+            <div class="search-wrapper">
                 <img class="icon" src="/img/icon/search-icon.svg">
                 <input class="search-input" type="text" placeholder="아파트로 채팅방 검색">
                 <img class="reset" src="/img/icon/x-circle.svg">
-            </form>
-            <div class="null-wrapper">
+            </div>
+            <div class="search-result-outer-wrapper">
+                <div class="search-result-wrapper" id="search-input-results">
+                    <div class="search-result-chat-room-wrapper">
+                        <div class="search-result-chat-room" th:each="chatRoom : ${chatRooms}"
+                            th:data-id="${chatRoom.id}" th:data-name="${chatRoom.apartData.name}"
+                            th:data-member-count="${chatRoom.memberCount}">
+                            <div class="inner-wrapper">
+                                <div class="top-box">
+                                    <div class="title">채팅방</div>
+                                    <div class="member-count" th:text="${chatRoom.memberCount} + '명'"></div>
+                                    <div class="join">참여하기 &gt;</div>
+                                </div>
+                                <div class="data" th:utext="${chatRoom.highlightName}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="null-wrapper" th:if="${myChatRooms == null}">
                 <div class="null">현재 참여중인 채팅방이 없습니다.</div>
             </div>
-            <div class="my-room" th:each="chatRoom : ${chatRooms}" th:data-id="${chatRoom.id}">
-                <div class="profiles">
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
+
+            <div id="my-rooms">
+                <div class="my-room" th:each="myChatRoom : ${myChatRooms}" th:data-id="${myChatRoom.id}"
+                    th:data-name="${myChatRoom.apartData.name}" th:data-member-count="${myChatRoom.memberCount}">
+                    <div class="profiles">
+                        <div class="img-wrapper">
+                            <img src="/img/icon/profile.png">
+                        </div>
+                        <div class="img-wrapper">
+                            <img src="/img/icon/profile.png">
+                        </div>
+                        <div class="img-wrapper">
+                            <img src="/img/icon/profile.png">
+                        </div>
                     </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
+                    <div class="info">
+                        <div class="title">
+                            <div class="text" th:text="${myChatRoom.apartData.name}"></div>
+                            <div class="number" th:text="${myChatRoom.memberCount} + '명'"></div>
+                        </div>
+                        <div class="content">안녕하세요.</div>
                     </div>
-                    <div class="img-wrapper">
-                        <img src="/img/icon/profile.png">
-                    </div>
-                </div>
-                <div class="info">
-                    <div class="title">
-                        <div class="text" th:text="${chatRoom.apartData.name}"></div>
-                        <div class="number" th:text="${chatRoom.memberCount} + '명'">132명</div>
-                    </div>
-                    <div class="content">안녕하세요.</div>
                 </div>
             </div>
+
         </div>
+
         <div class="right-side">
             <div class="chat-wrapper">
                 <div class="chat" data-id="" data-member-phone="">
                     <div class="head">
-                        <img class="exit-icon" src="/img/icon/chevron-left.svg">
-                        <div class="exit">채팅방<br>나가기</div>
+                        <img class="exit-icon room-exit" src="/img/icon/chevron-left.svg">
+                        <div class="exit room-exit">채팅방<br>나가기</div>
                         <div class="title">
-                            <div class="data">반포자이</div>
-                            <div class="text">채팅방</div>
+                            <div class="data"></div>
+                            <div class="member-count"></div>
                         </div>
                         <img class="close" src="/img/icon/close.png">
                     </div>
@@ -163,4 +192,5 @@
         </div>
     </div>
 </div>
+
 </html>

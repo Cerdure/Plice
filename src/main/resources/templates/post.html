@@ -298,7 +298,7 @@
                     <div class="write-btn-wrapper">
                         <div class="write-btn notice-write-btn">
                             <img src="/img/icon/pencil-square.svg">
-                            <div class="text">공지 등록</div>
+                            <div class="text" sec:authorize="hasRole('ADMIN')">공지 등록</div>
                         </div>
                     </div>
                 </div>
