@@ -13,15 +13,26 @@ public class SurveyElementDto {
     private Survey survey;
     private Member member;
     private String content;
+<<<<<<< HEAD
+    private Integer selects;
+
+    @Builder
+    public SurveyElementDto(Long id, Survey survey, Member member, String content, Integer selects) {
+=======
     private Integer selectValue;
 
     @Builder
     public SurveyElementDto(Long id, Survey survey, Member member, String content, Integer selectValue) {
+>>>>>>> 65c8704fa6ac02431ad37b65f159cdf02b74b094
         this.id = id;
         this.survey = survey;
         this.member = member;
         this.content = content;
+<<<<<<< HEAD
+        this.selects = selects;
+=======
         this.selectValue = selectValue;
+>>>>>>> 65c8704fa6ac02431ad37b65f159cdf02b74b094
     }
 
     public SurveyElement toEntity(){
@@ -30,7 +41,11 @@ public class SurveyElementDto {
                 .survey(this.survey)
                 .member(this.member)
                 .content(this.content)
+<<<<<<< HEAD
+                .selects(this.selects)
+=======
                 .selectValue(this.selectValue)
+>>>>>>> 65c8704fa6ac02431ad37b65f159cdf02b74b094
                 .build();
     }
 }

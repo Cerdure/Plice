@@ -101,13 +101,17 @@ header {
 
 .logo-wrapper img {
   width: 30px;
+  margin-right: 2px;
+  position: relative;
 }
 
 .logo-wrapper .text {
   height: 100%;
-  font-size: 30px;
+  font-size: 26px;
   font-family: 'Tenada';
   line-height: 70px;
+  position: relative;
+  bottom: 1px;
 }
 
 header span {
@@ -366,21 +370,6 @@ header .post {
   outline: none;
 }
 
-.disable {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.modal-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 13;
-  display: none;
-}
 .alert-window {
   position: fixed;
   top: 50%;

@@ -5,59 +5,21 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/default}">
 
-<div th:fragment="footer">
+<footer th:fragment="footer">
+    <p>
+        (주)플라이스<br>
+        사업자 번호: 000-00-00000&nbsp&nbsp&nbsp&nbsp통신판매업신고번호 : 제2023-서울 영등포-00000호<br>
+        주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩<br><br>
 
-    <div class="footer-wrapper">
-        <footer>
-            <img src="/img/icon/logo.png">
-            <div class="footer-title">Bookshelf</div>
-            <span class="footer-infor-title">사업자 정보 열기 ∨</span>
-            <p class="footer-infor">대표이사:최원석&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                사업자등록번호:123-45-6789&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                호스팅 제공자:(주)북셸프<br>
-                통신판매업 신고번호:2022-서울영등포-2000호<br>
-                주소:서울특별시 영등포구 국회대로37길6,10층(유경빌딩)<br><br>
-                고객정보보호 책임자:최원석(nicui@bookshelf.com)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                마케팅 제휴 문의:business@booshelf.com<br></p>
-            <ul>
-                <li>이용약관</li>
-                <li>개인정보처리방침</li>
-                <li>고객센터</li>
-                <li>환불신청</li>
-                <li>콘텐츠 제휴문의</li>
-                <li>저작권/도서오류 신고</li>
-                <li>회사 소개</li>
-            </ul>
-            <div class="footer-last">Copyright © 2022 북셸프 All Rights Reserved.</div>
-        </footer>
+        고객센터 : 02-0000-0000 | 평일 10:00 ~ 18:30, 점심시간 : 12:00 ~ 13:00 (토·일요일, 공휴일 휴무)<br>
+        팩스 : 02-000-0000&nbsp&nbsp&nbsp&nbsp프로모션/사업 제휴문의 : cerdure@gmail.com<br>
+        PLICE, Inc. All rights reserved.
+    </p>
+    <div class="icons">
+        <img src="/img/icon/instagram_mono.png">
+        <img src="/img/icon/facebook_mono.png">
+        <img src="/img/icon/blog_mono.png">
+        <img src="/img/icon/naverpost_mono.png">
+        <img src="/img/icon/youtube_mono.png">
     </div>
-
-    <div class="bottom-nav-wrapper">
-        <nav class="bottom-nav">
-            <ul>
-                <div id="overbar"></div>
-                <li onclick="location.href='/'">
-                    <img src="/img/icon/logo.png">
-                    <div>NOW</div>
-                </li>
-                <li onclick="location.href='/search'">
-                    <a href="/search"><img src="/img/icon/search.svg"></a>
-                    <div>책찾기</div>
-                </li>
-                <li onclick="location.href='/event'">
-                    <img src="/img/icon/event.svg">
-                    <div>이벤트</div>
-                </li>
-                <li onclick="location.href='/myshelf'">
-                    <img src="/img/icon/shelf.svg">
-                    <div>내책장</div>
-                </li>
-                <li onclick="location.href='/inquire?page=0&size=3'">
-                    <img src="/img/icon/list.svg">
-                    <div>게시판</div>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    
-</div>
+</footer>
