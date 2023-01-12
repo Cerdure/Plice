@@ -414,7 +414,6 @@ $(function () {
         let st = $(this).scrollTop();
         let ih = $(this).innerHeight();
         let sh = document.querySelector("#items").scrollHeight;
-        console.log(st + ih + "sh = " + sh)
 
         if((st + ih >= sh -1) && beforeLoad && !loadComplete){ 
             update = false;
@@ -535,7 +534,6 @@ $(function () {
         $(".search-result-outer-wrapper").show();
     }
   });
-  $
 
 
 

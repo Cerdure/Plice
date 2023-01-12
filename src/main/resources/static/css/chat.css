@@ -1,196 +1,13 @@
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Tenada';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'KOHIBaeumOTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KOHIBaeumOTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@keyframes hvr-ripple-out {
-    100% {
-        top: -10px;
-        right: -10px;
-        bottom: -10px;
-        left: -10px;
-        border: 0px solid white;
-        opacity: 0;
+@media only screen and (max-width:1400px) {
+    body {
+        width: 1385px;
     }
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
-
-a {
-    text-decoration: none;
-}
-
-body {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    margin: 0;
-    font-family: 'Pretendard-Regular';
-    color: #3b5987;
-}
-
-body::-webkit-scrollbar {
-    width: 15px;
-    background-color: white;
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: white;
-    box-shadow: 0px 0px 50px 0px black;
-    border: 3px solid #e3e3e3;
-    border-radius: 10px;
-}
-
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 60px;
-    z-index: 100;
-    border-bottom: 1px solid lightgray;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 18px;
-    padding: 0 40px;
-}
-
-.logo-wrapper {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.logo-wrapper img {
-    width: 30px;
-    margin-right: 2px;
-    position: relative;
-}
-
-.logo-wrapper .text {
-    height: 100%;
-    font-size: 26px;
-    font-family: 'Tenada';
-    line-height: 70px;
-    position: relative;
-    bottom: 1px;
-}
-
-header span {
-    width: 10%;
-    height: 100%;
-    text-align: center;
-    line-height: 60px;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    position: relative;
-    overflow: hidden;
-}
-
-header span:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    left: 51%;
-    right: 51%;
-    bottom: 0;
-    background: #5575ff;
-    height: 4px;
-    -webkit-transition-property: left, right;
-    transition-property: left, right;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease-out;
-    transition-timing-function: ease-out;
-}
-
-header span:hover:before,
-header span:focus:before,
-header span:active:before {
-    left: 0;
-    right: 0;
-}
-
-.login-wrapper {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
-
-.login-btn {
-    position: relative;
-    width: 100px;
-    height: 34px;
-    line-height: 34px;
-    text-align: center;
-    color: white;
-    background-color: #5575ff;
-    border-radius: 5px;
-    display: inline-block;
-    vertical-align: middle;
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    font-size: 16px;
-    font-weight: 400;
-}
-
-.login-btn:before {
-    content: '';
-    position: absolute;
-    border: #5575ff solid 3px;
-    border-radius: 5px;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-.login-btn:hover:before,
-.login-btn:focus:before,
-.login-btn:active:before {
-    -webkit-animation: hvr-ripple-out 1s both;
-    animation: hvr-ripple-out 1s both;
-}
-
-.login-btn:hover {
-    background-color: white;
-    color: #5575ff;
-    border: 1px solid #9bb2ff;
-    transition: 1s;
+@media only screen and (max-width:1350px) {
+    body {
+        overflow-x: scroll;
+    }
 }
 
 header .chat {
@@ -198,8 +15,8 @@ header .chat {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 .top-space {
@@ -208,7 +25,6 @@ body {
     height: 60px;
     flex: none;
 }
-
 
 .contents-wrapper {
     position: relative;
@@ -236,6 +52,7 @@ body {
     padding: 0 20px;
     display: flex;
     border-bottom: 1px solid silver;
+    background-color: white;
 }
 
 .search-wrapper .search-input {
@@ -275,17 +92,116 @@ body {
     opacity: 0.2;
 }
 
+
+.search-result-outer-wrapper {
+    display: none;
+}
+
+.search-result-wrapper {
+    position: absolute;
+    top: 56px;
+    left: 0px;
+    border: 1px solid silver;
+    border-top: none;
+    background-color: white;
+    z-index: 12;
+    display: flex;
+    box-shadow: 0px 2px 5px 0 rgb(0 0 0 / 30%);
+}
+
+.search-result-chat-room-wrapper {
+    width: 368px;
+    max-height: 475px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-result-chat-room-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.search-result-chat-room-wrapper::-webkit-scrollbar-thumb {
+    background-color: #4169fc;
+    border-radius: 2px;
+}
+
+.search-result-chat-room {
+    padding: 0 37px;
+    width: 100%;
+}
+.search-result-chat-room:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+}
+
+.search-result-chat-room:first-child {
+    margin-top: 20px;
+}
+
+.search-result-chat-room:last-child {
+    margin-bottom: 40px;
+}
+.search-result-chat-room .inner-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 10px auto;
+    padding: 15px 30px;
+    box-shadow: 0px 5px 15px 0px rgb(0 0 0 / 20%);
+    border-right: 1px solid rgb(225, 225, 225);
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+.search-result-chat-room .inner-wrapper .top-box {
+    display: flex;
+    font-size: 12px;
+    color: #888888;
+}
+
+.search-result-chat-room .title {
+    white-space: nowrap;
+    margin-right: 10px;
+}
+.search-result-chat-room .member-count {
+    white-space: nowrap;
+    width: 100%;
+}
+.search-result-chat-room .join {
+    white-space: nowrap;
+}
+.search-result-chat-room:hover .join {
+    color: #4169fc;
+    transition: 0.5s;
+}
+.search-result-chat-room .data {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 20px;
+    color: #a1a1a1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+
+.search-result-wrapper strong {
+    color: #005bff;
+}
+
 .null-wrapper {
     height: 100%;
-    /* display: flex; */
-    display: none;
+    display: flex;
     align-items: center;
+    color: silver;
 }
 
 .null {
     flex-shrink: 1;
     font-size: 20px;
-    font-weight: 600;
 }
 
 
@@ -314,22 +230,22 @@ body {
 }
 
 .chat-wrapper {
-    width: 60%;
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
     display: none;
 }
 
 .chat-wrapper .chat {
-    width: 60%;
+    max-width: 430px;
+    width: 70%;
     height: 80%;
     background-color: white;
     border: 1px solid silver;
     border-radius: 5px;
     overflow: hidden;
-    margin-right: 10%;
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
@@ -363,21 +279,30 @@ body {
 }
 
 .chat-wrapper .chat .head .title {
+    width: calc(100% - 120px);
+    margin-left: 25px;
     text-align: center;
     font-size: 20px;
     color: white;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .chat-wrapper .chat .head .title .data {
-    max-width: 150px;
+    max-width: 80%;
     white-space: nowrap;
     overflow: hidden;
+    font-size: 16px;
     text-overflow: ellipsis;
     margin-right: 10px;
+    color: #ffee5a;
 }
 
-.chat-wrapper .chat .head .title .text {}
+.chat-wrapper .chat .head .title .member-count {
+    font-size: 12px;
+}
+
 
 .chat-wrapper .chat .head .close {
     position: absolute;
@@ -400,6 +325,7 @@ body {
 .chat-wrapper .chat .body::-webkit-scrollbar-thumb {
     background-color: #6781a8;
 }
+
 .info-wrapper {
     display: flex;
     align-items: center;
@@ -408,15 +334,18 @@ body {
     font-size: 14px;
     color: silver;
 }
+
 .content-wrapper {
     width: 100%;
     display: flex;
     justify-content: flex-start;
     margin: 10px 0;
 }
+
 .content-wrapper:first-child {
     margin-top: 20px;
 }
+
 .profile-wrapper {
     display: flex;
     align-items: center;
@@ -451,7 +380,7 @@ body {
 
 
 .my-chat strong {
-    color: #315dff;
+    color: #7a96fd;
 }
 
 
@@ -469,6 +398,7 @@ body {
     min-height: 60px;
     margin: 20px;
     margin-right: 0;
+    padding: 5px;
     border: 1px solid silver;
     border-radius: 5px;
     outline: none;
@@ -520,6 +450,7 @@ body {
 .top3-wrapper {
     width: 100%;
     margin-top: 80px;
+    margin-right: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -737,7 +668,9 @@ body {
     text-align: end;
     z-index: 1;
 }
-
+#my-rooms {
+    width: 100%;
+}
 .my-room {
     width: 100%;
     height: 100px;
@@ -805,52 +738,4 @@ body {
 
 .active-room .info .title .text {
     color: #fff389;
-}
-
-
-footer {
-    position: relative;
-    width: 100%;
-    padding: 0 40px;
-    background-color: #3b5987;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-footer p {
-    width: 100%;
-    font-size: 14px;
-    line-height: 20px;
-    color: white;
-    margin: 40px 0;
-}
-
-footer .icons {
-    height: 100%;
-    padding-bottom: 40px;
-    display: flex;
-    align-self: end;
-    justify-content: end;
-}
-
-footer .icons img {
-    width: 40px;
-    margin-left: 10px;
-    filter: invert(20%) sepia(10%) saturate(1000%) hue-rotate(177deg) brightness(120%) contrast(150%);
-}
-
-
-
-@media only screen and (max-width:1400px) {
-    body {
-        width: 1385px;
-    }
-}
-
-
-@media only screen and (max-width:1350px) {
-    body {
-        overflow-x: scroll;
-    }
 }

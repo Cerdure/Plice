@@ -1,141 +1,67 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/img/logo/plice.png" />
-    <!--  home-css  -->
-    <link href="/css/home.css" rel="stylesheet" />
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/login.css">
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/js/login.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 로그인</title>
+</th:block>
 
-    <!--  login-css  -->
-    <link rel="stylesheet" href="/css/login.css" />
-    <link rel="stylesheet" href="/css/reset.css" />
-    <title>예쁜 집들이 모여있는 우리집</title>
-</head>
-<body class="login_js">
-<!-- header -->
-<header class="login_js">
-    <div class="logo-wrapper" onclick="location.href='/'">
-        <img src="/img/logo/plice.png" />
-        <div class="text">PLICE</div>
-    </div>
-    <span class="map" onclick="location.href='/map'">지도</span>
-    <span class="chat" onclick="location.href='/chat'">채팅</span>
-    <span class="post" onclick="location.href='/post'">이야기</span>
-    <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
-    <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
-</header>
-
-<!-- main -->
-
-<main class="login_container login_js">
-    <h1 class="login_title">로그인</h1>
-    <h5 class="login_subtitle">Plice 서비스 이용을 위해 로그인해주세요</h5>
-    <form action="#" class="login_info">
-        <div class="login_user">
-            <label for="login_id">아이디</label>
-            <input id="login_id" class="user" placeholder="번호 입력" onKeyup="onlyNumber(this)"/>
-            <label for="login_pwd">비밀번호</label>
-            <input id="login_pwd" class="user" type="password" placeholder="비밀번호 입력"/>
-        </div>
-        <div class="login_join">
-            <a class="login_join_btn btn" href="/sign-up">회원가입</a>
-            <a class="login_repwd_btn btn">비밀번호 재설정</a>
-        </div>
-        <input class="login_btn" type="submit" value="로그인" />
-        <div class="login_sns">
-            <ul class="sns kakao">
-                <li onclick="kakaoLogin();">
-                    <a href="javascript:void(0)">
-                        <img src="/img/icon/kakaotalk_sharing_btn_small.png" width="40" alt="카카오 로그인 버튼"/>
-                    </a>
-                </li>
-                <li onclick="kakaoLogout();" class="logout_btn">
-                    <a href="javascript:void(0)">
-                        <span>카카오 로그아웃</span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="sns naver">
-                <li>
-                    <!-- 아래와같이 아이디를 꼭 써준다. -->
-                    <a id="naverIdLogin_loginButton" href="javascript:void(0)">
-                        <img src="/img/icon/btnG_아이콘사각.png" width="40" alt="네이버 로그인 버튼" />
-                    </a>
-                </li>
-                <li onclick="naverLogout(); return false;" class="logout_btn">
-                    <a href="javascript:void(0)">
-                        <span>네이버 로그아웃</span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="sns google">
-                <li id="GgCustomLogin">
-                    <a href="javascript:void(0)">
-                        <img src="/img/icon/btn_google_light_normal_ios.svg" alt="구글"/>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </form>
-
-    <div class="pwd_find_container">
-        <div class="pwd_find_header">
-            <h1 class="pwd_find_title">비밀번호 재설정</h1>
-            <i class="fas fa-times fa-2x"></i>
-        </div>
-        <div class="pwd_find_email">
-            <h5 class="pwd_find_subtitle">
-                가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.
-            </h5>
-            <input class="pwd_find_check_input" type="email" placeholder="이메일"/>
-            <div class="accept_opt">
-                <label for="accept_code" id="code_text">인증번호 확인 :</label>
-                <input placeholder="인증번호를 입력해주세요." id="accept_code" />
-                <button class="accept_btn">확인</button>
+<div layout:fragment="content" class="meta-wrapper">
+    <div class="top-space"></div>
+    <div class="background"></div>
+    <main class="login_container login_js">
+        <h1 class="login_title">로그인</h1>
+        <form action="/loginProc" method="post" class="login_info">
+            <div class="login_user">
+                <label for="login_id">휴대폰 번호</label>
+                <input id="login_id" class="user" name="phone" placeholder="01012345678" onKeyup="onlyNumber(this)" />
+                <label for="login_pwd">비밀번호</label>
+                <input id="login_pwd" class="user" name="pw" type="password" placeholder="비밀번호 입력" />
             </div>
+            <div class="login_join">
+                <a class="login_join_btn btn" href="/sign-up">회원가입</a>
+                <a class="login_repwd_btn btn">비밀번호 재설정</a>
+            </div>
+            <input class="login_btn" type="submit" value="로그인" />
+
+            <div class="login_sns">
+                <div class="border"></div>
+                <div class="top_text">간편 로그인</div>
+                <div class="btn_box">
+                    <img class="kakao" src="/img/icon/kakao-icon-color.svg"/>
+                    <img class="naver" src="/img/icon/naver-icon-color.svg"/>
+                    <img class="google" src="/img/icon/google-icon-color.png"/>
+                </div>
+            </div>
+        </form>
+
+        <div class="pwd_find_container">
+            <div class="pwd_find_header">
+                <h1 class="pwd_find_title">비밀번호 재설정</h1>
+                <i class="fas fa-times fa-2x"></i>
+            </div>
+            <div class="pwd_find_email">
+                <h5 class="pwd_find_subtitle">
+                    가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.
+                </h5>
+                <input class="pwd_find_check_input" type="email" placeholder="이메일" />
+                <div class="accept_opt">
+                    <label for="accept_code" id="code_text">인증번호 확인 :</label>
+                    <input placeholder="인증번호를 입력해주세요." id="accept_code" />
+                    <button class="accept_btn">확인</button>
+                </div>
+            </div>
+            <button type="submit" class="pwd_find_btn">인증메일 받기</button>
         </div>
-        <button type="submit" class="pwd_find_btn">인증메일 받기</button>
-    </div>
-</main>
+    </main>
 
-<!-- footer -->
-<footer class="login_js">
-    <p>
-        (주)플라이스<br />
-        사업자 번호: 000-00-00000&nbsp&nbsp&nbsp&nbsp통신판매업신고번호 :
-        제2023-서울 영등포-00000호<br />
-        주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩<br /><br />
+</div>
 
-        고객센터 : 02-0000-0000 | 평일 10:00 ~ 18:30, 점심시간 : 12:00 ~ 13:00
-        (토·일요일, 공휴일 휴무)<br />
-        팩스 : 02-000-0000&nbsp&nbsp&nbsp&nbsp프로모션/사업 제휴문의 :
-        cerdure@gmail.com<br />
-        PLICE, Inc. All rights reserved.
-    </p>
-    <div class="icons">
-        <img src="/img/icon/instagram_mono.png" />
-        <img src="/img/icon/facebook_mono.png" />
-        <img src="/img/icon/blog_mono.png" />
-        <img src="/img/icon/naverpost_mono.png" />
-        <img src="/img/icon/youtube_mono.png" />
-    </div>
-</footer>
-
-
-<!-- jQuery CDN -->
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-<!--  icon JavaScript  -->
-<script src="https://kit.fontawesome.com/6b7a2f6a5d.js"></script>
-
-<!-- home - JavaScript -->
-<script src="/js/home.js"></script>
-
-<!-- login - JavaScript -->
-<script src="/js/login.js"></script>
-
-</body>
 </html>

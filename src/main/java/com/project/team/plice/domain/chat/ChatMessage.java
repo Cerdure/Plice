@@ -19,6 +19,7 @@ public class ChatMessage {
     private String message;
     private LocalDateTime regDate;
     private TrayIcon.MessageType type;
+    private boolean isMine;
     private Member member;
 
 }

@@ -1,13 +1,13 @@
 .join_container {
   width: 600px;
   margin: 120px auto;
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
   padding: 50px 45px;
   position: relative;
 }
 .join_title {
   font-size: 30px;
-  border-bottom: var(--login-border);
+  border-bottom: 1px solid #c9d5ff;
   margin-bottom: 30px;
   padding-bottom: 30px;
 }
@@ -24,7 +24,7 @@
 #join_form input {
   float: left;
   margin-bottom: 20px;
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
   padding: 15px 5px;
   border-radius: 5px;
   width: 100%;
@@ -39,7 +39,7 @@
   width: 33%;
 }
 #join_sel {
-  border: var(--login-border);
+  border: 1px solid #c9d5ff;
   width: 100%;
   height: 47px;
   border-radius: 5px;
@@ -64,7 +64,7 @@
 .yy_success_text,
 .mm_success_text,
 .dd_success_text {
-  color: var(--login-color);
+  color: #4169fc;
   display: none;
 }
 .id_failed_text,
@@ -77,9 +77,4 @@
 .dd_failed_text {
   color: red;
   display: none;
-}
-
-/* JavaScript 반응형 */
-.disable {
-  pointer-events: none;
 }

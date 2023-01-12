@@ -1,9 +1,0 @@
-/* components */
-@import url("components/reset.css");
-@import url("components/fonts.css");
-@import url("components/clear.css");
-
-/* screens */
-@import url("screens/login.css");
-@import url("screens/sns.css");
-@import url("screens/join.css");

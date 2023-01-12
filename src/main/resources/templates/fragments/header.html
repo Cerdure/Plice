@@ -4,71 +4,18 @@
     layout:decorate="~{layout/default}">
 
 <header th:fragment="header">
-
-    <div class="top-nav-background"></div>
-    <div class="top-nav-wrapper">
-        <div class="top-logo-wrapper" onclick="location.href='/'">
-            <img id="top-logo" src="/img/icon/logo.png">
-            <span class="top-title">BookShelf</span>
-        </div>
-
-        <div class="svg-wrapper" onclick="location.href='/login'" sec:authorize="!isAuthenticated()">
-            <svg id="shape-wrapper" xmlns="http://www.w3.org/2000/svg">
-                <rect id="shape" />
-                <div id="text">
-                    <span class="spot"></span>로그인
-                </div>
-            </svg>
-        </div>
-
-        <div class="login-active-user" sec:authorize="hasRole('USER')">
-            <div class="news-wrapper">
-                <img src="/img/icon/bell.svg" id="news">
-                <div id="news-n">N</div>
-            </div>
-            <img src="/img/icon/cart.svg" id="cart">
-
-            <div class="svg-wrapper" onclick="location.href='/logout'">
-                <svg id="shape-wrapper" xmlns="http://www.w3.org/2000/svg">
-                    <rect id="shape" />
-                    <div id="text">
-                        <span class="spot"></span>로그아웃
-                    </div>
-                </svg>
-            </div>
-        </div>
-
-        <div class="login-active-admin" sec:authorize="hasRole('ADMIN')">
-
-            <div class="svg-wrapper admin-btn" onclick="location.href='/admin'">
-                <svg id="shape-wrapper" xmlns="http://www.w3.org/2000/svg">
-                    <rect id="shape" />
-                    <div id="text">
-                        <span class="spot"></span>관리페이지
-                    </div>
-                </svg>
-            </div>
-
-            <div class="svg-wrapper" onclick="location.href='/logout'">
-                <svg id="shape-wrapper" xmlns="http://www.w3.org/2000/svg">
-                    <rect id="shape" />
-                    <div id="text">
-                        <span class="spot"></span>로그아웃
-                    </div>
-                </svg>
-            </div>
-        </div>
-
-        <nav class="top-nav">
-            <div id="underbar"></div>
-            <ul>
-                <li onclick="location.href='/'">NOW</li>
-                <li onclick="location.href='/search'">책찾기</li>
-                <li onclick="location.href='/event'">혜택</li>
-                <li onclick="location.href='/myshelf'">내책장</li>
-                <li onclick="location.href='/inquire?page=0&size=3'">게시판</li>
-            </ul>
-        </nav>
+    <div class="logo-wrapper" onclick="location.href='/'">
+        <img src="/img/logo/plice.png">
+        <div class="text">PLICE</div>
     </div>
-
+    <span class="map" onclick="location.href='/map'">지도</span>
+    <span class="chat" onclick="location.href='/chat'">채팅</span>
+    <span class="post" onclick="location.href='/post'">이야기</span>
+    <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
+    <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
+    <div class="login-wrapper">
+        <div class="login-btn" onclick="location.href='/login'" sec:authorize="!isAuthenticated()">로그인</div>
+        <div class="admin-btn" onclick="location.href='/admin'" sec:authorize="hasRole('ADMIN')">관리페이지</div>
+        <div class="logout-btn" onclick="location.href='/logout'" sec:authorize="isAuthenticated()">로그아웃</div>
+    </div>
 </header>
