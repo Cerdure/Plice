@@ -11,9 +11,4 @@ public class PliceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PliceApplication.class, args);
 	}
-
-	@Bean
-	public ServerEndpointExporter serverEndpointExporter() {
-		return new ServerEndpointExporter();
-	}
 }
