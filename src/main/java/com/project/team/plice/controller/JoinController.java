@@ -26,11 +26,18 @@ public class JoinController {
         return "join";
     }
 
+    @GetMapping("/join-success")
+    public String joinSuccess() {
+        return "join-success";
+    }
+
     @PostMapping("/join")
     public String joinMember(@ModelAttribute MemberDto memberDto){
+        System.out.println("memberDto = " + memberDto.toString());
         memberService.join(memberDto);
         return "join";
     }
+
 
     @GetMapping("/term-service")
     public String termServiceForm(){

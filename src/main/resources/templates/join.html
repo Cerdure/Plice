@@ -30,22 +30,12 @@
 <!-- main -->
 <main class="join_container">
     <h1 class="join_title">회원정보 입력</h1>
-    <h3 class="join_subtitle">
-        Plice 서비스 이용을 위해 아래 정보를 입력해주세요.
-    </h3>
-    <form id="join_form" action="/join" method="post">
+    <h3 class="join_subtitle">Plice 서비스 이용을 위해 아래 정보를 입력해주세요.</h3>
+    <form id="join_form" action="#" method="post">
         <label for="join_id" class="join_id_label">
-            아이디<span class="id_success_text hidden_text"></span
-        ><span class="id_failed_text hidden_text"></span>
+            아이디<span class="id_success_text hidden_text"></span><span class="id_failed_text hidden_text"></span>
             <div class="phone_accept">
-                <input
-                        id="join_id"
-                        placeholder="전화번호(-제외 11자) 입력"
-                        onKeyup="joinId(this)"
-                        minlength="11"
-                        maxlength="11"
-                        name="phone"
-                />
+                <input id="join_id" placeholder="전화번호(-제외 11자) 입력" onKeyup="joinId(this)" minlength="11" maxlength="11" name="phone" class="update_btn" />
                 <button class="id_btn disable">인증번호</button>
             </div>
         </label>
@@ -61,129 +51,55 @@
 
         <label for="join_name" class="join_name_label">
             이름
-            <input
-                    id="join_name"
-                    placeholder="한글만(2~3자)"
-                    onKeyup="joinName(this)"
-                    minlength="2"
-                    maxlength="3"
-                    name="name"
-            />
-            <span class="name_success_text hidden_text">
-            정상 확인 되었습니다.
-          </span>
+            <input id="join_name" placeholder="한글만(2~3자)" onKeyup="joinName(this)" minlength="2" maxlength="3" name="name" class="update_btn" />
+            <span class="name_success_text hidden_text"> 정상 확인 되었습니다. </span>
             <span class="name_failed_text hidden_text">다시 작성해주세요.</span>
         </label>
         <label for="join_nick" class="join_nick_label">
             닉네임
-            <input
-                    id="join_nick"
-                    placeholder="한글 또는 영문만(3~10자 이내)"
-                    onKeyup="joinNick(this)"
-                    minlength="3"
-                    maxlength="10"
-                    name="nickname"
-            />
-            <span class="nick_success_text hidden_text">
-            정상 확인 되었습니다.
-          </span>
+            <input id="join_nick" placeholder="한글 또는 영문만(3~10자 이내)" onKeyup="joinNick(this)" minlength="3" maxlength="10" name="nickname" class="update_btn" />
+            <span class="nick_success_text hidden_text"> 정상 확인 되었습니다. </span>
             <span class="nick_failed_text hidden_text">다시 작성해주세요.</span>
         </label>
         <label for="join_pwd" class="join_pwd_label">
             비밀번호
-            <input
-                    type="password"
-                    id="join_pwd"
-                    placeholder="문자, 숫자, 특수문자 포함(8~16자)"
-                    minlength="8"
-                    maxlength="16"
-                    name="pw"
-            />
+            <input type="password" id="join_pwd" placeholder="문자, 숫자, 특수문자 포함(8~16자)" minlength="8" maxlength="16" name="pw" class="update_btn" />
             <span class="pwd_success_text hidden_text"></span>
             <span class="pwd_failed_text hidden_text"></span>
         </label>
         <label for="join_repwd" class="join_repwd_label">
             비밀번호 확인
-            <input
-                    type="password"
-                    id="join_repwd"
-                    placeholder="비밀번호 확인"
-                    minlength="8"
-                    maxlength="16"
-            />
+            <input type="password" id="join_repwd" placeholder="비밀번호 확인" minlength="8" maxlength="16" class="update_btn" />
             <span class="repwd_success_text hidden_text"></span>
             <span class="repwd_failed_text hidden_text"></span>
         </label>
+
+        <label>
+            생년월일
+            <span class="yy_success_text hidden_text"></span>
+            <span class="yy_failed_text hidden_text"></span>
+        </label>
         <div class="join_birth">
-            <div class="year join_birth_column">
-                <label for="yy" class="yy_label">
-                    출생년도
-                    <input
-                            id="yy"
-                            placeholder="(4자리)년도 입력"
-                            onKeyup="joinYY(this)"
-                            minlength="4"
-                            maxlength="4"
-                            name="birth"
-                    />
-                    <span class="yy_success_text hidden_text"></span>
-                    <span class="yy_failed_text hidden_text"></span>
-                </label>
-            </div>
-            <div class="month join_birth_column">
-                <label for="join_sel">
-                    월
-                    <span class="mm_success_text hidden_text"></span>
-                    <span class="mm_failed_text hidden_text"></span>
-                    <select name="join_sel" id="join_sel" class="mm">
-                        <option value="00" selected>월</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                </label>
-            </div>
-            <div class="day join_birth_column">
-                <label for="dd" class="dd_label">
-                    일
-                    <input
-                            id="dd"
-                            placeholder="(4자리)년도 입력"
-                            onKeyup="joinDD(this)"
-                            maxlength="2"
-                    />
-                    <span class="dd_success_text hidden_text"></span>
-                    <span class="dd_failed_text hidden_text"></span>
-                </label>
-            </div>
+            <input class="birth_1 update_btn" id="yy" onKeyup="joinYY(this)" name="birth" minlength="6" maxlength="6" placeholder="1234567" />
+            <span class="birth_line">―</span>
+            <input class="birth_2" placeholder="●●●●●●●" readonly />
         </div>
+        <!--  -->
+        <button class="join_btn" disabled>
+            <strong>확인</strong>
+        </button>
     </form>
-    <button type="submit" class="join_btn disable">
-        <strong>확인</strong>
-    </button>
 </main>
 
 <!-- footer -->
 <footer class="login_js">
     <p>
         (주)플라이스<br />
-        사업자 번호: 000-00-00000&nbsp&nbsp&nbsp&nbsp통신판매업신고번호 :
-        제2023-서울 영등포-00000호<br />
+        사업자 번호: 000-00-00000&nbsp&nbsp&nbsp&nbsp통신판매업신고번호 : 제2023-서울 영등포-00000호<br />
         주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩<br /><br />
 
-        고객센터 : 02-0000-0000 | 평일 10:00 ~ 18:30, 점심시간 : 12:00 ~ 13:00
-        (토·일요일, 공휴일 휴무)<br />
-        팩스 : 02-000-0000&nbsp&nbsp&nbsp&nbsp프로모션/사업 제휴문의 :
-        cerdure@gmail.com<br />
+        고객센터 : 02-0000-0000 | 평일 10:00 ~ 18:30, 점심시간 : 12:00 ~ 13:00 (토·일요일, 공휴일 휴무)<br />
+        팩스 : 02-000-0000&nbsp&nbsp&nbsp&nbsp프로모션/사업 제휴문의 : cerdure@gmail.com<br />
         PLICE, Inc. All rights reserved.
     </p>
     <div class="icons">
