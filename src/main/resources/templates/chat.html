@@ -84,6 +84,20 @@
                         <img class="close" src="/img/icon/close.png">
                     </div>
                     <div class="body" id="chat-box">
+                        <div th:each="chat : ${chats}" th:class="${chat.type == 'INFO'} ? 'info-wrapper' :
+                        (${chat.member.phone == #authentication.principal.username} ? 'content-wrapper my-chat' : 'content-wrapper')">
+                            <div class='content' th:text="${chat.content}">
+                            <strong th:text="${chat.member.nickname}"> </strong>
+                            <div class='date'
+                                 th:with="hour=${#temporals.hour(chat.regDate)}"
+                                 th:with="minute=${#temporals.minute(chat.regDate)}"
+                                 th:text="(hour <= 12 ? '오전 ' + hour : '오후' + (hour - 12))
+                             + ':' + ${#temporals.minute(chat.regDate)}></div>
+                            + "</div>"
+                            + "<div class='profile-wrapper'>"
+                            + "<img src='" + content.member.profileImgPath + "'>"
+                            + "</div>"
+                        </div>
                     </div>
                     <form class="input-wrapper">
                         <textarea class="chat-input" type="text" placeholder="메시지를 입력하세요."></textarea>

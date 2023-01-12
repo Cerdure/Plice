@@ -47,23 +47,27 @@ $(function () {
     });
 
     function chatRoomOpen(_this){
-        $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
-        $(".right-side").css({'flex-direction':'row','align-items':'center'});
-        $(".top3-wrapper").hide();
-        $(".top3-wrapper .head").stop().animate({'margin-bottom':'0px'},300);
-        $(".top3-wrapper").css({'width':'auto','margin-top':'0px', 'margin-right':'10%'}).show();
-        $(".popular, .lastest").css('flex-direction','column');
-        $(".chat-wrapper").css('display','flex');
-        $(".chat-wrapper .chat .head .title .data").text($(_this).data("name"));
-        $(".chat-wrapper .chat .head .title .member-count").text('참여인원 ' + $(_this).data("member-count") + '명');
-        $(".room").css({'height':'10%','margin':'20px 20px'});
-        $(".search-result-outer-wrapper").hide();
-        $(".chat-wrapper .regist-btn .btn").remove();
-        const div = document.createElement("div");
-        div.setAttribute("class","btn send-btn-" + $(_this).data("id"));
-        div.innerHTML = "<img src='/img/icon/send-fill.svg'>";
-        $(".chat-wrapper .regist-btn .count").before(div);
-        subscribe($(_this).data("id"));
+        (async () => {
+            const update = await fetch("/chat/update?roomId=" + $(_this).data("id")).then(res => res.text());
+            $("#chat-box").replaceWith(update);
+            $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
+            $(".right-side").css({'flex-direction':'row','align-items':'center'});
+            $(".top3-wrapper").hide();
+            $(".top3-wrapper .head").stop().animate({'margin-bottom':'0px'},300);
+            $(".top3-wrapper").css({'width':'auto','margin-top':'0px', 'margin-right':'10%'}).show();
+            $(".popular, .lastest").css('flex-direction','column');
+            $(".chat-wrapper").css('display','flex');
+            $(".chat-wrapper .chat .head .title .data").text($(_this).data("name"));
+            $(".chat-wrapper .chat .head .title .member-count").text('참여인원 ' + $(_this).data("member-count") + '명');
+            $(".room").css({'height':'10%','margin':'20px 20px'});
+            $(".search-result-outer-wrapper").hide();
+            $(".chat-wrapper .regist-btn .btn").remove();
+            const div = document.createElement("div");
+            div.setAttribute("class","btn send-btn-" + $(_this).data("id"));
+            div.innerHTML = "<img src='/img/icon/send-fill.svg'>";
+            $(".chat-wrapper .regist-btn .count").before(div);
+            subscribe($(_this).data("id"));
+        })();
     }
 
     function chatRoomClose(){
@@ -74,6 +78,8 @@ $(function () {
         $(".top3-wrapper").css({'width':'100%','margin-top':'80px', 'margin-right':'0'}).show();
         $(".popular, .lastest").css('flex-direction','row');
         $(".chat-wrapper").hide();
+        $(".info-wrapper").remove();
+        $(".content-wrapper").remove();
         $(".room").css({'height':'200px','margin':'0px 20px'});
     }
 
@@ -165,8 +171,6 @@ $(function () {
             $(".search-result-outer-wrapper").show();
         }
       });
-
-      console.log(sessionStorage)
 });
 
 let newJoin = false;
@@ -174,51 +178,69 @@ let client, sock;
 let currentSubscribe;
 
 function subscribe(_roomId) {
-    var messageInput = $('.chat-input');
-    var sendBtn = $('.send-btn-' + _roomId);
-    var roomId = _roomId;
-    sock = new SockJS("/ws");
-    client = Stomp.over(sock); 
-
-    client.connect({},function(){
-        if(newJoin) {
-            client.send('/publish/chat/in-message', {}, JSON.stringify({chatRoomId: roomId})); 
-        }
-        if(currentSubscribe != null){
-            currentSubscribe.unsubscribe();
-        }
-        currentSubscribe =  client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
-            const content = JSON.parse(chat.body);
-            if(content.type == 'INFO'){
-                let messagebox = document.createElement("div");
-                messagebox.setAttribute('class','info-wrapper');
-                messagebox.innerHTML = content.message;
-                document.getElementById("chat-box").appendChild(messagebox);
-            } else {
-                    let hour = new Date(content.regDate).getHours();
-                    let minute = new Date(content.regDate).getMinutes();
-                    let messagebox = document.createElement("div");
-                    hour = hour <= 12 ? '오전 ' + hour : '오후' + (Number(hour) - 12);
-                    minute = minute < 10 ? '0' + minute : minute;
-                    messagebox.setAttribute('class','content-wrapper');
-                    messagebox.innerHTML = 
-                    "<div class='profile-wrapper'>"
-                        + "<img src='" + content.member.profileImgPath + "'>"
-                    + "</div>"
-                    + "<div class='content'>"
-                        + "<strong>" + content.member.nickname + "</strong>"
-                        + content.message
-                        + "<div class='date'>" + hour + ":" + minute + "</div>"
-                    + "</div>"
-                    document.getElementById("chat-box").appendChild(messagebox);
-            }
-        });
+        var messageInput = $('.chat-input');
+        var sendBtn = $('.send-btn-' + _roomId);
+        var roomId = _roomId;
+        sock = new SockJS("/ws");
+        client = Stomp.over(sock); 
     
-        sendBtn.click(function () {
-            var message = messageInput.val();
-            client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, message: message}));
-            messageInput.val('');
-            $(".chat-wrapper .regist-btn .count").text('0/300');
+        client.connect({},function(){
+            if(newJoin) {
+                client.send('/publish/chat/in-message', {}, JSON.stringify({chatRoomId: roomId})); 
+            }
+            if(currentSubscribe != null){
+                currentSubscribe.unsubscribe();
+            }
+            currentSubscribe =  client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
+                (async () => {
+                    const content = JSON.parse(chat.body);
+                    if(content.type == 'INFO'){
+                        let messagebox = document.createElement("div");
+                        messagebox.setAttribute('class','info-wrapper');
+                        messagebox.innerHTML = content.message;
+                        document.getElementById("chat-box").appendChild(messagebox);
+                        $(".chat-wrapper .chat .head .title .member-count").text('참여인원 ' + content.memberCount + '명');
+                        $(".my-room .info .title .number").text(content.memberCount + '명');
+                    } else {
+                            let hour = new Date(content.regDate).getHours();
+                            let minute = new Date(content.regDate).getMinutes();
+                            let messagebox = document.createElement("div");
+                            hour = hour <= 12 ? '오전 ' + hour : '오후' + (Number(hour) - 12);
+                            minute = minute < 10 ? '0' + minute : minute;
+                            const loginInfo = await fetch("/login-info").then(res => res.json());
+                            if(content.member.phone == loginInfo.phone){
+                                messagebox.setAttribute('class','content-wrapper my-chat');
+                                messagebox.innerHTML = 
+                                "<div class='content'>"
+                                    + content.message
+                                    + "<strong>" + content.member.nickname + "</strong>"
+                                    + "<div class='date'>" + hour + ":" + minute + "</div>"
+                                + "</div>"
+                                + "<div class='profile-wrapper'>"
+                                + "<img src='" + content.member.profileImgPath + "'>"
+                            + "</div>"
+                            } else {
+                                messagebox.setAttribute('class','content-wrapper');
+                                messagebox.innerHTML = 
+                                "<div class='profile-wrapper'>"
+                                    + "<img src='" + content.member.profileImgPath + "'>"
+                                + "</div>"
+                                + "<div class='content'>"
+                                    + "<strong>" + content.member.nickname + "</strong>"
+                                    + content.message
+                                    + "<div class='date'>" + hour + ":" + minute + "</div>"
+                                + "</div>"
+                            }
+                            document.getElementById("chat-box").appendChild(messagebox);
+                    }
+                })();
+            });
+        
+            sendBtn.click(function () {
+                var message = messageInput.val();
+                client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, message: message}));
+                messageInput.val('');
+                $(".chat-wrapper .regist-btn .count").text('0/300');
+            });
         });
-    });
 }

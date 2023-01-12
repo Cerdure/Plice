@@ -1,19 +1,15 @@
-package com.project.team.plice.domain.chat;
+package com.project.team.plice.dto.chat;
 
 import com.project.team.plice.domain.member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.awt.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatMessage {
+public class ChatDto {
     private String chatRoomId;
     private String phone;
     private String message;
