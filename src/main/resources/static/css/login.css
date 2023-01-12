@@ -148,7 +148,7 @@
 }
 
 .accept_btn {
-  background-color: var(--login-color);
+  background-color: #dfdfdf;
   color: white;
   padding: 15px 10px;
   font-size: 12px;
@@ -159,18 +159,8 @@
 .accept_btn:hover {
   background-color: var(--login-hover);
   color: white;
+  cursor: pointer;
 }
 
 /* JavaScript 기능 구현 도움 */
-.bg_black {
-  background-color: rgb(122, 122, 122);
-  border: none;
-}
 
-.bg_white {
-  background-color: white;
-  border: none;
-  transform: translateY(-400px);
-  position: absolute;
-  left: 47px;
-}
