@@ -378,9 +378,19 @@ body {
     color: #85a6d5;
 }
 
-
+.my-chat {
+    justify-content: end;
+}
+.my-chat .profile-wrapper img {
+    margin-right: 0;
+}
 .my-chat strong {
     color: #7a96fd;
+    margin-left: 10px;
+}
+.my-chat .content .date {
+    text-align: end;
+    margin-right: 10px;
 }
 
 

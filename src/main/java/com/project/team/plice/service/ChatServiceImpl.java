@@ -1,12 +1,11 @@
 package com.project.team.plice.service;
 
 import com.project.team.plice.domain.chat.Chat;
-import com.project.team.plice.domain.chat.ChatMessage;
+import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.chat.ChatRoomDto;
-import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.repository.chat.ChatRepository;
 import com.project.team.plice.repository.chat.ChatRoomRepository;
 import com.project.team.plice.repository.chat.MemberChatRoomRepository;
@@ -33,6 +32,12 @@ public class ChatServiceImpl implements ChatService {
     private final ApartDataRepository apartDataRepository;
 
     @Override
+    public List<Chat> findChatsByRoomId(String roomId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+        return chatRepository.findByChatRoom(chatRoom);
+    }
+
+    @Override
     public ChatRoom findChatRoomById(String roomId) {
         return chatRoomRepository.findById(roomId).get();
     }
@@ -54,12 +59,13 @@ public class ChatServiceImpl implements ChatService {
 
 
     @Override
-    public Chat chatSave(ChatMessage message, Member member) {
+    public Chat chatSave(ChatDto message, Member member) {
         Chat chat = Chat.builder()
                 .chatRoom(chatRoomRepository.findById(message.getChatRoomId()).get())
                 .member(member)
                 .content(message.getMessage())
                 .regDate(LocalDateTime.now())
+                .type(message.getType().toString())
                 .build();
         chatRepository.save(chat);
         return chat;
@@ -111,6 +117,11 @@ public class ChatServiceImpl implements ChatService {
                 memberChatRoomRepository.delete(m);
             }
         });
+    }
+
+    @Override
+    public Integer findMemberCount(String roomId) {
+        return chatRoomRepository.findById(roomId).get().getMemberCount();
     }
 
     @Override
