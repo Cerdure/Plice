@@ -1,5 +1,6 @@
 package com.project.team.plice.controller;
 
+import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,19 @@ public class JoinController {
     public String joinForm(){
         return "join";
     }
+
+    @GetMapping("/join-success")
+    public String joinSuccess() {
+        return "join-success";
+    }
+
+    @PostMapping("/join")
+    public String joinMember(@ModelAttribute MemberDto memberDto){
+        System.out.println("memberDto = " + memberDto.toString());
+        memberService.join(memberDto);
+        return "join";
+    }
+
 
     @GetMapping("/term-service")
     public String termServiceForm(){
