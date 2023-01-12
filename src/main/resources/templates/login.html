@@ -13,47 +13,32 @@
     <title>PLICE ㅣ 로그인</title>
 </th:block>
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="meta-wrapper">
     <div class="top-space"></div>
-
+    <div class="background"></div>
     <main class="login_container login_js">
         <h1 class="login_title">로그인</h1>
-        <h5 class="login_subtitle">Plice 서비스 이용을 위해 로그인해주세요</h5>
-        <form action="#" class="login_info">
+        <form action="/loginProc" method="post" class="login_info">
             <div class="login_user">
-                <label for="login_id">아이디</label>
-                <input id="login_id" class="user" placeholder="번호 입력" onKeyup="onlyNumber(this)" />
+                <label for="login_id">휴대폰 번호</label>
+                <input id="login_id" class="user" name="phone" placeholder="01012345678" onKeyup="onlyNumber(this)" />
                 <label for="login_pwd">비밀번호</label>
-                <input id="login_pwd" class="user" type="password" placeholder="비밀번호 입력" />
+                <input id="login_pwd" class="user" name="pw" type="password" placeholder="비밀번호 입력" />
             </div>
             <div class="login_join">
                 <a class="login_join_btn btn" href="/sign-up">회원가입</a>
                 <a class="login_repwd_btn btn">비밀번호 재설정</a>
             </div>
             <input class="login_btn" type="submit" value="로그인" />
+
             <div class="login_sns">
-                <ul class="sns kakao">
-                    <li onclick="kakaoLogin();">
-                        <a href="javascript:void(0)">
-                            <img src="/img/icon/kakaotalk_sharing_btn_small.png" width="40" alt="카카오 로그인 버튼" />
-                        </a>
-                    </li>
-                </ul>
-                <ul class="sns naver">
-                    <li>
-                        <!-- 아래와같이 아이디를 꼭 써준다. -->
-                        <a id="naverIdLogin_loginButton" href="javascript:void(0)">
-                            <img src="/img/icon/btnG_아이콘사각.png" width="40" alt="네이버 로그인 버튼" />
-                        </a>
-                    </li>
-                </ul>
-                <ul class="sns google">
-                    <li id="GgCustomLogin">
-                        <a href="javascript:void(0)">
-                            <img src="/img/icon/btn_google_light_normal_ios.svg" alt="구글" />
-                        </a>
-                    </li>
-                </ul>
+                <div class="border"></div>
+                <div class="top_text">간편 로그인</div>
+                <div class="btn_box">
+                    <img class="kakao" src="/img/icon/kakao-icon-color.svg"/>
+                    <img class="naver" src="/img/icon/naver-icon-color.svg"/>
+                    <img class="google" src="/img/icon/google-icon-color.png"/>
+                </div>
             </div>
         </form>
 
