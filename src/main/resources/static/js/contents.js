@@ -16,6 +16,27 @@ $(function () {
             $(this).addClass("active-index");
         }
     });
+    $(".right-side .head .sort .text").click(function(){
+        (async () => {
+            $(".right-side .head .sort .text").removeClass("active-sort");
+            $(this).addClass("active-sort");
+            const keyword = $(this).text();
+            const newsList = await fetch("/contents/search?keyword=" + keyword).then(res => res.text());
+            // for(const news of newsList){
+            //     let a = document.createElement("a");
+            //     a.setAttribute('class','article');
+            //     a.setAttribute("href",news.link);
+            //     a.innerHTML = 
+            //     "<div class='title'>" + news.title + "</div>"
+            //     + "<div class='description'>"
+            //     + "<li>" + news.description + "</li>"
+            //     + "</div>"
+            //     + "<div class='date'>SEP 6, 2022</div>"
+            //     $("#news-box").append(a);
+            // } 
+           $("#news-box").replaceWith(newsList);
+        })();
+    });
 
 });
 
@@ -45,4 +66,3 @@ $(document).ready(function () {
     );
 
 });
-
