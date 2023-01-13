@@ -12,7 +12,7 @@ $(function () {
                         chatRoomOpen(this);
                     } else {
                         const myRoomCount = await fetch("/chat/my-rooms/count").then(res => res.text());
-                        if(myRoomCount == '5'){
+                        if(myRoomCount == 5){
                             alert("채팅방은 최대 5개까지 참여할 수 있습니다.");
                         } else {
                             $(".my-room").removeClass("active-room");
@@ -32,7 +32,26 @@ $(function () {
             })();
         });
 
+        $(document).on("keyup", ".search-input", function(){
+            let inputVal = $(this).val();
+            if(inputVal != '' && inputVal.length > 1){
+                keySearch(inputVal);
+            } else {
+                $(".search-result-apart").remove();
+                $(".search-result-outer-wrapper").hide();
+            }
+        });
+
+        $(document).on("click", ".search-input", function(){
+            if($(this).val()!='') $(".search-result-outer-wrapper").show();
+        });
+
+
         $(document).on("click", ".chat-wrapper .chat .head .close", chatRoomClose);
+      
+        $(document).on("keyup", ".chat-input", function(){
+            $(".chat-wrapper .regist-btn .count").text($(this).val().length + '/300');
+        });
 
         $(document).on("click", ".room-exit", function(){
             (async () => {
@@ -44,12 +63,29 @@ $(function () {
                 $("#my-rooms").replaceWith(update);
             })();
         });
+
+     
     });
+
+    document.addEventListener('scroll', function (event) {
+        if (event.target.id === 'chat-box') {
+            let st = $("#chat-box").scrollTop();
+            const ih = $("#chat-box").innerHeight();
+            const sh = event.target.scrollHeight;
+            if((st + ih < sh - 10) && !$(".last-chat-viewer").hasClass('isMine')){
+                $(".last-chat-viewer").stop().fadeIn(300);
+            } else {
+                $(".last-chat-viewer").stop().fadeOut(300);
+            }
+        }
+    }, true);
+   
 
     function chatRoomOpen(_this){
         (async () => {
             const update = await fetch("/chat/update?roomId=" + $(_this).data("id")).then(res => res.text());
-            $("#chat-box").replaceWith(update);
+            $("#chat").replaceWith(update);
+            
             $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
             $(".right-side").css({'flex-direction':'row','align-items':'center'});
             $(".top3-wrapper").hide();
@@ -66,7 +102,11 @@ $(function () {
             div.setAttribute("class","btn send-btn-" + $(_this).data("id"));
             div.innerHTML = "<img src='/img/icon/send-fill.svg'>";
             $(".chat-wrapper .regist-btn .count").before(div);
+            moveScrollToBottom(true);
             subscribe($(_this).data("id"));
+            if($("#chat-box").innerHeight() >= document.querySelector("#chat-box").scrollHeight){
+                $(".last-chat-viewer").hide();
+            }
         })();
     }
 
@@ -83,19 +123,6 @@ $(function () {
         $(".room").css({'height':'200px','margin':'0px 20px'});
     }
 
-    $(".search-input").keyup(function(){
-        let inputVal = $(this).val();
-        if(inputVal != '' && inputVal.length > 1){
-            keySearch(inputVal);
-        } else {
-            $(".search-result-apart").remove();
-            $(".search-result-outer-wrapper").hide();
-        }
-    }).click(function(){
-        if($(this).val()!='') $(".search-result-outer-wrapper").show();
-    });
-
-    
     $(".search-wrapper .reset").click(function () {
         $('.search-input').val('');
         $(".search-result-chat-room").remove();
@@ -147,13 +174,6 @@ $(function () {
         }
     });
 
-   
-   
-
-    $(".chat-input").keyup(function(){
-        $(".chat-wrapper .regist-btn .count").text($(this).val().length + '/300');
-    });
-
     $('html').click(function (e) {
         if (!$(e.target).is(".search-result-wrapper,"
                             +".search-result-wrapper div,"
@@ -174,8 +194,8 @@ $(function () {
 });
 
 let newJoin = false;
-let client, sock;
-let currentSubscribe;
+let client, sock, currentSubscribe;
+let st, ih, sh;
 
 function subscribe(_roomId) {
         var messageInput = $('.chat-input');
@@ -194,45 +214,55 @@ function subscribe(_roomId) {
             currentSubscribe =  client.subscribe('/subscribe/chat/room/' + roomId, function (chat) {
                 (async () => {
                     const content = JSON.parse(chat.body);
+                    let messagebox;
                     if(content.type == 'INFO'){
-                        let messagebox = document.createElement("div");
+                        messagebox = document.createElement("div");
                         messagebox.setAttribute('class','info-wrapper');
                         messagebox.innerHTML = content.message;
-                        document.getElementById("chat-box").appendChild(messagebox);
                         $(".chat-wrapper .chat .head .title .member-count").text('참여인원 ' + content.memberCount + '명');
                         $(".my-room .info .title .number").text(content.memberCount + '명');
                     } else {
                             let hour = new Date(content.regDate).getHours();
                             let minute = new Date(content.regDate).getMinutes();
-                            let messagebox = document.createElement("div");
+                            messagebox = document.createElement("div");
                             hour = hour <= 12 ? '오전 ' + hour : '오후' + (Number(hour) - 12);
                             minute = minute < 10 ? '0' + minute : minute;
                             const loginInfo = await fetch("/login-info").then(res => res.json());
                             if(content.member.phone == loginInfo.phone){
                                 messagebox.setAttribute('class','content-wrapper my-chat');
                                 messagebox.innerHTML = 
-                                "<div class='content'>"
-                                    + content.message
-                                    + "<strong>" + content.member.nickname + "</strong>"
-                                    + "<div class='date'>" + hour + ":" + minute + "</div>"
-                                + "</div>"
-                                + "<div class='profile-wrapper'>"
-                                + "<img src='" + content.member.profileImgPath + "'>"
-                            + "</div>"
+                                "<div class='chat-box'>"
+                                    + "<div class='content'>" + content.message + "</div>"
+                                    + "<div class='name-date-box'>"
+                                        + "<strong>" + content.member.nickname + "</strong>"
+                                        + "<div class='date'>" + hour + ":" + minute + "</div>"
+                                    + "</div>"    
+                                    + "<div class='profile-wrapper'>"
+                                        + "<img src='" + content.member.profileImgPath + "'>"
+                                    + "</div>"
+                                + "<div>";
+                                $(".last-chat-viewer").addClass("isMine");
                             } else {
                                 messagebox.setAttribute('class','content-wrapper');
                                 messagebox.innerHTML = 
-                                "<div class='profile-wrapper'>"
-                                    + "<img src='" + content.member.profileImgPath + "'>"
-                                + "</div>"
-                                + "<div class='content'>"
-                                    + "<strong>" + content.member.nickname + "</strong>"
-                                    + content.message
-                                    + "<div class='date'>" + hour + ":" + minute + "</div>"
-                                + "</div>"
+                                "<div class='chat-box'>"
+                                    + "<div class='profile-wrapper'>"
+                                        + "<img src='" + content.member.profileImgPath + "'>"
+                                    + "</div>"
+                                    + "<div class='name-date-box'>"
+                                        + "<strong>" + content.member.nickname + "</strong>"
+                                        + "<div class='date'>" + hour + ":" + minute + "</div>"
+                                    + "</div>"    
+                                    + "<div class='content'>" + content.message + "</div>"
+                                + "<div>";
+                                $(".last-chat-viewer").removeClass("isMine");
+                                $(".last-chat-viewer .text").text(content.member.nickname + ' : ' + content.message);
                             }
-                            document.getElementById("chat-box").appendChild(messagebox);
                     }
+                    ih = $("#chat-box").innerHeight();
+                    sh = document.querySelector("#chat-box").scrollHeight;
+                    document.getElementById("chat-box").appendChild(messagebox);
+                    moveScrollToBottom(false);
                 })();
             });
         
@@ -244,3 +274,14 @@ function subscribe(_roomId) {
             });
         });
 }
+
+
+
+function moveScrollToBottom(open){
+    st = $("#chat-box").scrollTop();
+    if((st + ih >= sh - 1) || open){
+        const chatBody = $(".chat-wrapper .chat .body");
+        chatBody.scrollTop(chatBody.prop('scrollHeight'));
+    }
+}
+

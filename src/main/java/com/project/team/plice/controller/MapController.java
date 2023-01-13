@@ -5,7 +5,7 @@ import com.project.team.plice.dto.DataUtils;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
-import com.project.team.plice.service.MapServiceImpl;
+import com.project.team.plice.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MapController {
 
-    private final MapServiceImpl mapService;
+    private final MapService mapService;
 
     @GetMapping("/map")
     public String map(Model model) {

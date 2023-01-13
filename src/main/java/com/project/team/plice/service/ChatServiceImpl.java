@@ -1,10 +1,10 @@
 package com.project.team.plice.service;
 
 import com.project.team.plice.domain.chat.Chat;
-import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.dto.chat.ChatRoomDto;
 import com.project.team.plice.repository.chat.ChatRepository;
 import com.project.team.plice.repository.chat.ChatRoomRepository;
@@ -12,12 +12,17 @@ import com.project.team.plice.repository.chat.MemberChatRoomRepository;
 import com.project.team.plice.repository.data.ApartDataRepository;
 import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.ChatService;
+import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,11 +30,47 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final MemberChatRoomRepository memberChatRoomRepository;
-    private final ChatRoomRepository chatRoomRepository;
     private final ChatRepository chatRepository;
+    private final ChatRoomRepository chatRoomRepository;
     private final ApartDataRepository apartDataRepository;
+
+    @Override
+    public List<ChatRoomDto> myRoomsResolver(Authentication authentication) {
+        List<ChatRoom> chatRooms = findChatRoomsByMember(memberService.findMember(authentication));
+        List<ChatRoomDto> chatRoomDtos = chatRooms.stream().map(chatRoom -> chatRoom.toDto())
+                .collect(Collectors.toList());
+        chatRoomDtos.forEach(chatRoomDto -> setLastChat(chatRoomDto));
+        setMembers(chatRoomDtos);
+        return chatRoomDtos;
+    }
+
+    @Override
+    public void setLastChat(ChatRoomDto chatRoomDto) {
+        List<Chat> chats = chatRoomDto.getChats();
+        if (chats.size() != 0) {
+            int i = chats.size() - 1;
+            while (true) {
+                if (i < 0) {
+                    chatRoomDto.setLastChat(Chat.builder().content("아직 채팅이 없습니다.").build());
+                    break;
+                } else if (!chats.get(i).getType().equals("INFO")) {
+                    chatRoomDto.setLastChat(chats.get(i));
+                    break;
+                }
+                i--;
+            }
+        }
+    }
+
+    @Override
+    public void setMembers(List<ChatRoomDto> chatRoomDtos) {
+        chatRoomDtos.forEach(chatRoomDto -> {
+            List<Member> members = findMemberByChatRoom(chatRoomDto.toEntity());
+            chatRoomDto.setMembers(members);
+        });
+    }
 
     @Override
     public List<Chat> findChatsByRoomId(String roomId) {
@@ -45,6 +86,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatRoom> findChatRoomsByMember(Member member) {
         return memberChatRoomRepository.findByMember(member).stream().map(e -> e.getChatRoom()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Member> findMemberByChatRoom(ChatRoom chatRoom) {
+        return memberChatRoomRepository.findByChatRoom(chatRoom).stream().map(e -> e.getMember()).collect(Collectors.toList());
     }
 
     @Override
@@ -82,14 +128,15 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public String chatRoomJoin(Member member, String roomId) throws Exception {
+    public Integer chatRoomJoin(String roomId, Authentication authentication) throws Exception {
+        Member member = memberService.findMember(authentication);
         ChatRoom chatRoom = findChatRoomById(roomId);
-        if(!isJoined(member, chatRoom)){
+        if (!isJoined(member, chatRoom)) {
             chatRoom.memberCountPlus();
             MemberChatRoom memberChatRoom = MemberChatRoom.builder().chatRoom(chatRoom).member(member).build();
             chatRoomSave(chatRoom);
             memberChatRoomSave(memberChatRoom);
-            return chatRoom.getMemberCount().toString();
+            return chatRoom.getMemberCount();
         }
         throw new Exception("isJoined");
     }
@@ -97,7 +144,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public boolean isJoined(Member member, ChatRoom chatRoom) {
         List<MemberChatRoom> memberChatRooms = findMemberChatRoomByRoom(chatRoom);
-        if(memberChatRooms.stream().filter(mcr -> mcr.getMember().getPhone().equals(member.getPhone())).count() == 0){
+        if (memberChatRooms.stream().filter(mcr -> mcr.getMember().getPhone().equals(member.getPhone())).count() == 0) {
             return false;
         } else {
             return true;
@@ -107,13 +154,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void chatRoomExit(Member member, String roomId) {
-        System.out.println("chatRoomExit  roomId = " + roomId);
         ChatRoom chatRoom = findChatRoomById(roomId);
         chatRoom.memberCountMinus();
         chatRoomRepository.save(chatRoom);
         List<MemberChatRoom> memberChatRooms = findMemberChatRoomByMember(member);
         memberChatRooms.forEach(m -> {
-            if(m.getChatRoom().getId().equals(roomId)){
+            if (m.getChatRoom().getId().equals(roomId)) {
                 memberChatRoomRepository.delete(m);
             }
         });
@@ -122,6 +168,40 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Integer findMemberCount(String roomId) {
         return chatRoomRepository.findById(roomId).get().getMemberCount();
+    }
+
+    @Override
+    public Map<Integer,List<Chat>> chatsGroupByDay(String roomId) {
+        List<Chat> chats = findChatsByRoomId(roomId);
+        Map<Integer, List<Chat>> chatsMap = new HashMap<>();
+        List<Integer> days = new ArrayList<>();
+        for (Chat chat : chats) {
+            int day = chat.getRegDate().getDayOfMonth();
+            if(!days.contains(day)){
+                days.add(day);
+            }
+        }
+        for (Integer day : days) {
+            chatsMap.put(day,
+                    chats.stream().filter(chat -> chat.getRegDate().getDayOfMonth() == day)
+                            .collect(Collectors.toList()));
+        }
+        return chatsMap;
+    }
+
+    @Override
+    public List<ChatRoomDto> highlightChatRooms(String inputVal) {
+        List<ChatRoomDto> chatRooms = findChatRoomsByAddressOrName("", inputVal);
+        if (chatRooms != null) {
+            chatRooms.forEach(e -> e.coincidenceHighlight(inputVal));
+        }
+        return chatRooms;
+    }
+
+    @Override
+    public Integer numberOfMyRooms(Authentication authentication) {
+        List<ChatRoom> chatRooms = findChatRoomsByMember(memberService.findMember(authentication));
+        return chatRooms.size();
     }
 
     @Override

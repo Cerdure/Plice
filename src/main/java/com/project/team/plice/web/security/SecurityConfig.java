@@ -54,7 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             "/find-data/**", "/find-apart/**", "/webjars/**", "/ws/**",
                             "/chat/**", "**/websocket/**", "/post/**", "/story-detail/**", "/notice-detail/**",
                             "/contents/**", "/my-page/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**").permitAll()
-
                     .antMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()

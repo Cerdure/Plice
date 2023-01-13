@@ -1,11 +1,9 @@
 package com.project.team.plice.controller;
 
-import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.member.MemberDto;
-import com.project.team.plice.service.MemberServiceImpl;
+import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class JoinController {
 
-    private final MemberServiceImpl memberService;
+    private final MemberService memberService;
 
     @GetMapping("/sign-up")
     public String signUpForm(){
@@ -33,9 +31,8 @@ public class JoinController {
 
     @PostMapping("/join")
     public String joinMember(@ModelAttribute MemberDto memberDto){
-        System.out.println("memberDto = " + memberDto.toString());
         memberService.join(memberDto);
-        return "join";
+        return "redirect:/login";
     }
 
 

@@ -5,6 +5,7 @@ import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,12 +14,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;    // sql대신
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Transactional
     public Long join(MemberDto memberDto) {
         validateDuplicateMember(memberDto);
         Member member = memberDto.createMember(passwordEncoder);
@@ -31,6 +34,11 @@ public class MemberServiceImpl implements MemberService {
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+    }
+
+    @Override
+    public Member findMember(Authentication authentication) {
+        return findByPhone(authentication.getName());
     }
 
     public List<Member> findMembers() {
@@ -46,9 +54,11 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByPhone(phone).get();
     }
 
+    @Transactional
     public void update(Long id, MemberDto memberDto) {
     }
 
+    @Transactional
     public void delete(Long id){
     }
 

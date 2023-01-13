@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    layout:decorate="~{layout/default}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/default}">
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/chat.css">
@@ -26,8 +27,8 @@
                 <div class="search-result-wrapper" id="search-input-results">
                     <div class="search-result-chat-room-wrapper">
                         <div class="search-result-chat-room" th:each="chatRoom : ${chatRooms}"
-                            th:data-id="${chatRoom.id}" th:data-name="${chatRoom.apartData.name}"
-                            th:data-member-count="${chatRoom.memberCount}">
+                             th:data-id="${chatRoom.id}" th:data-name="${chatRoom.apartData.name}"
+                             th:data-member-count="${chatRoom.memberCount}">
                             <div class="inner-wrapper">
                                 <div class="top-box">
                                     <div class="title">채팅방</div>
@@ -47,16 +48,10 @@
 
             <div id="my-rooms">
                 <div class="my-room" th:each="myChatRoom : ${myChatRooms}" th:data-id="${myChatRoom.id}"
-                    th:data-name="${myChatRoom.apartData.name}" th:data-member-count="${myChatRoom.memberCount}">
+                     th:data-name="${myChatRoom.apartData.name}" th:data-member-count="${myChatRoom.memberCount}">
                     <div class="profiles">
-                        <div class="img-wrapper">
-                            <img src="/img/icon/profile.png">
-                        </div>
-                        <div class="img-wrapper">
-                            <img src="/img/icon/profile.png">
-                        </div>
-                        <div class="img-wrapper">
-                            <img src="/img/icon/profile.png">
+                        <div class="img-wrapper" th:each="member,i : ${myChatRoom.members}" th:if="${i.index} < 3">
+                            <img th:src="${member.profileImgPath}">
                         </div>
                     </div>
                     <div class="info">
@@ -64,7 +59,7 @@
                             <div class="text" th:text="${myChatRoom.apartData.name}"></div>
                             <div class="number" th:text="${myChatRoom.memberCount} + '명'"></div>
                         </div>
-                        <div class="content">안녕하세요.</div>
+                        <div class="content" th:text="${myChatRoom.lastChat.content}"></div>
                     </div>
                 </div>
             </div>
@@ -73,7 +68,7 @@
 
         <div class="right-side">
             <div class="chat-wrapper">
-                <div class="chat" data-id="" data-member-phone="">
+                <div class="chat" id="chat" data-id="" data-nickname="">
                     <div class="head">
                         <img class="exit-icon room-exit" src="/img/icon/chevron-left.svg">
                         <div class="exit room-exit">채팅방<br>나가기</div>
@@ -84,21 +79,54 @@
                         <img class="close" src="/img/icon/close.png">
                     </div>
                     <div class="body" id="chat-box">
-                        <div th:each="chat : ${chats}" th:class="${chat.type == 'INFO'} ? 'info-wrapper' :
-                        (${chat.member.phone == #authentication.principal.username} ? 'content-wrapper my-chat' : 'content-wrapper')">
-                            <div class='content' th:text="${chat.content}">
-                            <strong th:text="${chat.member.nickname}"> </strong>
-                            <div class='date'
-                                 th:with="hour=${#temporals.hour(chat.regDate)}"
-                                 th:with="minute=${#temporals.minute(chat.regDate)}"
-                                 th:text="(hour <= 12 ? '오전 ' + hour : '오후' + (hour - 12))
-                             + ':' + ${#temporals.minute(chat.regDate)}></div>
-                            + "</div>"
-                            + "<div class='profile-wrapper'>"
-                            + "<img src='" + content.member.profileImgPath + "'>"
-                            + "</div>"
+
+                        <div th:each="chats : ${chatsMap}">
+                            <div th:each="chat,i : ${chats.value}"
+                                 th:with="member = ${chat.member},
+                                isInfo = ${chat.type == 'INFO'},
+                                isMine = ${member.phone == #authentication.principal.username},
+                                day = ${#temporals.day(chat.regDate)},
+                                hour = ${#temporals.hour(chat.regDate)},
+                                minute = ${#temporals.minute(chat.regDate)}"
+                                 th:class="${isInfo} ? 'info-wrapper' : (${isMine} ? 'content-wrapper my-chat' : 'content-wrapper')">
+
+                                <div class="chats-day-line" th:if="${i.index} == 0"></div>
+                                <div class="chats-day" th:if="${i.index} == 0"
+                                     th:text="${#temporals.format(chat.regDate, 'yyyy년 MM월 dd일 EEEE')}"></div>
+
+                                <div class="chat-box">
+                                    <div class='profile-wrapper' th:if="${!isMine && !isInfo}">
+                                        <img th:src="${member.profileImgPath}">
+                                    </div>
+
+                                    <div class="name-date-box" th:if="${!isMine && !isInfo}">
+                                        <strong th:text="${member.nickname}"></strong>
+                                        <div class='date' th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))
+                                                            + ':' + (${minute} < 10 ? '0' + ${minute} : ${minute})"></div>
+                                    </div>
+
+                                    <div class='content' th:text="${chat.content}"></div>
+
+                                    <div class="name-date-box" th:if="${isMine && !isInfo}">
+                                        <strong th:text="${member.nickname}"></strong>
+                                        <div class='date' th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))
+                                                            + ':' + (${minute} < 10 ? '0' + ${minute} : ${minute})"></div>
+                                    </div>
+
+                                    <div class='profile-wrapper' th:if="${isMine && !isInfo}">
+                                        <img th:src="${member.profileImgPath}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="last-chat-viewer" th:if="${lastChat != null} and ${lastChat.member != null}" th:classappend="${lastChat.member?.phone == #authentication.principal.username} ? 'isMine' : ''">
+                        <img class="icon" src="/img/icon/chat-text.svg">
+                        <div class="text" th:text="${lastChat == null ? '' : (lastChat.member?.nickname + ' : ' + lastChat.content)}"></div>
+                        <img class="down" src="/img/icon/chevron-down.svg">
+                    </div>
+
                     <form class="input-wrapper">
                         <textarea class="chat-input" type="text" placeholder="메시지를 입력하세요."></textarea>
                         <div class="regist-btn">
