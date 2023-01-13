@@ -1,27 +1,5 @@
 $(function () {
 
-    $(".title-popular").click(function(){
-        if(!$(this).hasClass("active-sort")){
-            $(".top3-wrapper .body").fadeOut(100);
-            $(".lastest").css('display','none');
-            $(".popular").css('display','flex');
-            $(".top3-wrapper .body").fadeIn(200);
-            $(".title-lastest").removeClass("active-sort");
-            $(this).addClass("active-sort");
-        }
-    });
-    
-    $(".title-lastest").click(function(){
-        if(!$(this).hasClass("active-sort")){
-            $(".top3-wrapper .body").fadeOut(100);
-            $(".popular").css('display','none');
-            $(".lastest").css('display','flex');
-            $(".top3-wrapper .body").fadeIn(200);
-            $(".title-popular").removeClass("active-sort");
-            $(this).addClass("active-sort");
-        }
-    });
-
     $(".title-article").click(function(){
         if(!$(this).hasClass("active-sort")){
             $(".youtube-wrapper").hide();

@@ -212,4 +212,9 @@ public class ChatServiceImpl implements ChatService {
                 .map(chatRoom -> chatRoom.toDto()).collect(Collectors.toList());
     }
 
+    @Override
+    public List<ChatRoom> findTop3ChatRooms() {
+        return chatRoomRepository.findTop3ByOrderByMemberCountDesc();
+    }
+
 }

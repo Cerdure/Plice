@@ -37,6 +37,7 @@ public class ChatController extends Socket {
         if(authentication != null){
             model.addAttribute("myChatRooms", chatService.myRoomsResolver(authentication));
         }
+        model.addAttribute("top3", chatService.findTop3ChatRooms());
         return "chat";
     }
 
