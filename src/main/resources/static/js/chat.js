@@ -17,12 +17,12 @@ $(function () {
                         } else {
                             $(".my-room").removeClass("active-room");
                             if($(".my-room").get().every(e => {return e.dataset.id != $(this).data("id")})){
+                                newJoin = true;
                                 const memberCount = await fetch("/chat/in?roomId=" + $(this).data("id")).then(res => res.text());
                                 $(this).attr("data-member-count", memberCount);
                             }
                             myRoomUpdate();
                             $(".my-room:last-child").addClass("active-room"); 
-                            newJoin = true;
                             chatRoomOpen(this);
                         }
                     }
