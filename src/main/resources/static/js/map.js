@@ -16,7 +16,7 @@ $(function () {
             const detailXml = apartDetailXmls[id], 
                   aptName = detailXml.querySelector("kaptName").innerHTML,
                   kaptAddr = detailXml.querySelector("kaptAddr").innerHTML,
-                  doroJuso = detailXml.querySelector("doroJuso"),
+                  doroJuso = detailXml.querySelector("doroJuso"),    
                   address = doroJuso == null ? kaptAddr.substring(0, kaptAddr.indexOf(aptName)) : doroJuso.innerHTML,
                   codeSaleNm = detailXml.querySelector("codeSaleNm"),
                   kaptDongCnt = detailXml.querySelector("kaptDongCnt"),

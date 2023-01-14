@@ -1,13 +1,11 @@
 package com.project.team.plice.controller;
 
 import com.project.team.plice.domain.chat.Chat;
-import com.project.team.plice.domain.chat.ChatMessage;
+import com.project.team.plice.dto.DataUtils;
+import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.domain.chat.ChatRoom;
-import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.chat.ChatRoomDto;
-import com.project.team.plice.dto.data.AddressDataDto;
-import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.service.ChatServiceImpl;
 import com.project.team.plice.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -85,19 +83,11 @@ public class ChatController extends Socket {
         return "chat :: #my-rooms";
     }
 
-    @GetMapping("/chat/room-exit")
-    @ResponseBody
-    public String roomExit(@RequestParam("roomId") String roomId, Authentication authentication) {
-        if(authentication != null){
-            Member member = memberService.findByPhone(authentication.getName());
-            chatService.chatRoomExit(member, roomId);
-            ChatMessage message = new ChatMessage();
-            message.setMessage(member.getNickname() + "님이 채팅방을 나갔습니다.");
-            message.setType(TrayIcon.MessageType.INFO);
-            template.convertAndSend("/subscribe/chat/room/" + roomId, message);
-            return "exit";
-        }
-        return "fail";
+    @GetMapping("/chat/update")
+    public String updateChats(@RequestParam("roomId") String roomId, Model model) {
+        List<Chat> chats = chatService.findChatsByRoomId(roomId);
+        model.addAttribute("chats", chats);
+        return "chat :: #chat-box";
     }
 
     @GetMapping("/chat/my-rooms/count")
@@ -110,20 +100,46 @@ public class ChatController extends Socket {
     }
 
     @MessageMapping("/chat/in-message")
-    public void joinChatRoomMessage(ChatMessage message, Authentication authentication) {
+    public void joinChatRoomMessage(ChatDto message, Authentication authentication) {
         Member member = memberService.findByPhone(authentication.getName());
         message.setMessage(member.getNickname() + "님이 등장했습니다.");
         message.setType(TrayIcon.MessageType.INFO);
+        chatService.chatSave(message, member);
+        message.setMemberCount(chatService.findMemberCount(message.getChatRoomId()));
         template.convertAndSend("/subscribe/chat/room/" + message.getChatRoomId(), message);
     }
 
     @MessageMapping("/chat/message")
-    public void message(ChatMessage message, Authentication authentication) {
+    public void message(ChatDto message, Authentication authentication) {
         Member member = memberService.findByPhone(authentication.getName());
-        Chat chat = chatService.chatSave(message, member);
-        message.setType(TrayIcon.MessageType.NONE);
-        message.setRegDate(chat.getRegDate());
         message.setMember(member);
+        message.setType(TrayIcon.MessageType.NONE);
+        Chat chat = chatService.chatSave(message, member);
+        message.setRegDate(chat.getRegDate());
         template.convertAndSend("/subscribe/chat/room/" + message.getChatRoomId(), message);
+    }
+
+    @GetMapping("/chat/room-exit")
+    @ResponseBody
+    public String roomExit(@RequestParam("roomId") String roomId, Authentication authentication) {
+        if(authentication != null){
+            Member member = memberService.findByPhone(authentication.getName());
+            chatService.chatRoomExit(member, roomId);
+            ChatDto message = new ChatDto();
+            message.setChatRoomId(roomId);
+            message.setMessage(member.getNickname() + "님이 채팅방을 나갔습니다.");
+            message.setType(TrayIcon.MessageType.INFO);
+            message.setMemberCount(chatService.findMemberCount(message.getChatRoomId()));
+            template.convertAndSend("/subscribe/chat/room/" + roomId, message);
+            chatService.chatSave(message, member);
+            return "exit";
+        }
+        return "fail";
+    }
+
+    @GetMapping("/login-info")
+    @ResponseBody
+    public Member loginInfo(Authentication authentication){
+        return memberService.findByPhone(authentication.getName());
     }
 }
