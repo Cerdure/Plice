@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +54,7 @@
         </div>
 
         <div class="profile_wrapper">
-                <div class="profile_wrap">
+                <form action="/update" method="post" class="profile_wrap">
                     <div class="profile_box">
                         <div class="profile_image" size="96">
                             <img src="../img/profile.png">
@@ -65,29 +64,29 @@
                     <div class="profile_name">
                         <label class="name_label">
                             <p class="label_text">아이디</p>
-                            <input name="name" class="input_name" disabled>
+                            <input th:value="${member.phone}" name="name" class="input_name" disabled>
                         </label>
                     </div>
-                    <p class="profile_label">닉네임</p>
+                    <p class="profile_label">비밀번호</p>
                     <div class="input_box">
                             <div class="input_left">
-                                <input class="input_label" type="text" id="confirm" name="nickname" placeholder="한글 또는 영문만 가능" value="sfsf5975@naver.com" disabled>
+                                <input th:value="${member.pw}" id="confirm" class="input_label" type="text" name="nickname" placeholder="한글 또는 영문만 가능" disabled>
                             </div>
                             <button id="send" class="button_right" color="gray"><span>확인</span></button>
                     </div>
                     <p class="profile_label">이름</p>
                     <div class="input_box">
                             <div class="input_left">
-                                <input class="input_label" type="text" name="name" value="윤수호" disabled>
+                                <input th:value="${member.name}" id="confirm" class="input_label" type="text" name="name">
                             </div>
-                            <button class="button_right" color="gray"><span>수정</span></button>
+                            <button id="send" class="button_right" color="gray"><span>확인</span></button>
                     </div>
-                    <p class="profile_label">휴대폰 번호</p>
+                    <p class="profile_label">닉네임</p>
                     <div class="input_box">
                             <div class="input_left">
-                                <input class="input_label" type="text" name="phone" value="010-5102-5975" disabled>
+                                <input th:value="${member.nickname}" id="confirm" class="input_label" type="text" name="phone">
                             </div>
-                            <button class="button_right" color="gray"><span>수정</span></button>
+                            <button id="send" class="button_right" color="gray"><span>확인</span></button>
                     </div>
                     <div class="privacy_label">
                         <div class="privacy_left">
@@ -107,7 +106,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </form>
 
 
 

@@ -5,6 +5,7 @@ import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,10 +47,15 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByPhone(phone).get();
     }
 
-    public void update(Long id, MemberDto memberDto) {
+    public void update(Authentication authentication, MemberDto memberDto) {
+        Member member = memberRepository.findByPhone(authentication.getName()).get();
+        member.changeNickname(memberDto.getNickname());
+        memberRepository.save(memberDto.toEntity()).getName();
     }
 
-    public void delete(Long id){
+    public void delete(Authentication authentication){
+        Member member = memberRepository.findByPhone(authentication.getName()).get();
+        memberRepository.delete(member);
     }
 
 }

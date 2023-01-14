@@ -46,6 +46,24 @@ public class MemberDto {
         this.profileImgPath = profileImgPath;
         this.role = role;
     }
+    public Member toEntity(){
+        Member build = Member.builder()
+                .id(id)
+                .phone(phone)
+                .pw(pw)
+                .name(name)
+                .nickname(nickname)
+                .birth(birth)
+                .sex(sex)
+                .email(email)
+                .regDate(regDate)
+                .delDate(delDate)
+                .favorite(favorite)
+                .profileImgPath(profileImgPath)
+                .role(role)
+                .build();
+        return build;
+    }
 
     public Member createMember(PasswordEncoder passwordEncoder){
         return Member.builder()
