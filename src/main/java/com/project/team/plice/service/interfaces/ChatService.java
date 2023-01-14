@@ -1,10 +1,10 @@
 package com.project.team.plice.service.interfaces;
 
 import com.project.team.plice.domain.chat.Chat;
-import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.dto.chat.ChatRoomDto;
 import org.springframework.security.core.Authentication;
 

@@ -10,7 +10,6 @@ import com.project.team.plice.repository.chat.ChatRepository;
 import com.project.team.plice.repository.chat.ChatRoomRepository;
 import com.project.team.plice.repository.chat.MemberChatRoomRepository;
 import com.project.team.plice.repository.data.ApartDataRepository;
-import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.ChatService;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;

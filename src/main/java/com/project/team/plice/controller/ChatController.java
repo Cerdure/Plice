@@ -1,7 +1,6 @@
 package com.project.team.plice.controller;
 
 import com.project.team.plice.domain.chat.Chat;
-import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.dto.chat.ChatRoomDto;
@@ -20,9 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.awt.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller

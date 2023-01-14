@@ -133,6 +133,7 @@ body {
     padding: 0 37px;
     width: 100%;
 }
+
 .search-result-chat-room:hover {
     transform: scale(1.02);
     transition: 0.3s;
@@ -145,6 +146,7 @@ body {
 .search-result-chat-room:last-child {
     margin-bottom: 40px;
 }
+
 .search-result-chat-room .inner-wrapper {
     position: relative;
     width: 100%;
@@ -157,6 +159,7 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 .search-result-chat-room .inner-wrapper .top-box {
     display: flex;
     font-size: 12px;
@@ -167,17 +170,21 @@ body {
     white-space: nowrap;
     margin-right: 10px;
 }
+
 .search-result-chat-room .member-count {
     white-space: nowrap;
     width: 100%;
 }
+
 .search-result-chat-room .join {
     white-space: nowrap;
 }
+
 .search-result-chat-room:hover .join {
     color: #4169fc;
     transition: 0.5s;
 }
+
 .search-result-chat-room .data {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
@@ -357,6 +364,7 @@ body {
     font-size: 12px;
     letter-spacing: 1px;
 }
+
 .chats-day-line {
     width: 100%;
     height: 1px;
@@ -364,6 +372,7 @@ body {
     position: absolute;
     top: 10px;
 }
+
 .chats-day {
     position: relative;
     width: 200px;
@@ -427,13 +436,16 @@ body {
 .my-chat {
     justify-content: end;
 }
+
 .my-chat .chat-box {
     justify-content: end;
 }
+
 .my-chat .content {
     background-color: #f0f4ff;
     border-radius: 20px 0px 20px 20px;
 }
+
 .my-chat .name-date-box strong {
     color: #7891ff;
     margin-right: 0;
@@ -463,14 +475,17 @@ body {
 .last-chat-viewer img {
     filter: invert(100%) sepia(10%) saturate(7425%) hue-rotate(295deg) brightness(119%) contrast(104%);
 }
+
 .last-chat-viewer .icon {
     padding: 8px;
     padding-left: 14px;
 }
+
 .last-chat-viewer .down {
     padding: 8px;
     padding-right: 14px;
 }
+
 .last-chat-viewer .text {
     width: 100%;
     line-height: 34px;
@@ -479,6 +494,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .chat-wrapper .chat .input-wrapper {
     width: 100%;
     display: flex;
@@ -553,30 +569,30 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0 40px;
-  }
-  
-  .notice {
+}
+
+.notice {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
     overflow: hidden;
-  }
-  
-  .notice img {
+}
+
+.notice img {
     width: 40px;
     filter: invert(30%) sepia(30%) saturate(879%) hue-rotate(177deg) brightness(98%) contrast(89%);
     margin-right: 10px;
-  }
-  
-  .notice .text {
+}
+
+.notice .text {
     font-size: 20px;
     margin-right: 10px;
     white-space: nowrap;
-  }
-  
-  .notice ul {
+}
+
+.notice ul {
     position: relative;
     height: 100%;
     list-style: none;
@@ -584,13 +600,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: start;
-  }
-  
-  .notice ul li {
+}
+
+.notice ul li {
     font-size: 20px;
     white-space: nowrap;
     margin: 18px 0;
-  }
+}
 
 .current-data-wrapper {
     position: relative;
@@ -601,6 +617,7 @@ body {
     font-family: KOHIBaeumOTF;
     flex-direction: column;
 }
+
 .current-data-wrapper .head {
     position: absolute;
     top: 110px;
@@ -610,12 +627,14 @@ body {
     color: #6781a8a1;
     animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
 }
+
 .current-data-wrapper .body {
     display: flex;
     margin-left: 65px;
     animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
     animation-delay: 0.5s;
 }
+
 .current-data-wrapper .data {
     position: relative;
     font-size: 70px;
@@ -625,6 +644,7 @@ body {
     display: flex;
     line-height: 55px;
 }
+
 .current-data-wrapper .unit {
     position: relative;
     font-size: 40px;
@@ -633,12 +653,14 @@ body {
     align-items: end;
     display: flex;
 }
+
 .current-data-wrapper .text {
     font-size: 25px;
     display: flex;
     align-items: end;
     color: #6781a8;
 }
+
 .current-data-wrapper strong {
     font-size: 40px;
     font-weight: normal;
@@ -851,9 +873,11 @@ body {
     text-align: end;
     z-index: 1;
 }
+
 #my-rooms {
     width: 100%;
 }
+
 .my-room {
     width: 100%;
     height: 100px;
