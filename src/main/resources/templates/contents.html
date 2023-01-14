@@ -39,55 +39,17 @@
             <div class="text sort-new">신축</div>
           </div>
         </div>
-        <div class="body">
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
+        <div class="body" id="news-box">
+
+          <a class="article" th:each="search_result: ${search_result}" th:href="${search_result.link}">
+            <div class="title" th:utext="${search_result.title}">
             </div>
-            <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
+            <div class="description" >
+              <li th:utext="${search_result.description}"></li>
             </div>
             <div class="date">SEP 6, 2022</div>
-          </div>
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
-            </div>
-            <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
-            </div>
-            <div class="date">SEP 6, 2022</div>
-          </div>
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
-            </div>
-            <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
-            </div>
-            <div class="date">SEP 6, 2022</div>
-          </div>
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
-            </div>
-            <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
-            </div>
-            <div class="date">SEP 6, 2022</div>
-          </div>
+          </a>
+
         </div>
       </div>
       <div class="youtube-wrapper">
