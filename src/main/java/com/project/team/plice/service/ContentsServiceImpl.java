@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,13 +19,11 @@ public class SearchService {
     private final NaverClient naverClient;
     private final SearchRepository searchRepository;
 
-    public List<NewsEntity> search(String query){
-        SearchNewsReq req = new SearchNewsReq();
-        req.setQuery(query);
+    public List<NewsEntity> search(String keyword, Integer page, Integer totalPage , String sort) {
+        SearchNewsReq req = SearchNewsReq.builder().query(keyword).start(page).display(totalPage).sort(sort).build();
         ResponseEntity<SearchNewsRes> res = naverClient.searchLocal(req);
-        List<NewsEntity> newsEntities = res.getBody().getItems().stream().map(o -> new NewsEntity(o.getTitle(),
-                                                                                                  o.getLink(),
-                                                                                                  o.getDescription())).collect(Collectors.toList());
+        List<NewsEntity> newsEntities = res.getBody().getItems().stream().map(
+                o -> new NewsEntity(o.getTitle(), o.getLink(), o.getDescription())).collect(Collectors.toList());
         return newsEntities;
 
     }
