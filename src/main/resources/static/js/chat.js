@@ -322,5 +322,5 @@ function totalCountAnimation() {
                 clearInterval(totalCountUp);
             }
         }, 80);
-    }, 500);
+    }, 700);
 }

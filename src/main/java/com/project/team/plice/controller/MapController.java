@@ -1,7 +1,7 @@
 package com.project.team.plice.controller;
 
 import com.project.team.plice.domain.data.TradeData;
-import com.project.team.plice.dto.DataUtils;
+import com.project.team.plice.dto.utils.DataUtil;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
@@ -28,11 +28,11 @@ public class MapController {
     public String map(Model model) {
         List<TradeData> priceDescList = mapService.findAllTradeDataOrderByPriceDesc();
         List<TradeData> priceAscList = mapService.findAllTradeDataOrderByPriceAsc();
-        DataUtils dataUtils = new DataUtils();
-        dataUtils.setTradeCount(priceDescList.size());
-        dataUtils.setTradeMax(priceDescList.get(0));
-        dataUtils.setTradeMin(priceAscList.get(0));
-        model.addAttribute("dataUtils",dataUtils);
+        DataUtil dataUtil = new DataUtil();
+        dataUtil.setTradeCount(priceDescList.size());
+        dataUtil.setTradeMax(priceDescList.get(0));
+        dataUtil.setTradeMin(priceAscList.get(0));
+        model.addAttribute("dataUtils", dataUtil);
         return "map";
     }
 

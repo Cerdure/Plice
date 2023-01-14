@@ -613,28 +613,28 @@ body {
     height: 40%;
     padding-top: 5%;
     display: flex;
+    align-items: center;
     justify-content: center;
     font-family: KOHIBaeumOTF;
-    flex-direction: column;
 }
-
-.current-data-wrapper .head {
-    position: absolute;
-    top: 110px;
-    left: -6px;
+.current-data-wrapper div:not(.left-box, .left-box .text-1) {
+    animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    animation-delay: 0.5s;
+}
+.current-data-wrapper .left-box {
     display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+.current-data-wrapper .left-box .text-1 {
     font-size: 20px;
     color: #6781a8a1;
     animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
 }
-
-.current-data-wrapper .body {
-    display: flex;
-    margin-left: 65px;
+.current-data-wrapper .left-box .text {
     animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
     animation-delay: 0.5s;
 }
-
 .current-data-wrapper .data {
     position: relative;
     font-size: 70px;
