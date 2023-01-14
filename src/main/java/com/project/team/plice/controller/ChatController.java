@@ -1,13 +1,11 @@
 package com.project.team.plice.controller;
 
 import com.project.team.plice.domain.chat.Chat;
-import com.project.team.plice.dto.DataUtils;
-import com.project.team.plice.dto.chat.ChatDto;
-import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.dto.chat.ChatRoomDto;
-import com.project.team.plice.service.ChatServiceImpl;
-import com.project.team.plice.service.MemberServiceImpl;
+import com.project.team.plice.service.interfaces.ChatService;
+import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,34 +19,47 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.awt.*;
 import java.net.Socket;
-import java.util.List;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ChatController extends Socket {
-    private final MemberServiceImpl memberService;
+    private final MemberService memberService;
+    private final ChatService chatService;
     private final SimpMessagingTemplate template;
-    private final ChatServiceImpl chatService;
 
     @GetMapping("/chat")
     public String chat(Authentication authentication, Model model) {
         if(authentication != null){
-            String phone = authentication.getName();
-            Member member = memberService.findByPhone(phone);
-            List<ChatRoom> chatRooms = chatService.findChatRoomsByMember(member);
-            model.addAttribute("myChatRooms", chatRooms);
+            model.addAttribute("myChatRooms", chatService.myRoomsResolver(authentication));
         }
+        model.addAttribute("totalMemberCount", chatService.numberOfMembersOnChat());
+        model.addAttribute("top3", chatService.findTop3ChatRooms());
         return "chat";
+    }
+
+    @GetMapping("/chat/my-rooms")
+    public String updateMyRooms(Authentication authentication, Model model) {
+        if(authentication != null){
+            model.addAttribute("myChatRooms", chatService.myRoomsResolver(authentication));
+        }
+        return "chat :: #my-rooms";
+    }
+
+    @GetMapping("/chat/update")
+    public String updateChats(@RequestParam("roomId") String roomId, Model model) {
+        ChatRoomDto chatRoomDto = chatService.findChatRoomById(roomId).toDto();
+        chatService.setLastChat(chatRoomDto);
+        model.addAttribute("chatsMap", chatService.chatsGroupByDay(roomId));
+        model.addAttribute("lastChat", chatRoomDto.getLastChat());
+        return "chat :: #chat";
     }
 
     @GetMapping("/chat/in")
     @ResponseBody
-    public String joinChatRoom(@RequestParam("roomId") String roomId, Authentication authentication) throws Exception{
+    public Integer joinChatRoom(@RequestParam("roomId") String roomId, Authentication authentication) throws Exception{
         if(authentication != null){
-            Member member = memberService.findByPhone(authentication.getName());
-            String memberCount = chatService.chatRoomJoin(member, roomId);
-            return memberCount;
+            return chatService.chatRoomJoin(roomId, authentication);
         } else {
             throw new IllegalStateException("로그인 상태가 아닙니다.");
         }
@@ -57,11 +68,7 @@ public class ChatController extends Socket {
     @GetMapping("/chat/input-search")
     public String homeSearchInput(@RequestParam(name = "inputVal") String inputVal, Model model) {
         if(inputVal!=""){
-            List<ChatRoomDto> chatRooms = chatService.findChatRoomsByAddressOrName("",inputVal);
-            if(chatRooms != null){
-                chatRooms.forEach(e -> e.coincidenceHighlight(inputVal));
-            }
-            model.addAttribute("chatRooms", chatRooms);
+            model.addAttribute("chatRooms", chatService.highlightChatRooms(inputVal));
         }
         return "chat :: #search-input-results";
     }
@@ -72,31 +79,10 @@ public class ChatController extends Socket {
         return authentication == null ? "no" : "ok";
     }
 
-    @GetMapping("/chat/my-rooms")
-    public String updateMyRooms(Authentication authentication, Model model) {
-        if(authentication != null){
-            String phone = authentication.getName();
-            Member member = memberService.findByPhone(phone);
-            List<ChatRoom> chatRooms = chatService.findChatRoomsByMember(member);
-            model.addAttribute("myChatRooms", chatRooms);
-        }
-        return "chat :: #my-rooms";
-    }
-
-    @GetMapping("/chat/update")
-    public String updateChats(@RequestParam("roomId") String roomId, Model model) {
-        List<Chat> chats = chatService.findChatsByRoomId(roomId);
-        model.addAttribute("chats", chats);
-        return "chat :: #chat-box";
-    }
-
     @GetMapping("/chat/my-rooms/count")
     @ResponseBody
-    public String myRoomsCount(Authentication authentication) {
-        String phone = authentication.getName();
-        Member member = memberService.findByPhone(phone);
-        List<ChatRoom> chatRooms = chatService.findChatRoomsByMember(member);
-        return String.valueOf(chatRooms.size());
+    public Integer numberOfMyRooms(Authentication authentication) {
+        return chatService.numberOfMyRooms(authentication);
     }
 
     @MessageMapping("/chat/in-message")

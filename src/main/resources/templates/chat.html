@@ -40,23 +40,15 @@
                     </div>
                 </div>
             </div>
-
             <div class="null-wrapper" th:if="${myChatRooms == null}">
                 <div class="null">현재 참여중인 채팅방이 없습니다.</div>
             </div>
-
             <div id="my-rooms">
                 <div class="my-room" th:each="myChatRoom : ${myChatRooms}" th:data-id="${myChatRoom.id}"
                     th:data-name="${myChatRoom.apartData.name}" th:data-member-count="${myChatRoom.memberCount}">
                     <div class="profiles">
-                        <div class="img-wrapper">
-                            <img src="/img/icon/profile.png">
-                        </div>
-                        <div class="img-wrapper">
-                            <img src="/img/icon/profile.png">
-                        </div>
-                        <div class="img-wrapper">
-                            <img src="/img/icon/profile.png">
+                        <div class="img-wrapper" th:each="member,i : ${myChatRoom.members}" th:if="${i.index} < 3">
+                            <img th:src="${member.profileImgPath}">
                         </div>
                     </div>
                     <div class="info">
@@ -64,16 +56,31 @@
                             <div class="text" th:text="${myChatRoom.apartData.name}"></div>
                             <div class="number" th:text="${myChatRoom.memberCount} + '명'"></div>
                         </div>
-                        <div class="content">안녕하세요.</div>
+                        <div class="content"
+                            th:text="${myChatRoom.lastChat == null ? '아직 채팅이 없습니다.' : myChatRoom.lastChat.content}">
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
         <div class="right-side">
+            <div class="notice-wrapper">
+                <div class="notice">
+                    <img src="/img/icon/notice.png">
+                    <div class="text">[공지사항]</div>
+                    <ul>
+                        <li>공지사항 샘플 제목 1</li>
+                        <li>공지사항 샘플 제목 2</li>
+                        <li>공지사항 샘플 제목 3</li>
+                        <li>공지사항 샘플 제목 4</li>
+                        <li>공지사항 샘플 제목 5</li>
+                        <li>공지사항 샘플 제목 1</li>
+                    </ul>
+                </div>
+            </div>
             <div class="chat-wrapper">
-                <div class="chat" data-id="" data-member-phone="">
+                <div class="chat" id="chat" data-id="" sec:authorize="isAuthenticated()"
+                    th:data-phone="${#authentication.principal.username}">
                     <div class="head">
                         <img class="exit-icon room-exit" src="/img/icon/chevron-left.svg">
                         <div class="exit room-exit">채팅방<br>나가기</div>
@@ -84,20 +91,48 @@
                         <img class="close" src="/img/icon/close.png">
                     </div>
                     <div class="body" id="chat-box">
-                        <div th:each="chat : ${chats}" th:class="${chat.type == 'INFO'} ? 'info-wrapper' :
-                        (${chat.member.phone == #authentication.principal.username} ? 'content-wrapper my-chat' : 'content-wrapper')">
-                            <div class='content' th:text="${chat.content}">
-                            <strong th:text="${chat.member.nickname}"> </strong>
-                            <div class='date'
-                                 th:with="hour=${#temporals.hour(chat.regDate)}"
-                                 th:with="minute=${#temporals.minute(chat.regDate)}"
-                                 th:text="(hour <= 12 ? '오전 ' + hour : '오후' + (hour - 12))
-                             + ':' + ${#temporals.minute(chat.regDate)}></div>
-                            + "</div>"
-                            + "<div class='profile-wrapper'>"
-                            + "<img src='" + content.member.profileImgPath + "'>"
-                            + "</div>"
+                        <div th:each="chats : ${chatsMap}">
+                            <div th:each="chat,i : ${chats.value}" th:with="member = ${chat.member},
+                                isInfo = ${chat.type == 'INFO'},
+                                isMine = ${member.phone == #authentication.principal.username},
+                                day = ${#temporals.day(chat.regDate)},
+                                hour = ${#temporals.hour(chat.regDate)},
+                                minute = ${#temporals.minute(chat.regDate)}"
+                                th:class="${isInfo} ? 'info-wrapper' : (${isMine} ? 'content-wrapper my-chat' : 'content-wrapper')">
+                                <div class="chats-day-line" th:if="${i.index} == 0"></div>
+                                <div class="chats-day" th:if="${i.index} == 0"
+                                    th:text="${#temporals.format(chat.regDate, 'yyyy년 MM월 dd일 EEEE')}"></div>
+                                <div class="chat-box">
+                                    <div class='profile-wrapper' th:if="${!isMine && !isInfo}">
+                                        <img th:src="${member.profileImgPath}">
+                                    </div>
+                                    <div class="name-date-box" th:if="${!isMine && !isInfo}">
+                                        <strong th:text="${member.nickname}"></strong>
+                                        <div class='date' th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))
+                                                            + ':' + (${minute} < 10 ? '0' + ${minute} : ${minute})">
+                                        </div>
+                                    </div>
+                                    <div class='content' th:text="${chat.content}"></div>
+                                    <div class="name-date-box" th:if="${isMine && !isInfo}">
+                                        <strong th:text="${member.nickname}"></strong>
+                                        <div class='date' th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))
+                                                            + ':' + (${minute} < 10 ? '0' + ${minute} : ${minute})">
+                                        </div>
+                                    </div>
+                                    <div class='profile-wrapper' th:if="${isMine && !isInfo}">
+                                        <img th:src="${member.profileImgPath}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="last-chat-viewer" th:if="${lastChat != null} and ${lastChat.member != null}"
+                        th:classappend="${lastChat.member?.phone == #authentication.principal.username} ? 'isMine' : ''">
+                        <img class="icon" src="/img/icon/chat-text.svg">
+                        <div class="text"
+                            th:text="${lastChat == null ? '' : (lastChat.member?.nickname + ' : ' + lastChat.content)}">
+                        </div>
+                        <img class="down" src="/img/icon/chevron-down.svg">
                     </div>
                     <form class="input-wrapper">
                         <textarea class="chat-input" type="text" placeholder="메시지를 입력하세요."></textarea>
@@ -110,93 +145,38 @@
                     </form>
                 </div>
             </div>
+            <div class="current-data-wrapper">
+                <div class="head">
+                    플라이스에서
+                </div>
+                <div class="body">
+                    <div class="text">현재</div>
+                    <div class="data" th:data-num="${totalMemberCount}">0</div>
+                    <div class="unit">명</div>
+                    <div class="text">이 <strong>소통</strong>하고 있습니다.</div>
+                </div>
+            </div>
             <div class="top3-wrapper">
                 <div class="head">
                     <div class="title">
                         <img class="icon" src="/img/icon/chat-text.svg">
                         <div class="text">채팅방 <strong>TOP3</strong></div>
                     </div>
-                    <div class="sort">
-                        <div class="text title-popular active-sort">인기순</div>
-                        <div class="text title-lastest">최신순</div>
-                    </div>
                 </div>
                 <div class="body">
                     <div class="popular">
-                        <div class="room">
+                        <div class="room" th:each="chatRoom,i : ${top3}" th:data-id="${chatRoom.id}"
+                            th:data-name="${chatRoom.apartData.name}" th:data-member-count="${chatRoom.memberCount}">
                             <div class="back"></div>
                             <div class="title">
-                                <div class="number">1</div>
-                                <div class="name">일원동 래미안개포루체하임</div>
+                                <div class="number" th:text="${i.count}"></div>
+                                <div class="name" th:text="${chatRoom.apartData.name}"></div>
                             </div>
                             <div class="info">
                                 <img class="icon" src="/img/icon/people-fill.svg">
-                                <div class="data">523</div>
+                                <div class="text">현재</div>
+                                <div class="data" th:text="${chatRoom.memberCount}"></div>
                                 <div class="unit">명 참여중</div>
-                            </div>
-                            <div class="enter">입장하기 &gt;</div>
-                        </div>
-                        <div class="room">
-                            <div class="back"></div>
-                            <div class="title">
-                                <div class="number">2</div>
-                                <div class="name">잠실동 리센츠</div>
-                            </div>
-                            <div class="info">
-                                <img class="icon" src="/img/icon/people-fill.svg">
-                                <div class="data">475</div>
-                                <div class="unit">명 참여중</div>
-                            </div>
-                            <div class="enter">입장하기 &gt;</div>
-                        </div>
-                        <div class="room">
-                            <div class="back"></div>
-                            <div class="title">
-                                <div class="number">3</div>
-                                <div class="name">삼성동 삼성포스코더샵</div>
-                            </div>
-                            <div class="info">
-                                <img class="icon" src="/img/icon/people-fill.svg">
-                                <div class="data">298</div>
-                                <div class="unit">명 참여중</div>
-                            </div>
-                            <div class="enter">입장하기 &gt;</div>
-                        </div>
-                    </div>
-                    <div class="lastest">
-                        <div class="room">
-                            <div class="back"></div>
-                            <div class="title">
-                                <div class="number">1</div>
-                                <div class="name">잠원동 신반포메이플자이</div>
-                            </div>
-                            <div class="info">
-                                <div class="data">22.12.26</div>
-                                <div class="unit">OPEN</div>
-                            </div>
-                            <div class="enter">입장하기 &gt;</div>
-                        </div>
-                        <div class="room">
-                            <div class="back"></div>
-                            <div class="title">
-                                <div class="number">2</div>
-                                <div class="name">여의도동 아크로여의도더원</div>
-                            </div>
-                            <div class="info">
-                                <div class="data">22.12.24</div>
-                                <div class="unit">OPEN</div>
-                            </div>
-                            <div class="enter">입장하기 &gt;</div>
-                        </div>
-                        <div class="room">
-                            <div class="back"></div>
-                            <div class="title">
-                                <div class="number">3</div>
-                                <div class="name">삼성동 삼성포스코더샵</div>
-                            </div>
-                            <div class="info">
-                                <div class="data">22.12.22</div>
-                                <div class="unit">OPEN</div>
                             </div>
                             <div class="enter">입장하기 &gt;</div>
                         </div>
@@ -206,5 +186,4 @@
         </div>
     </div>
 </div>
-
 </html>

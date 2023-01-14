@@ -1,4 +1,4 @@
-package com.project.team.plice.util;
+package com.project.team.plice.utils;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;

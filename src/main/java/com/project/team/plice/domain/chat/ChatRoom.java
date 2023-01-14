@@ -67,4 +67,8 @@ public class ChatRoom {
     public void memberCountMinus(){
         this.memberCount--;
     }
+
+    public void changeMemberCount(Integer memberCount){
+        this.memberCount = memberCount;
+    }
 }

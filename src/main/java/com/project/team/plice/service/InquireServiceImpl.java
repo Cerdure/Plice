@@ -2,6 +2,7 @@ package com.project.team.plice.service;
 
 import com.project.team.plice.repository.inquire.InquireRepository;
 import com.project.team.plice.service.interfaces.InquireService;
+import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,6 @@ import org.springframework.stereotype.Service;
 public class InquireServiceImpl implements InquireService {
 
     private final InquireRepository inquireRepository;
-    private final MemberServiceImpl memberService;
+    private final MemberService memberService;
 
 }

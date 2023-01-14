@@ -1,4 +1,4 @@
-package com.project.team.plice.util;
+package com.project.team.plice.utils;
 
 
 import lombok.Data;
