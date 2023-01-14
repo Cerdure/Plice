@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;    // sql대신
     private final BCryptPasswordEncoder passwordEncoder;
 
     public Long join(MemberDto memberDto) {
