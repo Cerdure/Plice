@@ -1,6 +1,7 @@
 package com.project.team.plice.web.security;
 
 import com.project.team.plice.service.LoginServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -18,12 +20,15 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     LoginServiceImpl loginService;
     @Autowired
     DataSource dataSource;
+
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
     // 접근 허용 목록 (정적인 파일들)
     private static final String[] AUTH_WHITELIST = {
@@ -54,29 +59,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             "/map/**", "/markers/**", "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
                             "/find-data/**", "/find-apart/**", "/webjars/**", "/ws/**",
                             "/chat/**", "**/websocket/**", "/post/**", "/story-detail/**", "/notice-detail/**",
-                            "/contents/**", "/my-page/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**").permitAll()
-
+                            "/contents/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**").permitAll()
                     .antMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    .loginPage("/login")
-                    .usernameParameter("phone")
-                    .passwordParameter("pw")
-                    .loginProcessingUrl("/loginProc")
-                    .defaultSuccessUrl("/")
-                    .failureUrl("/login/error")
+                        .loginPage("/login")
+                        .usernameParameter("phone")
+                        .passwordParameter("pw")
+                        .loginProcessingUrl("/loginProc")
+                        .successHandler(authenticationSuccessHandler)
+                        .failureUrl("/login/error")
                 .and()
                     .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/")
                 .and()
                     .rememberMe()
-                    .key("rememberMe")
-                    .tokenValiditySeconds(3600)
-                    .alwaysRemember(false)
-                    .userDetailsService(loginService)
-                    .tokenRepository(tokenRepository())
+                        .key("rememberMe")
+                        .tokenValiditySeconds(3600)
+                        .alwaysRemember(false)
+                        .userDetailsService(loginService)
+                        .tokenRepository(tokenRepository())
                 .and()
                     .csrf().disable();
 

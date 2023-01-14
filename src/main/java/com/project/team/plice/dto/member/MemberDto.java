@@ -51,7 +51,6 @@ public class MemberDto {
         return Member.builder()
                 .pw(passwordEncoder.encode(this.pw))
                 .phone(this.phone)
-                .pw(this.pw)
                 .name(this.name)
                 .nickname(this.nickname)
                 .birth(this.birth)

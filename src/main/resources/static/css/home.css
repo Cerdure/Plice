@@ -354,23 +354,6 @@ nav>div>span {
   font-size: 30px;
 }
 
-.top3-wrapper .head .sort {
-  display: flex;
-}
-
-.top3-wrapper .head .sort .text {
-  font-size: 16px;
-  margin: 10px 20px;
-}
-
-.title-popular {
-  font-weight: 900;
-}
-
-.title-lastest {
-  font-weight: 900;
-}
-
 .top3-wrapper .body {
   position: relative;
   width: 100%;

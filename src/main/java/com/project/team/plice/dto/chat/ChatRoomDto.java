@@ -3,6 +3,7 @@ package com.project.team.plice.dto.chat;
 import com.project.team.plice.domain.chat.Chat;
 import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.data.ApartData;
+import com.project.team.plice.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,15 +19,20 @@ public class ChatRoomDto {
     private Integer memberCount;
     private Integer chatCount;
     private String highlightName;
+    private Chat lastChat;
+    private List<Member> members;
     private LocalDateTime regDate;
 
     @Builder
-    public ChatRoomDto(String id, ApartData apartData, List<Chat> chats, Integer memberCount, Integer chatCount, LocalDateTime regDate) {
+    public ChatRoomDto(String id, ApartData apartData, List<Chat> chats, Integer memberCount, Integer chatCount, String highlightName, Chat lastChat, List<Member> members, LocalDateTime regDate) {
         this.id = id;
         this.apartData = apartData;
         this.chats = chats;
         this.memberCount = memberCount;
         this.chatCount = chatCount;
+        this.highlightName = highlightName;
+        this.lastChat = lastChat;
+        this.members = members;
         this.regDate = regDate;
     }
 
