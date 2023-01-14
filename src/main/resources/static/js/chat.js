@@ -68,7 +68,8 @@ $(function () {
         });
 
         initConnect();
-
+        noticeAnimation();
+        totalCountAnimation();
     });
 
     document.addEventListener('scroll', function (event) {
@@ -94,11 +95,13 @@ $(function () {
             $(".right-side").css({'flex-direction':'row','align-items':'center'});
             $(".top3-wrapper").hide();
             $(".top3-wrapper .head").stop().animate({'margin-bottom':'20px'},300);
-            $(".top3-wrapper").css({'width':'auto','margin-top':'0px', 'margin-right':'10%'}).show();
+            $(".top3-wrapper .body").css('height','auto');
+            $(".top3-wrapper").css({'width':'auto','margin-top':'0px', 'margin-right':'10%', 'justify-content':'center', 'animation-delay':'0s'}).show();
             $(".popular").css('flex-direction','column');
             $(".chat-wrapper").css('display','flex');
             $(".room").css({'height':'10%','margin':'20px 20px'});
             $(".search-result-outer-wrapper").hide();
+            $(".current-data-wrapper").hide();
             $(".chat-wrapper .regist-btn .btn").remove();
             const div = document.createElement("div");
             div.setAttribute("class","btn send-btn-" + currentRoomId);
@@ -118,13 +121,16 @@ $(function () {
         $(".right-side").css({'flex-direction':'column','align-items':'center'});
         $(".top3-wrapper").hide();
         $(".top3-wrapper .head").stop().animate({'margin-bottom':'40px'},300);
-        $(".top3-wrapper").css({'width':'100%','margin-top':'80px', 'margin-right':'0'}).show();
+        $(".top3-wrapper .body").css('height','100%');
+        $(".top3-wrapper").css({'width':'100%', 'margin-right':'0', 'animation-delay':'1s'}).show();
         $(".popular").css('flex-direction','row');
+        $(".current-data-wrapper").show();
         $(".chat-wrapper").hide();
         $(".info-wrapper").remove();
         $(".content-wrapper").remove();
         $(".room").css({'height':'200px','margin':'0px 20px'});
         chatOpen = false;
+        totalCountAnimation();
     }
 
     $(".search-wrapper .reset").click(function () {
@@ -288,4 +294,33 @@ function newMessage(type){
     } else if(!$(".last-chat-viewer").hasClass('isMine') && type == 'NONE'){
         $(".last-chat-viewer").stop().fadeIn(300);
     }
+}
+
+function noticeAnimation(){
+    let idx = 1;
+    setInterval(function(){
+        $(".notice ul").stop().animate({'bottom': (59*idx)+'px'},300,function(){
+            if(idx == 5){
+                $(".notice ul").css('bottom','0px');
+                idx = 1;
+            } else {
+                idx++;
+            }
+        });
+    },3000);
+}
+
+function totalCountAnimation(){
+    let num = 0;
+    setTimeout(() => {
+        let totalCountUp =  setInterval(function(){
+            const dataView = $(".current-data-wrapper .data");
+            const maxNum = dataView.data("num");
+            num++;
+            dataView.text(num);
+            if(num == maxNum){
+                clearInterval(totalCountUp);
+            }    
+        }, 80);
+    }, 500);
 }

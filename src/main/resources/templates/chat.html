@@ -67,6 +67,22 @@
         </div>
 
         <div class="right-side">
+
+            <div class="notice-wrapper">
+                <div class="notice">
+                  <img src="/img/icon/notice.png">
+                  <div class="text">[공지사항]</div>
+                  <ul>
+                    <li>공지사항 샘플 제목 1</li>
+                    <li>공지사항 샘플 제목 2</li>
+                    <li>공지사항 샘플 제목 3</li>
+                    <li>공지사항 샘플 제목 4</li>
+                    <li>공지사항 샘플 제목 5</li>
+                    <li>공지사항 샘플 제목 1</li>
+                  </ul>
+                </div>
+              </div>
+
             <div class="chat-wrapper">
                 <div class="chat" id="chat" data-id="" sec:authorize="isAuthenticated()" th:data-phone="${#authentication.principal.username}">
                     <div class="head">
@@ -138,6 +154,19 @@
                     </form>
                 </div>
             </div>
+
+            <div class="current-data-wrapper">
+                <div class="head">
+                    플라이스에서
+                </div>
+                <div class="body">
+                    <div class="text">현재</div>
+                    <div class="data" th:data-num="${totalMemberCount}">0</div>
+                    <div class="unit">명</div>
+                    <div class="text">이 <strong>소통</strong>하고 있습니다.</div>
+                </div>
+            </div>
+
             <div class="top3-wrapper">
                 <div class="head">
                     <div class="title">
@@ -147,7 +176,6 @@
                 </div>
                 <div class="body">
                     <div class="popular">
-
                         <div class="room" th:each="chatRoom,i : ${top3}" th:data-id="${chatRoom.id}"
                              th:data-name="${chatRoom.apartData.name}" th:data-member-count="${chatRoom.memberCount}">
                             <div class="back"></div>
@@ -157,12 +185,12 @@
                             </div>
                             <div class="info">
                                 <img class="icon" src="/img/icon/people-fill.svg">
+                                <div class="text">현재</div>
                                 <div class="data" th:text="${chatRoom.memberCount}"></div>
                                 <div class="unit">명 참여중</div>
                             </div>
                             <div class="enter">입장하기 &gt;</div>
                         </div>
-
                     </div>
                 </div>
             </div>

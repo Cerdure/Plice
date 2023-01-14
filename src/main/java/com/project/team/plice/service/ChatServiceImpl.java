@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -202,6 +203,12 @@ public class ChatServiceImpl implements ChatService {
     public Integer numberOfMyRooms(Authentication authentication) {
         List<ChatRoom> chatRooms = findChatRoomsByMember(memberService.findMember(authentication));
         return chatRooms.size();
+    }
+
+    @Override
+    public Integer numberOfMembersOnChat() {
+        Stream<Member> distinctMembers = memberChatRoomRepository.findAll().stream().map(memberChatRoom -> memberChatRoom.getMember()).distinct();
+        return Math.toIntExact(distinctMembers.count());
     }
 
     @Override

@@ -33,4 +33,5 @@ public interface ChatService {
     public Map<Integer,List<Chat>> chatsGroupByDay(String roomId);
     public List<ChatRoomDto> highlightChatRooms(String inputVal);
     public Integer numberOfMyRooms(Authentication authentication);
+    public Integer numberOfMembersOnChat();
 }
