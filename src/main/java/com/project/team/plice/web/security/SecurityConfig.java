@@ -1,8 +1,7 @@
 package com.project.team.plice.web.security;
 
-import com.project.team.plice.service.LoginServiceImpl;
+import com.project.team.plice.service.impls.LoginServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,19 +22,23 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    LoginServiceImpl loginService;
-    @Autowired
-    DataSource dataSource;
-
+    private final LoginServiceImpl loginService;
+    private final DataSource dataSource;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
-    // 접근 허용 목록 (정적인 파일들)
-    private static final String[] AUTH_WHITELIST = {
-            "/img/**",
-            "/css/**",
-            "/js/**",
-            "/upload-img/**"
+    private static final String[] STATIC_WHITELIST = {
+            "/img/**", "/css/**", "/js/**", "/upload-img/**"
+    };
+
+    private static final String[] DYNAMIC_WHITELIST = {
+            "/", "/login/**", "/sign-up/**", "/join/**", "/join-success/**",
+            "/term-service/**", "/term-of-service/**", "/marketing/**", "/use-personal/**",
+            "/openapi.molit.go.kr/**", "/apis.data.go.kr/**", "/favicon.ico",
+            "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**",
+            "/map/**", "/markers/**", "/find-data/**", "/find-apart/**",
+            "/chat/**", "/webjars/**", "**/websocket/**", "/ws/**",
+            "/post/**", "/story-detail/**", "/notice-detail/**",
+            "/contents/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**"
     };
 
     @Bean
@@ -53,13 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()    // 로그인 필요 없는 페이지들 여기에 추가
-                    .antMatchers("/", "/login/**", "/sign-up/**", "/join-success/**", "/term-service/**", "/marketing/**", "/use-personal/**", "/term-of-service/**", 
-                            "/join/**", "/openapi.molit.go.kr/**", "/apis.data.go.kr/**", "/search/**",
-                            "/map/**", "/markers/**", "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**", "/favicon.ico",
-                            "/find-data/**", "/find-apart/**", "/webjars/**", "/ws/**",
-                            "/chat/**", "**/websocket/**", "/post/**", "/story-detail/**", "/notice-detail/**",
-                            "/contents/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**").permitAll()
+        http.authorizeRequests()
+                    .antMatchers(DYNAMIC_WHITELIST).permitAll()
                     .antMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
@@ -91,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(AUTH_WHITELIST);
+        web.ignoring().antMatchers(STATIC_WHITELIST);
     }
 
     @Override

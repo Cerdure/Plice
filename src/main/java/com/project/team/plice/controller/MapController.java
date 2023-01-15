@@ -1,10 +1,10 @@
 package com.project.team.plice.controller;
 
 import com.project.team.plice.domain.data.TradeData;
-import com.project.team.plice.dto.utils.DataUtil;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
+import com.project.team.plice.dto.utils.DataUtil;
 import com.project.team.plice.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class MapController {
         dataUtil.setTradeCount(priceDescList.size());
         dataUtil.setTradeMax(priceDescList.get(0));
         dataUtil.setTradeMin(priceAscList.get(0));
-        model.addAttribute("dataUtils", dataUtil);
+        model.addAttribute("dataUtil", dataUtil);
         return "map";
     }
 

@@ -75,8 +75,8 @@ $(function () {
     document.addEventListener('scroll', function (event) {
         if (event.target.id === 'chat-box') {
             let st = $("#chat-box").scrollTop();
-            const ih = $("#chat-box").innerHeight();
-            const sh = event.target.scrollHeight;
+            const ih = $("#chat-box").innerHeight(),
+                sh = event.target.scrollHeight;
             if ((st + ih) >= sh - 10) {
                 $(".last-chat-viewer").stop().fadeOut(300);
             }
@@ -92,7 +92,7 @@ $(function () {
                 .text('참여인원 ' + $(".my-room[data-id=" + currentRoomId + "]").data("member-count") + '명');
             $(".chat-wrapper .chat .head .title .data").text($(_this).data("name"));
             $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
-            $(".right-side").css({ 'flex-direction': 'row', 'align-items': 'center' });
+            $(".main-wrapper").css({ 'flex-direction': 'row'});
             $(".top3-wrapper").hide();
             $(".top3-wrapper .head").stop().animate({ 'margin-bottom': '20px' }, 300);
             $(".top3-wrapper .body").css('height', 'auto');
@@ -113,12 +113,13 @@ $(function () {
                 $(".last-chat-viewer").hide();
             }
             chatOpen = true;
+            $(".current-data-wrapper .data").text('0');
         })();
     }
 
     function chatRoomClose() {
         $(".my-room").removeClass("active-room");
-        $(".right-side").css({ 'flex-direction': 'column', 'align-items': 'center' });
+        $(".main-wrapper").css({ 'flex-direction': 'column'});
         $(".top3-wrapper").hide();
         $(".top3-wrapper .head").stop().animate({ 'margin-bottom': '40px' }, 300);
         $(".top3-wrapper .body").css('height', '100%');
@@ -169,29 +170,31 @@ $(function () {
             $(".search-result-outer-wrapper").hide();
         }
     });
+    
     $(".search-input").click(function () {
         if ($(this).val() != '') {
             $(".search-result-wrapper").show();
             $(".search-result-outer-wrapper").show();
         }
     });
+
 });
 
-let newJoin = false, chatOpen = false;
-let currentRoomId, currentSubscribe = new Map([]);
-let st, ih, sh, isFirstMessage = true;
+let newJoin = false, chatOpen = false,
+    currentRoomId, currentSubscribe = new Map([]),
+    st, ih, sh, isFirstMessage = true;
 
 function initConnect() {
     $(".my-room").get().forEach(e => { subscribe(e.dataset.id) });
 }
 
 function subscribe(_roomId) {
-    let messageInput = $('.chat-input');
-    let sendBtn = $('.send-btn-' + _roomId);
-    let roomId = _roomId;
+    let messageInput = $('.chat-input'),
+        sendBtn = $('.send-btn-' + _roomId),
+        roomId = _roomId;
 
-    const sock = new SockJS("/ws");
-    const client = Stomp.over(sock);
+    const sock = new SockJS("/ws"),
+        client = Stomp.over(sock);
 
     if (currentSubscribe.get(roomId) != null) {
         currentSubscribe.get(roomId).unsubscribe();
@@ -215,8 +218,8 @@ function subscribe(_roomId) {
                             + "</div>";
                         $(".chat-wrapper .chat .head .title .member-count").text('참여인원 ' + content.memberCount + '명');
                     } else {
-                        let hour = new Date(content.regDate).getHours();
-                        let minute = new Date(content.regDate).getMinutes();
+                        let hour = new Date(content.regDate).getHours(),
+                            minute = new Date(content.regDate).getMinutes();
                         messagebox = document.createElement("div");
                         hour = hour <= 12 ? '오전 ' + hour : '오후' + (Number(hour) - 12);
                         minute = minute < 10 ? '0' + minute : minute;
@@ -262,7 +265,7 @@ function subscribe(_roomId) {
         )
 
         sendBtn.click(function () {
-            var message = messageInput.val();
+            let message = messageInput.val();
             client.send('/publish/chat/message', {}, JSON.stringify({ chatRoomId: roomId, message: message }));
             messageInput.val('');
             $(".chat-wrapper .regist-btn .count").text('0/300');
@@ -314,8 +317,8 @@ function totalCountAnimation() {
     let num = 0;
     setTimeout(() => {
         let totalCountUp = setInterval(function () {
-            const dataView = $(".current-data-wrapper .data");
-            const maxNum = dataView.data("num");
+            const dataView = $(".current-data-wrapper .data"),
+                  maxNum = dataView.data("num");
             num++;
             dataView.text(num);
             if (num == maxNum) {

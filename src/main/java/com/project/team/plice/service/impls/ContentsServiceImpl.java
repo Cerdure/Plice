@@ -1,4 +1,4 @@
-package com.project.team.plice.service;
+package com.project.team.plice.service.impls;
 
 import com.project.team.plice.dto.contents.ArticleDto;
 import com.project.team.plice.dto.contents.NaverClient;

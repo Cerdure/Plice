@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class AdminController {
 
-//    private final AdminServiceImpl adminService;
+//    private final AdminService adminService;
 
     @GetMapping("/admin")
     public String login(){
