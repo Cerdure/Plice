@@ -17,8 +17,10 @@ public class MyPageController {
 
     @GetMapping("/inquiry")
     public String inquiry(){return "inquiry";}
+
     @GetMapping("/inquiry_write")
     public String inquiry_write(){return "inquiry_write";}
+
     @GetMapping("/watchlist")
     public String watchlist(){return "watchlist";}
 }

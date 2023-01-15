@@ -1,4 +1,4 @@
-package com.project.team.plice.service;
+package com.project.team.plice.service.impls;
 
 import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.post.Post;

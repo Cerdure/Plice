@@ -15,5 +15,4 @@ public class HomeController {
         return "home";
     }   //home.html 로 이동
 
-
 }

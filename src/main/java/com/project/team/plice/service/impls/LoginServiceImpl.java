@@ -1,9 +1,8 @@
-package com.project.team.plice.service;
+package com.project.team.plice.service.impls;
 
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
