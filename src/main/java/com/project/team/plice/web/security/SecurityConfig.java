@@ -1,6 +1,6 @@
 package com.project.team.plice.web.security;
 
-import com.project.team.plice.service.impls.LoginServiceImpl;
+import com.project.team.plice.service.classes.LoginServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

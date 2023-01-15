@@ -1,4 +1,4 @@
-package com.project.team.plice.service.impls;
+package com.project.team.plice.service.classes;
 
 import com.project.team.plice.dto.contents.ArticleDto;
 import com.project.team.plice.dto.contents.NaverClient;
@@ -7,7 +7,6 @@ import com.project.team.plice.dto.contents.SearchNewsRes;
 import com.project.team.plice.dto.utils.SearchParamUtil;
 import com.project.team.plice.service.interfaces.ContentsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
