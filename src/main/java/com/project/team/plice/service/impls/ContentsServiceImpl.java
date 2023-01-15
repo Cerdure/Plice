@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ContentsServiceImpl implements ContentsService {
+
     private final NaverClient naverClient;
 
     public List<ArticleDto> search(SearchParamUtil searchParams) {
