@@ -1,7 +1,5 @@
 package com.project.team.plice.service.interfaces;
 
-import com.project.team.plice.domain.data.AddressData;
-import com.project.team.plice.domain.data.ApartData;
 import com.project.team.plice.domain.data.TradeData;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;

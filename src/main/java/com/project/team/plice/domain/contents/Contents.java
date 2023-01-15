@@ -1,4 +1,4 @@
-package com.project.team.plice.domain;
+package com.project.team.plice.domain.contents;
 
 import com.project.team.plice.domain.member.Member;
 import lombok.*;

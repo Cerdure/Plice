@@ -24,6 +24,7 @@ import java.net.Socket;
 @Controller
 @RequiredArgsConstructor
 public class ChatController extends Socket {
+
     private final MemberService memberService;
     private final ChatService chatService;
     private final SimpMessagingTemplate template;

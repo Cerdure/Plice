@@ -35,7 +35,6 @@ public class JoinController {
         return "redirect:/login";
     }
 
-
     @GetMapping("/term-service")
     public String termServiceForm(){
         return "term-service";

@@ -1,68 +1,175 @@
 $(function () {
+    $(document).ready(function () {
 
-    $(".article-index").click(function(){
-        if(!$(this).hasClass("active-index")){
+        $(document).on("click", ".article-wrapper .head .keyword .text", function () {
+            articleUpdate('keyword', this);
+        });
+
+        $(document).on("click", ".pagenation a", function () {
+            articleUpdate('page', this);
+        });
+
+        $(document).on("click", ".pagenation .btn-left", function () {
+            articleUpdate('page', $(".active-page").prev());
+        });
+
+        $(document).on("click", ".pagenation .btn-right", function () {
+            articleUpdate('page', $(".active-page").next());
+        });
+
+        youtubeUpdate('keyword', $(".youtube-wrapper .active-keyword"));
+
+        $(document).on("click", ".youtube-wrapper .head .keyword .text", function () {
+            youtubeUpdate('keyword', this);
+        });
+
+        $(document).on("click", ".controller div", function () {
+            youtubeUpdate('page', this);
+        });
+
+        $(document).on("click", ".youtube", function () {
+            $(".modal-background").fadeIn(300);
+            $("body").css('overflow', 'hidden');
+            const iframeWrapper = $(this).parent().find(".iframe-wrapper");
+            iframeWrapper.addClass("active-iframe");
+            iframeWrapper.fadeIn(0, function () {
+                iframeWrapper.animate({ 'width': '70%' }, 300);
+            });
+            iframeWrapper.find("iframe")[0].contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+        });
+        $(document).on("click", ".iframe-close", function () {
+            const iframeWrapper = $(this).closest(".iframe-wrapper");
+            iframeWrapper.animate({ 'width': '0%' }, 300, function () {
+                iframeWrapper.hide();
+            });
+            iframeWrapper.find("iframe")[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+            $(".modal-background").fadeOut(100);
+            $("body").css('overflow', 'scroll');
+        });
+    });
+
+    $(".article-index").click(function () {
+        if (!$(this).hasClass("active-index")) {
             $(".youtube-wrapper").stop().hide();
             $(".article-wrapper").stop().fadeIn(300);
             $(".youtube-index").removeClass("active-index");
             $(this).addClass("active-index");
         }
     });
-    $(".youtube-index").click(function(){
-        if(!$(this).hasClass("active-index")){
+    $(".youtube-index").click(function () {
+        if (!$(this).hasClass("active-index")) {
             $(".article-wrapper").stop().hide();
-            $(".youtube-wrapper").stop().fadeIn(300).css('display','flex');
+            $(".youtube-wrapper").stop().fadeIn(300).css('display', 'flex');
             $(".article-index").removeClass("active-index");
             $(this).addClass("active-index");
         }
     });
-    $(".right-side .head .sort .text").click(function(){
-        (async () => {
-            $(".right-side .head .sort .text").removeClass("active-sort");
-            $(this).addClass("active-sort");
-            const keyword = $(this).text();
-            const newsList = await fetch("/contents/search?keyword=" + keyword).then(res => res.text());
-            // for(const news of newsList){
-            //     let a = document.createElement("a");
-            //     a.setAttribute('class','article');
-            //     a.setAttribute("href",news.link);
-            //     a.innerHTML = 
-            //     "<div class='title'>" + news.title + "</div>"
-            //     + "<div class='description'>"
-            //     + "<li>" + news.description + "</li>"
-            //     + "</div>"
-            //     + "<div class='date'>SEP 6, 2022</div>"
-            //     $("#news-box").append(a);
-            // } 
-           $("#news-box").replaceWith(newsList);
-        })();
+
+    $('html').click(function (e) {
+        if ($(e.target).is(".modal-background")) {
+            const iframeWrapper = $(".active-iframe");
+            iframeWrapper.animate({ 'width': '0%' }, 300, function () {
+                iframeWrapper.hide();
+            });
+            iframeWrapper.find("iframe")[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+            $(".modal-background").fadeOut(100);
+            $("body").css('overflow', 'scroll');
+        }
     });
 
 });
 
-$(document).ready(function () {
-    $.get(
-        "https://www.googleapis.com/youtube/v3/search", {
-            part: 'snippet',
-            q: '아파트 분양',
-            key: 'AIzaSyCLqtyChxbeBX49wVfHFo726QVBTWdRbFE',
-            maxResults: 1,
-            regionCode:"KR",
+function articleUpdate(clickType, _this) {
+    (async () => {
+        $(".article-wrapper .loading").fadeIn(0);
+        let keyword, page;
 
-        },
-
-        function (data) {
-            var output;
-            $.each(data.items, function (i, item) {
-                console.log(item);
-
-                thumbnail = item.snippet.thumbnails.medium.url;
-                output = '<img width="600" height="300" src ="' + thumbnail + '">';
-                // output= '<li>'+vTitle+'<iframe width="560" height="340" src=\"//www.youtube.com/embed/'+playlist+'\"></iframe></li>';
-                $(".youtube").append(output);
-                $(".youtube").append('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+item.id.videoId+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
-            })
+        if (clickType == 'keyword') {
+            keyword = $(_this).data("keyword");
+            page = 1;
+            $(".article-wrapper .head .keyword .text").removeClass("active-keyword");
+            $(_this).addClass("active-keyword");
+        } else {
+            keyword = $(".article-wrapper .active-keyword").data("keyword");
+            page = $(_this).text();
         }
-    );
 
-});
+        const result = await fetch("/contents/search?keyword=" + keyword + "&page=" + page).then(res => res.text());
+
+        setTimeout(function () {
+            $("#articles").replaceWith(result);
+        }, 500);
+        $(window).scrollTop(0);
+    })();
+}
+
+function youtubeUpdate(clickType, _this) {
+    (async () => {
+        $(".youtube-wrapper .loading").fadeIn(0);
+
+        let keyword, page = '', 
+            url = "https://www.googleapis.com/youtube/v3/search"
+            + "?key=AIzaSyDIgbt4H6nuG9fR7exf9067MGNk1DQa8C4"
+            + "&part=snippet&maxResults=4&regionCode=KR&chart=mostPopular";
+        // AIzaSyCLqtyChxbeBX49wVfHFo726QVBTWdRbFE 
+        // AIzaSyDg3HhsyLwHbvR_okr6UND03D5cI27EHsk 
+        // AIzaSyBG-5Krvf-tRP-0pqFCzNpuFUUb8opOw3c
+        // AIzaSyDIgbt4H6nuG9fR7exf9067MGNk1DQa8C4
+        // AIzaSyCUFMhMo-xE6QzSHDVN19FTwLY-ns0U-RI
+
+        const containers = $(".youtube-box").get(), iframe = $("iframe").get();
+
+        if (clickType == 'keyword') {
+            $(".youtube-wrapper .head .keyword .text").removeClass("active-keyword");
+            $(_this).addClass("active-keyword");
+            keyword = "&q=" + $(_this).data("keyword");
+        } else {
+            keyword = "&q=" + $(".youtube-wrapper .active-keyword").data("keyword");
+            page = "&pageToken=" + $(_this).data("token");
+        }
+
+        const result = await fetch(url + keyword + page).then(res => res.json());
+
+        for (let i = 0; i < 4; i++) {
+            const thumbnail = result.items[i].snippet.thumbnails.high.url,
+                id = result.items[i].id.videoId,
+                title = result.items[i].snippet.title,
+                channel = result.items[i].snippet.channelTitle;
+            pubTime = result.items[i].snippet.publishTime,
+                prevPage = result.prevPageToken,
+                nextPage = result.nextPageToken;
+            const date = getYmd10(pubTime);
+
+            containers[i].querySelector(".youtube").style.backgroundImage = "url(" + thumbnail + ")";
+            containers[i].querySelector(".youtube").dataset.id = id;
+            containers[i].querySelector(".title").innerHTML = title;
+            containers[i].querySelector(".channel").innerHTML = channel;
+            containers[i].querySelector(".date").innerHTML = date;
+            iframe[i].src = "https://www.youtube.com/embed/" + id + "?enablejsapi=1&version=3&playerapiid=ytplayer";
+
+            if (prevPage == null) {
+                $(".controller .btn-left").addClass("disable");
+            } else {
+                $(".controller .btn-left").removeClass("disable");
+                $(".controller .btn-left").attr("data-token", prevPage);
+            }
+            if (nextPage == null) {
+                $(".controller .btn-right").addClass("disable");
+            } else {
+                $(".controller .btn-right").removeClass("disable");
+                $(".controller .btn-right").attr("data-token", nextPage);
+            }
+            if (i == 3) {
+                setTimeout(function () { $(".youtube-wrapper .loading").hide() }, 500);
+            }
+        }
+        $(window).scrollTop(0);
+    })();
+}
+
+function getYmd10(_date) {
+    let d = new Date(_date);
+    return d.getFullYear() + "-"
+        + ((d.getMonth() + 1) > 9 ? (d.getMonth() + 1).toString() : "0" + (d.getMonth() + 1)) + "-"
+        + (d.getDate() > 9 ? d.getDate().toString() : "0" + d.getDate().toString());
+}

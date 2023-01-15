@@ -1,6 +1,6 @@
-package com.project.team.plice.dto;
+package com.project.team.plice.dto.contents;
 
-import com.project.team.plice.domain.Contents;
+import com.project.team.plice.domain.contents.Contents;
 import com.project.team.plice.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;

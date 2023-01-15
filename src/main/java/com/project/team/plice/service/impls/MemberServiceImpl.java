@@ -1,4 +1,4 @@
-package com.project.team.plice.service;
+package com.project.team.plice.service.impls;
 
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.member.MemberDto;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;    // sql대신
+    private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
