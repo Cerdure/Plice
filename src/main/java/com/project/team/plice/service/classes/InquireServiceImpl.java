@@ -1,4 +1,4 @@
-package com.project.team.plice.service.impls;
+package com.project.team.plice.service.classes;
 
 import com.project.team.plice.repository.inquire.InquireRepository;
 import com.project.team.plice.service.interfaces.InquireService;
