@@ -1,11 +1,7 @@
-package com.project.team.plice.repository.chat;
+package com.project.team.plice.repository.admin;
 
-import com.project.team.plice.domain.chat.Chat;
-import com.project.team.plice.domain.chat.ChatRoom;
+import com.project.team.plice.domain.admin.AccessLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface ChatRepository extends JpaRepository<Chat, Long> {
-    public List<Chat> findByChatRoom(ChatRoom chatRoom);
+public interface AccessLogRepository extends JpaRepository<AccessLog, Long> {
 }

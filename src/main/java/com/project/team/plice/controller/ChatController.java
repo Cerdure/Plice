@@ -4,6 +4,7 @@ import com.project.team.plice.domain.chat.Chat;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.dto.chat.ChatRoomDto;
+import com.project.team.plice.service.interfaces.AdminService;
 import com.project.team.plice.service.interfaces.ChatService;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -12,25 +13,30 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
 import java.net.Socket;
 
 @Slf4j
 @Controller
+@Transactional
 @RequiredArgsConstructor
 public class ChatController extends Socket {
 
+    private final AdminService adminService;
     private final MemberService memberService;
     private final ChatService chatService;
     private final SimpMessagingTemplate template;
 
     @GetMapping("/chat")
-    public String chat(Authentication authentication, Model model) {
+    public String chat(HttpServletRequest request, Authentication authentication, Model model) {
+        adminService.logAccess(request, authentication);
         if(authentication != null){
             model.addAttribute("myChatRooms", chatService.myRoomsResolver(authentication));
         }

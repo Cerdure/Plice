@@ -14,7 +14,7 @@ public class Favorite {
     @Column(name = "favorite_id")
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

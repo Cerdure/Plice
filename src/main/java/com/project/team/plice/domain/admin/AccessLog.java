@@ -1,18 +1,10 @@
-package com.project.team.plice.domain.member;
+package com.project.team.plice.domain.admin;
 
-import com.project.team.plice.domain.enums.MemberRole;
+import com.project.team.plice.domain.member.Member;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static javax.persistence.FetchType.LAZY;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,11 +14,28 @@ public class AccessLog {
     @Id @GeneratedValue
     @Column(name = "access_log_id")
     private Long id;
-    private String 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    private String uri;
+
+    private String ip;
+
     private LocalDateTime regDate;
 
     @PrePersist
     public void prePersist() {
-        this.regDate = this.regDate == null ? LocalDate.now() : this.regDate;
+        this.regDate = this.regDate == null ? LocalDateTime.now() : this.regDate;
+    }
+
+    @Builder
+    public AccessLog(Long id, Member member, String uri, String ip, LocalDateTime regDate) {
+        this.id = id;
+        this.member = member;
+        this.uri = uri;
+        this.ip = ip;
+        this.regDate = regDate;
     }
 }

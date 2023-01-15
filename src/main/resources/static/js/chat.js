@@ -110,6 +110,8 @@ $(function () {
             moveToBottom();
             subscribe(currentRoomId);
             if ($("#chat-box").innerHeight() <= document.querySelector("#chat-box").scrollHeight) {
+                console.log("ih = " + $("#chat-box").innerHeight());
+                console.log("sh = " + document.querySelector("#chat-box").scrollHeight);
                 $(".last-chat-viewer").hide();
             }
             chatOpen = true;
@@ -292,10 +294,13 @@ function moveToBottom() {
 
 function newMessage(type) {
     st = $("#chat-box").scrollTop();
+    console.log("ih = " + ih)
+    console.log("sh = " + sh)
+
     if (st + ih >= sh - 1) {
         moveToBottom();
     } else if (!$(".last-chat-viewer").hasClass('isMine') && type == 'NONE') {
-        $(".last-chat-viewer").stop().fadeIn(300);
+        $(".last-chat-viewer").css('display','flex');
     }
 }
 

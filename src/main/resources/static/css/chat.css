@@ -475,8 +475,9 @@ body {
     border-radius: 17px;
     background-color: rgba(0, 0, 0, 0.3);
     color: white;
-    display: flex;
+    display: none;
     z-index: 2;
+    animation: fade-in 0.3s both;
 }
 
 .last-chat-viewer img {
