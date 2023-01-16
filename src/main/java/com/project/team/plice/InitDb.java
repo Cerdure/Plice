@@ -135,6 +135,41 @@ public class InitDb {
 
             members.forEach(member -> em.persist(member));
 
+            List<Member> admins = new ArrayList<>();
+
+            admins.add(Member.builder()
+                    .name("최원석")
+                    .nickname("최원석")
+                    .phone("01032100575")
+                    .pw(passwordEncoder.encode("1234"))
+                    .role(MemberRole.SUPER_ADMIN)
+                    .build());
+
+            admins.add(Member.builder()
+                    .name("이현규")
+                    .nickname("이현규")
+                    .phone("01036198976")
+                    .pw(passwordEncoder.encode("1234"))
+                    .role(MemberRole.ADMIN)
+                    .build());
+
+            admins.add(Member.builder()
+                    .name("문태웅")
+                    .nickname("문태웅")
+                    .phone("01033149467")
+                    .pw(passwordEncoder.encode("1234"))
+                    .role(MemberRole.ADMIN)
+                    .build());
+
+            admins.add(Member.builder()
+                    .name("윤수호")
+                    .nickname("윤수호")
+                    .phone("01051025975")
+                    .pw(passwordEncoder.encode("1234"))
+                    .role(MemberRole.ADMIN)
+                    .build());
+
+            admins.forEach(admin -> em.persist(admin));
 
             List<ChatRoom> chatRooms = apartDataRepository.findAll().stream().map(apartData ->
                     ChatRoom.builder().apartData(apartData).build()).collect(Collectors.toList());
@@ -143,7 +178,6 @@ public class InitDb {
             chatRooms.get(5000).changeMemberCount(6);
             chatRooms.get(1000).changeMemberCount(1);
             chatRooms.forEach(e -> em.persist(e));
-
 
             List<MemberChatRoom> memberChatRooms = new ArrayList<>();
 
