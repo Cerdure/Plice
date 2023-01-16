@@ -85,6 +85,8 @@ public class Member implements UserDetails {
         this.memberChatRoom = memberChatRoom;
     }
 
+    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();

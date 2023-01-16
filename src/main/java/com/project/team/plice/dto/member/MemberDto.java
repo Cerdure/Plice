@@ -82,4 +82,15 @@ public class MemberDto {
                 .profileImgPath(this.profileImgPath)
                 .build();
     }
+
+    public Member toEntity(){
+        return Member.builder()
+                .id(this.id)
+                .phone(this.phone)
+                .name(this.name)
+                .nickname(this.nickname)
+                .birth(this.birth)
+                .email(this.email)
+                .build();
+    }
 }
