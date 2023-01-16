@@ -83,6 +83,8 @@ public class Member implements UserDetails {
         this.profileImgPath = profileImgPath;
     }
 
+    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();

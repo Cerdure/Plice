@@ -1,5 +1,6 @@
 package com.project.team.plice.service.classes;
 
+import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.repository.member.MemberRepository;
@@ -22,18 +23,20 @@ public class MemberServiceImpl implements MemberService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public Long join(MemberDto memberDto) {
-        validateDuplicateMember(memberDto);
+    public boolean join(MemberDto memberDto) {
+        boolean result = validateDuplicateMember(memberDto);
         Member member = memberDto.createMember(passwordEncoder);
         memberRepository.save(member);
-        return member.getId();
+        return result;
     }
 
-    public void validateDuplicateMember(MemberDto memberDto) {
+    public boolean validateDuplicateMember(MemberDto memberDto) {
+        boolean isDuplicated = false;
         Optional<Member> findMembers = memberRepository.findByPhone(memberDto.getPhone());
         if (!findMembers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
+            isDuplicated = true;
         }
+        return isDuplicated;
     }
 
     @Override
@@ -43,6 +46,11 @@ public class MemberServiceImpl implements MemberService {
 
     public List<Member> findMembers() {
         return memberRepository.findAll();
+    }
+
+    @Override
+    public List<Member> findByRole(MemberRole role) {
+        return memberRepository.findByRole(role);
     }
 
     public Member findById(Long memberId) {
@@ -55,7 +63,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Transactional
-    public void update(Long id, MemberDto memberDto) {
+    public void update(MemberDto memberDto) {
+        Optional<Member> member = memberRepository.findByPhone(memberDto.getPhone());
+        member = memberDto.toEntity();
+        memberRepository.save();
     }
 
     @Transactional

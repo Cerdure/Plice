@@ -195,7 +195,7 @@
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 0.8fr 0.8fr;
     justify-items: center;
     border-bottom: 1px solid silver;
     margin-bottom: 10px;
@@ -206,7 +206,7 @@
     width: 100%;
     padding: 10px 20px;
     display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 0.8fr 0.8fr;
     align-items: center;
 }
 
@@ -237,10 +237,91 @@
     border-radius: 5px;
     border: 1px solid #4169fc;
     margin-left: 10px;
+    text-align: center;
 }
 
-.user-management .user-info .delete {
+.user-management .user-info .btn:hover {
+    color: white;
+    background-color: #4169fc;
+    transition: 0.3s;
+}
+
+.user-management .user-info .delete-btn {
     border: 1px solid #3b5987;
     background-color: white;
     color: #3b5987;
 }
+
+.user-management .user-info .delete-btn:hover {
+    color: white;
+    background-color: #3b5987;
+    transition: 0.3s;
+}
+
+
+
+.alert-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 101;
+    text-align: center;
+    border: 1px solid silver;
+    display: none;
+  }
+  .alert-window .text{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+  .alert-window .cancel{
+    position: absolute;
+    bottom: 40px;
+    left: 50px;
+    width: 120px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: white;
+    color: #3b5987;
+    border: 1px solid #3b5987;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  .alert-window .cancel:hover{
+    background-color: #3b5987;
+    color: white;
+    transition: 0.5s;
+  }
+  .alert-window .okay{
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    width: 120px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: white;
+    color: #4169fc;
+    border: 1px solid #4169fc;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+  } 
+  .alert-window .okay:hover {
+    background-color: #4169fc;
+    color: white;
+    transition: 0.5s;
+  }
+  
+  

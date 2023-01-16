@@ -92,155 +92,174 @@
 .right-side {
     width: 100%;
     height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
 }
 
-.user-management {
+.right-side .head {
+    width: 100%;
+    padding: 20px;
+    padding-bottom: 0;
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.right-side .body {
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.right-side .body .create-account-btn {
+    padding: 9px 30px;
+    background-color: #557aff;
+    color: white;
+    border: 1px solid #4169fc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+.right-side .body .create-account-btn:hover {
+    background-color: #3662ff;
+    transition: 0.3s;
+}
+
+.right-side .body .accounts-wrapper {
+    width: 100%;
+    height: 70%;
+    display: flex;
+}
+
+.right-side .body .accounts-wrapper .outer-box {
+    width: 100%;
+    padding: 40px;
+    border: 1px solid #d3ddff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-size: 20px;
+}
+
+.right-side .body .accounts-wrapper .outer-box:first-child {
+    margin-right: 40px;
+}
+
+.right-side .body .accounts-wrapper .inner-box {
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    overflow-y: scroll;
+    align-items: start;
 }
 
-.user-management::-webkit-scrollbar {
-    width: 5px;
-}
-
-.user-management::-webkit-scrollbar-thumb {
-    background-color: #4f72ff;
-    border-radius: 10px;
-}
-
-.user-management .head {
+.right-side .body .accounts-wrapper .inner-box .title {
     width: 100%;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: 900;
-    padding: 20px;
-    padding-bottom: 0;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #d3ddff;
 }
 
-.user-management .body {
+.team-group {
     width: 100%;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
 }
 
-.search-wrapper {
-    width: 50%;
-    display: flex;
-    justify-content: end;
+.team-group:nth-child(2) {
+    margin-top: 40px;
     margin-bottom: 20px;
 }
 
-.search {
-    position: relative;
+.right-side .body .accounts-wrapper .inner-box .label {
+    margin-bottom: 20px;
+}
+.team-group .members {
     width: 100%;
-    height: 40px;
+    padding: 0 40px;
+}
+.team-group .member {
+    margin: 10px 0;
+    font-size: 18px;
+}
+.info-box {
+    width: 100%;
+    height: 100%;
     display: flex;
 }
+.info-group {
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.authority {
+    display: flex;
+    margin: 10px 0;
+    font-size: 18px;
+}
+.authority input {
+    margin-right: 10px;
+}
+.info-group .reg,
+.info-group .mod,
+.info-group .access {
+    margin-bottom: 20px;
+}
+.info-box .info {
+    font-size: 14px;
+}
+.info-box .info .date,
+.info-box .info .member,
+.info-box .info .ip {
+    display: flex;
+    margin: 10px 0;
+}
 
-.checkbox-wrapper {
-    width: 150px;
-    flex: none;
+.info-box .info .text {
+    width: 80px;
+    white-space: nowrap;
+}
+.info-box .info .data {
+    white-space: nowrap;
+}
+
+
+
+
+
+.btn-box {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
 }
-
-.checkbox-wrapper input {
-    margin: 10px;
-}
-
-.input-wrapper {
-    position: relative;
-    width: 100%;
-    display: flex;
-    border: 1px solid silver;
-}
-
-.search-by {
-    border: none;
-    outline: none;
-    padding: 0 10px;
-}
-
-.search-input {
-    width: 100%;
-    border: none;
-    outline: none;
-}
-
-.search-wrapper .reset {
-    width: 15px;
-    opacity: 0.2;
-}
-
-.search-wrapper .icon {
-    width: 20px;
-    margin: 0 10px;
-}
-
-.user-management .contents {
-    width: 100%;
-    border-top: 1px solid silver;
-    border-bottom: 1px solid silver;
-    padding-bottom: 10px;
-    margin-bottom: 40px;
-}
-
-.user-management .contents .top {
-    width: 100%;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
-    justify-items: center;
-    border-bottom: 1px solid silver;
-    margin-bottom: 10px;
-    background-color: #f1f7ff;
-}
-
-.user-management .user-info {
-    width: 100%;
-    padding: 10px 20px;
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 0.7fr 0.7fr;
-    align-items: center;
-}
-
-.user-management .user-info div {
+.btn-box .save-btn {
+    width: 140px;
+    padding: 9px 30px;
     text-align: center;
+    color: white;
+    background-color: #316ea5cc;
+    border: 1px solid #316ea5cc;
+    border-radius: 5px;   
+    margin-right: 40px;
 }
-
-.user-management .user-info input,
-.user-management .user-info select {
-    width: 90%;
-    height: 30px;
-    text-align: center;
-    outline: none;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    color: #3b5987;
+.btn-box .save-btn:hover {
+    background-color: #0f3c63cc;
+    transition: 0.3s;
 }
-
-.user-management .user-info div:first-child input {
-    font-weight: 600;
+.btn-box .delete-btn {
+    width: 140px;
+    padding: 9px 30px;
+    color: white;
+    background-color: rgb(243, 101, 129);
+    border: 1px solid crimson; 
+    border-radius: 5px;   
 }
-
-.user-management .user-info .btn {
-    width: 90%;
-    height: 30px;
-    line-height: 30px;
-    color: #4169fc;
-    border-radius: 5px;
-    border: 1px solid #4169fc;
-    margin-left: 10px;
-}
-
-.user-management .user-info .delete {
-    border: 1px solid #3b5987;
-    background-color: white;
-    color: #3b5987;
+.btn-box .delete-btn:hover {
+    background-color: crimson;
+    transition: 0.3s;
 }
