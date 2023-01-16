@@ -1,0 +1,226 @@
+.meta-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  padding: 60px;
+}
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(100vh - 60px);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.4), rgb(255, 255, 255)),
+    url("../../../img/images/background.jpg");
+  background-color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+.login_container {
+  width: 500px;
+  background-color: white;
+  border: 1px solid #c9d5ff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px 0 rgba(0,0,0,0.3);
+  padding: 50px 45px;
+  position: relative;
+}
+
+.login_title {
+  font-size: 30px;
+  margin-bottom: 40px;
+}
+
+.login_subtitle {
+  font-size: 15px;
+  padding: 30px 0px 40px 0px;
+}
+
+.login_user {
+  display: flex;
+  flex-direction: column;
+}
+
+.login_info label {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.login_info .user {
+  height: 50px;
+  border: 1px solid #c9d5ff;
+  border-radius: 5px;
+  outline: none;
+  padding: 8px 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-indent: 10px;
+  transition: all 1s;
+}
+
+.login_join {
+  text-align: end;
+  margin-bottom: 40px;
+}
+
+.login_join .login_join_btn::after {
+  content: "|";
+  margin: 0px 0px 0px 3px;
+}
+
+.login_btn {
+  padding: 14px 0px;
+  font-size: 16px;
+  width: 100%;
+  border: none;
+  color: white;
+  background-color: #4169fc;
+  border-radius: 5px;
+  transition: all 0.7s;
+}
+
+.login_btn:hover {
+  background-color: #224ce6;
+  color: white;
+}
+.btn {
+  font-size: 14px;
+}
+.login_sns {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+}
+.login_sns .border {
+  position: absolute;
+  top: 9px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background-color: #c9d5ff;
+  z-index: 0;
+}
+.login_sns .top_text {
+  background-color: white;
+  width: 150px;
+  text-align: center;
+  z-index: 1;
+}
+.login_sns .btn_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login_sns .btn_box img {
+  width: 90px;
+  padding: 20px;
+  filter: drop-shadow(0px 0px 1px gray) saturate(0.9);
+}
+
+/* find password */
+.pwd_find_container {
+  width: 500px;
+  height: 400px;
+  border: 1px solid #c9d5ff;
+  padding: 30px 20px;
+  position: relative;
+  display: none;
+}
+
+.pwd_find_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #c9d5ff;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+}
+
+.pwd_find_email {
+  width: 386px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pwd_find_check_input {
+  width: 100%;
+  padding: 20px 10px;
+  margin-bottom: 7px;
+}
+
+.pwd_find_subtitle {
+  font-size: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.pwd_find_check_input {
+  border: 1px solid #c9d5ff;
+}
+
+.pwd_find_btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0px;
+  background-color: 1px solid #c9d5ff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 1s;
+}
+
+.pwd_find_btn:hover {
+  color: white;
+  background-color: #224ce6;
+}
+
+.fa-times:hover {
+  color: #224ce6;
+}
+
+/* 가입한 이메일 확인 시 */
+.accept_opt {
+  /* display: none; */
+}
+
+#accept_code {
+  padding: 15px 10px;
+  border: 1px solid #c9d5ff;
+}
+
+#code_text {
+  font-size: 15px;
+}
+
+.accept_btn {
+  background-color: #224ce6;
+  color: white;
+  padding: 15px 10px;
+  font-size: 12px;
+  border-radius: 10px;
+  transition: all 1s;
+}
+
+.accept_btn:hover {
+  background-color: #224ce6;
+  color: white;
+  cursor: pointer;
+}
+
+.bg_white {
+  background-color: white;
+  border: none;
+  transform: translateY(-400px);
+  position: absolute;
+  left: 47px;
+}

@@ -31,14 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] DYNAMIC_WHITELIST = {
-            "/", "/login/**", "/sign-up/**", "/join/**", "/join-success/**",
+            "/", "/home", "/login/**", "/sign-up/**", "/join/**", "/join-success/**",
             "/term-service/**", "/term-of-service/**", "/marketing/**", "/use-personal/**",
-            "/openapi.molit.go.kr/**", "/apis.data.go.kr/**", "/favicon.ico",
-            "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**",
             "/map/**", "/markers/**", "/find-data/**", "/find-apart/**",
             "/chat/**", "/webjars/**", "**/websocket/**", "/ws/**",
             "/post/**", "/story-detail/**", "/notice-detail/**",
-            "/contents/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**"
+            "/contents/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**",
+            "/openapi.molit.go.kr/**", "/apis.data.go.kr/**", "/favicon.ico",
+            "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**"
     };
 
     @Bean
@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                     .antMatchers(DYNAMIC_WHITELIST).permitAll()
-                    .antMatchers("/admin").hasRole("ADMIN")
+                    .antMatchers("/admin").hasAnyRole("ADMIN", "SUPER_ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/home")
                 .and()
                     .rememberMe()
                         .key("rememberMe")
@@ -94,9 +94,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("00099990000").password(passwordEncoder().encode("1234")).roles("ADMIN");
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("00099990000").password(passwordEncoder().encode("1234")).roles("ADMIN");
         auth
                 .userDetailsService(loginService).passwordEncoder(passwordEncoder());
     }

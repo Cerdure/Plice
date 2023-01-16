@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,13 +107,18 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Chat chatSave(ChatDto message, Member member) {
+        ChatRoom chatRoom = chatRoomRepository.findById(message.getChatRoomId()).get();
         Chat chat = Chat.builder()
-                .chatRoom(chatRoomRepository.findById(message.getChatRoomId()).get())
+                .chatRoom(chatRoom)
                 .member(member)
                 .content(message.getMessage())
                 .regDate(LocalDateTime.now())
                 .type(message.getType().toString())
                 .build();
+        if(message.getType().equals(TrayIcon.MessageType.NONE)){
+            chatRoom.chatCountPlus();
+            chatRoomRepository.save(chatRoom);
+        }
         chatRepository.save(chat);
         return chat;
     }
