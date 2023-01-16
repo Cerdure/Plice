@@ -13,14 +13,14 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <title>Document</title>
-    <link rel="stylesheet" href="/css/layout-content/my-page/my-page.css">
+    <link rel="stylesheet" href="/css/my-page.css">
 </head>
 
 <body>
 
     <div id="content_1">
         <header>
-            <div class="logo-wrapper" onclick="location.href='/home'">
+            <div class="logo-wrapper" onclick="location.href='/'">
                 <img src="/img/logo/plice.png">
                 <div class="text">PLICE</div>
             </div>
@@ -64,7 +64,7 @@
                     <div class="profile_name">
                         <label class="name_label">
                             <p class="label_text">아이디</p>
-                            <input th:value="${member.phone}" name="phone" class="input_name" disabled>
+                            <input th:value="${member.phone}" name="name" class="input_name" disabled>
                         </label>
                     </div>
                     <p class="profile_label">비밀번호</p>
@@ -77,14 +77,14 @@
                     <p class="profile_label">이름</p>
                     <div class="input_box">
                             <div class="input_left">
-                                <input th:value="${member.name}" id="confirm" class="input_label" type="text" name="name" placeholder="pw">
+                                <input th:value="${member.name}" id="confirm" class="input_label" type="text" name="name">
                             </div>
-                            <button type="button" id="send_1" class="button_right" color="gray"><span>확인</span></button>
+                            <button type="button" id="send" class="button_right" color="gray"><span>확인</span></button>
                     </div>
                     <p class="profile_label">닉네임</p>
                     <div class="input_box">
                             <div class="input_left">
-                                <input th:value="${member.nickname}" id="confirm" class="input_label" type="text" name="nickname" placeholder="nickname">
+                                <input th:value="${member.nickname}" id="confirm" class="input_label" type="text" name="nickname">
                             </div>
                             <button type="button" id="send" class="button_right" color="gray"><span>확인</span></button>
                     </div>
@@ -101,7 +101,7 @@
                             </button>
                         </div>
                         <div class="privacy_right">
-                            <input type="submit" color="gray" class="button_right" value="수정">
+                            <input type="submit" color="gray" class="button_right" value="수정">                            
                         </div>
                     </div>
                 </form>
@@ -151,9 +151,9 @@
                                 <p>안내사항을 모두 확인하였으며, 이에 동의합니다.</p>
                             </label>
                         </div>
-                        <form class="modal_bottom" method="get" action="/withdrawal">
-                            <input type="submit" value="탈퇴 완료">
-                        </form>
+                        <div class="modal_bottom">
+                            <button>탈퇴 완료</button>
+                        </div>
                     </div>
                 </div>
         </div>
