@@ -15,6 +15,6 @@ public interface MemberService {
     public List<Member> findByRole(MemberRole role);
     public Member findById(Long memberId);
     public Member findByPhone(String phone);
-    public void update(MemberDto memberDto);
-    public void delete(Long id);
+    public void update(Authentication authentication, MemberDto memberDto);
+    public void delete(Authentication authentication);
 }

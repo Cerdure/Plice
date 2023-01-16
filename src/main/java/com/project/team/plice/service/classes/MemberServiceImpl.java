@@ -7,6 +7,7 @@ import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,14 +64,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Transactional
-    public void update(MemberDto memberDto) {
-        Optional<Member> member = memberRepository.findByPhone(memberDto.getPhone());
-        member = memberDto.toEntity();
-        memberRepository.save();
+    public void update(Authentication authentication, MemberDto memberDto) {
+        String phone = authentication.getName();
+        Member member = memberRepository.findByPhone(phone).get();
+        member.update(memberDto.getName(),
+                memberDto.getNickname());
+        memberRepository.save(member);
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Authentication authentication){
+        String phone = authentication.getName();
+        Member member = memberRepository.findByPhone(phone).get();
+        memberRepository.delete(member);
     }
+
 
 }
