@@ -19,7 +19,7 @@ public class PostController {
     @GetMapping("/post")
     public String map(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
-        return "post";
+        return "layout-content/post/post";
     }
 
 }

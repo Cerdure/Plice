@@ -38,7 +38,7 @@ public class MapController {
         dataUtil.setTradeMax(priceDescList.get(0));
         dataUtil.setTradeMin(priceAscList.get(0));
         model.addAttribute("dataUtil", dataUtil);
-        return "map";
+        return "layout-content/map/map";
     }
 
     @GetMapping("/find-data")
@@ -80,6 +80,6 @@ public class MapController {
             model.addAttribute("addressDataList", addressDataList);
             model.addAttribute("apartDataList", apartDataList);
         }
-        return "map :: #search-input-results";
+        return "layout-content/map/map :: #search-input-results";
     }
 }

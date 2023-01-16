@@ -34,7 +34,7 @@ public class ContentsController {
                 .build();
         List<ArticleDto> searchResults = contentsService.search(searchParams);
         model.addAttribute("searchResults", searchResults);
-        return "contents";
+        return "layout-content/contents/contents";
     }
 
 
@@ -44,7 +44,7 @@ public class ContentsController {
         searchParams.setSort("sim");
         List<ArticleDto> searchResults = contentsService.search(searchParams);
         model.addAttribute("searchResults", searchResults);
-        return "contents :: #articles";
+        return "layout-content/contents/contents :: #articles";
     }
 
 }

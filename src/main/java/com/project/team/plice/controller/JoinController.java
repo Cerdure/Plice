@@ -22,19 +22,19 @@ public class JoinController {
     @GetMapping("/sign-up")
     public String signUpForm(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "sign-up";
+        return "layout-content/join/sign-up";
     }
 
     @GetMapping("/join")
     public String joinForm(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "join";
+        return "layout-content/join/join";
     }
 
     @GetMapping("/join-success")
     public String joinSuccess(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
-        return "join-success";
+        return "layout-content/join/join-success";
     }
 
     @PostMapping("/join")
@@ -46,24 +46,24 @@ public class JoinController {
     @GetMapping("/term-service")
     public String termServiceForm(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "term-service";
+        return "layout-content/join/term-service";
     }
 
     @GetMapping("/use-personal")
     public String usePersonalForm(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "use-personal";
+        return "layout-content/join/use-personal";
     }
 
     @GetMapping("/marketing")
     public String marketingForm(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "marketing";
+        return "layout-content/join/marketing";
     }
 
     @GetMapping("/term-of-service")
     public String termOfServiceForm(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "term-of-service";
+        return "layout-content/join/term-of-service";
     }
 }

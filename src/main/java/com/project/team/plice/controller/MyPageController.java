@@ -19,21 +19,21 @@ public class MyPageController {
     @GetMapping("/my-page")
     public String map(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
-        return "my-page";
+        return "layout-content/my-page/my-page";
     }
 
     @GetMapping("/inquiry")
     public String inquiry(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "inquiry";
+        return "layout-content/my-page/inquiry";
     }
 
     @GetMapping("/inquiry_write")
-    public String inquiry_write(){return "inquiry_write";}
+    public String inquiry_write(){return "layout-content/my-page/inquiry_write";}
 
     @GetMapping("/watchlist")
     public String watchlist(HttpServletRequest request, Authentication authentication){
         adminService.logAccess(request, authentication);
-        return "watchlist";
+        return "layout-content/my-page/watchlist";
     }
 }

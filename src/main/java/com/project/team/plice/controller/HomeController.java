@@ -19,7 +19,7 @@ public class HomeController {
     @GetMapping(value = {"/", "/home"})
     public String home(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
-        return "home";
+        return "layout-content/home/home";
     }
 
 }
