@@ -9,6 +9,7 @@ import java.util.List;
 public interface MemberService {
     public Long join(MemberDto memberDto);
     void validateDuplicateMember(MemberDto memberDto);
+    public Member findMember(Authentication authentication);
     public List<Member> findMembers();
     public Member findById(Long memberId);
     public Member findByPhone(String phone);

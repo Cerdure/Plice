@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -32,17 +33,20 @@ public class Chat {
 
     private LocalDateTime regDate;
 
+    private String type;
+
     @PrePersist
     public void create() {
         this.regDate = this.regDate == null ? LocalDateTime.now() : this.regDate;
     }
 
     @Builder
-    public Chat(Long id, ChatRoom chatRoom, Member member, String content, LocalDateTime regDate) {
+    public Chat(Long id, ChatRoom chatRoom, Member member, String content, LocalDateTime regDate, String type) {
         this.id = id;
         this.chatRoom = chatRoom;
         this.member = member;
         this.content = content;
         this.regDate = regDate;
+        this.type = type;
     }
 }

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css"><link rel="stylesheet" href="/css/layout-content/post/post.css"></th:block>
+<th:block layout:fragment="script"><script src="/js/layout-content/post/post.js"></script></th:block>
+<th:block layout:fragment="title"><title>PLICE ㅣ 이야기</title></th:block>
+
+<div layout:fragment="content">
+    <div class="top-space"></div>
+    <div class="background"></div>
+
+    <!-- 이야기 등록 폼   시작-->
+    <div class="story-write-wrapper write-form-wrapper">
+        <form action="" method="post" class="story-write-form write-form">
+            <div class="head">
+                <span class="text">이야기 등록</span>
+                <img class="close" src="/img/icon/close.png">
+            </div>
+            <div class="body">
+                <div class="title-wrapper">
+                    <div class="label">ㅣ 제목</div>
+                    <textarea name="title" class="title-input" maxlength="30" placeholder="제목을 입력하세요."></textarea>
+                </div>
+                <div class="content-wrapper">
+                    <div class="label">ㅣ내용</div>
+                    <div class="content-frame">
+                        <textarea name="content" class="content-input" maxlength="3000"
+                            placeholder="내용을 입력하세요."></textarea>
+                        <div class="count">0/3000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="regist-button disable" onclick="formSubmit(this)">등록</div>
+        </form>
+    </div>
+    <!-- 이야기 등록 폼   끝-->
+
+
+    <!-- 공지사항 등록 폼   시작-->
+    <div class="notice-write-wrapper write-form-wrapper">
+        <form action="" method="post" class="notice-write-form write-form">
+            <div class="head">
+                <span class="text">공지사항 등록</span>
+                <img class="close" src="/img/icon/close.png">
+            </div>
+            <div class="body">
+                <div class="title-wrapper">
+                    <div class="label">ㅣ 제목</div>
+                    <textarea name="title" class="title-input" maxlength="30" placeholder="제목을 입력하세요."></textarea>
+                </div>
+                <div class="content-wrapper">
+                    <div class="label">ㅣ내용</div>
+                    <div class="content-frame">
+                        <textarea name="content" class="content-input" maxlength="3000"
+                            placeholder="내용을 입력하세요."></textarea>
+                        <div class="count">0/3000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="regist-button disable" onclick="formSubmit(this)">등록</div>
+        </form>
+    </div>
+    <!-- 공지사항 등록 폼   끝-->
+
+
+    <!-- 취소 알림창  시작-->
+    <div class="close-alert-wrapper">
+        <div class="close-alert">
+            <div class="text">
+                작성한 내용은 저장되지 않습니다.<br>
+                취소하겠습니까?
+            </div>
+            <button class="cancel" onclick="hideAlert()">취소</button>
+            <button class="okay" onclick="formClose()">확인</button>
+        </div>
+    </div>
+    <!-- 취소 알림창  끝-->
+
+
+    <div class="meta-wrapper">
+
+        <div class="meta-title">
+            <div class="story-title">이야기</div>
+            <div class="notice-title">공지사항</div>
+        </div>
+
+        <div class="tag-wrapper story-tag-wrapper active-tag-wrapper">
+            <div class="tag story-tag"></div>
+            <div class="text">이야기</div>
+        </div>
+
+        <div class="tag-wrapper notice-tag-wrapper">
+            <div class="tag notice-tag"></div>
+            <div class="text">공지사항</div>
+        </div>
+
+        <div class="frame">
+
+            <div class="story-frame">
+                <div class="head">
+                    <div class="count-wrapper">
+                        <div class="count">234</div>
+                        <div class="unit">개</div>
+                    </div>
+                    <div class="search-wrapper">
+                        <form action="" class="search">
+                            <select name="searchBy" class="search-by">
+                                <option value="nickname">작성자</option>
+                                <option value="title">제목</option>
+                                <option value="content">내용</option>
+                            </select>
+                            <input type="text" placeholder="검색어를 입력하세요.">
+                            <img class="reset" src="/img/icon/x-circle.svg">
+                            <img class="icon" src="/img/icon/search-icon.svg">
+                        </form>
+                    </div>
+                    <div class="write-btn-wrapper">
+                        <div class="write-btn story-write-btn">
+                            <img src="/img/icon/pencil-square.svg">
+                            <div class="text">글쓰기</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="table-head">
+                        <div class="number">번호</div>
+                        <div class="title">제목</div>
+                        <div class="writer">작성자</div>
+                        <div class="reg-date">등록일</div>
+                        <div class="hits">조회수</div>
+                    </div>
+                    <div class="table-body">
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">1</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">2</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">3</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">4</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">5</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">6</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">7</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">8</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">9</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">10</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">11</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+                        <a class="table-row" href="/story-detail">
+                            <div class="number">12</div>
+                            <div class="title">
+                                <div class="text">이야기 글 샘플 제목</div>
+                                <div class="reply-number">0</div>
+                            </div>
+                            <div class="writer">유저11</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </a>
+
+
+                    </div>
+
+                    <div class="table-footer"></div>
+
+                </div>
+            </div>
+
+
+            <div class="notice-frame">
+                <div class="head">
+                    <div class="count-wrapper">
+                        <div class="count">38</div>
+                        <div class="unit">건</div>
+                    </div>
+                    <div class="search-wrapper">
+                        <form action="" class="search">
+                            <select name="searchBy" class="search-by">
+                                <option value="nickname">작성자</option>
+                                <option value="title">제목</option>
+                                <option value="content">내용</option>
+                            </select>
+                            <input type="text" placeholder="검색어를 입력하세요.">
+                            <img class="reset" src="/img/icon/x-circle.svg">
+                            <img class="icon" src="/img/icon/search-icon.svg">
+                        </form>
+                    </div>
+                    <div class="write-btn-wrapper">
+                        <div class="write-btn notice-write-btn">
+                            <img src="/img/icon/pencil-square.svg">
+                            <div class="text" sec:authorize="hasRole('ADMIN')">공지 등록</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="table-head">
+                        <div class="number">번호</div>
+                        <div class="title">제목</div>
+                        <div class="writer">작성자</div>
+                        <div class="reg-date">등록일</div>
+                        <div class="hits">조회수</div>
+                    </div>
+                    <div class="table-body">
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">1</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">2</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">3</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">4</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">5</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">6</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">7</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">8</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">9</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">10</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">11</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+                        <div class="table-row" onclick="location.href='/notice-detail'">
+                            <div class="number">12</div>
+                            <div class="title">
+                                <div class="text">공지사항 샘플 제목</div>
+                            </div>
+                            <div class="writer">플라이스</div>
+                            <div class="reg-date">2022.12.31</div>
+                            <div class="hits">0</div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="table-footer"></div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</html>
