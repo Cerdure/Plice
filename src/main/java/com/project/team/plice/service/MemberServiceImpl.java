@@ -50,7 +50,8 @@ public class MemberServiceImpl implements MemberService {
     public void update(Authentication authentication, MemberDto memberDto) {
         Member member = memberRepository.findByPhone(authentication.getName()).get();
         member.changeNickname(memberDto.getNickname());
-        memberRepository.save(memberDto.toEntity()).getName();
+        member.changeName(memberDto.getName());
+        memberRepository.save(memberDto.toEntity()).getId();
     }
 
     public void delete(Authentication authentication){

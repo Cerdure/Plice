@@ -110,4 +110,8 @@ public class Member implements UserDetails {
     public void changeNickname(String nickname){
         this.nickname = nickname;
     }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
 }
