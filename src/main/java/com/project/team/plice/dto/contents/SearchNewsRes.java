@@ -22,6 +22,8 @@ public class SearchNewsRes {
         private String title;
         private String link;
         private String description;
+
         private String pubDate;
+
     }
 }
