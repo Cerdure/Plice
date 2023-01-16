@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MemberDto {
@@ -24,14 +25,14 @@ public class MemberDto {
     private String email;
     private LocalDate regDate;
     private LocalDate delDate;
-    private Favorite favorite;
+    private List<Favorite> favorite;
     private String profileImgPath;
 
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
     @Builder
-    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, Favorite favorite, String profileImgPath, MemberRole role) {
+    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, List<Favorite> favorite, String profileImgPath, MemberRole role) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
@@ -51,7 +52,6 @@ public class MemberDto {
         return Member.builder()
                 .pw(passwordEncoder.encode(this.pw))
                 .phone(this.phone)
-                .pw(this.pw)
                 .name(this.name)
                 .nickname(this.nickname)
                 .birth(this.birth)

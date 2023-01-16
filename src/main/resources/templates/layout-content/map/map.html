@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css"><link rel="stylesheet" th:href="@{/css/layout-content/map/map.css}"></th:block>
+<th:block layout:fragment="script"><script th:src="@{/js/layout-content/map/map.js}"></script></th:block>
+<th:block layout:fragment="title"><title>PLICE ㅣ 지도</title></th:block>
+
+<div layout:fragment="content">
+    <div class="top-space"></div>
+    <form class="top-wrapper" onsubmit="return false">
+        <div class="left-box">
+            <img class="icon" src="/img/icon/search-icon.svg">
+            <input class="search-input" type="text" placeholder="아파트, 지역으로 검색">
+            <img class="reset" src="/img/icon/x-circle.svg">
+
+            <div class="search-result-outer-wrapper">
+                <div class="search-result-wrapper" id="search-input-results">
+                    <div class="search-result-apart-wrapper">
+                        <div class="search-result-apart" th:each="apartData : ${apartDataList}" th:data-value="${apartData.name}">
+                             <div class="inner-wrapper">
+                                <div class="title">아파트</div>
+                                <div id="apart-box">
+                                    <span class="data" th:utext="${apartData.highlightName}"></span>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="search-result-address-wrapper">
+                        <div class="search-result-address" th:each="addressData : ${addressDataList}" th:data-value="${addressData.address}">
+                            <img src="/img/icon/geo-alt-fill.svg">
+                            <span class="data" th:utext="${addressData.highlightAddress}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-box">
+            <div class="left">
+                <div class="trade-type">
+                    <div class="text">거래유형</div>
+                    <input type="checkbox" value="직거래">직거래
+                    <input type="checkbox" value="중개거래">중개거래
+                </div>
+               
+                <div class="area">
+                    <div class="text">전용면적</div>
+                    <input type="checkbox" value="1">60㎡ 이하
+                    <input type="checkbox" value="2">61㎡ ~ 85㎡
+                    <input type="checkbox" value="3">86㎡ ~ 135㎡
+                    <input type="checkbox" value="4">136㎡ 이상
+                </div>
+        
+            </div>
+            <div class="right">
+                <div class="reset-btn">초기화</div>
+            </div>
+        </div>
+    </form>
+
+    <div class="contents-warpper">
+        <div class="left-box">
+            <div class="trend-wrapper">
+                <img class="fold" src="/img/icon/chevron-down.svg">
+                <ul>
+                    <li>
+                        <div class="number">1</div>
+                        <div class="data">검색어1</div>
+                    </li>
+                    <li>
+                        <div class="number">2</div>
+                        <div class="data">검색어2</div>
+                    </li>
+                    <li>
+                        <div class="number">3</div>
+                        <div class="data">검색어3</div>
+                    </li>
+                    <li>
+                        <div class="number">4</div>
+                        <div class="data">검색어4</div>
+                    </li>
+                    <li>
+                        <div class="number">5</div>
+                        <div class="data">검색어5</div>
+                    </li>
+                    <li>
+                        <div class="number">6</div>
+                        <div class="data">검색어6</div>
+                    </li>
+                    <li>
+                        <div class="number">7</div>
+                        <div class="data">검색어7</div>
+                    </li>
+                    <li>
+                        <div class="number">8</div>
+                        <div class="data">검색어8</div>
+                    </li>
+                    <li>
+                        <div class="number">9</div>
+                        <div class="data">검색어9</div>
+                    </li>
+                    <li>
+                        <div class="number">10</div>
+                        <div class="data">검색어10</div>
+                    </li>
+                    <li>
+                        <div class="number">1</div>
+                        <div class="data">검색어1</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="date-chart-back">
+                <div class="date-wrapper">
+                    <div>
+                        <span class="data">2022년 11월 ~ 2022년 12월</span>
+                        <span class="text">기준</span>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <div class="chart">
+                        <span class="text">전국 거래수</span>
+                        <span class="data" th:text="${#numbers.formatInteger(dataUtil.tradeCount, 3, 'COMMA')}"></span>
+                        <span class="unit">건</span>
+                    </div>
+                    <div class="chart">
+                        <span class="text">최저 거래가</span>
+                        <span class="data topData" th:text="${((dataUtil.tradeMin.price / 10000) < 1 ? '' : #numbers.formatInteger((dataUtil.tradeMin.price / 10000),1) + ' 억')
+                            + ((dataUtil.tradeMin.price % 10000) / 1000 < 1 ? '' : #numbers.formatInteger(((dataUtil.tradeMin.price % 10000) / 1000),1) + ' 천')
+                            + (dataUtil.tradeMin.price < 1000 ? dataUtil.tradeMin.price + ' 만' : '만')}"
+                              th:data-lat="${dataUtil.tradeMin.lat}" th:data-lng="${dataUtil.tradeMin.lng}">
+                              <div class="move">이동 &gt;</div>
+                        </span>
+                        <span class="unit">원</span>
+                    </div>
+                    <div class="chart">
+                        <span class="text">최고 거래가</span>
+                        <span class="data topData" th:text="${((dataUtil.tradeMax.price / 10000) < 1 ? '' : #numbers.formatInteger((dataUtil.tradeMax.price / 10000),1) + ' 억')
+                        + ((dataUtil.tradeMax.price % 10000) / 1000 < 1 ? '' : ' ' + #numbers.formatInteger(((dataUtil.tradeMax.price % 10000) / 1000),1) + ' 천')
+                        + (dataUtil.tradeMax.price < 1000 ? dataUtil.tradeMax.price + ' 만' : '만')}"
+                              th:data-lat="${dataUtil.tradeMax.lat}" th:data-lng="${dataUtil.tradeMax.lng}">
+                              <div class="move">이동 &gt;</div>
+                        </span>
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+            </div>
+            <div class="search-result-chart">
+                    <div class="left-side">
+                        <div class="data">'당산동'</div>
+                        <div class="text">검색결과</div>
+                    </div>
+                    <div class="right-side">
+                        <div class="data">29</div>
+                        <div class="text">건</div>
+                    </div>
+            </div>
+            <div class="item-wrapper" id="items">
+                <div class="loading">0%</div>
+                <div class="null">
+                    <img src="/img/icon/exclamation-circle-fill.svg">
+                    <div class="text">키워드에 해당하는 아파트가 없습니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-box">
+            <div id="map">
+            <div class="loading"></div>
+            </div>
+            <div class="centerAddr-wrapper">
+                <div id="centerAddr"></div>
+                <div id="currentCenterSearch">검색</div>
+            </div>
+            <div class="roadviewControl">로드뷰</div>
+            <div id="roadview"></div>
+            <img class="roadview-close" src="/img/icon/close.png">
+        </div>
+    </div>
+
+
+    <div class="apart-detail-wrapper">
+        <div class="inner-wrapper">
+            <div class="apart-detail">
+                <div class="top">
+                    <img class="close-btn" src="/img/icon/close.png">
+                    <span class="title">아파트 상세정보</span>
+                </div>
+                <div class="body">
+                    <div class="title-wrapper">
+                        <img src="/img/icon/house.png">
+                        <div class="right-box">
+                            <div class="name"></div>
+                            <div class="address"></div>
+                        </div>
+                    </div>
+                    <div class="codeSaleNm">
+                        <div class="label">분양형태</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="kaptDongCnt">
+                        <div class="label">동수</div>
+                        <div class="data"></div>
+                        <div class="unit">동</div>
+                    </div>
+                    <div class="hoCnt">
+                        <div class="label">호수</div>
+                        <div class="data"></div>
+                        <div class="unit">호</div>
+                    </div>
+                    <div class="kaptdaCnt">
+                        <div class="label">총 세대수</div>
+                        <div class="data"></div>
+                        <div class="unit">세대</div>
+                    </div>
+                    <div class="kaptBcompany">
+                        <div class="label">시공사</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="kaptAcompany">
+                        <div class="label">시행사</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="kaptTel">
+                        <div class="label">관리사무소연락처</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="kaptFax">
+                        <div class="label">관리사무소팩스</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="codeHeatNm">
+                        <div class="label">난방방식</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="codeMgrNm">
+                        <div class="label">관리방식</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="codeHallNm">
+                        <div class="label">복도유형</div>
+                        <div class="data"></div>
+                    </div>
+                    <div class="kaptUsedate">
+                        <div class="label">사용승인일</div>
+                        <div class="data year"></div>
+                        <div class="unit">년</div>
+                        <div class="data month"></div>
+                        <div class="unit">월</div>
+                        <div class="data day"></div>
+                        <div class="unit">일</div>
+                    </div>
+                    <div class="kaptTarea">
+                        <div class="label">연면적</div>
+                        <div class="data"></div>
+                        <div class="unit">m²</div>
+                    </div>
+                    <div class="kaptMarea">
+                        <div class="label">관리비부과면적</div>
+                        <div class="data"></div>
+                        <div class="unit">m²</div>
+                    </div>
+                    <div class="privArea">
+                        <div class="label">단지 전용면적합</div>
+                        <div class="data"></div>
+                        <div class="unit">m²</div>
+                    </div>
+                    <div class="kaptMparea">
+                        <div class="title">전용면적별 세대현황</div>
+                        <div class="box">
+                            <div class="kaptMparea_60 inner-box">
+                                <div class="label">60㎡ 이하</div>
+                                <div class="data-box">
+                                    <div class="data"></div>
+                                    <div class="unit">세대</div>
+                                </div>
+                            </div>
+                            <div class="kaptMparea_85 inner-box">
+                                <div class="label">61㎡ ~ 85㎡</div>
+                                <div class="data-box">
+                                    <div class="data"></div>
+                                    <div class="unit">세대</div>
+                                </div>
+                            </div>
+                            <div class="kaptMparea_135 inner-box">
+                                <div class="label">86㎡ ~ 135㎡</div>
+                                <div class="data-box">
+                                    <div class="data"></div>
+                                    <div class="unit">세대</div>
+                                </div>
+                            </div>
+                            <div class="kaptMparea_136 inner-box">
+                                <div class="label">136㎡ 이상</div>
+                                <div class="data-box">
+                                    <div class="data"></div>
+                                    <div class="unit">세대</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/css/layout-content/contents/contents.css">
+</th:block>
+<th:block layout:fragment="script">
+  <script src="/js/layout-content/contents/contents.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+  <title>PLICE ㅣ 컨텐츠</title>
+</th:block>
+
+<div layout:fragment="content" class="meta-wrapper">
+  <div class="modal-background"></div>
+  <div class="top-space"></div>
+  <div class="contents-wrapper">
+    <div class="left-side">
+      <div class="article-index index active-index">
+        <img src="/img/icon/article.svg">
+        <div class="text">아티클</div>
+      </div>
+      <div class="youtube-index index">
+        <img src="/img/icon/play.svg">
+        <div class="text">유튜브</div>
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="article-wrapper">
+        <div class="head">
+          <div class="title">
+            <div class="text">ㅣ 부동산 아티클</div>
+          </div>
+          <div class="keyword">
+            <div class="text active-keyword" data-keyword="아파트 매매">매매</div>
+            <div class="text" data-keyword="아파트 분양">분양</div>
+            <div class="text" data-keyword="아파트 신축">신축</div>
+            <div class="text" data-keyword="재개발">재개발</div>
+          </div>
+        </div>
+        <div class="body" id="articles">
+          <a class="article" th:each="searchResult: ${searchResults}" th:href="${searchResult.link}"
+            th:data-page="${searchResult.page}" th:data-total-page="${searchResult.totalPage}">
+            <div class="title" th:utext="${searchResult.title}"></div>
+            <div class="description">
+              <li th:utext="${searchResult.description}"></li>
+            </div>
+            <div class="date" th:text="${#dates.format(searchResult.date, 'yyyy년 MM월 dd일 HH:mm:ss')}"></div>
+          </a>
+          <div class="pagenation-wrapper">
+            <span class="pagenation" th:with="currentPage = ${searchResults.get(0).page},
+                         totalPage = ${searchResults.get(0).totalPage},
+                         isFirst = ${currentPage == 1},
+                         isLast = ${currentPage == totalPage}">
+              <b th:class="${isFirst} ? 'disable'"><img class="btn-left" src="/img/icon/btn_left.png"></b>
+              <a th:if="${totalPage > 3} and ${currentPage > 2}" th:text="1" aria-label="First"></a>
+              <span th:if="${totalPage > 3} and ${currentPage > 2}">...</span>
+              <a th:each="page: ${#numbers.sequence(1, totalPage)}" th:if="${isFirst ? (page < 4) :
+                (isLast ? (page > currentPage - 3) : (page < currentPage + 2) && (page > currentPage - 2))}"
+                th:class="${page == currentPage} ? 'active-page'" th:text="${page}">
+              </a>
+              <span th:if="${totalPage > 3} and ${currentPage < totalPage - 1}">...</span>
+              <a th:if="${totalPage > 3} and ${currentPage < totalPage - 1}" th:text="${totalPage}"
+                aria-label="Last"></a>
+              <b th:class="${isLast} ? 'disable'"><img class="btn-right" src="/img/icon/btn_right.png"></b>
+            </span>
+          </div>
+          <div class="loading"></div>
+        </div>
+      </div>
+      <div class="youtube-wrapper">
+        <div class="head">
+          <div class="title">
+            <div class="text">ㅣ 유튜브</div>
+          </div>
+          <div class="keyword">
+            <div class="text active-keyword" data-keyword="매매 아파트">매매</div>
+            <div class="text" data-keyword="아파트 분양">분양</div>
+            <div class="text" data-keyword="아파트 신축">신축</div>
+            <div class="text" data-keyword="재개발">재개발</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="row-1">
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
+            </div>
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
+            </div>
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="loading"></div>
+        </div>
+        <div class="controller">
+          <div class="btn-left" data-token="">&lt; 이전</div>
+          <div class="btn-right" data-token="">다음 &gt;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</html>

@@ -14,8 +14,8 @@
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9618200a7e0720f89b127c7968c0bb75&libraries=services,clusterer"></script>
 
-    <link rel="stylesheet" th:href="@{/css/default.css}">
-    <script th:src="@{/js/default.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/layout/default.css}">
+    <script th:src="@{/js/layout/default.js}"></script>
 
     <th:block layout:fragment="css"></th:block>
     <th:block layout:fragment="script"></th:block>
@@ -23,9 +23,9 @@
 </head>
 
 <body link="black" vlink="black">
-    <header th:replace="fragments/header :: header"></header>
+    <header th:replace="/layout/fragments/header :: header"></header>
     <div layout:fragment="content"></div>
-    <footer th:replace="fragments/footer :: footer"></footer>
+    <footer th:replace="/layout/fragments/footer :: footer"></footer>
 </body>
 
 </html>

@@ -1,19 +1,22 @@
 package com.project.team.plice.controller;
 
 import com.project.team.plice.domain.data.TradeData;
-import com.project.team.plice.dto.DataUtils;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
-import com.project.team.plice.service.MapServiceImpl;
+import com.project.team.plice.dto.utils.DataUtil;
+import com.project.team.plice.service.interfaces.AdminService;
+import com.project.team.plice.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +25,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MapController {
 
-    private final MapServiceImpl mapService;
+    private final AdminService adminService;
+    private final MapService mapService;
 
     @GetMapping("/map")
-    public String map(Model model) {
+    public String map(HttpServletRequest request, Authentication authentication, Model model) {
+        adminService.logAccess(request, authentication);
         List<TradeData> priceDescList = mapService.findAllTradeDataOrderByPriceDesc();
         List<TradeData> priceAscList = mapService.findAllTradeDataOrderByPriceAsc();
-        DataUtils dataUtils = new DataUtils();
-        dataUtils.setTradeCount(priceDescList.size());
-        dataUtils.setTradeMax(priceDescList.get(0));
-        dataUtils.setTradeMin(priceAscList.get(0));
-        model.addAttribute("dataUtils",dataUtils);
-        return "map";
+        DataUtil dataUtil = new DataUtil();
+        dataUtil.setTradeCount(priceDescList.size());
+        dataUtil.setTradeMax(priceDescList.get(0));
+        dataUtil.setTradeMin(priceAscList.get(0));
+        model.addAttribute("dataUtil", dataUtil);
+        return "layout-content/map/map";
     }
 
     @GetMapping("/find-data")
@@ -75,6 +80,6 @@ public class MapController {
             model.addAttribute("addressDataList", addressDataList);
             model.addAttribute("apartDataList", apartDataList);
         }
-        return "map :: #search-input-results";
+        return "layout-content/map/map :: #search-input-results";
     }
 }

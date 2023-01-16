@@ -1,5 +1,7 @@
 package com.project.team.plice.web;
 
+import com.project.team.plice.service.interfaces.AdminService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +15,6 @@ import java.util.Enumeration;
 @Component
 public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
-    //controller로 보내기 전 이벤트 작동(false - controller로 요청을 안함)
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.debug("============================== BEFORE CONTROLLER ==============================");
@@ -33,13 +34,11 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
         return super.preHandle(request, response, handler);
     }
 
-    //controller 처리 이후 이벤트 작동
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         log.info("================================ AFTER CONTROLLER ================================");
     }
 
-    //view 처리 이후 이벤트 작동
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         log.info("================================ AFTER VIEW ================================");
