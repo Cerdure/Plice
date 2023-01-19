@@ -15,6 +15,31 @@
 
 <div layout:fragment="content">
     <div class="top-space"></div>
+    <div class="modal-background"></div>
+    <div class="alert-window report-alert">
+        <div class="info">
+            <div class="report-reason-box">
+                <div class="label">채팅 신고 사유</div>
+                <select id="report-reason">
+                    <option value="비속어·폭언·비하 등 부적절한 채팅">비속어·폭언·비하 등 부적절한 채팅</option>
+                    <option value="갈등 조장 및 허위 사실 유포">갈등 조장 및 허위 사실 유포</option>
+                    <option value="도배 및 광고">도배 및 광고</option>
+                    <option value="기타 운영 규정 위반">기타 운영 규정 위반</option>
+                </select>
+            </div>
+            <div class="text">※ 허위 신고 시 이용이 제한될 수 있습니다.</div>
+        </div>
+        <button class="cancel" onclick="hideAlert(this)">취소</button>
+        <button class="okay" onclick="chatReport()">확인</button>
+    </div>
+
+    <div class="alert-window complete-alert">
+        <div class="info">
+            <div class="text">신고가 접수되었습니다.</div>
+        </div>
+        <button class="okay" onclick="hideAlert(this)">확인</button>
+    </div>
+
     <div class="contents-wrapper">
         <div class="left-side">
             <div class="search-wrapper">
@@ -103,7 +128,7 @@
                                     <div class="chats-day-line" th:if="${i.index} == 0"></div>
                                     <div class="chats-day" th:if="${i.index} == 0"
                                         th:text="${#temporals.format(chat.regDate, 'yyyy년 MM월 dd일 EEEE')}"></div>
-                                    <div class="chat-box">
+                                    <div class="chat-box" th:data-id="${chat.id}">
                                         <div class='profile-wrapper' th:if="${!isMine && !isInfo}">
                                             <img th:src="${member.profileImgPath}">
                                         </div>
@@ -114,6 +139,8 @@
                                             </div>
                                         </div>
                                         <div class='content' th:text="${chat.content}"></div>
+                                        <div class="report" th:if="${!isMine && !isInfo}">신고</div>
+
                                         <div class="name-date-box" th:if="${isMine && !isInfo}">
                                             <strong th:text="${member.nickname}"></strong>
                                             <div class='date' th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))

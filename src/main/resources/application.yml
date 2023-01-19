@@ -6,8 +6,10 @@ spring:
     password: 1234
 
   jpa:
+#    open-in-view: false
     hibernate:
 #      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true

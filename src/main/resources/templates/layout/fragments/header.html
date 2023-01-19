@@ -14,8 +14,8 @@
     <div class="text-box"><span class="contents" onclick="location.href='/contents'">컨텐츠</span><div class="under-bar"></div></div>
     <div class="text-box"><span class="my-page">마이페이지</span><div class="under-bar"></div></div>
     <div class="login-wrapper">
-        <div class="login-btn" onclick="location.href='/login'" sec:authorize="!isAuthenticated()">로그인</div>
-        <div class="admin-btn" onclick="location.href='/admin'" sec:authorize="hasRole('ADMIN')">관리페이지</div>
+        <div class="login-btn" onclick="location.href='/login'">로그인</div>
+        <div class="admin-btn" onclick="location.href='/admin'" sec:authorize="hasAnyRole('ADMIN', 'SUPER_ADMIN')">관리페이지</div>
         <div class="logout-btn" onclick="location.href='/logout'" sec:authorize="isAuthenticated()">로그아웃</div>
     </div>
 </header>

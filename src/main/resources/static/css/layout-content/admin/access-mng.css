@@ -18,10 +18,6 @@
 
 .right-side {
     width: 100%;
-    height: calc(100vh - 60px);
-}
-
-.user-management {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -29,16 +25,16 @@
     overflow-y: scroll;
 }
 
-.user-management::-webkit-scrollbar {
+.right-side::-webkit-scrollbar {
     width: 5px;
 }
 
-.user-management::-webkit-scrollbar-thumb {
+.right-side::-webkit-scrollbar-thumb {
     background-color: #4f72ff;
     border-radius: 10px;
 }
 
-.user-management .head {
+.right-side .head {
     width: 100%;
     font-size: 40px;
     font-weight: 900;
@@ -46,7 +42,7 @@
     padding-bottom: 0;
 }
 
-.user-management .body {
+.right-side .body {
     width: 100%;
     padding: 0 20px;
     display: flex;
@@ -54,11 +50,34 @@
     align-items: flex-end;
 }
 
+.right-side .body .body-head {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+    padding: 20px;
+    padding-right: 0;
+    font-size: 20px;
+}
+
+.right-side .body .body-head .sub-head {
+    width: 100%;
+    display: flex;
+}
+
+.right-side .body .body-head .sub-head .text {
+    margin-right: 40px;
+}
+
+.active-text {
+    color: #4169fc;
+    font-weight: 900;
+}
+
 .search-wrapper {
     width: 50%;
     display: flex;
     justify-content: end;
-    margin-bottom: 20px;
 }
 
 .search {
@@ -110,94 +129,86 @@
     margin: 0 10px;
 }
 
-.user-management .contents {
+.right-side .contents {
+    position: relative;
     width: 100%;
+    height: 760px;
     border-top: 1px solid silver;
-    border-bottom: 1px solid silver;
-    padding-bottom: 10px;
-    margin-bottom: 40px;
 }
 
-.user-management .contents .top {
+.right-side .access-log-box .top {
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 0.8fr 1.5fr 1fr 1fr 1fr 2fr 1fr 0.8fr 0.8fr 0.8fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
+    justify-items: center;
+    border-bottom: 1px solid silver;
+    background-color: #f1f7ff;
+}
+
+.right-side .access-log {
+    width: 100%;
+    padding: 8px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
+    align-items: center;
+    border-bottom: 1px solid #d9ecff;
+}
+
+.right-side .access-log:last-child {
+    border: none;
+}
+
+.right-side .access-log div {
+    text-align: center;
+}
+
+
+.right-side .member-blacklist-box .top {
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr;
+    justify-items: center;
+    border-bottom: 1px solid silver;
+    background-color: #f1f7ff;
+}
+
+.right-side .member-blacklist {
+    width: 100%;
+    padding: 8px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr;
+    align-items: center;
+    border-bottom: 1px solid #d9ecff;
+}
+
+.right-side .member-blacklist div {
+    text-align: center;
+}
+
+.right-side .ip-blacklist-box .top {
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr;
     justify-items: center;
     border-bottom: 1px solid silver;
     margin-bottom: 10px;
     background-color: #f1f7ff;
 }
 
-.user-management .user-info {
+.right-side .ip-blacklist {
     width: 100%;
-    padding: 10px 20px;
+    padding: 8px 20px;
     display: grid;
-    grid-template-columns: 1fr 0.8fr 1.5fr 1fr 1fr 1fr 2fr 1fr 0.8fr 0.8fr 0.8fr;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 1.5fr 1fr;
     align-items: center;
 }
 
-.user-management .user-info div {
+.right-side .ip-blacklist div {
     text-align: center;
 }
-
-.user-management .user-info input,
-.user-management .user-info select {
-    width: 90%;
-    height: 30px;
-    text-align: center;
-    outline: none;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    color: #3b5987;
-}
-
-.user-management .user-info div:first-child input {
-    font-weight: 600;
-}
-
-.user-management .user-info .btn {
-    width: 90%;
-    height: 30px;
-    line-height: 30px;
-    color: #4169fc;
-    border-radius: 5px;
-    border: 1px solid #4169fc;
-    margin-left: 10px;
-    text-align: center;
-}
-
-.user-management .user-info .btn:hover {
-    color: white;
-    background-color: #4169fc;
-    transition: 0.3s;
-}
-
-.user-management .user-info .delete-btn {
-    border: 1px solid #3b5987;
-    background-color: white;
-    color: #3b5987;
-}
-
-.user-management .user-info .delete-btn:hover {
-    color: white;
-    background-color: #3b5987;
-    transition: 0.3s;
-}
-
-.user-management .user-info .access-btn {
-    border: 1px solid #91aec3;
-    background-color: rgb(244, 249, 249);
-    color: #3b5987;
-}
-
-.user-management .user-info .access-btn:hover {
-    color: #0099ff;
-    background-color: #ebeff2;
-    border: 1px solid #00a6ff;
-    transition: 0.3s;
-}
-
 
 .alert-window {
     position: fixed;
@@ -271,4 +282,35 @@
     transition: 0.5s;
   }
   
+
+.block-alert {
+    height: 260px;
+}
+.block-alert .info .data {
+    margin-bottom: 20px;    
+}
+.block-date-box {
+    display: flex;
+    padding-left: 60px;
+    margin-bottom: 10px;
+}
+.block-alert .label {
+    width: 80px;
+    text-align: start;
+    display: flex;
+    align-items: center;
+}
+.block-alert select {
+    width: 160px;
+    height: 30px;
+    border: 1px solid #b5c8d5;
+}
+.block-reason-box {
+    display: flex;
+    padding-left: 60px;
+}
+.block-alert .cancel,
+.block-alert .okay {
+    bottom: 30px;
+}
   

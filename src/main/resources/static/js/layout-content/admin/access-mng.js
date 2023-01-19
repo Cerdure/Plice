@@ -1,36 +1,6 @@
-$(function () {
-
-  $(".modify-btn").click(function(){
-    selectForm = $(this).parent();
-    selectMemberId = selectForm.find("#id").val();
-    $(".mod-alert .data").text("회원 관리 ID : " + selectMemberId);
-    $(".modal-background").fadeIn(100);
-    $(".mod-alert").fadeIn(300);
-  }); 
-
-  $(".delete-btn").click(function(){
-    selectForm = $(this).parent();
-    selectMemberId = selectForm.find("#id").val();
-    $(".del-alert .data").text("회원 관리 ID : " + selectMemberId);
-    $(".modal-background").fadeIn(100);
-    $(".del-alert").fadeIn(300);
-  }); 
-  
-});
-let selectForm;
-let selectMemberId;
-
-function hideAlert(_this){
+function hideAlert(){
+  $("option:selected").prop("selected", false);
   $(".alert-window").hide();
   $(".modal-background").hide();
   $(".alert-window .data").text("");
-}
-
-function memberModify(){
-  selectForm.find("#id").attr("disabled", false);
-  selectForm.submit();
-}
-
-function memberDelete(){
-  location.href="/admin/member-del?id=" + selectMemberId;
 }

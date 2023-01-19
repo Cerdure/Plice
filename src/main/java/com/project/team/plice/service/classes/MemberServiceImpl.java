@@ -6,6 +6,10 @@ import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,8 +54,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> findByRole(MemberRole role) {
-        return memberRepository.findByRole(role);
+    public Page<Member> findByRole(MemberRole role, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable= PageRequest.of(page,12, Sort.by("regDate").descending());
+        return memberRepository.findByRole(role, pageable);
     }
 
     public Member findById(Long memberId) {
@@ -63,6 +69,7 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByPhone(phone).get();
     }
 
+    @Override
     @Transactional
     public void update(Authentication authentication, MemberDto memberDto) {
         String phone = authentication.getName();
@@ -72,11 +79,28 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
+    @Override
+    @Transactional
+    public void update(MemberDto memberDto) {
+        Member member = memberRepository.findById(memberDto.getId()).get();
+        member.updatePhone(memberDto.getPhone());
+        member.updateName(memberDto.getName());
+        member.updateNickname(memberDto.getNickname());
+        member.updateBirth(memberDto.getBirth());
+        memberRepository.save(member);
+    }
+
     @Transactional
     public void delete(Authentication authentication){
         String phone = authentication.getName();
         Member member = memberRepository.findByPhone(phone).get();
         memberRepository.delete(member);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        memberRepository.delete(memberRepository.findById(id).get());
     }
 
 

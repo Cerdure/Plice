@@ -21,8 +21,6 @@ public class MemberDto {
     private String name;
     private String nickname;
     private String birth;
-    private String sex;
-    private String email;
     private LocalDate regDate;
     private LocalDate delDate;
     private List<Favorite> favorite;
@@ -32,21 +30,20 @@ public class MemberDto {
     private MemberRole role;
 
     @Builder
-    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, List<Favorite> favorite, String profileImgPath, MemberRole role) {
+    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, LocalDate regDate, LocalDate delDate, List<Favorite> favorite, String profileImgPath, MemberRole role) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
         this.name = name;
         this.nickname = nickname;
         this.birth = birth;
-        this.sex = sex;
-        this.email = email;
         this.regDate = regDate;
         this.delDate = delDate;
         this.favorite = favorite;
         this.profileImgPath = profileImgPath;
         this.role = role;
     }
+
     public Member toEntity(){
         Member build = Member.builder()
                 .id(id)
@@ -55,8 +52,6 @@ public class MemberDto {
                 .name(name)
                 .nickname(nickname)
                 .birth(birth)
-                .sex(sex)
-                .email(email)
                 .regDate(regDate)
                 .delDate(delDate)
                 .favorite(favorite)
@@ -73,8 +68,6 @@ public class MemberDto {
                 .name(this.name)
                 .nickname(this.nickname)
                 .birth(this.birth)
-                .sex(this.sex)
-                .email(this.email)
                 .regDate(this.regDate)
                 .delDate(this.delDate)
                 .role(this.role)
@@ -83,14 +76,4 @@ public class MemberDto {
                 .build();
     }
 
-    public Member toEntity(){
-        return Member.builder()
-                .id(this.id)
-                .phone(this.phone)
-                .name(this.name)
-                .nickname(this.nickname)
-                .birth(this.birth)
-                .email(this.email)
-                .build();
-    }
 }

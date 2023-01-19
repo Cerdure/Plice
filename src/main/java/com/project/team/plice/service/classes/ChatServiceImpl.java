@@ -1,11 +1,13 @@
 package com.project.team.plice.service.classes;
 
+import com.project.team.plice.domain.admin.Report;
 import com.project.team.plice.domain.chat.Chat;
 import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.chat.ChatDto;
 import com.project.team.plice.dto.chat.ChatRoomDto;
+import com.project.team.plice.repository.admin.ReportRepository;
 import com.project.team.plice.repository.chat.ChatRepository;
 import com.project.team.plice.repository.chat.ChatRoomRepository;
 import com.project.team.plice.repository.chat.MemberChatRoomRepository;
@@ -36,6 +38,7 @@ public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final ApartDataRepository apartDataRepository;
+    private final ReportRepository reportRepository;
 
     @Override
     public List<ChatRoomDto> myRoomsResolver(Authentication authentication) {
@@ -74,6 +77,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public Chat findChatById(Long chatId) {
+        return chatRepository.findById(chatId).get();
+    }
+
+    @Override
     public List<Chat> findChatsByRoomId(String roomId) {
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
         return chatRepository.findByChatRoom(chatRoom);
@@ -82,6 +90,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatRoom findChatRoomById(String roomId) {
         return chatRoomRepository.findById(roomId).get();
+    }
+
+    @Override
+    public ChatRoom findChatRoomByChatId(Long chatId) {
+        return chatRepository.findById(chatId).get().getChatRoom();
     }
 
     @Override
@@ -196,6 +209,25 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public Map<Integer,List<Chat>> chatsGroupByDay(Long chatId) {
+        List<Chat> chats = findChatsByRoomId(findChatRoomByChatId(chatId).getId());
+        Map<Integer, List<Chat>> chatsMap = new HashMap<>();
+        List<Integer> days = new ArrayList<>();
+        for (Chat chat : chats) {
+            int day = chat.getRegDate().getDayOfMonth();
+            if(!days.contains(day)){
+                days.add(day);
+            }
+        }
+        for (Integer day : days) {
+            chatsMap.put(day,
+                    chats.stream().filter(chat -> chat.getRegDate().getDayOfMonth() == day)
+                            .collect(Collectors.toList()));
+        }
+        return chatsMap;
+    }
+
+    @Override
     public List<ChatRoomDto> highlightChatRooms(String inputVal) {
         List<ChatRoomDto> chatRooms = findChatRoomsByAddressOrName("", inputVal);
         if (chatRooms != null) {
@@ -214,6 +246,15 @@ public class ChatServiceImpl implements ChatService {
     public Integer numberOfMembersOnChat() {
         Stream<Member> distinctMembers = memberChatRoomRepository.findAll().stream().map(memberChatRoom -> memberChatRoom.getMember()).distinct();
         return Math.toIntExact(distinctMembers.count());
+    }
+
+    @Override
+    public void chatReport(Long chatId, String reason, Authentication authentication) {
+        reportRepository.save(Report.builder()
+                .chat(chatRepository.findById(chatId).get())
+                .reporter(memberService.findMember(authentication))
+                .reason(reason)
+                .build());
     }
 
     @Override

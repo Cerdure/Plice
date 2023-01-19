@@ -9,13 +9,15 @@ import java.time.LocalDateTime;
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class BlackList {
+public class Blacklist {
 
     @Id @GeneratedValue
     @Column(name = "black_list_id")
     private Long id;
 
-    private String ip;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ip_id")
+    private IP ip;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -33,7 +35,7 @@ public class BlackList {
     }
 
     @Builder
-    public BlackList(Long id, String ip, Member member, String reason, LocalDateTime regDate, LocalDateTime expDate) {
+    public Blacklist(Long id, IP ip, Member member, String reason, LocalDateTime regDate, LocalDateTime expDate) {
         this.id = id;
         this.ip = ip;
         this.member = member;

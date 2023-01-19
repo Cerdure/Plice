@@ -1,6 +1,8 @@
 package com.project.team.plice.domain.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.team.plice.domain.admin.Authority;
+import com.project.team.plice.domain.admin.Blacklist;
 import com.project.team.plice.domain.admin.Report;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.enums.MemberRole;
@@ -17,7 +19,6 @@ import java.util.List;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Member implements UserDetails {
 
     @Id @GeneratedValue
@@ -34,10 +35,6 @@ public class Member implements UserDetails {
 
     private String birth;
 
-    private String sex;
-
-    private String email;
-
     private LocalDate regDate;
 
     private LocalDate delDate;
@@ -45,19 +42,24 @@ public class Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", orphanRemoval = true)
     private List<Favorite> favorite;
 
-    @OneToMany(mappedBy = "reporter")
+    @OneToMany(mappedBy = "reporter", orphanRemoval = true)
+    @JsonIgnore
     private List<Report> reports;
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", orphanRemoval = true)
     private Authority authority;
 
     private String profileImgPath;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member", orphanRemoval = true)
+    @JsonIgnore
     private List<MemberChatRoom> memberChatRoom;
+
+    @OneToOne(mappedBy = "member", orphanRemoval = true)
+    private Blacklist blacklist;
 
     @PrePersist
     public void prePersist() {
@@ -65,16 +67,15 @@ public class Member implements UserDetails {
         this.profileImgPath = this.profileImgPath == null ? "/img/icon/profile.png" : this.profileImgPath;
         this.regDate = this.regDate == null ? LocalDate.now() : this.regDate;
     }
+
     @Builder
-    public Member(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, MemberRole role, List<Favorite> favorite, List<Report> reports, Authority authority, String profileImgPath, List<MemberChatRoom> memberChatRoom) {
+    public Member(Long id, String phone, String pw, String name, String nickname, String birth, LocalDate regDate, LocalDate delDate, MemberRole role, List<Favorite> favorite, List<Report> reports, Authority authority, String profileImgPath, List<MemberChatRoom> memberChatRoom, Blacklist blacklist) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
         this.name = name;
         this.nickname = nickname;
         this.birth = birth;
-        this.sex = sex;
-        this.email = email;
         this.regDate = regDate;
         this.delDate = delDate;
         this.role = role;
@@ -83,9 +84,8 @@ public class Member implements UserDetails {
         this.authority = authority;
         this.profileImgPath = profileImgPath;
         this.memberChatRoom = memberChatRoom;
+        this.blacklist = blacklist;
     }
-
-    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -126,8 +126,22 @@ public class Member implements UserDetails {
     public void update(String name, String nickname) {
         this.name = name;
         this.nickname = nickname;
-
     }
 
+    public void updatePhone(String phone){
+        this.phone = phone;
+    }
+
+    public void updateName(String name){
+        this.name = name;
+    }
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
+    }
+
+    public void updateBirth(String birth){
+        this.birth = birth;
+    }
 
 }
