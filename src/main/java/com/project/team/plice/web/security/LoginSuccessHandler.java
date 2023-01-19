@@ -1,6 +1,9 @@
 package com.project.team.plice.web.security;
 
 import com.project.team.plice.domain.enums.MemberRole;
+import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.service.interfaces.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final RequestCache requestCache = new HttpSessionRequestCache();
@@ -33,8 +37,10 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
             request.getSession().removeAttribute("prevPage");
         }
         String uri = "/home";
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
-            || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"))){
+
+
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
+                || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"))) {
             uri = "/admin";
         } else {
             if (savedRequest != null) {
