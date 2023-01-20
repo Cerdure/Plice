@@ -1,18 +1,12 @@
 package com.project.team.plice.dto.post;
 
 import com.project.team.plice.domain.member.Member;
-import com.project.team.plice.domain.post.Notice;
-import com.project.team.plice.domain.post.Post;
 import com.project.team.plice.domain.post.Reply;
-import com.project.team.plice.domain.post.UploadFile;
-import com.project.team.plice.dto.member.MemberDto;
+import com.project.team.plice.domain.post.Post;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,8 +22,15 @@ public class PostDto {
     private LocalDateTime modDate;
     private List<MultipartFile> imageFiles;
 
+    private Integer closed;
+    private Integer reFlag;
+    private List<Reply> replies;
+
+    private Integer searchBy;
+    private String input;
+
     @Builder
-    public PostDto(Long id, Member member, String memberNickname, String title, String content, Integer hits, LocalDateTime regDate, LocalDateTime modDate, List<MultipartFile> imageFiles) {
+    public PostDto(Long id, Member member, String memberNickname, String title, String content, Integer hits, LocalDateTime regDate, LocalDateTime modDate, List<Reply> replies, Integer searchBy, String input, List<MultipartFile> imageFiles) {
         this.id = id;
         this.member = member;
         this.memberNickname = memberNickname;
@@ -39,7 +40,14 @@ public class PostDto {
         this.regDate = regDate;
         this.modDate = modDate;
         this.imageFiles = imageFiles;
+        this.replies = replies;
+        this.searchBy = searchBy;
+        this.input = input;
     }
+
+//    a = PostDto.build()
+//            .name(name1)
+//    .title(title156).builder()
 
     public Post toEntity(){
         return Post.builder()

@@ -44,7 +44,7 @@ public class AdminController {
 
     @GetMapping("/admin/member-mod")
     public String memberMod(@ModelAttribute MemberDto memberDto, Model model){
-        memberService.update(memberDto);
+//        memberService.update(memberDto);
         return "redirect:/admin/member-mng";
     }
 

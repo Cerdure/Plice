@@ -222,8 +222,8 @@ header .post {
   width: 100%;
   height: 1020px;
   background:
-    linear-gradient(rgba(0, 0, 0, 0), rgb(255, 255, 255)),
-    url("../../../img/images/background.jpg");
+          linear-gradient(rgba(0, 0, 0, 0), rgb(255, 255, 255)),
+          url("../../../img/images/background.jpg");
   background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
@@ -260,8 +260,8 @@ header .post {
   height: auto;
   padding: 20px 40px;
   background:
-    linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
-    url("../../../img/images/bg.png");
+          linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
+          url("../../../img/images/bg.png");
   background-size: 50%;
 }
 
@@ -427,7 +427,7 @@ header .post {
   font-size: 16px;
   font-weight: 900;
   cursor: pointer;
-} 
+}
 .alert-window .okay:hover {
   background-color: #4169fc;
   color: white;
@@ -477,7 +477,7 @@ header .post {
   border: 1px solid silver;
   border-bottom: none;
   transform:
-    skew(-40deg) translate(30px, 0px);
+          skew(-40deg) translate(30px, 0px);
   background-color: white;
 }
 

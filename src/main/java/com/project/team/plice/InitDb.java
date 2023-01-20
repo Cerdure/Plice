@@ -4,9 +4,12 @@ import com.project.team.plice.domain.chat.ChatRoom;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.domain.post.Notice;
+import com.project.team.plice.domain.post.Post;
 import com.project.team.plice.repository.chat.ChatRoomRepository;
 import com.project.team.plice.repository.data.ApartDataRepository;
 import com.project.team.plice.repository.member.MemberRepository;
+import com.project.team.plice.repository.post.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -24,9 +27,10 @@ public class InitDb {
 
     private final InitService initService;
 
+
     @PostConstruct
     public void init() {
-        initService.dbInit();
+//        initService.dbInit();
     }
 
     @Component
@@ -39,8 +43,134 @@ public class InitDb {
         private final MemberRepository memberRepository;
         private final ApartDataRepository apartDataRepository;
         private final ChatRoomRepository chatRoomRepository;
+        private final NoticeRepository noticeRepository;
 
         public void dbInit() {
+
+            List<Post> posts = new ArrayList<>();
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자1")
+                    .title("공지사항1")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자2")
+                    .title("공지사항2")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자3")
+                    .title("공지사항3")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자4")
+                    .title("공지사항4")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자5")
+                    .title("공지사항5")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자6")
+                    .title("공지사항6")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자7")
+                    .title("공지사항7")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자8")
+                    .title("공지사항8")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자9")
+                    .title("공지사항9")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자10")
+                    .title("공지사항10")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자11")
+                    .title("공지사항11")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자12")
+                    .title("공지사항12")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자13")
+                    .title("공지사항13")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자14")
+                    .title("공지사항14")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자15")
+                    .title("공지사항15")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자16")
+                    .title("공지사항16")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자17")
+                    .title("공지사항17")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자18")
+                    .title("공지사항18")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자19")
+                    .title("공지사항19")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("관리자20")
+                    .title("공지사항20")
+                    .content("플라이스 파이널 프로젝트 화이팅")
+                    .build());
+
+            posts.forEach(notice -> em.persist(notice));
+
 
             List<Member> members = new ArrayList<>();
 

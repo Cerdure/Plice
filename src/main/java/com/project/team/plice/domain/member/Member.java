@@ -17,7 +17,6 @@ import java.util.List;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Member implements UserDetails {
 
     @Id @GeneratedValue

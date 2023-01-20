@@ -38,8 +38,8 @@ public class Notice {
 
     @PrePersist
     public void prePersist() {
-        this.regDate = this.regDate == null ? LocalDateTime.now() : this.regDate;
         this.hits = this.hits == null ? 0 : this.hits;
+        this.regDate = this.regDate == null ? LocalDateTime.now() : this.regDate;
     }
 
     @Builder
