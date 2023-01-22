@@ -1,11 +1,13 @@
 package com.project.team.plice.controller;
 
+import com.project.team.plice.domain.admin.SearchKeyword;
 import com.project.team.plice.domain.data.TradeData;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
 import com.project.team.plice.dto.utils.DataUtil;
 import com.project.team.plice.service.interfaces.AdminService;
+import com.project.team.plice.service.interfaces.FavoriteService;
 import com.project.team.plice.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ public class MapController {
 
     private final AdminService adminService;
     private final MapService mapService;
+    private final FavoriteService favoriteService;
 
     @GetMapping("/map")
     public String map(HttpServletRequest request, Authentication authentication, Model model) {
@@ -38,6 +41,7 @@ public class MapController {
         dataUtil.setTradeMax(priceDescList.get(0));
         dataUtil.setTradeMin(priceAscList.get(0));
         model.addAttribute("dataUtil", dataUtil);
+        model.addAttribute("searchKeywords", mapService.searchKeywordTop10());
         return "layout-content/map/map";
     }
 
@@ -81,5 +85,19 @@ public class MapController {
             model.addAttribute("apartDataList", apartDataList);
         }
         return "layout-content/map/map :: #search-input-results";
+    }
+
+
+    @GetMapping("/map/favorite")
+    public boolean favoriteSave(@RequestParam("apartName") String apartName, Authentication authentication){
+        favoriteService.favoriteSave(apartName, authentication);
+        return true;
+
+
+    @GetMapping("/map/keyword-save")
+    public String keywordSave(@RequestParam("keyword") String keyword){
+        mapService.saveSearchKeyword(keyword);
+        return "layout-content/map/map :: #trend";
+
     }
 }

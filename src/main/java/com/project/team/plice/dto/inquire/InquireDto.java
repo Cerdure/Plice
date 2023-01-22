@@ -17,16 +17,18 @@ public class InquireDto {
     private Member member;
     private String title;
     private String content;
+    private String type;
     private Integer isAnswered;  // 답변 여부 (0,1)
     private LocalDateTime regDate;
     private Answer answer;
 
     @Builder
-    public InquireDto(Long id, Member member, String title, String content, Integer isAnswered, LocalDateTime regDate, Answer answer) {
+    public InquireDto(Long id, Member member, String title, String content, String type, Integer isAnswered, LocalDateTime regDate, Answer answer) {
         this.id = id;
         this.member = member;
         this.title = title;
         this.content = content;
+        this.type = type;
         this.isAnswered = isAnswered;
         this.regDate = regDate;
         this.answer = answer;
@@ -38,6 +40,7 @@ public class InquireDto {
                 .member(this.member)
                 .title(this.title)
                 .content(this.content)
+                .type(this.type)
                 .isAnswered(this.isAnswered)
                 .regDate(this.regDate)
                 .answer(this.answer)

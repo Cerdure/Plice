@@ -10,4 +10,5 @@ public interface ApartDataRepository extends JpaRepository<ApartData, Long> {
     public List<ApartData> findByNameContainingIgnoreCase(String val);
     public List<ApartData> findByAddressContainingIgnoreCaseAndNameContainingIgnoreCase(String address, String name);
     public Optional<ApartData> findById(Long id);
+    public ApartData findByNameContains(String apartName);
 }

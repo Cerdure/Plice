@@ -1,5 +1,6 @@
 package com.project.team.plice.domain.chat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.team.plice.domain.member.Member;
 import lombok.*;
 
@@ -8,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class MemberChatRoom {
 
     @Id @GeneratedValue
@@ -19,7 +19,7 @@ public class MemberChatRoom {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
 

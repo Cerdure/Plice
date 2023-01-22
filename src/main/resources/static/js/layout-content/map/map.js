@@ -67,6 +67,10 @@ $(function () {
             moveToPlace(this);
         });
 
+        $(document).on("click", ".favorite-btn", function(){
+            fetch("/map/favorite?apartName=" + $(".apart-detail-wrapper .name").text()).then(console.log("success"));
+        });
+
         $(document).on("mouseover", ".item, .custom-overlay-apart", function () {
             pinOverlaies.forEach(e => e.setMap(null));
             const place = apartCoords[$(this).data('id')];
@@ -85,24 +89,36 @@ $(function () {
             $(".apart-detail-wrapper").stop().fadeOut(100);
         });
 
+        trendInterval = setInterval(trendAnimation, 3000);
+
         $(document).on("click", ".trend-wrapper .fold", function () {
             if (!$(this).hasClass("clicked")) {
-                $(this).addClass("clicked").css('transform', 'translateY(-50%) rotate(180deg)');
-                $(".trend-wrapper").css('overflow', 'visible');
+                clearInterval(trendInterval);
+                $(this).addClass("clicked").css({'transform':'translateY(-50%) rotate(180deg)', 'top':'20px'});
+                $(".trend-wrapper ul").css('bottom', '0px');
+                trendIdx = 1;
+                $(".trend-wrapper").animate({'height':'500px'}, 300);
             } else {
-                $(this).removeClass("clicked").css('transform', 'translateY(-50%) rotate(0)');
-                $(".trend-wrapper").css('overflow', 'hidden');
+                trendInterval = setInterval(trendAnimation, 3000);
+                $(".trend-wrapper").animate({'height':'50px'}, 300, function(){
+                    $(".trend-wrapper .fold").removeClass("clicked").css({'transform':'translateY(-50%) rotate(0)', 'top':'50%'});
+                });
             }
         });
 
         $(document).on("click", ".search-result-apart", function () {
-            $(".custom-overlay-apart").remove();
-            let apartName = $(this).data("value");
-            $(".search-input").val(apartName);
-            currentItemsIdx = 0;
-            update = true;
-            findApartData('', apartName);
-            moveToPlace(this);
+            (async () => {
+                $(".custom-overlay-apart").remove();
+                let apartName = $(this).data("value");
+                $(".search-input").val(apartName);
+                currentItemsIdx = 0;
+                update = true;
+                findApartData('', apartName);
+                moveToPlace(this);
+                const result = fetch("/map/keyword-save?keyword=" + apartName).then(res => res.text());
+                $("#trend").replaceWith(result);
+            })();
+           
         });
 
         $(document).on("click", ".search-result-address", function () {
@@ -113,6 +129,8 @@ $(function () {
             update = true;
             findApartData(address, '');
             searchRegion(address);
+            const result = fetch("/map/keyword-save?keyword=" + address.substring(address.indexOf(" "))).then(res => res.text());
+            $("#trend").replaceWith(result);
         });
     });
 
@@ -490,6 +508,8 @@ $(function () {
             update = true;
             findApartData(inputVal, '');
             searchRegion(inputVal);
+            const result = fetch("/map/keyword-save?keyword=" + inputVal).then(res => res.text());
+            $("#trend").replaceWith(result);
             return;
         } else if (inputVal != '' && inputVal.length > 1) {
             keySearch(inputVal);
@@ -573,19 +593,6 @@ $(function () {
         findApartData(currentCenterAddr, '');
         searchRegion(currentCenterAddr);
     });
-
-    let trendIdx = 1;
-
-    setInterval(function () {
-        $(".trend-wrapper ul").stop().animate({ 'bottom': (50 * trendIdx) + 'px' }, 300, function () {
-            if (trendIdx == 10) {
-                $(".trend-wrapper ul").css('bottom', '0px');
-                trendIdx = 1;
-            } else {
-                trendIdx++;
-            }
-        });
-    }, 3000);
 
     const findApart = (address, apartName) => fetch("/find-apart?region=" + address + "&apart=" + apartName).then(res => res.json());
 
@@ -739,7 +746,8 @@ let options, map, searchType, keyword, apartCoords, currentCenterAddr,
     findDataList, tradeDataList, apartDataList, apartDetailXmls, currentItemsIdx,
     customOverlaies = [], apartOverlaies = [], regionOverlaies = [], 
     pinOverlaies = [], rvCustomOverlaies = [], rvApartOverlaies = [],
-    ps = new kakao.maps.services.Places(), geocoder = new kakao.maps.services.Geocoder();
+    ps = new kakao.maps.services.Places(), geocoder = new kakao.maps.services.Geocoder(),
+    trendIdx = 1, trendInterval;
 
 // -----------------------------------------------------------------------------------------------------
 
@@ -863,4 +871,27 @@ const formatPhoneNumber = (input) => {
     return result;
 }
 
+function trendAnimation() {
+    $(".trend-wrapper ul").stop().animate({ 'bottom': (50 * trendIdx) + 'px' }, 300, function () {
+        if (trendIdx == 10) {
+            $(".trend-wrapper ul").css('bottom', '0px');
+            trendIdx = 1;
+        } else {
+            trendIdx++;
+        }
+    });
+}
 
+$(function(){
+    $(".favorite-btn").click(function(){
+        (async () => {
+            const loginCheck = await fetch("/chat/login-check").then(res => res.text());
+            if(loginCheck == "ok"){
+                location.href = "/my-page";
+            } else {
+                alert('로그인 후 이용 가능합니다.');
+                location.href = "/login";
+            }
+        })();
+    });
+});

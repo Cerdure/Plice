@@ -67,6 +67,12 @@ $(function () {
             moveToBottom();
         });
 
+        $(document).on("click", ".report", function () {
+            selectChatId = $(this).closest(".chat-box").data("id");
+            $(".modal-background").fadeIn(100);
+            $(".report-alert").fadeIn(300);
+        });
+
         initConnect();
         noticeAnimation();
         totalCountAnimation();
@@ -184,7 +190,7 @@ $(function () {
 
 let newJoin = false, chatOpen = false,
     currentRoomId, currentSubscribe = new Map([]),
-    st, ih, sh, isFirstMessage = true;
+    st, ih, sh, isFirstMessage = true, selectChatId;
 
 function initConnect() {
     $(".my-room").get().forEach(e => { subscribe(e.dataset.id) });
@@ -331,4 +337,18 @@ function totalCountAnimation() {
             }
         }, 80);
     }, 700);
+}
+
+function hideAlert(_this){
+    $(".alert-window").hide();
+    $(".modal-background").hide();
+    $("option:selected").prop("selected", false);
+  }
+
+function chatReport(){
+    $(".alert-window").hide();
+    fetch(encodeURI("/chat/report?chatId=" + selectChatId + "&reason=" + $("#report-reason option:selected").val()))
+    .then(() => {
+        $(".complete-alert").fadeIn(300);
+    })
 }

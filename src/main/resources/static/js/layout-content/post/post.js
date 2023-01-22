@@ -32,16 +32,16 @@ $(function () {
       $(".story-frame").stop().fadeIn(300);
     }
   });
-  $(".notice-tag-wrapper").click(function(){
-    if(!$(this).hasClass("active-tag-wrapper")){
-      $(".story-title").hide();
-      $(".notice-title").show();
-      $(".tag-wrapper").removeClass("active-tag-wrapper");
-      $(this).addClass("active-tag-wrapper");
-      $(".story-frame").stop().hide();
-      $(".notice-frame").stop().fadeIn(300);
-    }
-  });
+  // $(".notice-tag-wrapper").click(function(){
+  //   if(!$(this).hasClass("active-tag-wrapper")){
+  //     $(".story-title").hide();
+  //     $(".notice-title").show();
+  //     $(".tag-wrapper").removeClass("active-tag-wrapper");
+  //     $(this).addClass("active-tag-wrapper");
+  //     $(".story-frame").stop().hide();
+  //     $(".notice-frame").stop().fadeIn(300);
+  //   }
+  // });
 
   $(document).on("keyup", ".title-input", function () {
     let val = $(this).val();
@@ -71,9 +71,9 @@ let mainPassed = false;
 
 function registCheck(...passed){
   if(passed.every(e => {return e;})) {
-      $(".regist-button").removeClass("disable");
+    $(".regist-button").removeClass("disable");
   } else {
-      $(".regist-button").addClass("disable");
+    $(".regist-button").addClass("disable");
   }
 }
 

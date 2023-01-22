@@ -815,6 +815,30 @@ clusterUnit {
     display: flex;
     flex-direction: column;
 }
+.apart-detail .body .title-wrapper .right-box .name{
+    white-space: nowrap;
+}
+.apart-detail .body .title-wrapper .right-box .address{
+    white-space: nowrap;
+}
+.apart-detail .body .title-wrapper .favorite-btn-wrapper{
+    width: 100%;
+    height: 100%;
+    justify-content: end;
+}
+.apart-detail .body .title-wrapper .favorite-btn-wrapper .favorite-btn{
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 7px 10px;
+    border: 1px solid #4169fc;
+    border-radius: 5px;
+}
+.apart-detail .body .title-wrapper .favorite-btn-wrapper .favorite-btn:hover{
+    background-color: #4169fc;
+    color: white;
+    transition: 0.5s;
+}
 
 .apart-detail .body .name {
     font-size: 20px;

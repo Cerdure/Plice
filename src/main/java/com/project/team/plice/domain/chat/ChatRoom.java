@@ -1,5 +1,6 @@
 package com.project.team.plice.domain.chat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.team.plice.domain.data.ApartData;
 import com.project.team.plice.dto.chat.ChatRoomDto;
 import lombok.*;
@@ -11,7 +12,6 @@ import java.util.UUID;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class ChatRoom {
 
     @Id
