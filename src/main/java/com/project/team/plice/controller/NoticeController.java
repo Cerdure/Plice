@@ -53,12 +53,13 @@ public class NoticeController {
 
     @PostMapping("/notice-detail")
     public String updateNotice(@ModelAttribute NoticeDto noticeDto, Model model) {
+        Long id = noticeDto.getId();
         Notice notice = noticeService.findNoticeById(noticeDto.getId());
         notice.changeTitle(noticeDto.getTitle());
         notice.changeContent(noticeDto.getContent());
         noticeService.saveNotice(notice);
         model.addAttribute("notice", notice);
-        return "layout-content/post/notice-detail";
+        return "redirect:/notice-detail?id=" + id;
     }
 
     @GetMapping("/notice-delete")

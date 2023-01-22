@@ -28,7 +28,7 @@
     </div>
     <span class="map" onclick="location.href='/map'">지도</span>
     <span class="chat" onclick="location.href='/chat'">채팅</span>
-    <span class="post" onclick="location.href='/post'">이야기</span>
+    <span class="post" onclick="location.href='/post-story'">이야기</span>
     <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
     <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
     <div class="login-wrapper">
@@ -101,7 +101,7 @@
       <div class="text">이야기</div>
     </div>
 
-    <div class="tag-wrapper notice-tag-wrapper" onclick="location.href='/post'">
+    <div class="tag-wrapper notice-tag-wrapper" onclick="location.href='/post-notice'">
       <div class="tag notice-tag"></div>
       <div class="text">공지사항</div>
     </div>
@@ -112,47 +112,48 @@
         <div class="head">
           <div class="back">
             <img class="icon" src="/img/icon/chevron-left.svg">
-            <div class="text" onclick="location.href='/post'">목록으로</div>
+            <div class="text" onclick="location.href='/post-story'">목록으로</div>
           </div>
           <div class="btn-wrapper">
             <div class="modify-btn btn">
               <img src="/img/icon/pencil-square.svg">
               <div class="text">수정</div>
             </div>
-            <div class="delete-btn btn">
+            <a class="delete-btn btn" th:href="'/post-delete?id=' + ${posts.id}">
               <img src="/img/icon/x-square.svg">
               <div class="text">삭제</div>
-            </div>
+            </a>
           </div>
         </div>
 
         <div class="body">
           <div class="title-wrapper">
-            <div class="title">이야기 글 샘플 제목</div>
+            <div class="title" th:text="${posts.title}">이야기 글 샘플 제목</div> <!-- 타임리프 기본적인 쓰는 방식. th:타입="${객체.변수} -->
             <div class="below">
-              <div class="writer">유저11</div>
+              <div class="writer" th:text="${posts.memberNickname}">유저11</div>
               <div class="split">ㅣ</div>
-              <div class="reg-date">2022.12.31 20:13:39</div>
-              <div class="hits">조회 14</div>
+              <div class="reg-date" th:text="${#temporals.format(posts.regDate, 'yyyy.MM.dd HH:mm:ss')}">2022.12.31 20:13:39</div> <!-- !!!!날짜 끊어서 샘플처럼 나오게 반환하는 방법 구글링해서 만들기 -- 타임리프 날짜 포맷-->
+              <div class="hits" th:text="'조회 ' + ${posts.hits}">조회 14</div>
               <div class="split">ㅣ</div>
-              <div class="reply">댓글 3</div>
+              <div class="reply" th:text="'댓글 ' + ${posts.replies == null ? '' : posts.replies.size()}">댓글 3</div>
             </div>
           </div>
-          <div class="content">
+          <div class="content" th:text="${posts.content}">
             지난 10일 사우디 수도 리야드 국제공항에 도착한 비행기는 활주로에서 착륙하지 못하고 몇바퀴 선회를 했다.<br>
             창 밖을 보니 활주로에 빗방울이 엄청나게 쏟아지고 있었다. 사우디에서 소낙비를 맞게 될 줄이야!<br>
             이날 새벽부터 낮까지 내린 비로 리야드 시내는 물바다가 돼 버렸다.<br>
             불과 10~20mm에 불과한 비에도 배수시설이 부족한 사우디에서는 곳곳에서 맨홀이 역류하고 도로가 끊겼다.
           </div>
 
+
           <div class="comment-wrapper">
-            <div class="sum" th:text="'댓글 '+${inquire.replies.size()}+'개'">댓글 3개</div>
+            <div class="sum" th:text="'댓글 '+${posts.replies.size()}+'개'">댓글 3개</div>
             <div class="comment-input">
-              <input id="commentSeq" th:value="${inquire.replies.size()}" type="hidden">
+              <input id="commentSeq" th:value="${posts.replies.size()}" type="hidden">
               <input id="commentLevel" value="0" type="hidden">
               <textarea class="comment" name="comment" maxlength="300" onkeydown="resize(this)" onkeyup="resize(this)"
-                onclick="commentClick(this)" onfocusout="commentFocusout(this)"
-                placeholder="내용을 입력해주세요. 최대 300자까지 입력할 수 있습니다."></textarea>
+                onclick="commentClick(this)"
+                placeholder="내용을 입력해주세요. 최대 300자까지 입력할 수 있습니다."></textarea><!--onfocusout="commentFocusout(this)"-->
               <div class="comment-underline">
                 <div class="comment-underline-back"></div>
               </div>
@@ -160,7 +161,7 @@
               <div class="comment-button-cancel" onclick="commentCancel(this)">취소</div>
             </div>
 
-            <div th:each="reply : ${inquire.replies}" th:if="${reply.parent==null}">
+            <div th:each="reply : ${posts.replies}" th:if="${reply.parent==null}">
 
               <div th:fragment="replyBlock" th:remove="tag">
 
@@ -171,7 +172,7 @@
                       <span class="name" th:text="${reply.member?.nickname}">유저11</span>
                       <span class="split" th:if="${reply.member!=null}">ㅣ</span>
                       <span class="date"
-                        th:text="${#temporals.format(inquire.regDate, 'yyyy.MM.dd HH:mm:ss')}">2022.12.31
+                        th:text="${#temporals.format(post.regDate, 'yyyy.MM.dd HH:mm:ss')}">2022.12.31
                         14:53:10</span>
                     </div>
                     <div class="body" th:utext="${reply.content}">
@@ -207,24 +208,24 @@
           <div class="other-story">
             <div class="next-detail">
               <span class="next">다음글</span>
-              <input class="inquireId" th:value="${nextInquire.id}" type="hidden">
+              <input class="inquireId" th:value="${nextPost.id}" type="hidden">
               <img class="icon" src="/img/icon/chevron-up.svg">
-              <a class="title" th:if="${nextInquire.id==null}">다음글이 없습니다.</a>
-              <a class="title" th:if="${nextInquire.id!=null}" onclick="inquireDetail(this)"
-                th:text="${nextInquire.title}"></a>
+              <a class="title" th:if="${nextPost.id==null}">다음글이 없습니다.</a>
+              <a class="title" th:if="${nextPost.id!=null}" th:href="'/story-detail?id='+${nextPost.id}"
+                th:text="${nextPost.title}"></a>
             </div>
 
             <div class="prev-detail">
               <span class="prev">이전글</span>
-              <input class="inquireId" th:value="${prevInquire.id}" type="hidden">
+              <input class="inquireId" th:value="${prevPost.id}" type="hidden">
               <img class="icon" src="/img/icon/chevron-up.svg">
-              <a class="title" th:if="${prevInquire.id==null}">이전글이 없습니다.</a>
-              <a class="title" th:if="${prevInquire.id!=null}" onclick="inquireDetail(this)"
-                th:text="${prevInquire.title}"></a>
+              <a class="title" th:if="${prevPost.id==null}">이전글이 없습니다.</a>
+              <a class="title" th:if="${prevPost.id!=null}" th:href="'/story-detail?id='+${prevPost.id}"
+                th:text="${prevPost.title}"></a>
             </div>
           </div>
 
-          <div class="back-btn" onclick="location.href='/post'">목록으로</div>
+          <div class="back-btn" onclick="location.href='/post-story'">목록으로</div>
         </div>
       </div>
 

@@ -127,11 +127,11 @@
                             th:with="start=${T(java.lang.Math).floor(notices.number/10)*10 + 1}, last=(${notices.totalPages})">
 
                          <a th:class="${notices.first} ? 'disable'"
-                            th:href="@{/story-notice(page=${notices.number})}">
+                            th:href="@{/post-notice(page=${notices.number})}">
                            <img class="controller-btn-left" src="/img/icon/btn_left.png">
                          </a>
 
-                        <a th:href="@{/story-notice(page=1)}"
+                        <a th:href="@{/post-notice(page=1)}"
                            th:if="${notices.totalPages < 4 ? false :notices.number > 1}"
                            th:text="1" aria-label="First">
                         </a>
@@ -142,18 +142,18 @@
                             th:if="${notices.first ? (page == 0 ? false : page < notices.number + 4) :
                             (notices.last ? page > notices.number - 2 : (page < notices.number + 3) && (page > notices.number - 1))}"
                             th:class="${page == notices.number + 1} ? 'index-active'"
-                            th:text="${page}" th:href="@{/story-notice(page=${page})}">
+                            th:text="${page}" th:href="@{/post-notice(page=${page})}">
                          </a>
 
                         <span th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}">...</span>
 
-                        <a th:href="@{/story-notice(page=${notices.totalPages})}"
+                        <a th:href="@{/post-notice(page=${notices.totalPages})}"
                            th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}"
                            th:text="${notices.totalPages}" aria-label="Last" >
                         </a>
 
                         <a th:class="${notices.last} ? 'disable'"
-                           th:href="@{/story-notice(page=${notices.number +2})}">
+                           th:href="@{/post-notice(page=${notices.number +2})}">
                           <img class="controller-btn-right" src="/img/icon/btn_right.png">
                         </a>
 

@@ -28,7 +28,7 @@
     </div>
     <span class="map" onclick="location.href='/map'">지도</span>
     <span class="chat" onclick="location.href='/chat'">채팅</span>
-    <span class="post" onclick="location.href='/post'">이야기</span>
+    <span class="post" onclick="location.href='/post-story'">이야기</span>
     <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
     <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
     <div class="login-wrapper">
@@ -84,7 +84,7 @@
       <div class="notice-title">공지사항</div>
     </div>
 
-    <div class="tag-wrapper story-tag-wrapper" onclick="location.href='/post'">
+    <div class="tag-wrapper story-tag-wrapper" onclick="location.href='/post-story'">
       <div class="tag story-tag"></div>
       <div class="text">이야기</div>
     </div>
@@ -100,7 +100,7 @@
         <div class="head">
           <div class="back">
             <img class="icon" src="/img/icon/chevron-left.svg">
-            <div class="text" onclick="location.href='/post'">목록으로</div>
+            <div class="text" onclick="location.href='/post-notice'">목록으로</div>
           </div>
           <div class="btn-wrapper">
             <div class="modify-btn btn">
@@ -134,24 +134,24 @@
           <div class="other-notice">
             <div class="next-detail">
               <span class="next">다음글</span>
-              <input class="inquireId" th:value="${nextInquire.id}" type="hidden">
+              <input class="inquireId" th:value="${nextNotice.id}" type="hidden">
               <img class="icon" src="/img/icon/chevron-up.svg">
-              <a class="title" th:if="${nextInquire.id==null}">다음글이 없습니다.</a>
-              <a class="title" th:if="${nextInquire.id!=null}" onclick="inquireDetail(this)"
-                th:text="${nextInquire.title}"></a>
+              <a class="title" th:if="${nextNotice.id==null}">다음글이 없습니다.</a>
+              <a class="title" th:if="${nextNotice.id!=null}" th:href="'/notice-detail?id='+${nextNotice.id}"
+                th:text="${nextNotice.title}"></a>
             </div>
 
             <div class="prev-detail">
               <span class="prev">이전글</span>
-              <input class="inquireId" th:value="${prevInquire.id}" type="hidden">
+              <input class="inquireId" th:value="${prevNotice.id}" type="hidden">
               <img class="icon" src="/img/icon/chevron-up.svg">
-              <a class="title" th:if="${prevInquire.id==null}">이전글이 없습니다.</a>
-              <a class="title" th:if="${prevInquire.id!=null}" onclick="inquireDetail(this)"
-                th:text="${prevInquire.title}"></a>
+              <a class="title" th:if="${prevNotice.id==null}">이전글이 없습니다.</a>
+              <a class="title" th:if="${prevNotice.id!=null}" th:href="'/notice-detail?id='+${prevNotice.id}"
+                th:text="${prevNotice.title}"></a>
             </div>
           </div>
 
-          <div class="back-btn" onclick="location.href='/post'">목록으로</div>
+          <div class="back-btn" onclick="location.href='/post-notice'">목록으로</div>
         </div>
       </div>
 

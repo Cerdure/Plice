@@ -50,126 +50,252 @@ public class InitDb {
             List<Post> posts = new ArrayList<>();
 
             posts.add(Post.builder()
+                    .memberNickname("작성자1")
+                    .title("작성글1")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자2")
+                    .title("작성글2")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자3")
+                    .title("작성글3")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자4")
+                    .title("작성글4")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자5")
+                    .title("작성글5")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자6")
+                    .title("작성글6")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자7")
+                    .title("작성글7")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자8")
+                    .title("작성글8")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자9")
+                    .title("작성글9")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자10")
+                    .title("작성글10")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자11")
+                    .title("작성글11")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자12")
+                    .title("작성글12")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자13")
+                    .title("작성글13")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자14")
+                    .title("작성글14")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자15")
+                    .title("작성글15")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자16")
+                    .title("작성글16")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자17")
+                    .title("작성글17")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자18")
+                    .title("작성글18")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자19")
+                    .title("작성글19")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.add(Post.builder()
+                    .memberNickname("작성자20")
+                    .title("작성글20")
+                    .content("일해라 이현규 플라이스 화이팅")
+                    .build());
+
+            posts.forEach(post -> em.persist(post));
+
+
+
+            /*List<Notice> notices = new ArrayList<>();
+
+            notices.add(Notice.builder()
                     .memberNickname("관리자1")
                     .title("공지사항1")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자2")
                     .title("공지사항2")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자3")
                     .title("공지사항3")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자4")
                     .title("공지사항4")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자5")
                     .title("공지사항5")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자6")
                     .title("공지사항6")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자7")
                     .title("공지사항7")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자8")
                     .title("공지사항8")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자9")
                     .title("공지사항9")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자10")
                     .title("공지사항10")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자11")
                     .title("공지사항11")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자12")
                     .title("공지사항12")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자13")
                     .title("공지사항13")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자14")
                     .title("공지사항14")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자15")
                     .title("공지사항15")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자16")
                     .title("공지사항16")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자17")
                     .title("공지사항17")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자18")
                     .title("공지사항18")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자19")
                     .title("공지사항19")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.add(Post.builder()
+            notices.add(Notice.builder()
                     .memberNickname("관리자20")
                     .title("공지사항20")
                     .content("플라이스 파이널 프로젝트 화이팅")
                     .build());
 
-            posts.forEach(notice -> em.persist(notice));
+            notices.forEach(notice -> em.persist(notice));
 
 
             List<Member> members = new ArrayList<>();
@@ -299,17 +425,17 @@ public class InitDb {
                     .role(MemberRole.ADMIN)
                     .build());
 
-            admins.forEach(admin -> em.persist(admin));
+            admins.forEach(admin -> em.persist(admin));*/
 
-            List<ChatRoom> chatRooms = apartDataRepository.findAll().stream().map(apartData ->
+            /*List<ChatRoom> chatRooms = apartDataRepository.findAll().stream().map(apartData ->
                     ChatRoom.builder().apartData(apartData).build()).collect(Collectors.toList());
 
             chatRooms.get(10000).changeMemberCount(8);
             chatRooms.get(5000).changeMemberCount(6);
             chatRooms.get(1000).changeMemberCount(1);
-            chatRooms.forEach(e -> em.persist(e));
+            chatRooms.forEach(e -> em.persist(e));*/
 
-            List<MemberChatRoom> memberChatRooms = new ArrayList<>();
+            /*List<MemberChatRoom> memberChatRooms = new ArrayList<>();
 
             memberChatRooms.add(MemberChatRoom.builder().chatRoom(chatRooms.get(10000)).member(members.get(0)).build());
             memberChatRooms.add(MemberChatRoom.builder().chatRoom(chatRooms.get(10000)).member(members.get(1)).build());
@@ -329,7 +455,7 @@ public class InitDb {
 
             memberChatRooms.add(MemberChatRoom.builder().chatRoom(chatRooms.get(1000)).member(members.get(0)).build());
 
-            memberChatRooms.forEach(memberChatRoom -> em.persist(memberChatRoom));
+            memberChatRooms.forEach(memberChatRoom -> em.persist(memberChatRoom));*/
         }
     }
 }

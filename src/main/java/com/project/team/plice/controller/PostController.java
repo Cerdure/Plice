@@ -41,13 +41,13 @@ public class PostController {
         return "redirect:/post-story"; // 페이지로 리턴. post.html
     }
 
-    @GetMapping("/post-detail")
-    public String postDetail(@RequestParam("id") Long id, Model model) { // controller에서 view로 넘어갈 때 값을 보내주는 역할이 Model
-        Post post = postService.findPostById(id);
-        postService.hitsPlus(post);
-        Post prev = postService.findPrevPost(post);
-        Post next = postService.findNextPost(post);
-        model.addAttribute("post", post);
+    @GetMapping("/story-detail")
+    public String storyDetail(@RequestParam("id") Long id, Model model) { // controller에서 view로 넘어갈 때 값을 보내주는 역할이 Model
+        Post posts = postService.findPostById(id);
+        postService.hitsPlus(posts);
+        Post prev = postService.findPrevPost(posts);
+        Post next = postService.findNextPost(posts);
+        model.addAttribute("posts", posts);
         model.addAttribute("prevPost",prev);
         model.addAttribute("nextPost",next);
         return "layout-content/post/story-detail";
@@ -63,7 +63,7 @@ public class PostController {
         return "layout-content/post/post-detail";
     }*/
 
-    @PostMapping("/post-detail")
+    @PostMapping("/story-detail")
     public String updatePost(@ModelAttribute PostDto postDto, Model model) { // controller에서 view로 넘어갈 때 값을 보내주는 역할이 Model
         Long id = postDto.getId(); /* 서비스에서 로직 처리하게끔 분리하기*/
         Post post = postService.findPostById(id);
@@ -81,7 +81,7 @@ public class PostController {
         postService.deletePost(post);
         /* 다시 페이지 돌아갈 때, 화면에 표시할 게시글들 정보 가져오기 */
         Page<Post> posts = postService.findAllPost(pageable);
-        model.addAttribute("posts", posts);
+        model.addAttribute("post", post);
         /* 리턴을 목록 페이지로 */
         return "redirect:/post-story";
     }

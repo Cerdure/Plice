@@ -31,8 +31,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void replySave(ReplyDto replyDto, Long inquireId, Authentication authentication) {
-        Post post = postRepository.findById(inquireId).get();
+    public void replySave(ReplyDto replyDto, Long id, Authentication authentication) {
+        Post post = postRepository.findById(id).get();
 
         if(replyDto.getParentId()!=null){
             Reply parent = replyRepository.findById(replyDto.getParentId()).get();

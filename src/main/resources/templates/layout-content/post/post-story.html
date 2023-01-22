@@ -108,15 +108,15 @@
                     </div>
                     <div class="table-body">
 
-                        <a class="table-row" href="/story-detail" th:each="posts,i : ${posts}" th:href="${'/story-detail?id='+posts.id}">
-                            <div class="number" th:text="${i.count}"></div>
+                        <a class="table-row" href="/story-detail" th:each="post,i : ${posts}" th:href="${'/story-detail?id='+post.id}">
+                            <div class="number" th:text="${post.id}"></div>
                             <div class="title">
-                                <div class="text" th:text="${posts.title}"></div>
-                                <div class="reply-number" th:text="${posts.replies.size()}"></div> <!-- ${posts.replies?.size()} == ${x.replies == null ? '' : x.replies.size()}, 널값 처리.  -->
+                                <div class="text" th:text="${post.title}"></div>
+                                <div class="reply-number" th:text="${post.replies.size()}"></div> <!-- ${x.replies?.size()} == ${x.replies == null ? '' : x.replies.size()}, 널값 처리.  -->
                             </div>
-                            <div class="writer" th:text="${posts.memberNickname}"></div>
-                            <div class="reg-date" th:text="${posts.regDate}"></div>
-                            <div class="hits" th:text="${posts.hits}"></div>
+                            <div class="writer" th:text="${post.memberNickname}"></div>
+                            <div class="reg-date" th:text="${#temporals.format(post.regDate, 'yyyy.MM.dd')}"></div>
+                            <div class="hits" th:text="${post.hits}"></div>
                         </a>
 
                     </div>
@@ -126,16 +126,16 @@
                 </div>
             </div>
 
-                    <div class="story-controller">
+                    <div class="post-controller">
                       <span class="controller"
                             th:with="start=${T(java.lang.Math).floor(posts.number/10)*10 + 1}, last=(${posts.totalPages})">
 
                          <a th:class="${posts.first} ? 'disable'"
-                            th:href="@{/story-detail(page=${posts.number})}">
+                            th:href="@{/post-story(page=${posts.number})}">
                            <img class="controller-btn-left" src="/img/icon/btn_left.png">
                          </a>
 
-                        <a th:href="@{/story-detail(page=1)}"
+                        <a th:href="@{/post-story(page=1)}"
                            th:if="${posts.totalPages < 4 ? false :posts.number > 1}"
                            th:text="1" aria-label="First">
                         </a>
@@ -146,18 +146,18 @@
                             th:if="${posts.first ? (page == 0 ? false : page < posts.number + 4) :
                             (posts.last ? page > posts.number - 2 : (page < posts.number + 3) && (page > posts.number - 1))}"
                             th:class="${page == posts.number + 1} ? 'index-active'"
-                            th:text="${page}" th:href="@{/story-detail(page=${page})}">
+                            th:text="${page}" th:href="@{/post-story(page=${page})}">
                          </a>
 
                         <span th:if="${posts.totalPages < 4 ? false :posts.number < posts.totalPages - 2}">...</span>
 
-                        <a th:href="@{/story-detail(page=${posts.totalPages})}"
+                        <a th:href="@{/post-story(page=${posts.totalPages})}"
                            th:if="${posts.totalPages < 4 ? false :posts.number < posts.totalPages - 2}"
                            th:text="${posts.totalPages}" aria-label="Last" >
                         </a>
 
                         <a th:class="${posts.last} ? 'disable'"
-                           th:href="@{/story-detail(page=${posts.number +2})}">
+                           th:href="@{/post-story(page=${posts.number +2})}">
                           <img class="controller-btn-right" src="/img/icon/btn_right.png">
                         </a>
 
