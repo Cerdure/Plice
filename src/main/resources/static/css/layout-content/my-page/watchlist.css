@@ -25,9 +25,12 @@ a {
     min-height: 100%;
 }
 
+.inquiry_wrapper {
+    height: calc(100vh - 220px);
+}
+
 .wrapper {
     width: 100%;
-
 }
 
 .wrapper div {

@@ -65,11 +65,10 @@ a{
 
 /* main */
 .inquiry_wrapper{
+    height: calc(100vh - 220px);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    margin-bottom: 100px;
     flex-direction: column;
 }
 .content p{
