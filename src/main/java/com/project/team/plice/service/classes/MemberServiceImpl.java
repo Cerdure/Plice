@@ -6,9 +6,14 @@ import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,8 +55,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> findByRole(MemberRole role) {
-        return memberRepository.findByRole(role);
+    public List<Member> findByRoles(List<MemberRole> roles) {
+        return memberRepository.findByRoleIn(roles);
+    }
+
+    @Override
+    public Page<Member> findByRoles(List<MemberRole> roles, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable= PageRequest.of(page,12, Sort.by("regDate").descending());
+        return memberRepository.findByRoleIn(roles, pageable);
     }
 
     public Member findById(Long memberId) {
@@ -63,12 +75,31 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByPhone(phone).get();
     }
 
+    @Override
     @Transactional
     public void update(Authentication authentication, MemberDto memberDto) {
         String phone = authentication.getName();
         Member member = memberRepository.findByPhone(phone).get();
-        member.update(memberDto.getName(),
-                memberDto.getNickname());
+            member.update(memberDto.getName(),
+                        memberDto.getNickname());
+            if(memberDto.getPw() != null && memberDto.getPw() != ""){
+            member.updatePw(passwordEncoder.encode(memberDto.getPw()));
+            }
+        memberRepository.save(member);
+        System.out.println("member = " + memberDto.getPw());
+
+        }
+
+
+
+    @Override
+    @Transactional
+    public void update(MemberDto memberDto) {
+        Member member = memberRepository.findById(memberDto.getId()).get();
+        member.updatePhone(memberDto.getPhone());
+        member.updateName(memberDto.getName());
+        member.updateNickname(memberDto.getNickname());
+        member.updateBirth(memberDto.getBirth());
         memberRepository.save(member);
     }
 
@@ -77,6 +108,12 @@ public class MemberServiceImpl implements MemberService {
         String phone = authentication.getName();
         Member member = memberRepository.findByPhone(phone).get();
         memberRepository.delete(member);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        memberRepository.delete(memberRepository.findById(id).get());
     }
 
 

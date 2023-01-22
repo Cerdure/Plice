@@ -1,7 +1,5 @@
-package com.project.team.plice.web;
+package com.project.team.plice.web.interceptor;
 
-import com.project.team.plice.service.interfaces.AdminService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;

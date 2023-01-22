@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    layout:decorate="~{layout/default}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/default}">
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/layout-content/admin/member-mng.css">
@@ -17,68 +18,73 @@
     <div class="top-space"></div>
     <div class="modal-background"></div>
     <div class="alert-window mod-alert">
-        <div class="text">
-          수정 사항을 저장하겠습니까?
+        <div class="info">
+            <div class="text">수정 사항을 저장하겠습니까?</div>
+            <div class="data"></div>
         </div>
-        <div class="data"></div>
         <button class="cancel" onclick="hideAlert(this)">취소</button>
-        <button class="okay" onclick="memberModify(this)">확인</button>
+        <button class="okay" onclick="memberModify()">확인</button>
     </div>
 
     <div class="alert-window del-alert">
-        <div class="text">
-          계정을 삭제하겠습니까?
+        <div class="info">
+            <div class="text">계정을 삭제하겠습니까?</div>
+            <div class="data"></div>
         </div>
-        <div class="data"></div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="memberDelete()">확인</button>
+    </div>
+
+    <div class="alert-window block-alert">
+        <div class="info">
+            <div class="text">계정을 차단하겠습니까?</div>
+            <div class="data"></div>
+            <div class="block-date-box">
+                <div class="label">차단 기간</div>
+                <select id="block-date">
+                    <option value="1">1개월</option>
+                    <option value="2">6개월</option>
+                    <option value="3">1년</option>
+                    <option value="4">3년</option>
+                    <option value="5">영구 차단</option>
+                </select>
+            </div>
+            <div class="block-reason-box">
+                <div class="label">차단 사유</div>
+                <select id="block-reason">
+                    <option value="부정 이용">부정 이용</option>
+                    <option value="부적절한 글·채팅 작성">부적절한 글·채팅 작성</option>
+                    <option value="타인 명의 도용">타인 명의 도용</option>
+                    <option value="기타 운영 규정 위반">기타 운영 규정 위반</option>
+                </select>
+            </div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="block()">확인</button>
+    </div>
+
+    <div class="alert-window block-cancel-alert">
+        <div class="info">
+            <div class="text">차단을 해제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
         <button class="cancel" onclick="hideAlert(this)">취소</button>
-        <button class="okay" onclick="memberDelete(this)">확인</button>
+        <button class="okay" onclick="blockCancel()">확인</button>
     </div>
 
     <div class="content-wrapper">
 
-        <div class="left-side">
-            <div class="admin-management-index index" onclick="location.href='/admin/admin-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/admin.svg">
-                </div>
-                <div class="text">운영진 관리</div>
-            </div>
-            <div class="user-management-index index active-index" onclick="location.href='/admin/member-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/people-fill.svg">
-                </div>
-                <div class="text">회원 관리</div>
-            </div>
-            <div class="chat-management-index index" onclick="location.href='/admin/chat-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/chat-text.svg">
-                </div>
-                <div class="text">채팅 관리</div>
-            </div>
-            <div class="post-management-index index" onclick="location.href='/admin/post-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/board.svg">
-                </div>
-                <div class="text">게시판 관리</div>
-            </div>
-            <div class="site-chart-index index" onclick="location.href='/admin/site-chart'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/chart.svg">
-                </div>
-                <div class="text">사이트 통계</div>
-            </div>
-        </div>
-
+        <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
 
         <div class="right-side">
 
             <div class="user-management">
-                <div class="head">ㅣ 회원 관리</div>
+                <div class="head" id="page-title" data-value="회원 관리">ㅣ 회원 관리</div>
                 <div class="body">
                     <div class="search-wrapper">
                         <form class="search">
                             <div class="checkbox-wrapper">
-                                <input type="checkbox"> 탈퇴 회원 제외
+                                <input type="checkbox"> 차단 회원 제외
                             </div>
                             <div class="input-wrapper">
                                 <select class="search-by" name="search-by">
@@ -87,8 +93,6 @@
                                     <option value="name">이름</option>
                                     <option value="nickname">닉네임</option>
                                     <option value="birth">생년월일</option>
-                                    <option value="email">이메일</option>
-                                    <option value="reg-date">가입일</option>
                                 </select>
                                 <input class="search-input" type="text">
                                 <img class="reset" src="/img/icon/x-circle.svg">
@@ -99,25 +103,66 @@
                     <div class="contents">
                         <div class="top">
                             <div class="id">회원 관리 ID</div>
+                            <div class="access">상태</div>
                             <div class="phone">전화번호</div>
                             <div class="name">이름</div>
                             <div class="nickname">닉네임</div>
                             <div class="birth">생년월일</div>
-                            <div class="email">이메일</div>
                             <div class="reg-date">가입일</div>
                         </div>
 
-                        <form th:action="'/admin/member-mod'" class="user-info" th:each="member : ${members}" id="${member.id}">
-                            <div><input id='id' name="id" th:value="${member.id}" disabled></div>
+                        <form th:action="'/admin/member-mod'" class="user-info row" th:each="member : ${members}"
+                              id="${member.id}">
+                            <div><input id='member-id' name="id" th:value="${member.id}" th:data-value="${member.id}"
+                                        disabled></div>
+                            <div><input id='access' th:value="${member.blacklist} == null ? '접속 허용' : '차단'" disabled>
+                            </div>
                             <div><input name="phone" th:value="${member.phone}"></div>
                             <div><input name="name" th:value="${member.name}"></div>
                             <div><input name="nickname" th:value="${member.nickname}"></div>
                             <div><input name="birth" th:value="${member.birth}"></div>
-                            <div><input name="email" th:value="${member.email} == null ? '-' : ${member.email}"></div>
                             <div><input name="reg-date" th:value="${member.regDate}" disabled></div>
-                            <a class="btn modify-btn">수정</a>
-                            <a class="btn delete-btn">탈퇴</a>
+                            <a class="btn row-btn-3 modify-btn">수정</a>
+                            <a class="btn row-btn-2 delete-btn">삭제</a>
+                            <a class="btn row-btn-1" th:text="${member.blacklist} == null ? '계정 차단' : '계정 차단 해제'"
+                               th:classappend="${member.blacklist} == null ? 'block-btn' : 'block-cancel-btn'"
+                               data-type="member"></a>
                         </form>
+
+                        <div class="pagination-wrapper">
+                            <span class="pagination" 
+                                  th:with="start=${T(java.lang.Math).floor(members.number/10)*10 + 1},
+                                            last=${members.totalPages},
+                                            totalPage=${members.totalPages},
+                                            currentPage=${members.number},
+                                            isFirst=${members.first},
+                                            isLast=${members.last}">
+                                <a th:class="${isFirst} ? 'disable'" th:href="@{/admin/member-mng(page=${currentPage})}">
+                                    <img class="controller-btn-left" src="/img/icon/btn_left.png">
+                                </a>
+                                <div class="index-box">
+                                    <a th:href="@{/admin/member-mng(page=1)}"
+                                       th:if="${totalPage < 4 ? false :currentPage > 1}" th:text="1" aria-label="First">
+                                    </a>
+                                    <span th:if="${totalPage < 4 ? false :currentPage > 1}">...</span>
+                                    <a th:each="page: ${#numbers.sequence(start, last)}"
+                                       th:if="${isFirst ? (page == 0 ? false : page < currentPage + 4) :
+                                        (isLast ? page > currentPage - 2 : (page < currentPage + 3) && (page > currentPage - 1))}"
+                                       th:class="${page == currentPage + 1} ? 'active-index'" th:text="${page}"
+                                       th:href="@{/admin/member-mng(page=${page})}">
+                                    </a>
+                                    <span th:if="${totalPage < 4 ? false :currentPage < totalPage - 2}">...</span>
+                                    <a th:href="@{/admin/member-mng(page=${totalPage})}"
+                                       th:if="${totalPage < 4 ? false :currentPage < totalPage - 2}" th:text="${totalPage}"
+                                       aria-label="Last">
+                                    </a>
+                                </div>
+                                <a th:class="${isLast} ? 'disable'"
+                                   th:href="@{/admin/member-mng(page=${currentPage +2})}">
+                                    <img class="controller-btn-right" src="/img/icon/btn_right.png">
+                                </a>
+                            </span>
+                        </div>
 
                     </div>
                 </div>

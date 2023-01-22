@@ -1,0 +1,162 @@
+/* Join_Container */
+.member_join_container {
+  width: 600px;
+  margin: 100px auto;
+  padding: 50px 100px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+/* Join_Header Part */
+
+.member_join_header {
+  margin-bottom: 30px;
+}
+
+.member_join_title {
+  font-size: 30px;
+}
+
+.member_join_subtitle {
+  font-size: 15px;
+}
+
+.member_join_horizontal {
+  margin: 30px 0;
+  opacity: 0.2;
+}
+
+/* Join_Info Part */
+.member_join_group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.member_join_group label {
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.member_join_group input {
+  padding: 10px 16px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: var(--main-border);
+  transition: all 0.5s ease-in-out;
+}
+
+.member_join_birthday_label {
+  margin-bottom: 5px;
+}
+
+.member_join_group input:focus {
+  border-color: var(--main-color);
+}
+
+.member_join_birthday_input {
+  display: flex;
+}
+
+.member_join_phone {
+  display: flex;
+}
+
+.member_join_phone input {
+  width: 70%;
+  margin-right: 10px;
+}
+
+.member_join_phone_btn {
+  position: relative;
+  border: var(--main-border);
+  background-color: #1e41d0;
+  color: white;
+  width: 30%;
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out;
+}
+
+.member_join_phone_btn:active {
+  color: cornflowerblue;
+  font-size: 11px;
+  transition: 0.3s;
+}
+
+.member_join_phone_btn:hover {
+  background-color: #0e2169;
+}
+
+.timer {
+  position: absolute;
+  right: 37px;
+  top: 20px;
+  display: none;
+}
+
+.verify {
+  position: relative;
+  margin-top: 10px;
+  display: none;
+}
+
+.code-check {
+  position: absolute;
+  right: 100px;
+  top: 9px;
+}
+
+.member_join_birthday_input .sel {
+  border: var(--main-border);
+  border-radius: 10px;
+  margin: 0 5px;
+}
+
+.member_join_birthday_input .birth_box {
+  width: 33%;
+}
+
+.member_join_group .member_join_btn {
+  padding: 25px 10px;
+  margin-top: 50px;
+  margin-bottom: -50px;
+  font-size: 19px;
+  font-weight: normal;
+  background-color: #1e41d0;
+  transition: all 0.5s ease-in-out;
+  color: white;
+}
+
+.member_join_group .member_join_btn:hover {
+  background-color: #152e91;
+}
+
+#pwd {
+  transition: all 0.5s ease-in-out;
+}
+
+.pwd_text {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.pwd_suc,
+.repwd_suc,
+.nick_success_alert,
+.email_suc,
+.all_mis {
+  color: blue;
+  display: none;
+}
+
+.pwd_mis,
+.repwd_mis,
+.en_nick_alert,
+.kr_nick_alert,
+.email_mis,
+.yy_mis,
+.mm_mis,
+.dd_mis {
+  color: red;
+  display: none;
+}

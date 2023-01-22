@@ -63,52 +63,16 @@
 
     <div class="contents-warpper">
         <div class="left-box">
-            <div class="trend-wrapper">
+            <div class="trend-wrapper" id="trend">
                 <img class="fold" src="/img/icon/chevron-down.svg">
                 <ul>
-                    <li>
-                        <div class="number">1</div>
-                        <div class="data">검색어1</div>
+                    <li th:each="keyword,i : ${searchKeywords}">
+                        <div class="number" th:text="${i.count}"></div>
+                        <div class="data" th:text="${keyword.keyword}"></div>
                     </li>
-                    <li>
-                        <div class="number">2</div>
-                        <div class="data">검색어2</div>
-                    </li>
-                    <li>
-                        <div class="number">3</div>
-                        <div class="data">검색어3</div>
-                    </li>
-                    <li>
-                        <div class="number">4</div>
-                        <div class="data">검색어4</div>
-                    </li>
-                    <li>
-                        <div class="number">5</div>
-                        <div class="data">검색어5</div>
-                    </li>
-                    <li>
-                        <div class="number">6</div>
-                        <div class="data">검색어6</div>
-                    </li>
-                    <li>
-                        <div class="number">7</div>
-                        <div class="data">검색어7</div>
-                    </li>
-                    <li>
-                        <div class="number">8</div>
-                        <div class="data">검색어8</div>
-                    </li>
-                    <li>
-                        <div class="number">9</div>
-                        <div class="data">검색어9</div>
-                    </li>
-                    <li>
-                        <div class="number">10</div>
-                        <div class="data">검색어10</div>
-                    </li>
-                    <li>
-                        <div class="number">1</div>
-                        <div class="data">검색어1</div>
+                    <li th:each="keyword,i : ${searchKeywords}" th:if="${i.count} == 1">
+                        <div class="number" th:text="${i.count}"></div>
+                        <div class="data" th:text="${keyword.keyword}"></div>
                     </li>
                 </ul>
             </div>
@@ -196,6 +160,9 @@
                         <div class="right-box">
                             <div class="name"></div>
                             <div class="address"></div>
+                        </div>
+                        <div class="favorite-btn-wrapper">
+                            <div class="favorite-btn">관심목록</div>
                         </div>
                     </div>
                     <div class="codeSaleNm">

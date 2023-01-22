@@ -19,4 +19,11 @@ $(function () {
     $(".pwd_find_container").hide().removeClass("bg_white");
     $(".login_js, .user, .login_btn").removeClass("bg_black");
   });
+
+  // $(".login_btn").click(function(){
+  //   (async () => {
+  //     const isblocked = await fetch("") 
+  //   })();
+  // });
 });
+

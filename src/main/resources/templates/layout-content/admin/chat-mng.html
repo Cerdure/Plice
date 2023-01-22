@@ -15,63 +15,104 @@
 
 <div layout:fragment="content">
     <div class="top-space"></div>
-    <div class="content-wrapper">
+    <div class="modal-background"></div>
 
-        <div class="left-side">
-            <div class="admin-management-index index" onclick="location.href='/admin/admin-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/admin.svg">
-                </div>
-                <div class="text">운영진 관리</div>
+    <div class="alert-window block-alert">
+        <div class="info">
+            <div class="text">계정을 차단하겠습니까?</div>
+            <div class="data"></div>
+            <div class="block-date-box">
+                <div class="label">차단 기간</div>
+                <select id="block-date">
+                    <option value="1">1개월</option>
+                    <option value="2">6개월</option>
+                    <option value="3">1년</option>
+                    <option value="4">3년</option>
+                    <option value="5">영구 차단</option>
+                </select>
             </div>
-            <div class="user-management-index index" onclick="location.href='/admin/member-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/people-fill.svg">
-                </div>
-                <div class="text">회원 관리</div>
-            </div>
-            <div class="chat-management-index index active-index" onclick="location.href='/admin/chat-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/chat-text.svg">
-                </div>
-                <div class="text">채팅 관리</div>
-            </div>
-            <div class="post-management-index index" onclick="location.href='/admin/post-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/board.svg">
-                </div>
-                <div class="text">게시판 관리</div>
-            </div>
-            <div class="site-chart-index index" onclick="location.href='/admin/site-chart'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/chart.svg">
-                </div>
-                <div class="text">사이트 통계</div>
+            <div class="block-reason-box">
+                <div class="label">차단 사유</div>
+                <select id="block-reason">
+                    <option value="부정 이용">부정 이용</option>
+                    <option value="부적절한 글·채팅 작성">부적절한 글·채팅 작성</option>
+                    <option value="타인 명의 도용">타인 명의 도용</option>
+                    <option value="기타 운영 규정 위반">기타 운영 규정 위반</option>
+                </select>
             </div>
         </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="complete(true, 1, this); block()">확인</button>
+    </div>
 
+
+    <div class="chat-wrapper">
+        <div class="chat" id="chat" data-id="">
+            <div class="head">
+                <div class="title">
+                    <div class="data" th:text="${chatRoom?.apartData?.name}"></div>
+                    <div class="member-count" th:text="${chatRoom?.memberCount} + '명'"></div>
+                </div>
+                <img class="close" src="/img/icon/close.png">
+            </div>
+            <div class="body" id="chat-box">
+                <div th:each="chats : ${chatsMap}">
+                    <div th:each="chat,i : ${chats.value}" th:with="member = ${chat.member},
+                                isInfo = ${chat.type == 'INFO'},
+                                isMine = ${member.phone == #authentication.principal.username},
+                                day = ${#temporals.day(chat.regDate)},
+                                hour = ${#temporals.hour(chat.regDate)},
+                                minute = ${#temporals.minute(chat.regDate)}"
+                        th:class="${isInfo} ? 'info-wrapper' :
+                         (${chat.id} == ${reportedChat.id} ? 'reportedChat chat-content-wrapper' : 'chat-content-wrapper')">
+                        <div class="chats-day-line" th:if="${i.index} == 0"></div>
+                        <div class="chats-day" th:if="${i.index} == 0"
+                            th:text="${#temporals.format(chat.regDate, 'yyyy년 MM월 dd일 EEEE')}"></div>
+                        <div class="chat-box row" th:data-id="${chat.id}">
+                            <div class='profile-wrapper'>
+                                <img th:src="${member.profileImgPath}">
+                            </div>
+                            <div class="name-date-box">
+                                <strong th:text="${member.nickname}" id="member-id" th:data-value="${member.id}"></strong>
+                                <div class='date'
+                                    th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))
+                                                                + ':' + (${minute} < 10 ? '0' + ${minute} : ${minute})">
+                                </div>
+                            </div>
+                            <div class='content block-btn' th:text="${chat.content}" th:data-member-id="${member.id}" data-type="member"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert-window block-cancel-alert">
+        <div class="info">
+            <div class="text">차단을 해제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="blockCancel()">확인</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
 
         <div class="right-side">
 
-            <div class="user-management">
-                <div class="head">ㅣ 채팅 관리</div>
+            <div class="meta-wrapper">
+                <div class="head" id="page-title" data-value="채팅 관리">ㅣ 채팅 관리</div>
                 <div class="body">
                     <div class="search-wrapper">
                         <form class="search">
                             <div class="checkbox-wrapper">
-                                <input type="checkbox"> 탈퇴 회원 제외
+                                <input type="checkbox"> 처리 완료 제외
                             </div>
                             <div class="input-wrapper">
                                 <select class="search-by" name="search-by">
-                                    <option value="id">회원 관리 ID</option>
-                                    <option value="phone">전화번호</option>
-                                    <option value="name">이름</option>
-                                    <option value="nickname">닉네임</option>
-                                    <option value="birth">생년월일</option>
-                                    <option value="email">이메일</option>
-                                    <option value="role">권한</option>
-                                    <option value="reg-date">가입일</option>
-                                    <option value="del-date">탈퇴일</option>
+                                    <option value="id">신고 관리 ID</option>
                                 </select>
                                 <input class="search-input" type="text">
                                 <img class="reset" src="/img/icon/x-circle.svg">
@@ -81,252 +122,64 @@
                     </div>
                     <div class="contents">
                         <div class="top">
-                            <div class="id">회원 관리 ID</div>
-                            <div class="phone">전화번호</div>
-                            <div class="name">이름</div>
-                            <div class="nickname">닉네임</div>
-                            <div class="birth">생년월일</div>
-                            <div class="email">이메일</div>
-                            <div class="role">권한</div>
-                            <div class="reg-date">가입일</div>
-                            <div class="del-date">탈퇴일</div>
+                            <div class="state">상태</div>
+                            <div class="id">신고 관리 ID</div>
+                            <div class="reason">신고 사유</div>
+                            <div class="chat">채팅 ID</div>
+                            <div class="writer">작성자 ID</div>
+                            <div class="reporter">신고자 ID</div>
+                            <div class="reg-date">신고 일시</div>
                         </div>
 
-                        <form class="user-info">
-                            <div><input class="id" value="1" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
+                        <row class="report row" th:each="report : ${reports}" th:id="${report.id}">
+                            <div th:text="${report.complete} ? '처리 완료' : '접수'"></div>
+                            <div id="report-id" th:text="${report.id}" th:data-value="${report.id}"></div>
+                            <div th:text="${report.reason}"></div>
+                            <div id="chat-id" th:text="${report.chat.id}"></div>
+                            <div id="writer-id" th:text="${report.chat.member.id}"></div>
+                            <div th:text="${report.reporter.id}"></div>
+                            <div th:text="${#temporals.format(report.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
+                            <a class="btn row-btn-1 chat-open-btn">채팅 보기</a>
+                            <a class="btn row-btn-2 complete-btn" th:text="${report.complete} ? '처리 취소' : '완료 처리'"
+                            th:onclick="${report.complete} ? 'complete(false, 0, this)' : 'complete(true, 0, this)'"></a>
+                        </row>
 
-                        <form class="user-info">
-                            <div><input class="id" value="2" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="3" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="4" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="5" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="6" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="7" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="8" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="9" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="10" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="11" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
-                        <form class="user-info">
-                            <div><input class="id" value="12" disabled></div>
-                            <div><input class="phone" value="010-1234-5678"></div>
-                            <div><input class="name" value="테스트"></div>
-                            <div><input class="nickname" value="유저11"></div>
-                            <div><input class="birth" value="19910101"></div>
-                            <div><input class="email" value="user11@plice.com"></div>
-                            <div>
-                                <select class="role">
-                                    <option value="USER">USER</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                </select>
-                            </div>
-                            <div><input class="reg-date" value="2022-12-01" disabled></div>
-                            <div><input class="del-date" value="-" disabled></div>
-                            <div class="btn modify">수정</div>
-                            <div class="btn delete">탈퇴</div>
-                        </form>
-
+                        <div class="pagination-wrapper">
+                            <span class="pagination"
+                                th:with="start=${T(java.lang.Math).floor(reports.number/10)*10 + 1}, last=(${reports.totalPages})">
+                                <a th:class="${reports.first} ? 'disable'"
+                                    th:href="@{/admin/chat-mng(page=${reports.number})}">
+                                    <img class="controller-btn-left" src="/img/icon/btn_left.png">
+                                </a>
+                                <div class="index-box">
+                                    <a th:href="@{/admin/chat-mng(page=1)}"
+                                        th:if="${reports.totalPages < 4 ? false :reports.number > 1}" th:text="1"
+                                        aria-label="First">
+                                    </a>
+                                    <span th:if="${reports.totalPages < 4 ? false :reports.number > 1}">...</span>
+                                    <a th:each="page: ${#numbers.sequence(start, last)}"
+                                        th:if="${reports.first ? (page == 0 ? false : page < reports.number + 4) :
+                                            (reports.last ? page > reports.number - 2 : (page < reports.number + 3) && (page > reports.number - 1))}"
+                                        th:class="${page == reports.number + 1} ? 'active-index'" th:text="${page}"
+                                        th:href="@{/admin/chat-mng(page=${page})}">
+                                    </a>
+                                    <span
+                                        th:if="${reports.totalPages < 4 ? false :reports.number < reports.totalPages - 2}">...</span>
+                                    <a th:href="@{/admin/chat-mng(page=${reports.totalPages})}"
+                                        th:if="${reports.totalPages < 4 ? false :reports.number < reports.totalPages - 2}"
+                                        th:text="${reports.totalPages}" aria-label="Last">
+                                    </a>
+                                </div>
+                                <a th:class="${reports.last} ? 'disable'"
+                                    th:href="@{/admin/chat-mng(page=${reports.number +2})}">
+                                    <img class="controller-btn-right" src="/img/icon/btn_right.png">
+                                </a>
+                            </span>
+                        </div>
                     </div>
-
-                    <div></div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

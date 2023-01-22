@@ -15,135 +15,174 @@
 
 <div layout:fragment="content">
     <div class="top-space"></div>
-    <div class="content-wrapper">
+    <div class="modal-background"></div>
 
-        <div class="left-side">
-            <div class="admin-management-index index active-index" onclick="location.href='/admin/admin-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/admin.svg">
-                </div>
-                <div class="text">운영진 관리</div>
-            </div>
-            <div class="user-management-index index" onclick="location.href='/admin/member-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/people-fill.svg">
-                </div>
-                <div class="text">회원 관리</div>
-            </div>
-            <div class="chat-management-index index" onclick="location.href='/admin/chat-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/chat-text.svg">
-                </div>
-                <div class="text">채팅 관리</div>
-            </div>
-            <div class="post-management-index index" onclick="location.href='/admin/post-mng'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/board.svg">
-                </div>
-                <div class="text">게시판 관리</div>
-            </div>
-            <div class="site-chart-index index" onclick="location.href='/admin/site-chart'">
-                <div class="icon-wrapper">
-                    <img src="/img/icon/chart.svg">
-                </div>
-                <div class="text">사이트 통계</div>
+    <div class="alert-window team-create-window">
+        <div class="info">
+            <div class="text">부서 생성</div>
+            <div class="input-box">
+                <div class="label">부서명</div>
+                <input type="text">
             </div>
         </div>
+        <button class="cancel" onclick="hideAlert(this)">취소</button>
+        <button class="okay" onclick="teamCreate()">확인</button>
+    </div>
+
+    <form class="alert-window admin-create-window" action="/admin/admin-mng/admin-create" method="post">
+        <div class="info">
+            <div class="text">계정 생성</div>
+            <div class="input-box">
+                <div class="label">핸드폰 번호</div>
+                <input name="phone" type="text" placeholder="01012345678">
+            </div>
+            <div class="input-box">
+                <div class="label">비밀번호</div>
+                <input name="pw" type="text" placeholder="비밀번호 입력">
+            </div>
+            <div class="input-box">
+                <div class="label">이름</div>
+                <input name="name" type="text" placeholder="이름 입력">
+            </div>
+            <div class="input-box">
+                <div class="label">소속</div>
+                <select name="teamNumber" class="team">
+                    <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="cancel" onclick="hideAlert(this)">취소</div>
+        <button class="okay" type="submit">확인</button>
+    </form>
+
+    <div class="alert-window del-alert">
+        <div class="info">
+            <div class="text">계정을 삭제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="adminDelete()">확인</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
 
         <div class="right-side">
-                <div class="head">ㅣ 운영진 관리</div>
-                <div class="body">
-                    <div class="create-account-btn">계정 생성</div>
-                    <div class="accounts-wrapper">
-                        <div class="outer-box">
-                            <div class="inner-box">
-                                <div class="title">운영진 목록</div>
-                                <div class="team-group plice">
-                                    <div class="label">플라이스팀</div>
-                                    <div class="members">
-                                        <div class="member">최원석 [SUPER_ADMIN]</div>
-                                        <div class="member">이현규 [ADMIN]</div>
-                                        <div class="member">문태웅 [ADMIN]</div>
-                                        <div class="member">윤수호 [ADMIN]</div>
-                                    </div>
-                                </div>
-                                <div class="team-group client-support">
-                                    <div class="label">고객지원팀</div>
-                                    <div class="members">
-                                        <div class="member">김ㅇㅇ [ADMIN]</div>
-                                        <div class="member">이ㅇㅇ [ADMIN]</div>
-                                        <div class="member">박ㅇㅇ [ADMIN]</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outer-box">
-                            <div class="inner-box">
-                                <div class="title">최원석 [SUPER_ADMIN]</div>
-                                <form class="info-box">
-                                    <div class="info-group">
-                                        <div class="label">권한 정보</div>
-                                        <div class="authority">
-                                            <input name="admin-mng" type="checkbox" value=true>운영진 관리
-                                        </div>
-                                        <div class="authority">
-                                            <input name="member-mng" type="checkbox" value=true>회원 관리
-                                        </div>
-                                        <div class="authority">
-                                            <input name="chat-mng" type="checkbox" value=true>채팅 관리
-                                        </div>
-                                        <div class="authority">
-                                            <input name="post-mng" type="checkbox" value=true>게시판 관리
-                                        </div>
-                                    </div>
-                                    <div class="info-group">
-                                        <div class="label">계정 정보</div>
-                                        <div class="info">
-                                            <div class="reg">
-                                                <div class="date">
-                                                    <div class="text">생성 일자 :</div>
-                                                    <div class="data">2022-12-31  23:44:25</div>
-                                                </div>
-                                                <div class="member">
-                                                    <div class="text">생성자 :</div>
-                                                    <div class="data">최원석[SUPER_ADMIN]</div>
-                                                </div>
-                                            </div>
-                                            <div class="mod">
-                                                <div class="date">
-                                                    <div class="text">수정 일자 :</div>
-                                                    <div class="data">2023-01-12  12:33:21</div>
-                                                </div>
-                                                <div class="member">
-                                                    <div class="text">수정자 :</div>
-                                                    <div class="data">최원석[SUPER_ADMIN]</div>
-                                                </div>
-                                            </div>
-                                            <div class="access">
-                                                <div class="date">
-                                                    <div class="text">접속 일자 :</div>
-                                                    <div class="data">2023-01-12  12:33:21</div>
-                                                </div>
-                                                <div class="ip">
-                                                    <div class="text">접속 IP :</div>
-                                                    <div class="data">127.0.0.1</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="btn-box">
-                                    <div class="save-btn">저장</div>
-                                    <div class="delete-btn">계정 삭제</div>
+            <div class="head" id="page-title" data-value="운영진 관리">ㅣ 운영진 관리</div>
+            <div class="body">
+                <div class="btn-box">
+                    <div class="create-team-btn">부서 생성</div>
+                    <div class="create-admin-btn">계정 생성</div>
+                </div>
+                <div class="accounts-wrapper">
+                    <div class="outer-box">
+                        <div class="inner-box">
+                            <div class="title">운영진 목록</div>
+                            <div class="team-group" th:each="team : ${teams}">
+                                <div class="label" th:text="${team.name}"></div>
+                                <div class="members">
+                                    <div class="member" th:each="admin,i : ${admins}"
+                                        th:text="${admin.name} + ' [' + ${admin.role} + ']'"
+                                        th:if="${admin.adminTeam.id} == ${team.id}" th:id="'admin-' + ${i.count}"
+                                        th:data-id="${admin.id}"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="outer-box" id="detail-box">
+                        <form class="inner-box" id="detail-form">
+                            <div class="title">
+                                <div class="text" th:text="${adminDetail?.name} + ' [' + ${adminDetail?.role} + ']'">
+                                </div>
+                                <div class="team-box">
+                                    <div class="label">소속 부서</div>
+                                    <select name="teamNumber" class="team">
+                                        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"
+                                            th:selected="${adminDetail} != null ? ${adminDetail.adminTeam.id} == ${team.id} : false">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="info-box">
+                                <input id="member-id" type="hidden" name="id" th:value="${adminDetail?.id}">
+                                <div class="info-group">
+                                    <div class="label">권한 정보</div>
+                                    <div class="authority">
+                                        <input name="adminMng" type="checkbox" value=true
+                                            th:checked="${adminDetail?.authority?.adminMng}">운영진 관리
+                                    </div>
+                                    <div class="authority">
+                                        <input name="memberMng" type="checkbox" value=true
+                                            th:checked="${adminDetail?.authority?.memberMng}">회원 관리
+                                    </div>
+                                    <div class="authority">
+                                        <input name="chatMng" type="checkbox" value=true
+                                            th:checked="${adminDetail?.authority?.chatMng}">채팅 관리
+                                    </div>
+                                    <div class="authority">
+                                        <input name="postMng" type="checkbox" value=true
+                                            th:checked="${adminDetail?.authority?.postMng}">게시판 관리
+                                    </div>
+                                    <div class="authority">
+                                        <input name="inquiryMng" type="checkbox" value=true
+                                            th:checked="${adminDetail?.authority?.inquiryMng}">문의사항 관리
+                                    </div>
+                                </div>
+                                <div class="info-group">
+                                    <div class="label">계정 정보</div>
+                                    <div class="info">
+                                        <div class="reg">
+                                            <div class="date">
+                                                <div class="text">생성 일시 :</div>
+                                                <div class="data"
+                                                    th:text="${#temporals.format(adminDetail?.regDate, 'yyyy년 MM월 dd일  HH:mm:SS')}">
+                                                </div>
+                                            </div>
+                                            <div class="member">
+                                                <div class="text">생성자 :</div>
+                                                <div class="data">최원석[SUPER_ADMIN]</div>
+                                            </div>
+                                        </div>
+                                        <div class="mod">
+                                            <div class="date">
+                                                <div class="text">수정 일시 :</div>
+                                                <div class="data"
+                                                    th:text="${adminDetail?.authority == null ? '-' :
+                                                         #temporals.format(adminDetail?.authority?.modDate, 'yyyy년 MM월 dd일  HH:mm:SS')}">
+                                                </div>
+                                            </div>
+                                            <div class="member">
+                                                <div class="text">수정자 :</div>
+                                                <div class="data">최원석[SUPER_ADMIN]</div>
+                                            </div>
+                                        </div>
+                                        <div class="access">
+                                            <div class="date">
+                                                <div class="text">접속 일시 :</div>
+                                                <div class="data"
+                                                    th:text="${lastAccess == null ? '-' :
+                                                         #temporals.format(lastAccess?.regDate, 'yyyy년 MM월 dd일  HH:mm:SS')}"></div>
+                                            </div>
+                                            <div class="ip">
+                                                <div class="text">접속 IP :</div>
+                                                <div class="data"
+                                                    th:text="${lastAccess == null ? '-' : lastAccess.ip.ip}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-box">
+                                <div class="save-btn">저장</div>
+                                <div class="delete-btn">계정 삭제</div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+            </div>
         </div>
-
     </div>
 </div>
-
 
 </html>

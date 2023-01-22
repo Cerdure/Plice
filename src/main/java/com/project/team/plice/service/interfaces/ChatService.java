@@ -15,8 +15,10 @@ public interface ChatService {
     public List<ChatRoomDto> myRoomsResolver(Authentication authentication);
     public void setLastChat(ChatRoomDto chatRoomDtos);
     public void setMembers(List<ChatRoomDto> chatRoomDtos);
+    public Chat findChatById(Long chatId);
     public List<Chat> findChatsByRoomId(String roomId);
     public ChatRoom findChatRoomById(String roomId);
+    public ChatRoom findChatRoomByChatId(Long chatId);
     public List<ChatRoom> findChatRoomsByMember(Member member);
     public List<Member> findMemberByChatRoom(ChatRoom chatRoom);
     public List<MemberChatRoom> findMemberChatRoomByRoom(ChatRoom chatRoom);
@@ -31,7 +33,9 @@ public interface ChatService {
     public void chatRoomExit(Member member, String roomId);
     public Integer findMemberCount(String roomId);
     public Map<Integer,List<Chat>> chatsGroupByDay(String roomId);
+    public Map<Integer,List<Chat>> chatsGroupByDay(Long chatId);
     public List<ChatRoomDto> highlightChatRooms(String inputVal);
     public Integer numberOfMyRooms(Authentication authentication);
     public Integer numberOfMembersOnChat();
+    public void chatReport(Long chatId, String reason, Authentication authentication);
 }

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/layout-content/admin/access-mng.css">
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/js/layout-content/admin/access-mng.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 접속 관리</title>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="top-space"></div>
+    <div class="modal-background"></div>
+
+    <div class="alert-window block-alert">
+        <div class="info">
+            <div class="text">해당 IP를 차단하겠습니까?</div>
+            <div class="data"></div>
+            <div class="block-date-box">
+                <div class="label">차단 기간</div>
+                <select id="block-date">
+                    <option value="1">1개월</option>
+                    <option value="2">6개월</option>
+                    <option value="3">1년</option>
+                    <option value="4">3년</option>
+                    <option value="5">영구 차단</option>
+                </select>
+            </div>
+            <div class="block-reason-box">
+                <div class="label">차단 사유</div>
+                <select id="block-reason">
+                    <option value="부정 이용">부정 이용</option>
+                    <option value="부적절한 글·채팅 작성">부적절한 글·채팅 작성</option>
+                    <option value="타인 명의 도용">타인 명의 도용</option>
+                    <option value="기타 운영 규정 위반">기타 운영 규정 위반</option>
+                </select>
+            </div>
+        </div>
+        <button class="cancel" onclick="hideAlert(this)">취소</button>
+        <button class="okay" onclick="block()">확인</button>
+    </div>
+
+    <div class="alert-window block-cancel-alert">
+        <div class="info">
+            <div class="text">차단을 해제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
+        <button class="cancel" onclick="hideAlert(this)">취소</button>
+        <button class="okay" onclick="blockCancel()">확인</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
+
+        <div class="right-side">
+            <div class="head" id="page-title" data-value="접속 관리">ㅣ 접속 관리</div>
+
+            <div class="body">
+
+                <div class="body-head">
+
+                    <div class="sub-head">
+                        <a class="text access-log-title active-text" href="/admin/access-mng/log" data-value="log">엑세스 로그</a>
+                        <a class="text member-blacklist-title" href="/admin/access-mng/member" data-value="member">회원 차단 목록</a>
+                        <a class="text ip-blacklist-title" href="/admin/access-mng/ip" data-value="ip">IP 차단 목록</a>
+                    </div>
+
+                    <div class="search-wrapper">
+                        <form class="search">
+                            <div class="input-wrapper">
+                                <select class="search-by" name="search-by">
+                                    <option value="memberId">회원 관리 ID</option>
+                                    <option value="ip">IP</option>
+                                    <option value="regDate">등록 일시</option>
+                                    <option value="expDate">만료 일시</option>
+                                </select>
+                                <input class="search-input" type="text">
+                                <img class="reset" src="/img/icon/x-circle.svg">
+                                <img class="icon" src="/img/icon/search-icon.svg">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="contents access-log-box">
+
+                    <div class="top">
+                        <div class="access-log-id">엑세스 로그 관리 ID</div>
+                        <div class="member-id">회원 관리 ID</div>
+                        <div class="ip">IP</div>
+                        <div class="uri">접속 페이지</div>
+                        <div class="reg-date">등록 일시</div>
+                    </div>
+
+                    <row class="access-log row" th:each="access : ${accessList}" th:id="${access.id}" th:with="ipObj=${access.ip}, member=${access.member}">
+                        <div class="access-log-id" th:text="${access.id}"></div>
+                        <div id="member-id" class="member-id" th:text="${access.member.id}" th:data-value="${access.member.id}"></div>
+                        <div id="ip" class="ip" th:text="${ipObj.blacklist} == null ? ${ipObj.ip} : ${ipObj.ip} + ' (차단 상태)'"
+                             th:data-value="${access.ip.ip}"></div>
+                        <div class="uri" th:text="${access.uri}"></div>
+                        <div class="reg-date" th:text="${#temporals.format(access.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
+                        <a class="btn row-btn-1" th:text="${ipObj.blacklist} == null ? 'IP 차단' : 'IP 차단 해제'"
+                        th:classappend="${ipObj.blacklist} == null ? 'block-btn' : 'block-cancel-btn'" data-type="ip"></a>
+                        <a class="btn row-btn-2" th:text="${member.blacklist} == null ? '계정 차단' : '계정 차단 해제'"
+                        th:classappend="${member.blacklist} == null ? 'block-btn' : 'block-cancel-btn'" data-type="member"></a>
+                    </row>
+
+                    <div class="pagination-wrapper">
+                        <span class="pagination"
+                            th:with="start=${T(java.lang.Math).floor(accessList.number/10)*10 + 1}, last=(${accessList.totalPages})">
+
+                            <a th:class="${accessList.first} ? 'disable'"
+                                th:href="@{/admin/access-mng/log(page=${accessList.number})}">
+                                <img class="controller-btn-left" src="/img/icon/btn_left.png">
+                            </a>
+
+                            <div class="index-box">
+                                <a th:href="@{/admin/access-mng/log(page=1)}"
+                                    th:if="${accessList.totalPages < 4 ? false :accessList.number > 1}" th:text="1"
+                                    aria-label="First">
+                                </a>
+
+                                <span th:if="${accessList.totalPages < 4 ? false :accessList.number > 1}">...</span>
+
+                                <a th:each="page: ${#numbers.sequence(start, last)}"
+                                    th:if="${accessList.first ? (page == 0 ? false : page < accessList.number + 4) :
+                                        (accessList.last ? page > accessList.number - 2 : (page < accessList.number + 3) && (page > accessList.number - 1))}"
+                                    th:class="${page == accessList.number + 1} ? 'active-index'" th:text="${page}"
+                                    th:href="@{/admin/access-mng/log(page=${page})}">
+                                </a>
+
+                                <span
+                                    th:if="${accessList.totalPages < 4 ? false :accessList.number < accessList.totalPages - 2}">...</span>
+
+                                <a th:href="@{/admin/access-mng/log(page=${accessList.totalPages})}"
+                                    th:if="${accessList.totalPages < 4 ? false :accessList.number < accessList.totalPages - 2}"
+                                    th:text="${accessList.totalPages}" aria-label="Last">
+                                </a>
+                            </div>
+
+                            <a th:class="${accessList.last} ? 'disable'"
+                                th:href="@{/admin/access-mng/log(page=${accessList.number +2})}">
+                                <img class="controller-btn-right" src="/img/icon/btn_right.png">
+                            </a>
+
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

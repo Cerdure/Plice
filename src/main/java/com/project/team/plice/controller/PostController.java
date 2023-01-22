@@ -143,4 +143,13 @@ public class PostController {
         return "layout-content/post/story-detail";
     }
 
+    @GetMapping("/post/story-detail")
+    public String storyDetail(HttpServletRequest request, Authentication authentication) {
+        return "layout-content/post/story-detail";
+    }
+
+    @GetMapping("/post/notice-detail")
+    public String noticeDetail(HttpServletRequest request, Authentication authentication) {
+        return "layout-content/post/notice-detail";
+    }
 }

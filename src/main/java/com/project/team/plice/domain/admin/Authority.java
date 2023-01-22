@@ -2,7 +2,6 @@ package com.project.team.plice.domain.admin;
 
 import com.project.team.plice.domain.member.Member;
 import lombok.*;
-import org.apache.xpath.operations.Bool;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,7 +27,7 @@ public class Authority {
 
     private Boolean postMng;
 
-    private Boolean noticeMng;
+    private Boolean inquiryMng;
 
     private LocalDateTime modDate;
 
@@ -38,14 +37,23 @@ public class Authority {
     }
 
     @Builder
-    public Authority(Long id, Member member, Boolean adminMng, Boolean memberMng, Boolean chatMng, Boolean postMng, Boolean noticeMng, LocalDateTime modDate) {
+    public Authority(Long id, Member member, Boolean adminMng, Boolean memberMng, Boolean chatMng, Boolean postMng, Boolean inquiryMng, LocalDateTime modDate) {
         this.id = id;
         this.member = member;
         this.adminMng = adminMng;
         this.memberMng = memberMng;
         this.chatMng = chatMng;
         this.postMng = postMng;
-        this.noticeMng = noticeMng;
+        this.inquiryMng = inquiryMng;
         this.modDate = modDate;
+    }
+
+    public void updateAuthorities(Authority authority){
+        this.adminMng = authority.getAdminMng() == null ? false : authority.getAdminMng();
+        this.memberMng = authority.getMemberMng() == null ? false : authority.getMemberMng();
+        this.chatMng = authority.getChatMng() == null ? false : authority.getChatMng();
+        this.postMng = authority.getPostMng() == null ? false : authority.getPostMng();
+        this.inquiryMng = authority.getInquiryMng() == null ? false : authority.getInquiryMng();
+        this.modDate = LocalDateTime.now();
     }
 }
