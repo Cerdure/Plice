@@ -14,7 +14,8 @@ public interface MemberService {
     boolean validateDuplicateMember(MemberDto memberDto);
     public Member findMember(Authentication authentication);
     public List<Member> findMembers();
-    public Page<Member> findByRole(MemberRole role, Pageable pageable);
+    public List<Member> findByRoles(List<MemberRole> roles);
+    public Page<Member> findByRoles(List<MemberRole> roles, Pageable pageable);
     public Member findById(Long memberId);
     public Member findByPhone(String phone);
     public void update(Authentication authentication, MemberDto memberDto);

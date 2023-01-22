@@ -1,45 +1,40 @@
 $(function () {
 
-    $(document).ready(function () {
-
-        $(document).on("click", ".block-btn", function () {
-            switch ($(this).data("type")) {
-                case "ip":
-                    type = "ip";
-                    selectIp = $(this).closest(".row").find("#ip").data("value");
-                    $(".block-alert .data").text("IP : " + selectIp);
-                    $(".block-alert .text").text("해당 IP를 차단하겠습니까?");
-                    break;
-                case "member":
-                    type = "member";
-                    selectId = $(this).closest(".row").find("#member-id").data("value");
-                    $(".block-alert .data").text("회원 관리 ID : " + selectId);
-                    $(".block-alert .text").text("해당 계정을 차단하겠습니까?");
-                    break;
-            }
-            $(".modal-background").fadeIn(100);
-            $(".block-alert").fadeIn(300);
-        });
-
-        $(document).on("click", ".block-cancel-btn", function () {
-            switch ($(this).data("type")) {
-                case "ip":
-                    type = "ip";
-                    selectIp = $(this).closest(".row").find("#ip").data("value");
-                    $(".block-cancel-alert .data").text("IP : " + selectIp);
-                    break;
-                case "member":
-                    type = "member";
-                    selectId = $(this).closest(".row").find("#member-id").data("value");
-                    $(".block-cancel-alert .data").text("회원 관리 ID : " + selectId);
-                    break;
-            }
-            $(".modal-background").fadeIn(100);
-            $(".block-cancel-alert").fadeIn(300);
-        });
-
+    $(document).on("click", ".block-btn", function () {
+        switch ($(this).data("type")) {
+            case "ip":
+                type = "ip";
+                selectIp = $(this).closest(".row").find("#ip").data("value");
+                $(".block-alert .data").text("IP : " + selectIp);
+                $(".block-alert .text").text("해당 IP를 차단하겠습니까?");
+                break;
+            case "member":
+                type = "member";
+                selectId = $(this).closest(".row").find("#member-id").data("value");
+                $(".block-alert .data").text("회원 관리 ID : " + selectId);
+                $(".block-alert .text").text("해당 계정을 차단하겠습니까?");
+                break;
+        }
+        $(".modal-background").fadeIn(100);
+        $(".block-alert").fadeIn(300);
     });
 
+    $(document).on("click", ".block-cancel-btn", function () {
+        switch ($(this).data("type")) {
+            case "ip":
+                type = "ip";
+                selectIp = $(this).closest(".row").find("#ip").data("value");
+                $(".block-cancel-alert .data").text("IP : " + selectIp);
+                break;
+            case "member":
+                type = "member";
+                selectId = $(this).closest(".row").find("#member-id").data("value");
+                $(".block-cancel-alert .data").text("회원 관리 ID : " + selectId);
+                break;
+        }
+        $(".modal-background").fadeIn(100);
+        $(".block-cancel-alert").fadeIn(300);
+    });
 
     $("header .my-page").click(function () {
         (async () => {
@@ -69,6 +64,23 @@ $(function () {
 let selectIp,
     selectId,
     type;
+
+function authorityCheck(page) {
+    (async () => {
+        const authority = await fetch("/admin/authority-check?page=" + page).then(res => res.json());
+        if (authority) {
+            switch (page) {
+                case "admin": location.href = "/admin/admin-mng"; break;
+                case "member": location.href = "/admin/member-mng"; break;
+                case "chat": location.href = "/admin/chat-mng"; break;
+                case "post": location.href = "/admin/post-mng/story"; break;
+                case "inquiry": location.href = "/admin/inquiry-mng"; break;
+            }
+        } else {
+            alert("권한이 없습니다.");
+        }
+    })();
+}
 
 function block() {
     (async () => {

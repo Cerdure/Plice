@@ -8,11 +8,6 @@
 </th:block>
 <th:block layout:fragment="script">
     <script src="/js/layout-content/login/login.js"></script>
-    <th:block th:if="${alertText != null}">
-        <script>
-            top.alert("[[${alertText}]]");
-        </script>
-    </th:block>
 </th:block>
 <th:block layout:fragment="title">
     <title>PLICE ㅣ 로그인</title>

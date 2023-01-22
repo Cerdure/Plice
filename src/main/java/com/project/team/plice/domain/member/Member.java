@@ -1,6 +1,7 @@
 package com.project.team.plice.domain.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.team.plice.domain.admin.AdminTeam;
 import com.project.team.plice.domain.admin.Authority;
 import com.project.team.plice.domain.admin.Blacklist;
 import com.project.team.plice.domain.admin.Report;
@@ -61,6 +62,10 @@ public class Member implements UserDetails {
     @OneToOne(mappedBy = "member", orphanRemoval = true)
     private Blacklist blacklist;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_team_id")
+    private AdminTeam adminTeam;
+
     @PrePersist
     public void prePersist() {
         this.role = this.role == null ? MemberRole.USER : this.role;
@@ -69,7 +74,7 @@ public class Member implements UserDetails {
     }
 
     @Builder
-    public Member(Long id, String phone, String pw, String name, String nickname, String birth, LocalDate regDate, LocalDate delDate, MemberRole role, List<Favorite> favorite, List<Report> reports, Authority authority, String profileImgPath, List<MemberChatRoom> memberChatRoom, Blacklist blacklist) {
+    public Member(Long id, String phone, String pw, String name, String nickname, String birth, LocalDate regDate, LocalDate delDate, MemberRole role, List<Favorite> favorite, List<Report> reports, Authority authority, String profileImgPath, List<MemberChatRoom> memberChatRoom, Blacklist blacklist, AdminTeam adminTeam) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
@@ -85,6 +90,7 @@ public class Member implements UserDetails {
         this.profileImgPath = profileImgPath;
         this.memberChatRoom = memberChatRoom;
         this.blacklist = blacklist;
+        this.adminTeam = adminTeam;
     }
 
     @Override
@@ -143,5 +149,17 @@ public class Member implements UserDetails {
     public void updateBirth(String birth){
         this.birth = birth;
     }
+
+    public void updateAdminTeam(AdminTeam adminTeam){
+        this.adminTeam = adminTeam;
+    }
+
+    public void grantRole(MemberRole role){
+        this.role = role;
+    };
+
+    public void grantAuthorities(Authority authority){
+        this.authority = authority;
+    };
 
 }

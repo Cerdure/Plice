@@ -15,7 +15,8 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     public Optional <Member> findByPhone(String phone);
     public List <Member> findByNickname(String nickname);
-    public Page<Member> findByRole(MemberRole role, Pageable pageable);
+    public List<Member> findByRoleIn(List<MemberRole> roles);
+    public Page<Member> findByRoleIn(List<MemberRole> roles, Pageable pageable);
     public Long countByRegDate(LocalDate regDate);
     public List<Member> findByRegDateAfter(LocalDate regDate);
     public Long countByRegDateBefore(LocalDate regDate);

@@ -54,10 +54,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Page<Member> findByRole(MemberRole role, Pageable pageable) {
+    public List<Member> findByRoles(List<MemberRole> roles) {
+        return memberRepository.findByRoleIn(roles);
+    }
+
+    @Override
+    public Page<Member> findByRoles(List<MemberRole> roles, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable= PageRequest.of(page,12, Sort.by("regDate").descending());
-        return memberRepository.findByRole(role, pageable);
+        return memberRepository.findByRoleIn(roles, pageable);
     }
 
     public Member findById(Long memberId) {

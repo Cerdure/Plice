@@ -1,16 +1,17 @@
 package com.project.team.plice.service.classes;
 
-import com.project.team.plice.domain.admin.AccessLog;
-import com.project.team.plice.domain.admin.Blacklist;
-import com.project.team.plice.domain.admin.IP;
-import com.project.team.plice.domain.admin.Report;
+import com.project.team.plice.domain.admin.*;
+import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.domain.post.Notice;
+import com.project.team.plice.domain.post.Post;
 import com.project.team.plice.dto.admin.BlockDto;
-import com.project.team.plice.repository.admin.AccessLogRepository;
-import com.project.team.plice.repository.admin.BlacklistRepository;
-import com.project.team.plice.repository.admin.IPRepository;
-import com.project.team.plice.repository.admin.ReportRepository;
+import com.project.team.plice.dto.member.MemberDto;
+import com.project.team.plice.dto.post.NoticeDto;
+import com.project.team.plice.repository.admin.*;
 import com.project.team.plice.repository.member.MemberRepository;
+import com.project.team.plice.repository.post.NoticeRepository;
+import com.project.team.plice.repository.post.PostRepository;
 import com.project.team.plice.service.interfaces.AdminService;
 import com.project.team.plice.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,11 @@ public class AdminServiceImpl implements AdminService {
     private final BlacklistRepository blacklistRepository;
     private final IPRepository ipRepository;
     private final ReportRepository reportRepository;
+    private final AdminTeamRepository adminTeamRepository;
+    private final AuthorityRepository authorityRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final PostRepository postRepository;
+    private final NoticeRepository noticeRepository;
 
     @Override
     public void logAccess(HttpServletRequest request, Authentication authentication) {
@@ -62,13 +69,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void initLogAccess() {
+        List<AccessLog> logs = accessLogRepository.findByRegDateAfter(LocalDateTime.now().minusHours(23));
+        if(logs.size() < 10){
             IP ip = ipRepository.findByIp("127.0.0.1");
-            AccessLog[] accessLogs = new AccessLog[30];
-            for(int i=0; i<30; i++){
-                int randomNum = (int) (Math.random()*4+1);
+            AccessLog[] accessLogs = new AccessLog[(int)(Math.random()*9+1)];
+            for(int i=0; i<accessLogs.length; i++){
+                int randomNum = (int)(Math.random()*5+1);
                 switch (randomNum){
                     case 1: accessLogs[i] = AccessLog.builder().uri("/home").ip(ip)
-                                .member(memberService.findByPhone("01012345678")).build(); break;
+                            .member(memberService.findByPhone("01012345678")).build(); break;
                     case 2: accessLogs[i] = AccessLog.builder().uri("/map").ip(ip)
                             .member(memberService.findByPhone("01012345678")).build(); break;
                     case 3: accessLogs[i] = AccessLog.builder().uri("/chat").ip(ip)
@@ -79,9 +88,24 @@ public class AdminServiceImpl implements AdminService {
                             .member(memberService.findByPhone("01012345678")).build(); break;
                 }
             }
-        for (AccessLog accessLog : accessLogs) {
-            accessLogRepository.save(accessLog);
+            for (AccessLog accessLog : accessLogs) {
+                accessLogRepository.save(accessLog);
+            }
         }
+    }
+
+    @Override
+    public boolean authorityCheck(Authentication authentication, String page) {
+        Member member = memberRepository.findByPhone(authentication.getName()).get();
+        Authority authority = member.getAuthority();
+        switch (page) {
+            case "admin": return authority.getAdminMng();
+            case "member": return authority.getMemberMng();
+            case "chat": return authority.getChatMng();
+            case "post": return authority.getPostMng();
+            case "inquiry": return authority.getInquiryMng();
+        }
+        return false;
     }
 
     @Override
@@ -298,4 +322,91 @@ public class AdminServiceImpl implements AdminService {
         reportRepository.save(report);
     }
 
+    @Override
+    public List<Member> findAllAdmin() {
+        List<MemberRole> roles = new ArrayList<>();
+        roles.add(MemberRole.ADMIN);
+        roles.add(MemberRole.SUPER_ADMIN);
+        return memberService.findByRoles(roles);
+    }
+
+    @Override
+    public AccessLog findLastAccess(Member member) {
+        return accessLogRepository.findTopByMemberOrderByRegDateDesc(member);
+    }
+
+    @Override
+    public List<AdminTeam> findAllTeam() {
+        return adminTeamRepository.findAll();
+    }
+
+    @Override
+    public void createAdmin(MemberDto memberDto) {
+        Member admin = memberDto.createMember(passwordEncoder);
+        admin.grantRole(MemberRole.ADMIN);
+        AdminTeam adminTeam = adminTeamRepository.findById(memberDto.getTeamNumber()).get();
+        admin.updateAdminTeam(adminTeam);
+        memberRepository.save(admin);
+        authorityRepository.save(Authority.builder()
+                .member(admin)
+                .adminMng(false)
+                .memberMng(false)
+                .chatMng(false)
+                .postMng(false)
+                .inquiryMng(false)
+                .build());
+    }
+
+    @Override
+    public void updateAdmin(MemberDto memberDto) {
+        Member admin = memberRepository.findById(memberDto.getId()).get();
+        admin.updateAdminTeam(adminTeamRepository.findById(memberDto.getTeamNumber()).get());
+        memberRepository.save(admin);
+        Authority authority = authorityRepository.findByMember(admin);
+        authority.updateAuthorities(memberDto.getAuthorities());
+        authorityRepository.save(authority);
+    }
+
+    @Override
+    public void deleteAdmin(Long id) {
+        memberService.delete(id);
+    }
+
+    @Override
+    public void createTeam(String teamName) {
+        adminTeamRepository.save(AdminTeam.builder().name(teamName).build());
+    }
+
+    @Override
+    public Page<Post> findAllPost(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable= PageRequest.of(page,12, Sort.by("regDate").descending());
+        return postRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Notice> findAllNotice(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable= PageRequest.of(page,12, Sort.by("regDate").descending());
+        return noticeRepository.findAll(pageable);
+    }
+
+    @Override
+    public void saveNotice(NoticeDto noticeDto, Authentication authentication) {
+        Member member = memberService.findMember(authentication);
+        noticeDto.setMember(member);
+        noticeDto.setMemberNickname(member.getNickname());
+        Notice notice = noticeDto.toEntity();
+        noticeRepository.save(notice);
+    }
+
+    @Override
+    public void deleteStory(Long id) {
+        postRepository.delete(postRepository.findById(id).get());
+    }
+
+    @Override
+    public void deleteNotice(Long id) {
+        noticeRepository.delete(noticeRepository.findById(id).get());
+    }
 }

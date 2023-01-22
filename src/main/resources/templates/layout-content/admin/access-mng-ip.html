@@ -67,7 +67,7 @@
                         <div class="reason" th:text="${blacklist.reason}"></div>
                         <div class="reg-date" th:text="${#temporals.format(blacklist.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
                         <div class="exp-date" th:text="${#temporals.format(blacklist.expDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
-                        <a class="btn block-cancel-btn" data-type="ip">차단 해제</a>
+                        <a class="btn row-btn-1 block-cancel-btn" data-type="ip">차단 해제</a>
                     </row>
                     <div class="pagination-wrapper">
                         <span class="pagination" th:with="

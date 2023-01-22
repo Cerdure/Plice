@@ -122,9 +122,9 @@
                             <div><input name="nickname" th:value="${member.nickname}"></div>
                             <div><input name="birth" th:value="${member.birth}"></div>
                             <div><input name="reg-date" th:value="${member.regDate}" disabled></div>
-                            <a class="btn modify-btn">수정</a>
-                            <a class="btn delete-btn">삭제</a>
-                            <a class="btn" th:text="${member.blacklist} == null ? '계정 차단' : '계정 차단 해제'"
+                            <a class="btn row-btn-3 modify-btn">수정</a>
+                            <a class="btn row-btn-2 delete-btn">삭제</a>
+                            <a class="btn row-btn-1" th:text="${member.blacklist} == null ? '계정 차단' : '계정 차단 해제'"
                                th:classappend="${member.blacklist} == null ? 'block-btn' : 'block-cancel-btn'"
                                data-type="member"></a>
                         </form>

@@ -156,51 +156,6 @@
     font-weight: 600;
 }
 
-.user-management .user-info .btn {
-    width: 90%;
-    height: 30px;
-    color: #4169fc;
-    border-radius: 5px;
-    border: 1px solid #4169fc;
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-}
-
-.user-management .user-info .btn:hover {
-    color: white;
-    background-color: #4169fc;
-    transition: 0.3s;
-}
-
-.user-management .user-info .delete-btn {
-    border: 1px solid #3b5987;
-    background-color: white;
-    color: #3b5987;
-}
-
-.user-management .user-info .delete-btn:hover {
-    color: white;
-    background-color: #3b5987;
-    transition: 0.3s;
-}
-
-.user-management .user-info .access-btn {
-    border: 1px solid #91aec3;
-    background-color: #e6f0f7;
-    color: #3b5987;
-}
-
-.user-management .user-info .access-btn:hover {
-    color: #0099ff;
-    background-color: white;
-    border: 1px solid #00a6ff;
-    transition: 0.3s;
-}
-
-
 .alert-window {
     position: fixed;
     top: 50%;

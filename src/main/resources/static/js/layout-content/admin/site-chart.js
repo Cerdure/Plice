@@ -165,6 +165,8 @@ function drawPieChart() {
   
     var chart = new google.visualization.PieChart(document.getElementById('day-chart'));
     chart.draw(data, options);
+    const texts = $("#day-chart g text").get();
+    console.log(texts)
   })();
 }
 
@@ -215,7 +217,6 @@ function drawChart() {
     data.addColumn('number','volume');
     data.addColumn('number','increase/decrease');
     data.addRow(['키워드', null, 0, 0]);
-    console.log(result);
     result.forEach(e => {
       data.addRow([e.keyword, '키워드', e.count, e.count]);
     });

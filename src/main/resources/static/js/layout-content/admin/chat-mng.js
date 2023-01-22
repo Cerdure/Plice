@@ -1,11 +1,9 @@
 $(function () {
 
-  $(document).ready(function () {
-
     $(document).on("click", ".chat-open-btn", function () {
       (async () => {
         const report = $(this).closest("row");
-        report.addClass("active-report");
+        report.addClass("active-row");
         const chatId = report.find("#chat-id").text();
         const result = await fetch("/admin/chat-view?chatId=" + chatId).then(res => res.text());
         $("#chat").replaceWith(result);
@@ -26,8 +24,6 @@ $(function () {
     $(document).on("click", ".chat-wrapper .chat .head .close", function () {
       chatWindowHide();
     });
-  });
-
 
   $('html').click(function (e) {
     if ($(e.target).is(".chat-wrapper")) {
@@ -45,7 +41,7 @@ function complete(state, clickType, _this){
         reportId = $(_this).closest(".row").find("#report-id").data("value");
         break;
       case 1:
-        reportId = $(".active-report").find("#report-id").data("value");
+        reportId = $(".active-row").find("#report-id").data("value");
         break;
     }
     const result = await fetch("/admin/report/state?reportId=" + reportId + "&state=" + state).then(res => res.text());
@@ -63,5 +59,5 @@ function hideAlert(){
 function chatWindowHide() {
   $(".chat-wrapper").fadeOut(100);
   $("body").css("overflow-y", 'scroll');
-  $("row").removeClass("active-report");
+  $("row").removeClass("active-row");
 }

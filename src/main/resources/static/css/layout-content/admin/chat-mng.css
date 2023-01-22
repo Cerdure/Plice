@@ -548,10 +548,3 @@
 .reportedChat img {
     border: 1px solid #ff0057;
 }
-
-.active-report {
-    border: 3px solid #0040ff !important;
-    border-radius: 5px;
-    color: royalblue !important;
-    background-color: aliceblue;
-}

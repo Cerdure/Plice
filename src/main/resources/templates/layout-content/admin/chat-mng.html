@@ -139,8 +139,8 @@
                             <div id="writer-id" th:text="${report.chat.member.id}"></div>
                             <div th:text="${report.reporter.id}"></div>
                             <div th:text="${#temporals.format(report.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
-                            <a class="chat-open-btn">채팅 보기</a>
-                            <a class="complete-btn" th:text="${report.complete} ? '처리 취소' : '완료 처리'"
+                            <a class="btn row-btn-1 chat-open-btn">채팅 보기</a>
+                            <a class="btn row-btn-2 complete-btn" th:text="${report.complete} ? '처리 취소' : '완료 처리'"
                             th:onclick="${report.complete} ? 'complete(false, 0, this)' : 'complete(true, 0, this)'"></a>
                         </row>
 

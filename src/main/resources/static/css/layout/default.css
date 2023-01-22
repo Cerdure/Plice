@@ -479,8 +479,7 @@ footer .icons img {
 }
 
 
-.block-btn,
-.block-cancel-btn {
+.row .btn {
     width: 90%;
     height: 30px;
     border-radius: 5px;
@@ -488,30 +487,76 @@ footer .icons img {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #919ec3;
-    background-color: #e8f0ff;
-    color: #3b4a87;
 }
 
-.block-btn:last-child,
-.block-cancel-btn:last-child {
+.row-btn-1 {
+  border: 1px solid cornflowerblue !important;
+  background-color: white !important;
+  color: cornflowerblue !important;
+}
+
+.row-btn-1:hover {
+  color: white !important;
+  background-color: cornflowerblue !important;
+  border: 1px solid cornflowerblue !important;
+  transition: 0.3s;
+}
+
+.row-btn-2 {
+    border: 1px solid slategray !important;
+    background-color: white !important;
+    color: slategray !important;
+}
+
+.row-btn-2:hover {
+    color: white !important;
+    background-color: slategray !important;
+    border: 1px solid slategray !important;
+    transition: 0.3s;
+}
+
+.row-btn-3 {
+  border: 1px solid steelblue !important;
+  background-color: white !important;
+  color: steelblue !important;
+}
+
+.row-btn-3:hover {
+  color: white !important;
+  background-color: steelblue !important;
+  border: 1px solid steelblue !important;
+  transition: 0.3s;
+}
+
+.row-btn-4 {
+  border: 1px solid #919ec3;
+  background-color: #e8f0ff;
+  color: #3b4a87;
+}
+
+.row-btn-4:hover {
+  color: #396bff;
+  background-color: #ffffff;
+  border: 1px solid #396bff;
+  transition: 0.3s;
+}
+
+.row-btn-5 {
     border: 1px solid #91aec3 !important;
     background-color: #e6f0f7 !important;
     color: #3b5987 !important;
 }
 
-.block-btn:hover,
-.block-cancel-btn:hover {
-    color: #396bff;
-    background-color: #ffffff;
-    border: 1px solid #396bff;
-    transition: 0.3s;
-}
-
-.block-btn:last-child:hover,
-.block-cancel-btn:last-child:hover {
+.row-btn-5:hover {
     color: #0099ff !important;
     background-color: #ffffff !important;
     border: 1px solid #00a6ff !important;
     transition: 0.3s;
+}
+
+.active-row {
+  border: 3px solid #5575ff !important;
+  border-radius: 5px;
+  color: #5575ff !important;
+  background-color: aliceblue;
 }

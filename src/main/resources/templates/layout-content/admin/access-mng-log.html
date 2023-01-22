@@ -107,9 +107,9 @@
                              th:data-value="${access.ip.ip}"></div>
                         <div class="uri" th:text="${access.uri}"></div>
                         <div class="reg-date" th:text="${#temporals.format(access.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
-                        <a class="btn" th:text="${ipObj.blacklist} == null ? 'IP 차단' : 'IP 차단 해제'"
+                        <a class="btn row-btn-1" th:text="${ipObj.blacklist} == null ? 'IP 차단' : 'IP 차단 해제'"
                         th:classappend="${ipObj.blacklist} == null ? 'block-btn' : 'block-cancel-btn'" data-type="ip"></a>
-                        <a class="btn" th:text="${member.blacklist} == null ? '계정 차단' : '계정 차단 해제'"
+                        <a class="btn row-btn-2" th:text="${member.blacklist} == null ? '계정 차단' : '계정 차단 해제'"
                         th:classappend="${member.blacklist} == null ? 'block-btn' : 'block-cancel-btn'" data-type="member"></a>
                     </row>
 

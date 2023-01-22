@@ -1,5 +1,6 @@
 package com.project.team.plice.dto.member;
 
+import com.project.team.plice.domain.admin.Authority;
 import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.member.Favorite;
 import com.project.team.plice.domain.member.Member;
@@ -25,6 +26,13 @@ public class MemberDto {
     private LocalDate delDate;
     private List<Favorite> favorite;
     private String profileImgPath;
+
+    private Long teamNumber;
+    private Boolean adminMng;
+    private Boolean memberMng;
+    private Boolean chatMng;
+    private Boolean postMng;
+    private Boolean inquiryMng;
 
     @Enumerated(EnumType.STRING)
     private MemberRole role;
@@ -76,4 +84,13 @@ public class MemberDto {
                 .build();
     }
 
+    public Authority getAuthorities(){
+        return Authority.builder()
+                .adminMng(this.adminMng)
+                .memberMng(this.memberMng)
+                .chatMng(this.chatMng)
+                .postMng(this.postMng)
+                .inquiryMng(this.inquiryMng)
+                .build();
+    }
 }
