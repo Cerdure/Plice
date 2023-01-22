@@ -136,8 +136,9 @@ public class Member implements UserDetails {
         this.nickname = nickname;
     }
 
-    public void updatePw(String pw){
+    public void updatePw(String pw) {
         this.pw = pw;
+    }
 
     public void updatePhone(String phone){
         this.phone = phone;

@@ -20,6 +20,10 @@ public interface MemberService {
     public Member findByPhone(String phone);
     public void update(Authentication authentication, MemberDto memberDto);
     public void update(MemberDto memberDto);
+    public void update(String phone, String pw);
     public void delete(Authentication authentication);
     public void delete(Long id);
+    public String checkPhone(String idInput);
+    public String checkNick(String nickInput);
+    public String certifiedPhoneNumber(String phoneNumber);
 }
