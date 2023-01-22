@@ -6,6 +6,7 @@ import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
 import com.project.team.plice.dto.utils.DataUtil;
 import com.project.team.plice.service.interfaces.AdminService;
+import com.project.team.plice.service.interfaces.FavoriteService;
 import com.project.team.plice.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class MapController {
 
     private final AdminService adminService;
     private final MapService mapService;
+    private final FavoriteService favoriteService;
 
     @GetMapping("/map")
     public String map(HttpServletRequest request, Authentication authentication, Model model) {
@@ -81,5 +83,12 @@ public class MapController {
             model.addAttribute("apartDataList", apartDataList);
         }
         return "layout-content/map/map :: #search-input-results";
+    }
+
+    @GetMapping("/map/favorite")
+    public boolean favoriteSave(@RequestParam("apartName") String apartName, Authentication authentication){
+        favoriteService.favoriteSave(apartName, authentication);
+        return true;
+
     }
 }

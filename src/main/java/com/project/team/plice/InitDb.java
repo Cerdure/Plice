@@ -26,7 +26,7 @@ public class InitDb {
 
     @PostConstruct
     public void init() {
-        initService.dbInit();
+//        initService.dbInit();
     }
 
     @Component
@@ -199,7 +199,7 @@ public class InitDb {
 
             memberChatRooms.add(MemberChatRoom.builder().chatRoom(chatRooms.get(1000)).member(members.get(0)).build());
 
-            memberChatRooms.forEach(memberChatRoom -> em.persist(memberChatRoom));
+           memberChatRooms.forEach(memberChatRoom -> em.persist(memberChatRoom));
         }
     }
 }

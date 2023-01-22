@@ -1,9 +1,12 @@
 package com.project.team.plice.domain.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.team.plice.domain.admin.AccessLog;
 import com.project.team.plice.domain.admin.Authority;
 import com.project.team.plice.domain.admin.Report;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.enums.MemberRole;
+import com.project.team.plice.domain.inquire.Inquire;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +20,6 @@ import java.util.List;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Member implements UserDetails {
 
     @Id @GeneratedValue
@@ -56,8 +58,17 @@ public class Member implements UserDetails {
 
     private String profileImgPath;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<MemberChatRoom> memberChatRoom;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<AccessLog> accessLogs;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Inquire> inquires;
 
     @PrePersist
     public void prePersist() {
@@ -66,7 +77,7 @@ public class Member implements UserDetails {
         this.regDate = this.regDate == null ? LocalDate.now() : this.regDate;
     }
     @Builder
-    public Member(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, MemberRole role, List<Favorite> favorite, List<Report> reports, Authority authority, String profileImgPath, List<MemberChatRoom> memberChatRoom) {
+    public Member(Long id, String phone, String pw, String name, String nickname, String birth, String sex, String email, LocalDate regDate, LocalDate delDate, MemberRole role, List<Favorite> favorite, List<Report> reports, Authority authority, String profileImgPath, List<MemberChatRoom> memberChatRoom, List<AccessLog> accessLogs) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
@@ -83,6 +94,7 @@ public class Member implements UserDetails {
         this.authority = authority;
         this.profileImgPath = profileImgPath;
         this.memberChatRoom = memberChatRoom;
+        this.accessLogs = accessLogs;
     }
 
     @Override
@@ -124,7 +136,9 @@ public class Member implements UserDetails {
     public void update(String name, String nickname) {
         this.name = name;
         this.nickname = nickname;
-
+    }
+    public void updatePw(String pw){
+        this.pw = pw;
     }
 
 

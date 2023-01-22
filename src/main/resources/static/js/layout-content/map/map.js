@@ -67,6 +67,10 @@ $(function () {
             moveToPlace(this);
         });
 
+        $(document).on("click", ".favorite-btn", function(){
+            fetch("/map/favorite?apartName=" + $(".apart-detail-wrapper .name").text()).then(console.log("success"));
+        });
+
         $(document).on("mouseover", ".item, .custom-overlay-apart", function () {
             pinOverlaies.forEach(e => e.setMap(null));
             const place = apartCoords[$(this).data('id')];
@@ -864,3 +868,16 @@ const formatPhoneNumber = (input) => {
 }
 
 
+$(function(){
+    $(".favorite-btn").click(function(){
+        (async () => {
+            const loginCheck = await fetch("/chat/login-check").then(res => res.text());
+            if(loginCheck == "ok"){
+                location.href = "/my-page";
+            } else {
+                alert('로그인 후 이용 가능합니다.');
+                location.href = "/login";
+            }
+        })();
+    });
+});

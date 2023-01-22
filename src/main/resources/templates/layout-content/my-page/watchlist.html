@@ -1,39 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
-    <link href="/bootstrap-5.3.0-alpha1-dist/bootstrap-5.3.0-alpha1-dist/css/" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="/css/layout-content/my-page/watchlist.css">
-    <title>Document</title>
-</head>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/layout-content/my-page/watchlist.css}">
+</th:block>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/layout-content/my-page/watchlist.js}"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 관심내역</title>
+</th:block>
 
-<body>
-    <div id="content">
-        <header>
-            <div class="logo-wrapper" onclick="location.href='/home'">
-                <img src="/img/logo/plice.png">
-                <div class="text">PLICE</div>
-            </div>
-            <span class="map" onclick="location.href='/map'">지도</span>
-            <span class="chat" onclick="location.href='/chat'">채팅</span>
-            <span class="post" onclick="location.href='/post'">이야기</span>
-            <span class="contents" onclick="location.href='/contents'">컨텐츠</span>
-            <span class="my-page" onclick="location.href='/my-page'">마이페이지</span>
-            <div class="login-wrapper">
-                <div class="login-btn" onclick="location.href='/login'">로그인</div>
-            </div>
-        </header>
-
+<div layout:fragment="content">
+    <div class="top-space"></div>
+    <div class="inquiry_wrapper">
         <div class="wrapper">
             <div>
                 <h1 class="title">MY PLICE</h1>
@@ -108,25 +90,8 @@
                 </div>
             </div>
         </div>
-        <footer>
-            <p>
-                (주)플라이스<br>
-                사업자 번호: 000-00-00000&nbsp&nbsp&nbsp&nbsp통신판매업신고번호 : 제2023-서울 영등포-00000호<br>
-                주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩<br><br>
-    
-                고객센터 : 02-0000-0000 | 평일 10:00 ~ 18:30, 점심시간 : 12:00 ~ 13:00 (토·일요일, 공휴일 휴무)<br>
-                팩스 : 02-000-0000&nbsp&nbsp&nbsp&nbsp프로모션/사업 제휴문의 : cerdure@gmail.com<br>
-                PLICE, Inc. All rights reserved.
-            </p>
-            <div class="icons">
-                <img src="/img/icon/instagram_mono.png">
-                <img src="/img/icon/facebook_mono.png">
-                <img src="/img/icon/blog_mono.png">
-                <img src="/img/icon/naverpost_mono.png">
-                <img src="/img/icon/youtube_mono.png">
-            </div>
-        </footer>
+
     </div>
-</body>
+</div>
 
 </html>
