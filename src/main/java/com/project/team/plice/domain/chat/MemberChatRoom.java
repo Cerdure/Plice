@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class MemberChatRoom {
 
     @Id @GeneratedValue

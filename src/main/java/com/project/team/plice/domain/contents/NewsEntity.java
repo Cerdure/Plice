@@ -1,4 +1,4 @@
-package com.project.team.plice.domain.news;
+package com.project.team.plice.domain.contents;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

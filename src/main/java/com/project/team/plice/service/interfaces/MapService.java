@@ -1,5 +1,6 @@
 package com.project.team.plice.service.interfaces;
 
+import com.project.team.plice.domain.admin.SearchKeyword;
 import com.project.team.plice.domain.data.TradeData;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
@@ -15,4 +16,6 @@ public interface MapService {
     public TradeData findTradeDataByAddress(String address);
     public List<AddressDataDto> findAddressDataByAddress(String val);
     public List<ApartDataDto> findApartByAddressOrName(String address, String name);
+    public void saveSearchKeyword(String searchKeyword);
+    public List<SearchKeyword> searchKeywordTop10();
 }

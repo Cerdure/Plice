@@ -1,4 +1,5 @@
 .meta-wrapper {
+  height: calc(100vh - 280px);
   display: flex;
   align-items: center;
   justify-content: center;

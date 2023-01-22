@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/layout-content/admin/post-mng.css">
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/js/layout-content/admin/post-mng.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 게시판 관리</title>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="top-space"></div>
+    <div class="modal-background"></div>
+
+    <div class="window-wrapper">
+        <div class="iframe-outer-box">
+            <div class="iframe-close">
+                <img src="/img/icon/close.png">
+            </div>
+            <div class="iframe-box">
+                <iframe class="post-window" src="/post/story-detail"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert-window block-alert">
+        <div class="info">
+            <div class="text">해당 계정을 차단하겠습니까?</div>
+            <div class="data"></div>
+            <div class="block-date-box">
+                <div class="label">차단 기간</div>
+                <select id="block-date">
+                    <option value="1">1개월</option>
+                    <option value="2">6개월</option>
+                    <option value="3">1년</option>
+                    <option value="4">3년</option>
+                    <option value="5">영구 차단</option>
+                </select>
+            </div>
+            <div class="block-reason-box">
+                <div class="label">차단 사유</div>
+                <select id="block-reason">
+                    <option value="부정 이용">부정 이용</option>
+                    <option value="부적절한 글·채팅 작성">부적절한 글·채팅 작성</option>
+                    <option value="타인 명의 도용">타인 명의 도용</option>
+                    <option value="기타 운영 규정 위반">기타 운영 규정 위반</option>
+                </select>
+            </div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="block()">확인</button>
+    </div>
+
+    <div class="alert-window del-alert">
+        <div class="info">
+            <div class="text">글을 삭제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="deletePost('story')">확인</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
+
+        <div class="right-side">
+            <div class="head" id="page-title" data-value="게시판 관리">ㅣ 게시판 관리</div>
+
+            <div class="body">
+
+                <div class="body-head">
+
+                    <div class="sub-head">
+                        <a class="text story-title active-text" href="/admin/post-mng/story" data-value="story">이야기</a>
+                        <a class="text notice-title" href="/admin/post-mng/notice" data-value="notice">공지사항</a>
+                    </div>
+
+                    <div class="search-wrapper">
+                        <form class="search">
+                            <div class="input-wrapper">
+                                <select class="search-by" name="search-by">
+                                    <option value="postId">게시글 관리 ID</option>
+                                    <option value="writer">작성자</option>
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                </select>
+                                <input class="search-input" type="text">
+                                <img class="reset" src="/img/icon/x-circle.svg">
+                                <img class="icon" src="/img/icon/search-icon.svg">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="contents row-box story-row-box">
+
+                    <div class="top">
+                        <div class="post-id">게시글 관리 ID</div>
+                        <div class="title">제목</div>
+                        <div class="member">작성자</div>
+                        <div class="reg-date">등록 일시</div>
+                        <div class="hits">조회수</div>
+                    </div>
+
+                    <row class="row story-row" th:each="post : ${posts}" th:id="${post.id}">
+                        <div id="id" th:text="${post.id}" th:data-value="${post.id}"></div>
+                        <div class="title" th:text="${post.title}"></div>
+                        <div class="member" th:text="${post.memberNickname}"></div>
+                        <div class="reg-date" th:text="${#temporals.format(post.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
+                        <div class="hits" th:text="${post.hits}"></div>
+                        <a class="btn row-btn-1 open-btn">게시글 보기</a>
+                        <a class="btn row-btn-2 del-btn">삭제</a>
+                    </row>
+
+                    <div class="pagination-wrapper">
+                        <span class="pagination"
+                            th:with="start=${T(java.lang.Math).floor(posts.number/10)*10 + 1}, last=(${posts.totalPages})">
+
+                            <a th:class="${posts.first} ? 'disable'"
+                                th:href="@{/admin/post-mng/story(page=${posts.number})}">
+                                <img class="controller-btn-left" src="/img/icon/btn_left.png">
+                            </a>
+
+                            <div class="index-box">
+                                <a th:href="@{/admin/post-mng/story(page=1)}"
+                                    th:if="${posts.totalPages < 4 ? false :posts.number > 1}" th:text="1"
+                                    aria-label="First">
+                                </a>
+
+                                <span th:if="${posts.totalPages < 4 ? false :posts.number > 1}">...</span>
+
+                                <a th:each="page: ${#numbers.sequence(start, last)}"
+                                    th:if="${posts.first ? (page == 0 ? false : page < posts.number + 4) :
+                                        (posts.last ? page > posts.number - 2 : (page < posts.number + 3) && (page > posts.number - 1))}"
+                                    th:class="${page == posts.number + 1} ? 'active-index'" th:text="${page}"
+                                    th:href="@{/admin/post-mng/story(page=${page})}">
+                                </a>
+
+                                <span
+                                    th:if="${posts.totalPages < 4 ? false :posts.number < posts.totalPages - 2}">...</span>
+
+                                <a th:href="@{/admin/post-mng/story(page=${posts.totalPages})}"
+                                    th:if="${posts.totalPages < 4 ? false :posts.number < posts.totalPages - 2}"
+                                    th:text="${posts.totalPages}" aria-label="Last">
+                                </a>
+                            </div>
+
+                            <a th:class="${posts.last} ? 'disable'"
+                                th:href="@{/admin/post-mng/story(page=${posts.number +2})}">
+                                <img class="controller-btn-right" src="/img/icon/btn_right.png">
+                            </a>
+
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

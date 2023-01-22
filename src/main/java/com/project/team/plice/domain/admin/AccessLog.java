@@ -21,7 +21,9 @@ public class AccessLog {
 
     private String uri;
 
-    private String ip;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IP_id")
+    private IP ip;
 
     private LocalDateTime regDate;
 
@@ -31,7 +33,7 @@ public class AccessLog {
     }
 
     @Builder
-    public AccessLog(Long id, Member member, String uri, String ip, LocalDateTime regDate) {
+    public AccessLog(Long id, Member member, String uri, IP ip, LocalDateTime regDate) {
         this.id = id;
         this.member = member;
         this.uri = uri;
