@@ -89,10 +89,10 @@ public class MapController {
 
 
     @GetMapping("/map/favorite")
-    public boolean favoriteSave(@RequestParam("apartName") String apartName, Authentication authentication){
+    public boolean favoriteSave(@RequestParam("apartName") String apartName, Authentication authentication) {
         favoriteService.favoriteSave(apartName, authentication);
         return true;
-
+    }
 
     @GetMapping("/map/keyword-save")
     public String keywordSave(@RequestParam("keyword") String keyword){
