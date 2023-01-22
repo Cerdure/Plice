@@ -1,8 +1,10 @@
 package com.project.team.plice.service.classes;
 
+import com.project.team.plice.domain.admin.SearchKeyword;
 import com.project.team.plice.domain.data.TradeData;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
+import com.project.team.plice.repository.admin.SearchKeywordRepository;
 import com.project.team.plice.repository.data.AddressDataRepository;
 import com.project.team.plice.repository.data.ApartDataRepository;
 import com.project.team.plice.repository.data.TradeDataRepository;
@@ -22,6 +24,7 @@ public class MapServiceImpl implements MapService {
     private final AddressDataRepository addressDataRepository;
     private final ApartDataRepository apartDataRepository;
     private final TradeDataRepository tradeDataRepository;
+    private final SearchKeywordRepository searchKeywordRepository;
 
     @Override
     public List<TradeData> findTradeData() {
@@ -58,5 +61,21 @@ public class MapServiceImpl implements MapService {
     public List<ApartDataDto> findApartByAddressOrName(String address, String name) {
         return apartDataRepository.findByAddressContainingIgnoreCaseAndNameContainingIgnoreCase(address, name).stream().map(e -> e.toDto())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveSearchKeyword(String searchKeyword) {
+        SearchKeyword keyword = searchKeywordRepository.findByKeywordContainsIgnoreCase(searchKeyword);
+        if(keyword == null){
+            searchKeywordRepository.save(SearchKeyword.builder().keyword(searchKeyword).build());
+        } else {
+            keyword.countPlus();
+            searchKeywordRepository.save(keyword);
+        }
+    }
+
+    @Override
+    public List<SearchKeyword> searchKeywordTop10() {
+        return searchKeywordRepository.findTop10ByOrderByCountDesc();
     }
 }

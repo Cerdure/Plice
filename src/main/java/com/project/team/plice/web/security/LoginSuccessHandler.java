@@ -1,6 +1,6 @@
 package com.project.team.plice.web.security;
 
-import com.project.team.plice.domain.enums.MemberRole;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -18,7 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
-public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+@RequiredArgsConstructor
+public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final RequestCache requestCache = new HttpSessionRequestCache();
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -32,19 +33,18 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         if (prevPage != null) {
             request.getSession().removeAttribute("prevPage");
         }
-        String uri = "/home";
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
-            || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"))){
+        String uri = "/login/block-check";
+
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
+                || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"))) {
             uri = "/admin";
         } else {
-            if (savedRequest != null) {
-                uri = savedRequest.getRedirectUrl();
-            } else if (prevPage != null && !prevPage.equals("")) {
-                if (prevPage.contains("/auth/join")) {
-                    uri = "/home";
-                } else {
-                    uri = prevPage;
+            if (prevPage != null && !prevPage.equals("")) {
+                if (savedRequest != null) {
+                    prevPage = savedRequest.getRedirectUrl();
                 }
+                prevPage = prevPage.substring("http://localhost:8080".length());
+                uri += "?prevPage=" + prevPage;
             }
         }
         redirectStrategy.sendRedirect(request, response, uri);

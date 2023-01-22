@@ -3,6 +3,7 @@ package com.project.team.plice.domain.admin;
 import com.project.team.plice.domain.chat.Chat;
 import com.project.team.plice.domain.member.Member;
 import lombok.*;
+import org.apache.xpath.operations.Bool;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,21 +30,25 @@ public class Report {
 
     private LocalDateTime regDate;
 
-    @OneToMany(mappedBy = "report")
-    private List<ReportAnswer> reportAnswers;
+    private Boolean complete;
 
     @PrePersist
     public void prePersist() {
         this.regDate = this.regDate == null ? LocalDateTime.now() : this.regDate;
+        this.complete = this.complete == null ? false : this.complete;
     }
 
     @Builder
-    public Report(Long id, Chat chat, Member reporter, String reason, LocalDateTime regDate, List<ReportAnswer> reportAnswers) {
+    public Report(Long id, Chat chat, Member reporter, String reason, LocalDateTime regDate, Boolean complete) {
         this.id = id;
         this.chat = chat;
         this.reporter = reporter;
         this.reason = reason;
         this.regDate = regDate;
-        this.reportAnswers = reportAnswers;
+        this.complete = complete;
+    }
+
+    public void changeComplete(Boolean state){
+        this.complete = state;
     }
 }

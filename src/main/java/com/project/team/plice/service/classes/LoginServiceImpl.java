@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -19,15 +21,16 @@ public class LoginServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
-        Member member = memberRepository.findByPhone(phone).get();
-        System.out.println("member.toString() = " + member.toString());
-        if (member == null) {
+        Optional<Member> optionalMember = memberRepository.findByPhone(phone);
+        if (optionalMember.isEmpty()) {
             throw new UsernameNotFoundException(phone);
+        } else {
+            Member member = optionalMember.get();
+            return User.builder()
+                    .username(member.getPhone())
+                    .password(member.getPw())
+                    .roles(member.getRole().toString())
+                    .build();
         }
-        return User.builder()
-                .username(member.getPhone())
-                .password(member.getPw())
-                .roles(member.getRole().toString())
-                .build();
     }
-    }
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/layout-content/admin/post-mng.css">
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/js/layout-content/admin/post-mng.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 게시판 관리</title>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="top-space"></div>
+    <div class="modal-background"></div>
+
+    <div class="window-wrapper">
+        <div class="iframe-outer-box">
+            <div class="iframe-close">
+                <img src="/img/icon/close.png">
+            </div>
+            <div class="iframe-box">
+                <iframe class="post-window" src="/post/story-detail"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notice-write-wrapper write-form-wrapper">
+        <form action="/admin/post-mng/notice" method="post" class="notice-write-form write-form">
+            <div class="head">
+                <span class="text">공지사항 등록</span>
+                <img class="close" src="/img/icon/close.png">
+            </div>
+            <div class="body">
+                <div class="title-wrapper">
+                    <div class="label">ㅣ 제목</div>
+                    <textarea name="title" class="title-input" maxlength="30" placeholder="제목을 입력하세요."></textarea>
+                </div>
+                <div class="content-wrapper">
+                    <div class="label">ㅣ내용</div>
+                    <div class="content-frame">
+                        <textarea name="content" class="content-input" maxlength="3000"
+                            placeholder="내용을 입력하세요."></textarea>
+                        <div class="count">0/3000</div>
+                    </div>
+                </div>
+            </div>
+            <button class="regist-button disable" type="submit">등록</button>
+        </form>
+    </div>
+
+    <div class="alert-window close-alert-wrapper">
+        <div class="info">
+            <div class="text">
+                작성한 내용은 저장되지 않습니다.<br>
+                취소하겠습니까?
+            </div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="formClose()">확인</button>
+    </div>
+
+    <div class="alert-window del-alert">
+        <div class="info">
+            <div class="text">글을 삭제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="deletePost('notice')">확인</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
+
+        <div class="right-side">
+            <div class="head" id="page-title" data-value="게시판 관리">ㅣ 게시판 관리</div>
+
+            <div class="body">
+
+                <div class="body-head">
+
+                    <div class="sub-head">
+                        <a class="text story-title" href="/admin/post-mng/story" data-value="story">이야기</a>
+                        <a class="text notice-title active-text" href="/admin/post-mng/notice" data-value="notice">공지사항</a>
+                    </div>
+
+                    <div class="search-wrapper">
+                        <form class="search">
+                            <div class="input-wrapper">
+                                <select class="search-by" name="search-by">
+                                    <option value="noticeId">게시글 관리 ID</option>
+                                    <option value="writer">작성자</option>
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                </select>
+                                <input class="search-input" type="text">
+                                <img class="reset" src="/img/icon/x-circle.svg">
+                                <img class="icon" src="/img/icon/search-icon.svg">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="create-btn">공지글 작성</div>
+
+                </div>
+
+
+                <div class="contents row-box notice-row-box">
+
+                    <div class="top">
+                        <div class="notice-id">게시글 관리 ID</div>
+                        <div class="title">제목</div>
+                        <div class="member">작성자</div>
+                        <div class="reg-date">등록 일시</div>
+                        <div class="hits">조회수</div>
+                    </div>
+
+                    <row class="row notice-row" th:each="notice : ${notices}" th:id="${notice.id}">
+                        <div id="id" th:text="${notice.id}" th:data-value="${notice.id}"></div>
+                        <div class="title" th:text="${notice.title}"></div>
+                        <div class="member" th:text="${notice.memberNickname}"></div>
+                        <div class="reg-date" th:text="${#temporals.format(notice.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
+                        <div class="hits" th:text="${notice.hits}"></div>
+                        <a class="btn row-btn-1 open-btn">공지글 보기</a>
+                        <a class="btn row-btn-3 mod-btn">수정</a>
+                        <a class="btn row-btn-2 del-btn">삭제</a>
+                    </row>
+
+                    <div class="pagination-wrapper">
+                        <span class="pagination"
+                              th:with="start=${T(java.lang.Math).floor(notices.number/10)*10 + 1}, last=(${notices.totalPages})">
+
+                            <a th:class="${notices.first} ? 'disable'"
+                               th:href="@{/admin/post-mng/notice(page=${notices.number})}">
+                                <img class="controller-btn-left" src="/img/icon/btn_left.png">
+                            </a>
+
+                            <div class="index-box">
+                                <a th:href="@{/admin/post-mng/notice(page=1)}"
+                                   th:if="${notices.totalPages < 4 ? false :notices.number > 1}" th:text="1"
+                                   aria-label="First">
+                                </a>
+
+                                <span th:if="${notices.totalPages < 4 ? false :notices.number > 1}">...</span>
+
+                                <a th:each="page: ${#numbers.sequence(start, last)}"
+                                   th:if="${notices.first ? (page == 0 ? false : page < notices.number + 4) :
+                                        (notices.last ? page > notices.number - 2 : (page < notices.number + 3) && (page > notices.number - 1))}"
+                                   th:class="${page == notices.number + 1} ? 'active-index'" th:text="${page}"
+                                   th:href="@{/admin/post-mng/notice(page=${page})}">
+                                </a>
+
+                                <span
+                                        th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}">...</span>
+
+                                <a th:href="@{/admin/post-mng/notice(page=${notices.totalPages})}"
+                                   th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}"
+                                   th:text="${notices.totalPages}" aria-label="Last">
+                                </a>
+                            </div>
+
+                            <a th:class="${notices.last} ? 'disable'"
+                               th:href="@{/admin/post-mng/notice(page=${notices.number +2})}">
+                                <img class="controller-btn-right" src="/img/icon/btn_right.png">
+                            </a>
+
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

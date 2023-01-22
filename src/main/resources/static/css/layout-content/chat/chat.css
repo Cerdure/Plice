@@ -440,6 +440,15 @@ body {
     white-space: break-spaces;
 }
 
+.report {
+    display: flex;
+    align-items: end;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 12px;
+    color: silver;
+}
+
 .my-chat {
     justify-content: end;
 }
@@ -959,4 +968,119 @@ body {
 
 .active-room .info .title .text {
     color: #fff389;
+}
+
+
+
+.alert-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 101;
+    text-align: center;
+    border: 1px solid silver;
+    display: none;
+  }
+  .alert-window .info{
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .alert-window .info .text {
+    margin-bottom: 10px;
+  }
+  .alert-window .info .data {
+    color: #ff0046;
+  }
+  .alert-window .cancel{
+    position: absolute;
+    bottom: 40px;
+    left: 50px;
+    width: 120px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: white;
+    color: #3b5987;
+    border: 1px solid #3b5987;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  .alert-window .cancel:hover{
+    background-color: #3b5987;
+    color: white;
+    transition: 0.5s;
+  }
+  .alert-window .okay{
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    width: 120px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: white;
+    color: #4169fc;
+    border: 1px solid #4169fc;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+  } 
+  .alert-window .okay:hover {
+    background-color: #4169fc;
+    color: white;
+    transition: 0.5s;
+  }
+  
+
+.report-alert {
+    height: 220px;
+}
+.report-alert .info {
+   top: 40%;
+}
+.report-alert .text {
+    margin: 20px !important;
+    color: #7990b1;
+}
+.report-alert .label {
+    text-align: start;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 900;
+}
+.report-alert select {
+    width: 250px;
+    height: 30px;
+    border: 1px solid #b5c8d5;
+}
+.report-reason-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.report-alert .cancel,
+.report-alert .okay {
+    bottom: 30px;
+}
+.complete-alert .text {
+    font-size: 18px;
+}
+.complete-alert .okay {
+    width: 160px;
+    right: 50%;
+    transform: translateX(50%);
 }

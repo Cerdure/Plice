@@ -9,23 +9,25 @@ import java.time.LocalDateTime;
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class ReportAnswer {
+public class Blacklist {
 
     @Id @GeneratedValue
-    @Column(name = "report_answer_id")
+    @Column(name = "black_list_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "report_id")
-    private Report report;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ip_id")
+    private IP ip;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
-    private Member admin;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    private String content;
+    private String reason;
 
     private LocalDateTime regDate;
+
+    private LocalDateTime expDate;
 
     @PrePersist
     public void prePersist() {
@@ -33,11 +35,12 @@ public class ReportAnswer {
     }
 
     @Builder
-    public ReportAnswer(Long id, Report report, Member admin, String content, LocalDateTime regDate) {
+    public Blacklist(Long id, IP ip, Member member, String reason, LocalDateTime regDate, LocalDateTime expDate) {
         this.id = id;
-        this.report = report;
-        this.admin = admin;
-        this.content = content;
+        this.ip = ip;
+        this.member = member;
+        this.reason = reason;
         this.regDate = regDate;
+        this.expDate = expDate;
     }
 }

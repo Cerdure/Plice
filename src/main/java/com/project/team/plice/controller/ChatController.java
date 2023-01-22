@@ -135,4 +135,9 @@ public class ChatController extends Socket {
     public Member loginInfo(Authentication authentication){
         return memberService.findByPhone(authentication.getName());
     }
+
+    @GetMapping("/chat/report")
+    public void chatReport(@RequestParam("chatId") Long chatId, @RequestParam("reason") String reason, Authentication authentication){
+        chatService.chatReport(chatId, reason, authentication);
+    }
 }
