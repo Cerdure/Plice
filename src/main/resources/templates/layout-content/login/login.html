@@ -5,9 +5,15 @@
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/layout-content/login/login.css">
+    <link rel="shortcut icon" href="/img/logo/plice.png">
+    <!--alert css-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 </th:block>
 <th:block layout:fragment="script">
     <script src="/js/layout-content/login/login.js"></script>
+    <script src="https://kit.fontawesome.com/6b7a2f6a5d.js"></script>
+    <!--alert - js-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 </th:block>
 <th:block layout:fragment="title">
     <title>PLICE ㅣ 로그인</title>
@@ -21,7 +27,7 @@
         <form action="/loginProc" method="post" class="login_info">
             <div class="login_user">
                 <label for="login_id">휴대폰 번호</label>
-                <input id="login_id" class="user" name="phone" placeholder="01012345678" onKeyup="onlyNumber(this)" />
+                <input id="login_id" class="user" name="phone" placeholder="가입번호 11자 입력(-제외)" onKeyup="onlyNumber(this)" minlength="11" maxlength="11"/>
                 <label for="login_pwd">비밀번호</label>
                 <input id="login_pwd" class="user" name="pw" type="password" placeholder="비밀번호 입력" />
             </div>
@@ -29,13 +35,13 @@
                 <a class="login_join_btn btn" href="/sign-up">회원가입</a>
                 <a class="login_repwd_btn btn">비밀번호 재설정</a>
             </div>
-            <input class="login_btn" type="submit" value="로그인" />
+            <input class="login_btn" type="submit" value="로그인"/>
 
             <div class="login_sns">
                 <div class="border"></div>
                 <div class="top_text">간편 로그인</div>
                 <div class="btn_box">
-                    <img class="kakao" src="/img/icon/kakao-icon-color.svg"/>
+                    <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e5e6ade0bec33d3ac174b2c9710cc440&redirect_uri=http://localhost:8080/login/oauth2/code/kakao "><img class="kakao" src="/img/icon/kakao-icon-color.svg"/></a>
                     <img class="naver" src="/img/icon/naver-icon-color.svg"/>
                     <img class="google" src="/img/icon/google-icon-color.png"/>
                 </div>
@@ -45,21 +51,22 @@
         <div class="pwd_find_container">
             <div class="pwd_find_header">
                 <h1 class="pwd_find_title">비밀번호 재설정</h1>
-                <i class="fas fa-times fa-2x"></i>
+                <i class="fas fa-times fa-lg"></i>
             </div>
-            <div class="pwd_find_email">
+            <div class="pwd_find_phone">
                 <h5 class="pwd_find_subtitle">
-                    가입한 이메일 정보 입력 후 인증 메일 받기를 클릭하세요.
+                    가입한 번호 정보 입력 후 인증번호 받기를 클릭하세요.
                 </h5>
-                <input class="pwd_find_check_input" type="email" placeholder="이메일" />
+                <input class="pwd_find_check_input" placeholder="가입번호 11자 입력해주세요(-제외)" minlength="11" maxlength="11"/>
                 <div class="accept_opt">
                     <label for="accept_code" id="code_text">인증번호 확인 :</label>
-                    <input placeholder="인증번호를 입력해주세요." id="accept_code" />
-                    <button class="accept_btn">확인</button>
+                    <input placeholder="인증번호를 입력해주세요." id="accept_code" minlength="6" maxlength="6"/>
+                    <button class="accept_btn" disabled>확인</button>
                 </div>
             </div>
-            <button type="submit" class="pwd_find_btn">인증메일 받기</button>
+            <button class="pwd_find_btn">인증번호 받기</button>
         </div>
+
     </main>
 </div>
 

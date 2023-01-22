@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/layout-content/join/join-success.css">
+    <link rel="shortcut icon" href="/img/logo/plice.png">
+</th:block>
+<th:block layout:fragment="script">
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 축하</title>
+</th:block>
+
+<div layout:fragment="content">
+<main class="success_container">
+    <div class="success_img">
+        <img src="/img/images/congratulations.png" alt="logo" />
+    </div>
+    <div class="success_text">
+        <h1 class="title text_m">Plice 회원가입을 축하합니다.</h1>
+        <h5 class="sub_title text_m">Welcome to Plice</h5>
+        <p class="success_paragraph text_m">안전한 거래, 거짓없는 정보로 회원분들에게 부동산 거래를 응원합니다.</p>
+    </div>
+    <button onclick="location.href='/home'" class="home_btn">홈으로</button>
+</main>
+</div>
+
+</html>

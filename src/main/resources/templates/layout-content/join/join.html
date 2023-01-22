@@ -5,6 +5,7 @@
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/layout-content/join/join.css">
+    <link rel="shortcut icon" href="/img/logo/plice.png">
 </th:block>
 <th:block layout:fragment="script">
     <script src="/js/layout-content/join/join.js"></script>
@@ -18,42 +19,44 @@
     <main class="join_container">
     <h1 class="join_title">회원정보 입력</h1>
     <h3 class="join_subtitle">Plice 서비스 이용을 위해 아래 정보를 입력해주세요.</h3>
-    <form id="join_form" action="#" method="post">
+    <form id="join_form" action="/join" method="post">
         <label for="join_id" class="join_id_label">
             아이디<span class="id_success_text hidden_text"></span><span class="id_failed_text hidden_text"></span>
             <div class="phone_accept">
                 <input id="join_id" placeholder="전화번호(-제외 11자) 입력" onKeyup="joinId(this)" minlength="11" maxlength="11" name="phone" class="update_btn" />
-                <button class="id_btn disable">인증번호</button>
+                <button class="id_btn disable" id="send">인증번호</button>
             </div>
         </label>
 
-        <label class="accept_number">
-            인증번호
+        <label class="accept_number">인증번호
             <div class="accept_container">
                 <span id="timer">00:00</span>
-                <input class="accept_input" placeholder="인증번호" />
-                <button class="accept_btn">확인</button>
+                <input class="accept_input" placeholder="인증번호" id="sms" name="sms" minlength="6" maxlength="6"/>
+                <button class="accept_btn" id="enterBtn">확인</button>
             </div>
         </label>
 
         <label for="join_name" class="join_name_label">
             이름
             <input id="join_name" placeholder="한글만(2~3자)" onKeyup="joinName(this)" minlength="2" maxlength="3" name="name" class="update_btn" />
-            <span class="name_success_text hidden_text"> 정상 확인 되었습니다. </span>
+            <span class="name_success_text hidden_text"> 정상 확인 </span>
             <span class="name_failed_text hidden_text">다시 작성해주세요.</span>
         </label>
+
         <label for="join_nick" class="join_nick_label">
             닉네임
             <input id="join_nick" placeholder="한글 또는 영문만(3~10자 이내)" onKeyup="joinNick(this)" minlength="3" maxlength="10" name="nickname" class="update_btn" />
-            <span class="nick_success_text hidden_text"> 정상 확인 되었습니다. </span>
-            <span class="nick_failed_text hidden_text">다시 작성해주세요.</span>
+            <span class="nick_success_text hidden_text"></span>
+            <span class="nick_failed_text hidden_text"></span>
         </label>
+
         <label for="join_pwd" class="join_pwd_label">
             비밀번호
             <input type="password" id="join_pwd" placeholder="문자, 숫자, 특수문자 포함(8~16자)" minlength="8" maxlength="16" name="pw" class="update_btn" />
             <span class="pwd_success_text hidden_text"></span>
             <span class="pwd_failed_text hidden_text"></span>
         </label>
+
         <label for="join_repwd" class="join_repwd_label">
             비밀번호 확인
             <input type="password" id="join_repwd" placeholder="비밀번호 확인" minlength="8" maxlength="16" class="update_btn" />
@@ -66,12 +69,13 @@
             <span class="yy_success_text hidden_text"></span>
             <span class="yy_failed_text hidden_text"></span>
         </label>
+
         <div class="join_birth">
             <input class="birth_1 update_btn" id="yy" onKeyup="joinYY(this)" name="birth" minlength="6" maxlength="6" placeholder="1234567" />
             <span class="birth_line">―</span>
             <input class="birth_2" placeholder="●●●●●●●" readonly />
         </div>
-        <!--  -->
+
         <button class="join_btn" disabled>
             <strong>확인</strong>
         </button>
