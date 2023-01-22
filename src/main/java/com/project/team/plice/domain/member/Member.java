@@ -1,12 +1,14 @@
 package com.project.team.plice.domain.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.team.plice.domain.admin.AccessLog;
 import com.project.team.plice.domain.admin.AdminTeam;
 import com.project.team.plice.domain.admin.Authority;
 import com.project.team.plice.domain.admin.Blacklist;
 import com.project.team.plice.domain.admin.Report;
 import com.project.team.plice.domain.chat.MemberChatRoom;
 import com.project.team.plice.domain.enums.MemberRole;
+import com.project.team.plice.domain.inquire.Inquire;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -73,7 +75,7 @@ public class Member implements UserDetails {
         this.regDate = this.regDate == null ? LocalDate.now() : this.regDate;
     }
 
-    @Builder
+ @Builder
     public Member(Long id, String phone, String pw, String name, String nickname, String birth, LocalDate regDate, LocalDate delDate, MemberRole role, List<Favorite> favorite, List<Report> reports, Authority authority, String profileImgPath, List<MemberChatRoom> memberChatRoom, Blacklist blacklist, AdminTeam adminTeam) {
         this.id = id;
         this.phone = phone;
@@ -133,6 +135,9 @@ public class Member implements UserDetails {
         this.name = name;
         this.nickname = nickname;
     }
+
+    public void updatePw(String pw){
+        this.pw = pw;
 
     public void updatePhone(String phone){
         this.phone = phone;

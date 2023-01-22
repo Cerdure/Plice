@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,10 +80,17 @@ public class MemberServiceImpl implements MemberService {
     public void update(Authentication authentication, MemberDto memberDto) {
         String phone = authentication.getName();
         Member member = memberRepository.findByPhone(phone).get();
-        member.update(memberDto.getName(),
-                memberDto.getNickname());
+            member.update(memberDto.getName(),
+                        memberDto.getNickname());
+            if(memberDto.getPw() != null && memberDto.getPw() != ""){
+            member.updatePw(passwordEncoder.encode(memberDto.getPw()));
+            }
         memberRepository.save(member);
-    }
+        System.out.println("member = " + memberDto.getPw());
+
+        }
+
+
 
     @Override
     @Transactional
