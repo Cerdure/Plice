@@ -5,8 +5,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/default}">
 
-<th:block layout:fragment="css"><link rel="stylesheet" href="/css/layout-content/story/story.css"></th:block>
-<th:block layout:fragment="script"><script src="/js/layout-content/story/story.js"></script></th:block>
+<th:block layout:fragment="css"><link rel="stylesheet" href="/css/layout-content/post/post-story.css"></th:block>
+<th:block layout:fragment="script"><script src="/js/layout-content/post/post-story.js"></script></th:block>
 <th:block layout:fragment="title"><title>PLICE ㅣ 이야기</title></th:block>
 
 <div layout:fragment="content">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="regist-button disable" onclick="formSubmit(this)">등록</div>
+            <button type="submit" class="regist-button disable">등록</button>
         </form>
     </div>
     <!-- 이야기 등록 폼   끝-->
@@ -52,6 +52,7 @@
     </div>
     <!-- 취소 알림창  끝-->
 
+
     <div class="meta-wrapper">
 
         <div class="meta-title">
@@ -64,7 +65,7 @@
             <div class="text">이야기</div>
         </div>
 
-        <div class="tag-wrapper notice-tag-wrapper">
+        <div class="tag-wrapper notice-tag-wrapper" onclick="location.href='post-notice'">
             <div class="tag notice-tag"></div>
             <div class="text">공지사항</div>
         </div>
@@ -107,15 +108,15 @@
                     </div>
                     <div class="table-body">
 
-                        <a class="table-row" href="/story-detail" th:each="posts,i : ${posts}" th:href="${'/story-detail?id='+posts.id}">
-                            <div class="number" th:text="${i.count}"></div>
+                        <a class="table-row" href="/story-detail" th:each="post,i : ${posts}" th:href="${'/story-detail?id='+post.id}">
+                            <div class="number" th:text="${post.id}"></div>
                             <div class="title">
-                                <div class="text" th:text="${posts.title}"></div>
-                                <div class="reply-number" th:text="${posts.replies.size()}"></div> <!-- ${posts.replies?.size()} == ${x.replies == null ? '' : x.replies.size()}, 널값 처리.  -->
+                                <div class="text" th:text="${post.title}"></div>
+                                <div class="reply-number" th:text="${post.replies.size()}"></div> <!-- ${x.replies?.size()} == ${x.replies == null ? '' : x.replies.size()}, 널값 처리.  -->
                             </div>
-                            <div class="writer" th:text="${posts.memberNickname}"></div>
-                            <div class="reg-date" th:text="${posts.regDate}"></div>
-                            <div class="hits" th:text="${posts.hits}"></div>
+                            <div class="writer" th:text="${post.memberNickname}"></div>
+                            <div class="reg-date" th:text="${#temporals.format(post.regDate, 'yyyy.MM.dd')}"></div>
+                            <div class="hits" th:text="${post.hits}"></div>
                         </a>
 
                     </div>
@@ -125,66 +126,16 @@
                 </div>
             </div>
 
-
-            <div class="notice-frame">
-                <div class="head">
-                    <div class="count-wrapper">
-                        <div class="count" th:text="${notices.getTotalPages()}"></div>
-                        <div class="unit">건</div>
-                    </div>
-                    <div class="search-wrapper">
-                        <form action="" class="search">
-                            <select name="searchBy" class="search-by">
-                                <option value="nickname">작성자</option>
-                                <option value="title">제목</option>
-                                <option value="content">내용</option>
-                            </select>
-                            <input type="text" placeholder="검색어를 입력하세요.">
-                            <img class="reset" src="/img/icon/x-circle.svg">
-                            <img class="icon" src="/img/icon/search-icon.svg">
-                        </form>
-                    </div>
-                    <div class="write-btn-wrapper">
-                        <div class="write-btn notice-write-btn">
-                            <img src="/img/icon/pencil-square.svg">
-                            <div class="text" sec:authorize="hasRole('ADMIN')">공지 등록</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="body">
-                    <div class="table-head">
-                        <div class="number">번호</div>
-                        <div class="title">제목</div>
-                        <div class="writer">작성자</div>
-                        <div class="reg-date">등록일</div>
-                        <div class="hits">조회수</div>
-                    </div>
-
-                    <div class="table-body">
-
-                        <a class="table-row" href='/notice-detail' th:each="notice,i : ${notices}" th:href="${'/notice-detail?id='+notice.id}">
-                            <div class="number" th:text="${i.count}"></div>
-                            <div class="title">
-                                <div class="text" th:text="${notice.title}"></div>
-                            </div>
-                            <div class="writer" th:text="${notice.memberNickname}"></div>
-                            <div class="reg-date" th:text="${notice.regDate}"></div>
-                            <div class="hits" th:text="${notice.hits}">0</div>
-                        </a>
-
-                    </div>
-
-                    <div class="story-controller">
+                    <div class="post-controller">
                       <span class="controller"
                             th:with="start=${T(java.lang.Math).floor(posts.number/10)*10 + 1}, last=(${posts.totalPages})">
 
                          <a th:class="${posts.first} ? 'disable'"
-                            th:href="@{/story(page=${posts.number})}">
+                            th:href="@{/post-story(page=${posts.number})}">
                            <img class="controller-btn-left" src="/img/icon/btn_left.png">
                          </a>
 
-                        <a th:href="@{/story(page=1)}"
+                        <a th:href="@{/post-story(page=1)}"
                            th:if="${posts.totalPages < 4 ? false :posts.number > 1}"
                            th:text="1" aria-label="First">
                         </a>
@@ -195,18 +146,18 @@
                             th:if="${posts.first ? (page == 0 ? false : page < posts.number + 4) :
                             (posts.last ? page > posts.number - 2 : (page < posts.number + 3) && (page > posts.number - 1))}"
                             th:class="${page == posts.number + 1} ? 'index-active'"
-                            th:text="${page}" th:href="@{/story(page=${page})}">
+                            th:text="${page}" th:href="@{/post-story(page=${page})}">
                          </a>
 
                         <span th:if="${posts.totalPages < 4 ? false :posts.number < posts.totalPages - 2}">...</span>
 
-                        <a th:href="@{/story(page=${posts.totalPages})}"
+                        <a th:href="@{/post-story(page=${posts.totalPages})}"
                            th:if="${posts.totalPages < 4 ? false :posts.number < posts.totalPages - 2}"
                            th:text="${posts.totalPages}" aria-label="Last" >
                         </a>
 
                         <a th:class="${posts.last} ? 'disable'"
-                           th:href="@{/story(page=${posts.number +2})}">
+                           th:href="@{/post-story(page=${posts.number +2})}">
                           <img class="controller-btn-right" src="/img/icon/btn_right.png">
                         </a>
 

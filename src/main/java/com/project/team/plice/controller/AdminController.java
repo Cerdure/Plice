@@ -157,6 +157,7 @@ public class AdminController {
         return "layout-content/admin/member-mng";
     }
 
+
     @GetMapping("/admin/member-mod")
     public String memberMod(@ModelAttribute MemberDto memberDto) {
         memberService.update(memberDto);
