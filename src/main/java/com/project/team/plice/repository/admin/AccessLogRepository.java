@@ -15,6 +15,6 @@ public interface AccessLogRepository extends JpaRepository<AccessLog, Long> {
     public Page<AccessLog> findAllByOrderByRegDateDesc(Pageable pageable);
     public List<AccessLog> findByRegDateAfter(LocalDateTime localDateTime);
     public Page<AccessLog> findById(Long id, Pageable pageable);
-    public Page<AccessLog> findByMember(Member member, Pageable pageable);
+    public Page<AccessLog> findByMemberId(Long memberId, Pageable pageable);
     public Page<AccessLog> findByIp(IP ip, Pageable pageable);
 }

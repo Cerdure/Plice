@@ -88,14 +88,14 @@
                         <form class="search">
                             <div action="/admin/inquiry-mng" class="input-wrapper">
                                 <select name="searchBy" class="search-by">
-                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">문의 관리 ID</option>
-                                    <option value="type" th:selected="${dataUtil?.searchBy} == 'type'">문의 유형</option>
-                                    <option value="title" th:selected="${dataUtil?.searchBy} == 'title'">제목</option>
-                                    <option value="memberId" th:selected="${dataUtil?.searchBy} == 'memberId'">작성자 ID
+                                    <option value="id" th:selected="${searchUtils?.searchBy} == 'id'">문의 관리 ID</option>
+                                    <option value="type" th:selected="${searchUtils?.searchBy} == 'type'">문의 유형</option>
+                                    <option value="title" th:selected="${searchUtils?.searchBy} == 'title'">제목</option>
+                                    <option value="memberId" th:selected="${searchUtils?.searchBy} == 'memberId'">작성자 ID
                                     </option>
                                 </select>
                                 <input name="keyword" class="search-input" type="text" placeholder="검색어를 입력하세요."
-                                    th:value="${dataUtil?.keyword}">
+                                    th:value="${searchUtils?.keyword}">
                                 <img class="reset" src="/img/icon/x-circle.svg"
                                     onclick="location.href='/admin/inquiry-mng'">
                                 <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">

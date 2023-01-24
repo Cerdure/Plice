@@ -108,9 +108,8 @@ $(function () {
     $(document).on("click", ".my-comment .edit", function () {
       $(this).closest(".my-comment").find(".option").hide();
       origin = $(this).closest(".my-comment").find(".body");
-      originText = origin.text(); console.log(originText);
+      originText = origin.text();
       if (origin.find("strong").text() == '') {
-        console.log('if')
         commentBodyText = origin.text();
       } else {
         commentBodyText = origin.text().substring(origin.text().indexOf(" ") + 1, origin.text().length);

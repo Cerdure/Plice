@@ -3,10 +3,10 @@ package com.project.team.plice.service.classes;
 import com.project.team.plice.domain.inquire.Inquire;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.inquire.InquireDto;
+import com.project.team.plice.dto.utils.SearchUtils;
 import com.project.team.plice.repository.inquire.InquireRepository;
 import com.project.team.plice.service.interfaces.InquireService;
 import com.project.team.plice.service.interfaces.MemberService;
-import com.project.team.plice.utils.DataUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -75,11 +75,11 @@ public class InquireServiceImpl implements InquireService {
     }
 
     @Override
-    public Page<Inquire> searchInquire(DataUtil dataUtil, Pageable pageable) {
+    public Page<Inquire> searchInquire(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        String keyword = dataUtil.getKeyword();
-        switch (dataUtil.getSearchBy()) {
+        String keyword = searchUtils.getKeyword();
+        switch (searchUtils.getSearchBy()) {
             case "id":
                 return inquireRepository
                         .findById(Long.parseLong(keyword), pageable);
@@ -90,8 +90,7 @@ public class InquireServiceImpl implements InquireService {
                 return inquireRepository
                         .findByTitleContainsIgnoreCase(keyword, pageable);
             case "memberId":
-                return inquireRepository
-                        .findByMember(memberService.findById(Long.parseLong(keyword)), pageable);
+                return inquireRepository.findByMemberId(Long.parseLong(keyword), pageable);
         }
         throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
     }

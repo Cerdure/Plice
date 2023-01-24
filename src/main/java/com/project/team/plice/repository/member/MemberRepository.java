@@ -21,6 +21,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     public Page<Member> findByNameContainsIgnoreCaseAndRoleIn(String name, List<MemberRole> roles, Pageable pageable);
     public Page<Member> findByNicknameContainsIgnoreCaseAndRoleIn(String nickname, List<MemberRole> roles, Pageable pageable);
     public Long countByRegDate(LocalDate regDate);
-    public List<Member> findByRegDateAfter(LocalDate regDate);
-    public Long countByRegDateBefore(LocalDate regDate);
 }

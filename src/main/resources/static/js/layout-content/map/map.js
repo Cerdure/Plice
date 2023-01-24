@@ -259,7 +259,6 @@ $(function () {
 
     function appendApartList() {
         (async () => {
-            console.log("appendApart")
             let endNum = currentItemsIdx + 12 <= apartDataList.length ? currentItemsIdx + 12 : apartDataList.length;
             $(".item-wrapper .loading").stop().show();
             if (update) {
@@ -765,7 +764,6 @@ function moveToPlace(_this) {
     (async () => {
         $(".search-result-wrapper").hide();
         $(".search-result-outer-wrapper").hide();
-        console.log(_this)
         if ($(_this).prop('tagName') == 'DIV') {
             searchType = 'apt';
             keyword = $(_this).data("value");

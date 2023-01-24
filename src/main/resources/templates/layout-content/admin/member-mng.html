@@ -77,13 +77,13 @@
                         <form class="search" action="/admin/member-mng">
                             <div class="input-wrapper">
                                 <select class="search-by" name="searchBy">
-                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">회원 관리 ID</option>
-                                    <option value="phone" th:selected="${dataUtil?.searchBy} == 'phone'">전화번호</option>
-                                    <option value="name" th:selected="${dataUtil?.searchBy} == 'name'">이름</option>
-                                    <option value="nickname" th:selected="${dataUtil?.searchBy} == 'nickname'">닉네임
+                                    <option value="id" th:selected="${searchUtils?.searchBy} == 'id'">회원 관리 ID</option>
+                                    <option value="phone" th:selected="${searchUtils?.searchBy} == 'phone'">전화번호</option>
+                                    <option value="name" th:selected="${searchUtils?.searchBy} == 'name'">이름</option>
+                                    <option value="nickname" th:selected="${searchUtils?.searchBy} == 'nickname'">닉네임
                                     </option>
                                 </select>
-                                <input class="search-input" name="keyword" type="text" th:value="${dataUtil?.keyword}">
+                                <input class="search-input" name="keyword" type="text" th:value="${searchUtils?.keyword}">
                                 <img class="reset" src="/img/icon/x-circle.svg"
                                     onclick="location.href='/admin/member-mng'">
                                 <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">

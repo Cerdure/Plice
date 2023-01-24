@@ -1,7 +1,7 @@
 package com.project.team.plice.controller;
 
 import com.project.team.plice.dto.contents.ArticleDto;
-import com.project.team.plice.dto.utils.SearchParamUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import com.project.team.plice.service.interfaces.AdminService;
 import com.project.team.plice.service.interfaces.ContentsService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class ContentsController {
     @GetMapping("/contents")
     public String contents(HttpServletRequest request, Authentication authentication, Model model) {
         adminService.logAccess(request, authentication);
-        SearchParamUtil searchParams = SearchParamUtil.builder()
+        SearchUtils searchParams = SearchUtils.builder()
                 .keyword("아파트 매매")
                 .page(1)
                 .totalPage(4)
@@ -39,7 +39,7 @@ public class ContentsController {
 
 
     @GetMapping("/contents/search")
-    public String search(@ModelAttribute SearchParamUtil searchParams, Model model) throws Exception {
+    public String search(@ModelAttribute SearchUtils searchParams, Model model) throws Exception {
         searchParams.setTotalPage(4);
         searchParams.setSort("sim");
         List<ArticleDto> searchResults = contentsService.search(searchParams);

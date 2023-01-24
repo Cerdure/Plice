@@ -1,5 +1,6 @@
 package com.project.team.plice.controller;
 
+import com.project.team.plice.domain.admin.AccessLog;
 import com.project.team.plice.domain.admin.Report;
 import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.member.Member;
@@ -8,7 +9,7 @@ import com.project.team.plice.dto.inquire.AnswerDto;
 import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.dto.post.NoticeDto;
 import com.project.team.plice.service.interfaces.*;
-import com.project.team.plice.utils.DataUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -147,16 +148,16 @@ public class AdminController {
     }
 
     @GetMapping("/admin/member-mng")
-    public String memberMng(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String memberMng(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             List<MemberRole> memberRoles = new ArrayList<>();
             memberRoles.add(MemberRole.USER);
             model.addAttribute("members", memberService.findByRoles(memberRoles, pageable));
         } else {
             List<MemberRole> memberRoles = new ArrayList<>();
             memberRoles.add(MemberRole.USER);
-            model.addAttribute("members", memberService.searchMember(dataUtil, memberRoles, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("members", memberService.searchMember(searchUtils, memberRoles, pageable));
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/member-mng";
     }
@@ -174,45 +175,47 @@ public class AdminController {
     }
 
     @GetMapping("/admin/access-mng/log")
-    public String accessMngLog(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String accessMngLog(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             model.addAttribute("accessList", adminService.findAllAccessLog(pageable));
         } else {
-            model.addAttribute("accessList", adminService.searchAccessLog(dataUtil, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            Page<AccessLog> accessLogs = adminService.searchAccessLog(searchUtils, pageable);
+            System.out.println("accessLogs = " + accessLogs);
+            model.addAttribute("accessList", accessLogs);
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/access-mng-log";
     }
 
     @GetMapping("/admin/access-mng/member")
-    public String accessMngBlacklistMember(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String accessMngBlacklistMember(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             model.addAttribute("memberBlacklists", adminService.findAllMemberBlacklist(pageable));
         } else {
-            model.addAttribute("memberBlacklists", adminService.searchMemberBlacklist(dataUtil, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("memberBlacklists", adminService.searchMemberBlacklist(searchUtils, pageable));
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/access-mng-member";
     }
 
     @GetMapping("/admin/access-mng/ip")
-    public String accessMngBlacklistIp(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String accessMngBlacklistIp(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             model.addAttribute("ipBlacklists", adminService.findAllIpBlacklist(pageable));
         } else {
-            model.addAttribute("ipBlacklists", adminService.searchIpBlacklist(dataUtil, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("ipBlacklists", adminService.searchIpBlacklist(searchUtils, pageable));
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/access-mng-ip";
     }
 
     @GetMapping("/admin/chat-mng")
-    public String chatMng(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String chatMng(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             model.addAttribute("reports", adminService.findAllReport(pageable));
         } else {
-            model.addAttribute("reports", adminService.searchReport(dataUtil, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("reports", adminService.searchReport(searchUtils, pageable));
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/chat-mng";
     }
@@ -236,12 +239,12 @@ public class AdminController {
     }
 
     @GetMapping("/admin/post-mng/story")
-    public String postMngStory(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String postMngStory(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             model.addAttribute("posts", postService.findAllPost(pageable));
         } else {
-            model.addAttribute("posts", postService.searchPost(dataUtil, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("posts", postService.searchPost(searchUtils, pageable));
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/post-mng-story";
     }
@@ -260,12 +263,12 @@ public class AdminController {
     }
 
     @GetMapping("/admin/post-mng/notice")
-    public String postMngNotice(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String postMngNotice(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             model.addAttribute("notices", postService.findAllNotice(pageable));
         } else {
-            model.addAttribute("notices", postService.searchNotice(dataUtil, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("notices", postService.searchNotice(searchUtils, pageable));
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/post-mng-notice";
     }
@@ -303,12 +306,12 @@ public class AdminController {
     }
 
     @GetMapping("/admin/inquiry-mng")
-    public String inquiryMng(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
-        if (dataUtil.getKeyword() == null) {
+    public String inquiryMng(@ModelAttribute SearchUtils searchUtils, Model model, Pageable pageable) {
+        if (searchUtils.getKeyword() == null) {
             model.addAttribute("inquiries", inquireService.findAllInquire(pageable));
         } else {
-            model.addAttribute("inquiries", inquireService.searchInquire(dataUtil, pageable));
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("inquiries", inquireService.searchInquire(searchUtils, pageable));
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/admin/inquiry-mng";
     }

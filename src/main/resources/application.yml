@@ -5,11 +5,7 @@ spring:
     username: root
     password: 1234
 
-#  profiles:
-#    include: oauth
-
   jpa:
-#    open-in-view: false
     hibernate:
 #      ddl-auto: create
       ddl-auto: update
@@ -31,7 +27,6 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-#  org.hibernate.type: trace
 
 thymeleaf:
   cache: false
@@ -44,4 +39,3 @@ server:
   servlet:
     session:
       tracking-modes: cookie
-  port: 8080

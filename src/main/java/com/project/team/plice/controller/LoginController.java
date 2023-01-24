@@ -59,7 +59,6 @@ public class LoginController {
     @GetMapping("/login/pwd-find")
     @ResponseBody
     public String findPwd(@RequestParam("findPwd") String findPwd) {
-        System.out.println("findPwd = " + findPwd);
         return memberService.checkPhone(findPwd);
     }
 
@@ -78,7 +77,6 @@ public class LoginController {
     @GetMapping("/login/check")
     @ResponseBody
     public String idCheck(@RequestParam("idInput") String idInput) {
-        System.out.println("idInput = " + idInput);
         return memberService.checkPhone(idInput);
     }
 

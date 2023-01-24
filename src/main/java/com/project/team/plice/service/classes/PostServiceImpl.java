@@ -9,7 +9,7 @@ import com.project.team.plice.repository.post.NoticeRepository;
 import com.project.team.plice.repository.post.PostRepository;
 import com.project.team.plice.service.interfaces.MemberService;
 import com.project.team.plice.service.interfaces.PostService;
-import com.project.team.plice.utils.DataUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -68,11 +68,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> searchPost(DataUtil dataUtil, Pageable pageable) {
+    public Page<Post> searchPost(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        String keyword = dataUtil.getKeyword();
-        switch (dataUtil.getSearchBy()) {
+        String keyword = searchUtils.getKeyword();
+        switch (searchUtils.getSearchBy()) {
             case "id":
                 return postRepository.findById(Long.parseLong(keyword), pageable);
             case "nickname":
@@ -127,11 +127,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Notice> searchNotice(DataUtil dataUtil, Pageable pageable) {
+    public Page<Notice> searchNotice(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        String keyword = dataUtil.getKeyword();
-        switch (dataUtil.getSearchBy()) {
+        String keyword = searchUtils.getKeyword();
+        switch (searchUtils.getSearchBy()) {
             case "id":
                 return noticeRepository.findById(Long.parseLong(keyword), pageable);
             case "nickname":

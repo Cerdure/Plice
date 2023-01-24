@@ -166,7 +166,6 @@ function drawPieChart() {
     var chart = new google.visualization.PieChart(document.getElementById('day-chart'));
     chart.draw(data, options);
     const texts = $("#day-chart g text").get();
-    console.log(texts)
   })();
 }
 

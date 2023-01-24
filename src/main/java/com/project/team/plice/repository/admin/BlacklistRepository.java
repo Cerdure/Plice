@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BlacklistRepository extends JpaRepository<Blacklist, Long> {
     public Page<Blacklist> findAllByMemberNotNullOrderByRegDateDesc(Pageable pageable);
     public Page<Blacklist> findByIdAndMemberNotNull(Long id, Pageable pageable);
-    public Page<Blacklist> findByMember(Member member, Pageable pageable);
+    public Page<Blacklist> findByMemberId(Long memberId, Pageable pageable);
     public Blacklist findByMember(Member member);
     public Page<Blacklist> findAllByIpNotNullOrderByRegDateDesc(Pageable pageable);
     public Page<Blacklist> findByIdAndIpNotNull(Long id, Pageable pageable);

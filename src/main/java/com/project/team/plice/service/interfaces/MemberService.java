@@ -3,7 +3,7 @@ package com.project.team.plice.service.interfaces;
 import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.member.MemberDto;
-import com.project.team.plice.utils.DataUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -20,7 +20,7 @@ public interface MemberService {
     public Page<Member> findByRoles(List<MemberRole> roles, Pageable pageable);
     public Member findById(Long memberId);
     public Member findByPhone(String phone);
-    public Page<Member> searchMember(DataUtil dataUtil, List<MemberRole> roles, Pageable pageable);
+    public Page<Member> searchMember(SearchUtils searchUtils, List<MemberRole> roles, Pageable pageable);
 
     public void update(Authentication authentication, MemberDto memberDto);
     public void update(MemberDto memberDto);

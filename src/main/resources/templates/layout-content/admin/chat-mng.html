@@ -103,12 +103,12 @@
                         <form class="search">
                             <div class="input-wrapper">
                                 <select class="search-by" name="searchBy">
-                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">신고 관리 ID</option>
-                                    <option value="reporterId" th:selected="${dataUtil?.searchBy} == 'reporterId'">신고자
+                                    <option value="id" th:selected="${searchUtils?.searchBy} == 'id'">신고 관리 ID</option>
+                                    <option value="reporterId" th:selected="${searchUtils?.searchBy} == 'reporterId'">신고자
                                         ID</option>
                                 </select>
                                 <input class="search-input" name="keyword" type="text" placeholder="검색어를 입력하세요."
-                                    th:value="${dataUtil?.keyword}">
+                                    th:value="${searchUtils?.keyword}">
                                 <img class="reset" src="/img/icon/x-circle.svg"
                                     onclick="location.href='/admin/chat-mng'">
                                 <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">

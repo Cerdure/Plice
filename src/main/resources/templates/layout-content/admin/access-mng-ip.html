@@ -41,11 +41,11 @@
                         <form class="search">
                             <div class="input-wrapper">
                                 <select class="search-by" name="searchBy">
-                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">차단 관리 ID</option>
-                                    <option value="ip" th:selected="${dataUtil?.searchBy} == 'ip'">IP</option>
+                                    <option value="id" th:selected="${searchUtils?.searchBy} == 'id'">차단 관리 ID</option>
+                                    <option value="ip" th:selected="${searchUtils?.searchBy} == 'ip'">IP</option>
                                 </select>
                                 <input class="search-input" name="keyword" type="text" placeholder="검색어를 입력하세요."
-                                    th:value="${dataUtil?.keyword}">
+                                    th:value="${searchUtils?.keyword}">
                                 <img class="reset" src="/img/icon/x-circle.svg"
                                     onclick="location.href='/admin/access-mng/ip'">
                                 <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">
@@ -62,7 +62,7 @@
                         <div class="exp-date">만료 일시</div>
                     </div>
                     <row class="member-blacklist row" th:each="blacklist : ${ipBlacklists}" th:id="${blacklist.id}"
-                        th:with="ipObj=${blacklist.ip}">
+                        th:with="ipObj=${blacklist.ip}" th:if="${ipObj}">
                         <div class="blacklist-id" th:text="${blacklist.id}"></div>
                         <div id="ip" class="ip" th:text="${ipObj.ip}" th:data-value="${ipObj.ip}"></div>
                         <div class="reason" th:text="${blacklist.reason}"></div>

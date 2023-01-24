@@ -23,7 +23,6 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String uri = "/login";
         if (exception instanceof LockedException) {
-            System.out.println("request = " + request.getRemoteAddr());
             uri = "/login/blocked";
         }
         redirectStrategy.sendRedirect(request, response, uri);

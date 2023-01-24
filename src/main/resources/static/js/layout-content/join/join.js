@@ -53,7 +53,6 @@ $(function () {
       const nickRgx = /^[가-힣|a-z|A-Z]{3,10}$/;
       const nickInput = document.querySelector("#join_nick").value;
       const result = await fetch("/join/nick-check?nickInput=" + nickInput).then(res => res.text());
-      console.log(result);
       if (result != "ok") {
         if (nickRgx.test(nickInput)) {
           $(".nick_success_text").css("display", "inline").html("닉네임 등록이 가능합니다.");
@@ -83,15 +82,11 @@ $(function () {
       const idRgx = /01[016789][0-9]{4}[0-9]{4}/;
       const joinNumber = document.querySelector("#join_id").value;
       const result = await fetch("/login/check?idInput=" + joinNumber).then(res => res.text());
-      console.log(result);
       if (result != "ok") {
         const accNumber = await fetch("/login/send-message?phone=" + joinNumber).then(res => res.json());
-        console.log("accNumber = " + accNumber);
         $("#join_form .accept_container #enterBtn").click(function (e) {
           e.preventDefault();
-          console.log("accNumber = " + accNumber);
           const accUser = $("#join_form .accept_container #sms").val();
-          console.log("accUser = " + accUser);
           if (accNumber == accUser) {
             alert("인증번호가 일치합니다.");
             $("#join_form .accept_number").fadeOut(500);

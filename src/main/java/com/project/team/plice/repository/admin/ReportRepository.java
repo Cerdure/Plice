@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
     public Page<Report> findById(Long id, Pageable pageable);
-    public Page<Report> findByReporter(Member reporter, Pageable pageable);
+    public Page<Report> findByReporterId(Long reporterId, Pageable pageable);
 }

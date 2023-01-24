@@ -45,14 +45,12 @@ public class JoinController {
     @GetMapping("/join/check")
     @ResponseBody
     public String idCheck(@RequestParam("idInput") String idInput) {
-        System.out.println("idInput = " + idInput);
         return memberService.checkPhone(idInput);
     }
 
     @GetMapping("/join/nick-check")
     @ResponseBody
     public String nickCheck(@RequestParam("nickInput") String nickInput) {
-        System.out.println("nickInput = " + nickInput);
         return memberService.checkNick(nickInput);
     }
 

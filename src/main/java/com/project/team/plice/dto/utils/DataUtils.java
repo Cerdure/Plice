@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class DataUtil {
+public class DataUtils {
     private Integer tradeCount;
     private TradeData tradeMax;
     private TradeData tradeMin;

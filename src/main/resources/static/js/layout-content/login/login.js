@@ -20,7 +20,6 @@ $(function () {
             const idRgx = /01[016789][0-9]{4}[0-9]{4}/;
             const idInput = document.querySelector(".pwd_find_container .pwd_find_check_input").value;
             const result = await fetch("/login/check?idInput=" + idInput).then(res => res.text());
-            console.log(result);
             if (result != "ok") {
                 $(".accept_opt").fadeOut(300);
                 $(".pwd_find_check_input").css("border", "1px solid red");
@@ -31,18 +30,15 @@ $(function () {
                 $(".pwd_find_check_input").css("border", "1px solid #1a5ae8").attr("readonly", true);
                 $(".pwd_find_btn").css("background-color", "#1a5ae8").css("color", "white").html("문자인증을 진행해주세요.");
                 $(".pwd_find_container .accept_opt .accept_btn").attr("disabled", false).css("background-color", "#1a5ae8").css("color", "white");
-                console.log("인증번호 - accNumber = " + accNumber);
                 $(".pwd_find_container .accept_opt .accept_btn").click(function (e) {
                     e.preventDefault();
                     const userNum = $("#accept_code").val();
                     if (userNum == accNumber) {
                         alert("인증번호가 일치합니다.");
-                        console.log("일치할 때 userNum = " + userNum);
                         location.href = "/login/update?phone=" + $(".pwd_find_container .pwd_find_check_input").val();
                     } else {
                         alert("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
                         $("#accept_code").val("").focus();
-                        console.log("일치하지 않을 때 userNum = " + userNum);
                     }
                     if (userNum == "") {
                         alert("인증번호를 입력해주세요");

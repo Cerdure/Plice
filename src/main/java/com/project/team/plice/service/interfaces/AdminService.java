@@ -9,7 +9,7 @@ import com.project.team.plice.dto.admin.BlockDto;
 import com.project.team.plice.dto.inquire.AnswerDto;
 import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.dto.post.NoticeDto;
-import com.project.team.plice.utils.DataUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,7 @@ public interface AdminService {
     public void logAccess(HttpServletRequest request, Authentication authentication);
     public void initLogAccess();
     public Page<AccessLog> findAllAccessLog(Pageable pageable);
-    public Page<AccessLog> searchAccessLog(DataUtil dataUtil, Pageable pageable);
+    public Page<AccessLog> searchAccessLog(SearchUtils searchUtils, Pageable pageable);
     public AccessLog findLastAccess(Member member);
 
     public Map<LocalDate, Long> logCountByDay(int range, String page);
@@ -44,11 +44,11 @@ public interface AdminService {
     public Page<Blacklist> findAllMemberBlacklist(Pageable pageable);
     public Page<Blacklist> findAllIpBlacklist(Pageable pageable);
     public Blacklist findBlacklistByIp(String ip);
-    public Page<Blacklist> searchMemberBlacklist(DataUtil dataUtil, Pageable pageable);
-    public Page<Blacklist> searchIpBlacklist(DataUtil dataUtil, Pageable pageable);
+    public Page<Blacklist> searchMemberBlacklist(SearchUtils searchUtils, Pageable pageable);
+    public Page<Blacklist> searchIpBlacklist(SearchUtils searchUtils, Pageable pageable);
 
     public Page<Report> findAllReport(Pageable pageable);
-    public Page<Report> searchReport(DataUtil dataUtil, Pageable pageable);
+    public Page<Report> searchReport(SearchUtils searchUtils, Pageable pageable);
     public void reportHandler(Long reportId, boolean state);
 
     public List<Member> findAllAdmin();

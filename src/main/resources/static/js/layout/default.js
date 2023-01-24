@@ -71,9 +71,7 @@ let selectIp,
 function formSubmit(_this) {
     const form = $(_this).closest("form");
     const textareas = form.find("textarea").get();
-    textareas.forEach(e => console.log('bf ' + e.value))
     textareas.forEach(e => { e.value = e.value.replace(/\n/g, "<br>") });
-    textareas.forEach(e => console.log('af' + e.value))
     form.submit();
 }
 

@@ -8,7 +8,7 @@ import com.project.team.plice.dto.post.ReplyDto;
 import com.project.team.plice.service.classes.PostServiceImpl;
 import com.project.team.plice.service.classes.ReplyServiceImpl;
 import com.project.team.plice.service.interfaces.AdminService;
-import com.project.team.plice.utils.DataUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -30,15 +30,15 @@ public class PostController {
     private final ReplyServiceImpl replyService;
 
     @GetMapping("/post/story")
-    public String post(@ModelAttribute DataUtil dataUtil, HttpServletRequest request, Authentication authentication, Model model, Pageable pageable) {
+    public String post(@ModelAttribute SearchUtils searchUtils, HttpServletRequest request, Authentication authentication, Model model, Pageable pageable) {
         adminService.logAccess(request, authentication);
-        if (dataUtil.getKeyword() == null) {
+        if (searchUtils.getKeyword() == null) {
             Page<Post> posts = postService.findAllPost(pageable);
             model.addAttribute("posts", posts);
         } else {
-            Page<Post> posts = postService.searchPost(dataUtil, pageable);
+            Page<Post> posts = postService.searchPost(searchUtils, pageable);
             model.addAttribute("posts", posts);
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/post/post-story";
     }
@@ -93,15 +93,15 @@ public class PostController {
     }
 
     @GetMapping("/post/notice")
-    public String notice(@ModelAttribute DataUtil dataUtil, HttpServletRequest request, Authentication authentication, Model model, Pageable pageable) {
+    public String notice(@ModelAttribute SearchUtils searchUtils, HttpServletRequest request, Authentication authentication, Model model, Pageable pageable) {
         adminService.logAccess(request, authentication);
-        if (dataUtil.getKeyword() == null) {
+        if (searchUtils.getKeyword() == null) {
             Page<Notice> notices = postService.findAllNotice(pageable);
             model.addAttribute("notices", notices);
         } else {
-            Page<Notice> notices = postService.searchNotice(dataUtil, pageable);
+            Page<Notice> notices = postService.searchNotice(searchUtils, pageable);
             model.addAttribute("notices", notices);
-            model.addAttribute("dataUtil", dataUtil);
+            model.addAttribute("searchUtils", searchUtils);
         }
         return "layout-content/post/post-notice";
     }

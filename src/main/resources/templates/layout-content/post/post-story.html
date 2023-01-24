@@ -72,11 +72,11 @@
                     <div class="search-wrapper">
                         <form action="/post/story" class="search">
                             <select name="searchBy" class="search-by">
-                                <option value="nickname" th:selected="${dataUtil?.searchBy} == 'nickname'">작성자</option>
-                                <option value="title" th:selected="${dataUtil?.searchBy} == 'title'">제목</option>
-                                <option value="content" th:selected="${dataUtil?.searchBy} == 'content'">내용</option>
+                                <option value="nickname" th:selected="${searchUtils?.searchBy} == 'nickname'">작성자</option>
+                                <option value="title" th:selected="${searchUtils?.searchBy} == 'title'">제목</option>
+                                <option value="content" th:selected="${searchUtils?.searchBy} == 'content'">내용</option>
                             </select>
-                            <input name="keyword" type="text" placeholder="검색어를 입력하세요." th:value="${dataUtil?.keyword}">
+                            <input name="keyword" type="text" placeholder="검색어를 입력하세요." th:value="${searchUtils?.keyword}">
                             <img class="reset" src="/img/icon/x-circle.svg">
                             <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">
                         </form>

@@ -30,7 +30,7 @@ $(function () {
 
 function complete(state, clickType, _this) {
   (async () => {
-    let reportId; console.log(clickType)
+    let reportId;
     switch (clickType) {
       case 0:
         reportId = $(_this).closest(".row").find("#report-id").data("value");

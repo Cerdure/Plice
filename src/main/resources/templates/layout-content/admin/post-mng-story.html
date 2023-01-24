@@ -155,14 +155,14 @@
                         <form class="search">
                             <div action="/admin/post-mng/story" class="input-wrapper">
                                 <select name="searchBy" class="search-by">
-                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">게시글 관리 ID</option>
-                                    <option value="nickname" th:selected="${dataUtil?.searchBy} == 'nickname'">작성자
+                                    <option value="id" th:selected="${searchUtils?.searchBy} == 'id'">게시글 관리 ID</option>
+                                    <option value="nickname" th:selected="${searchUtils?.searchBy} == 'nickname'">작성자
                                     </option>
-                                    <option value="title" th:selected="${dataUtil?.searchBy} == 'title'">제목</option>
-                                    <option value="content" th:selected="${dataUtil?.searchBy} == 'content'">내용</option>
+                                    <option value="title" th:selected="${searchUtils?.searchBy} == 'title'">제목</option>
+                                    <option value="content" th:selected="${searchUtils?.searchBy} == 'content'">내용</option>
                                 </select>
                                 <input name="keyword" class="search-input" type="text" placeholder="검색어를 입력하세요."
-                                    th:value="${dataUtil?.keyword}">
+                                    th:value="${searchUtils?.keyword}">
                                 <img class="reset" src="/img/icon/x-circle.svg"
                                     onclick="location.href='/admin/post-mng/story'">
                                 <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">

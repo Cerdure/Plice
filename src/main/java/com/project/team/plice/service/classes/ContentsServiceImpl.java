@@ -4,7 +4,7 @@ import com.project.team.plice.dto.contents.ArticleDto;
 import com.project.team.plice.dto.contents.NaverClient;
 import com.project.team.plice.dto.contents.SearchNewsReq;
 import com.project.team.plice.dto.contents.SearchNewsRes;
-import com.project.team.plice.dto.utils.SearchParamUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import com.project.team.plice.service.interfaces.ContentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,7 @@ public class ContentsServiceImpl implements ContentsService {
 
     private final NaverClient naverClient;
 
-    public List<ArticleDto> search(SearchParamUtil searchParams) {
-        System.out.println("searchParams = " + searchParams);
+    public List<ArticleDto> search(SearchUtils searchParams) {
         SearchNewsReq req = SearchNewsReq.builder()
                 .query(searchParams.getKeyword())
                 .start(searchParams.getPage())
@@ -40,7 +39,6 @@ public class ContentsServiceImpl implements ContentsService {
             articleDto.setPage(searchNewsRes.getStart());
             articleDto.setTotalPage(totalPage > 1000 ? 1000 : totalPage);
         });
-        System.out.println("articleDtos = " + articleDtos.get(0).getTotalPage());
         return articleDtos;
 
     }

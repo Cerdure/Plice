@@ -1,7 +1,6 @@
 $(function () {
     $('.bottom_contents').click(function () {
         const inquiryBox = $(this).parent().find('#inquiry_box');
-        console.log("click")
         if (inquiryBox.css('display') == 'none') {
             inquiryBox.css('display', 'block');
         } else {

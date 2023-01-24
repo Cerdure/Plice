@@ -4,7 +4,7 @@ import com.project.team.plice.domain.post.Notice;
 import com.project.team.plice.domain.post.Post;
 import com.project.team.plice.dto.post.NoticeDto;
 import com.project.team.plice.dto.post.PostDto;
-import com.project.team.plice.utils.DataUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -16,7 +16,7 @@ public interface PostService {
     public Post findPostById(Long id);
     public Post findPrevPost(Post post);
     public Post findNextPost(Post post);
-    public Page<Post> searchPost(DataUtil dataUtil, Pageable pageable);
+    public Page<Post> searchPost(SearchUtils searchUtils, Pageable pageable);
     public void savePost(PostDto postDto, Authentication authentication);
     public void updatePost(PostDto postDto);
     public void deletePost(Long id);
@@ -24,7 +24,7 @@ public interface PostService {
 
     public Page <Notice> findAllNotice(Pageable pageable);
     public Notice findNoticeById(Long id);
-    public Page<Notice> searchNotice(DataUtil dataUtil, Pageable pageable);
+    public Page<Notice> searchNotice(SearchUtils searchUtils, Pageable pageable);
     public void saveNotice(NoticeDto noticeDto, Authentication authentication);
     public void updateNotice(NoticeDto noticeDto);
     public void deleteNotice(Long id);

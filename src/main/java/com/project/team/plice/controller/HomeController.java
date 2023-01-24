@@ -1,6 +1,6 @@
 package com.project.team.plice.controller;
 
-import com.project.team.plice.dto.utils.SearchParamUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import com.project.team.plice.service.interfaces.AdminService;
 import com.project.team.plice.service.interfaces.ChatService;
 import com.project.team.plice.service.interfaces.ContentsService;
@@ -27,7 +27,7 @@ public class HomeController {
     @GetMapping(value = {"/", "/home"})
     public String home(HttpServletRequest request, Authentication authentication, Model model) {
         adminService.logAccess(request, authentication);
-        SearchParamUtil searchParams = SearchParamUtil.builder()
+        SearchUtils searchParams = SearchUtils.builder()
                 .keyword("아파트 매매").page(1).totalPage(4).sort("sim").build();
         model.addAttribute("chatRooms", chatService.findTop3ChatRooms());
         model.addAttribute("articles", contentsService.search(searchParams));

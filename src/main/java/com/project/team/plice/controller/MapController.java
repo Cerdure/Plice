@@ -4,7 +4,7 @@ import com.project.team.plice.domain.data.TradeData;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
-import com.project.team.plice.dto.utils.DataUtil;
+import com.project.team.plice.dto.utils.DataUtils;
 import com.project.team.plice.service.interfaces.AdminService;
 import com.project.team.plice.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +33,11 @@ public class MapController {
         adminService.logAccess(request, authentication);
         List<TradeData> priceDescList = mapService.findAllTradeDataOrderByPriceDesc();
         List<TradeData> priceAscList = mapService.findAllTradeDataOrderByPriceAsc();
-        DataUtil dataUtil = new DataUtil();
-        dataUtil.setTradeCount(priceDescList.size());
-        dataUtil.setTradeMax(priceDescList.get(0));
-        dataUtil.setTradeMin(priceAscList.get(0));
-        model.addAttribute("dataUtil", dataUtil);
+        DataUtils dataUtils = new DataUtils();
+        dataUtils.setTradeCount(priceDescList.size());
+        dataUtils.setTradeMax(priceDescList.get(0));
+        dataUtils.setTradeMin(priceAscList.get(0));
+        model.addAttribute("dataUtils", dataUtils);
         model.addAttribute("searchKeywords", mapService.searchKeywordTop10());
         if (request.getParameter("keyword") != null) {
             model.addAttribute("keyword", request.getParameter("keyword"));

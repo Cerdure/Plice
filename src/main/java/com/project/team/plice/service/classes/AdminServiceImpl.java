@@ -18,7 +18,7 @@ import com.project.team.plice.repository.post.PostRepository;
 import com.project.team.plice.service.interfaces.AdminService;
 import com.project.team.plice.service.interfaces.InquireService;
 import com.project.team.plice.service.interfaces.MemberService;
-import com.project.team.plice.utils.DataUtil;
+import com.project.team.plice.dto.utils.SearchUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -348,17 +348,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<AccessLog> searchAccessLog(DataUtil dataUtil, Pageable pageable) {
+    public Page<AccessLog> searchAccessLog(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        String keyword = dataUtil.getKeyword();
-        switch (dataUtil.getSearchBy()) {
+        String keyword = searchUtils.getKeyword();
+        switch (searchUtils.getSearchBy()) {
             case "id":
                 return accessLogRepository
                         .findById(Long.parseLong(keyword), pageable);
             case "memberId":
                 return accessLogRepository
-                        .findByMember(memberService.findById(Long.parseLong(keyword)), pageable);
+                        .findByMemberId(Long.parseLong(keyword), pageable);
             case "ip":
                 return accessLogRepository
                         .findByIp(ipRepository.findByIp(keyword), pageable);
@@ -372,27 +372,25 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<Blacklist> searchMemberBlacklist(DataUtil dataUtil, Pageable pageable) {
+    public Page<Blacklist> searchMemberBlacklist(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        String keyword = dataUtil.getKeyword();
-        switch (dataUtil.getSearchBy()) {
+        String keyword = searchUtils.getKeyword();
+        switch (searchUtils.getSearchBy()) {
             case "id":
-                return blacklistRepository
-                        .findByIdAndMemberNotNull(Long.parseLong(keyword), pageable);
+                return blacklistRepository.findByIdAndMemberNotNull(Long.parseLong(keyword), pageable);
             case "memberId":
-                return blacklistRepository
-                        .findByMember(memberService.findById(Long.parseLong(keyword)), pageable);
+                return blacklistRepository.findByMemberId(Long.parseLong(keyword), pageable);
         }
         throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
     }
 
     @Override
-    public Page<Blacklist> searchIpBlacklist(DataUtil dataUtil, Pageable pageable) {
+    public Page<Blacklist> searchIpBlacklist(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        String keyword = dataUtil.getKeyword();
-        switch (dataUtil.getSearchBy()) {
+        String keyword = searchUtils.getKeyword();
+        switch (searchUtils.getSearchBy()) {
             case "id":
                 return blacklistRepository
                         .findByIdAndIpNotNull(Long.parseLong(keyword), pageable);
@@ -411,16 +409,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<Report> searchReport(DataUtil dataUtil, Pageable pageable) {
+    public Page<Report> searchReport(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        String keyword = dataUtil.getKeyword();
-        switch (dataUtil.getSearchBy()) {
+        String keyword = searchUtils.getKeyword();
+        switch (searchUtils.getSearchBy()) {
             case "id":
                 return reportRepository.findById(Long.parseLong(keyword), pageable);
             case "reporterId":
-                return reportRepository
-                        .findByReporter(memberService.findById(Long.parseLong(keyword)), pageable);
+                return reportRepository.findByReporterId(Long.parseLong(keyword), pageable);
         }
         throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
     }
