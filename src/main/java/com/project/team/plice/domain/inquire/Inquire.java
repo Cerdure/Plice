@@ -10,7 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Inquire {
 
@@ -25,16 +26,16 @@ public class Inquire {
 
     private String title;
 
-    @Size(max=10000)
+    @Size(max = 10000)
     private String content;
 
     private String type;
 
-    private Integer isAnswered;  // 답변 여부 (0,1)
+    private Integer isAnswered;
 
     private LocalDateTime regDate;
 
-    @OneToOne(mappedBy = "inquire")
+    @OneToOne(mappedBy = "inquire", orphanRemoval = true)
     private Answer answer;
 
     @PrePersist
@@ -55,11 +56,11 @@ public class Inquire {
         this.answer = answer;
     }
 
-    public void changeIsAnswered(Integer isAnswered){
+    public void changeIsAnswered(Integer isAnswered) {
         this.isAnswered = isAnswered;
     }
 
-    public void changeInquire(String content,String title, String type) {
+    public void changeInquire(String content, String title, String type) {
         this.title = title;
         this.content = content;
         this.type = type;

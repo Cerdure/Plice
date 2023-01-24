@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class IP {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "IP_id")
     private Long id;
 

@@ -107,10 +107,10 @@ function youtubeUpdate(clickType, _this) {
     (async () => {
         $(".youtube-wrapper .loading").fadeIn(0);
 
-        let keyword, page = '', 
+        let keyword, page = '',
             url = "https://www.googleapis.com/youtube/v3/search"
-            + "?key=AIzaSyDIgbt4H6nuG9fR7exf9067MGNk1DQa8C4"
-            + "&part=snippet&maxResults=4&regionCode=KR&chart=mostPopular";
+                + "?key=AIzaSyDIgbt4H6nuG9fR7exf9067MGNk1DQa8C4"
+                + "&part=snippet&maxResults=4&regionCode=KR&chart=mostPopular";
         // AIzaSyCLqtyChxbeBX49wVfHFo726QVBTWdRbFE 
         // AIzaSyDg3HhsyLwHbvR_okr6UND03D5cI27EHsk 
         // AIzaSyBG-5Krvf-tRP-0pqFCzNpuFUUb8opOw3c

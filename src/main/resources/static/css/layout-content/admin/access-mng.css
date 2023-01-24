@@ -1,4 +1,4 @@
-@media only screen and (max-width:1400px) {
+@media only screen and (max-width: 1400px) {
     body {
         width: 1385px;
     }
@@ -223,8 +223,9 @@
     text-align: center;
     border: 1px solid silver;
     display: none;
-  }
-  .alert-window .info{
+}
+
+.alert-window .info {
     position: absolute;
     top: 35%;
     left: 50%;
@@ -232,14 +233,17 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-  }
-  .alert-window .info .text {
+}
+
+.alert-window .info .text {
     margin-bottom: 10px;
-  }
-  .alert-window .info .data {
+}
+
+.alert-window .info .data {
     color: #ff0046;
-  }
-  .alert-window .cancel{
+}
+
+.alert-window .cancel {
     position: absolute;
     bottom: 40px;
     left: 50px;
@@ -254,13 +258,15 @@
     font-size: 16px;
     font-weight: 900;
     cursor: pointer;
-  }
-  .alert-window .cancel:hover{
+}
+
+.alert-window .cancel:hover {
     background-color: #3b5987;
     color: white;
     transition: 0.5s;
-  }
-  .alert-window .okay{
+}
+
+.alert-window .okay {
     position: absolute;
     bottom: 40px;
     right: 50px;
@@ -275,42 +281,48 @@
     font-size: 16px;
     font-weight: 900;
     cursor: pointer;
-  } 
-  .alert-window .okay:hover {
+}
+
+.alert-window .okay:hover {
     background-color: #4169fc;
     color: white;
     transition: 0.5s;
-  }
-  
+}
+
 
 .block-alert {
     height: 260px;
 }
+
 .block-alert .info .data {
-    margin-bottom: 20px;    
+    margin-bottom: 20px;
 }
+
 .block-date-box {
     display: flex;
     padding-left: 60px;
     margin-bottom: 10px;
 }
+
 .block-alert .label {
     width: 80px;
     text-align: start;
     display: flex;
     align-items: center;
 }
+
 .block-alert select {
     width: 160px;
     height: 30px;
     border: 1px solid #b5c8d5;
 }
+
 .block-reason-box {
     display: flex;
     padding-left: 60px;
 }
+
 .block-alert .cancel,
 .block-alert .okay {
     bottom: 30px;
 }
-  

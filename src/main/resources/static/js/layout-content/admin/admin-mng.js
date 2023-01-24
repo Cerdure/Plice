@@ -9,7 +9,10 @@ $(function () {
         cache: 'no-cache',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: $("#detail-form").serialize()
-      }).then(res => res.text());
+      }).then(res => {
+        alert("저장되었습니다.");
+        return res.text();
+      });
       $(".accounts-wrapper").replaceWith(result);
     })();
   });

@@ -46,51 +46,61 @@ body {
     flex-direction: column;
     padding: 40px;
 }
+
 .row-container {
     display: flex;
     width: 100%;
     height: 500px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 40px;
 }
+
 .row-container:last-child {
     box-shadow: none;
     overflow: visible;
 }
+
 .hits-chart-box {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
+
 .hits-chart-box .title-box {
     width: 100%;
     display: flex;
     padding: 40px;
     padding-bottom: 0;
 }
+
 .hits-chart-box .title {
     width: 100%;
     display: flex;
     margin-bottom: 20px;
 }
+
 .chart-type {
     display: flex;
 }
+
 .chart-type .type {
     font-size: 20px;
     margin-right: 20px;
     white-space: nowrap;
 }
+
 .chart-type .type:last-child {
     margin-right: 120px;
 }
+
 .active-text {
     color: #4f72ff;
     font-weight: 900;
 }
+
 .hits-chart-box .title .text {
     display: flex;
     align-items: center;
@@ -192,11 +202,11 @@ body {
 }
 
 #day-chart path {
-    filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
 }
 
 #day-chart circle {
-    filter: drop-shadow(0 0 1px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8));
 }
 
 .join-chart-box {
@@ -206,17 +216,19 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
     margin-right: 40px;
     border-radius: 10px;
     overflow: hidden;
 }
+
 .join-chart-box .title-box {
     width: 100%;
     display: flex;
     padding: 40px;
     padding-bottom: 0;
 }
+
 .join-chart-box .title {
     width: 100%;
     font-size: 20px;
@@ -227,13 +239,15 @@ body {
     width: 100%;
     height: 100%;
 }
+
 .search-chart-box {
     width: 70%;
     height: 100%;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     overflow: hidden;
 }
+
 .search-chart-box .title {
     font-size: 20px;
     font-weight: 900;
@@ -246,11 +260,11 @@ body {
     height: 100%;
     padding: 100px 40px;
     padding-top: 0;
-    filter: drop-shadow(0, 0, 5px rgba(0,0,0,0.3));
+    filter: drop-shadow(0, 0, 5px rgba(0, 0, 0, 0.3));
 }
 
 #search-chart svg {
-    filter: drop-shadow(0 0 3px rgba(0,0,0,0.3));
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
 }
 
 #search-chart svg g:nth-child(3) text {

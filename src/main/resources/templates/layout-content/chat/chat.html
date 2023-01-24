@@ -32,14 +32,12 @@
         <button class="cancel" onclick="hideAlert(this)">취소</button>
         <button class="okay" onclick="chatReport()">확인</button>
     </div>
-
     <div class="alert-window complete-alert">
         <div class="info">
             <div class="text">신고가 접수되었습니다.</div>
         </div>
         <button class="okay" onclick="hideAlert(this)">확인</button>
     </div>
-
     <div class="contents-wrapper">
         <div class="left-side">
             <div class="search-wrapper">
@@ -94,12 +92,10 @@
                     <img src="/img/icon/notice.png">
                     <div class="text">[공지사항]</div>
                     <ul>
-                        <li>공지사항 샘플 제목 1</li>
-                        <li>공지사항 샘플 제목 2</li>
-                        <li>공지사항 샘플 제목 3</li>
-                        <li>공지사항 샘플 제목 4</li>
-                        <li>공지사항 샘플 제목 5</li>
-                        <li>공지사항 샘플 제목 1</li>
+                        <a th:each="notice: ${notices}" th:text="${notice.title}"
+                            th:href="'/post/notice/detail?id=' + ${notice.id}"></a>
+                        <a th:each="notice,i: ${notices}" th:text="${notice.title}"
+                            th:href="'/post/notice/detail?id=' + ${notice.id}" th:if="${i.count} == 1"></a>
                     </ul>
                 </div>
             </div>
@@ -140,7 +136,6 @@
                                         </div>
                                         <div class='content' th:text="${chat.content}"></div>
                                         <div class="report" th:if="${!isMine && !isInfo}">신고</div>
-
                                         <div class="name-date-box" th:if="${isMine && !isInfo}">
                                             <strong th:text="${member.nickname}"></strong>
                                             <div class='date' th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))
@@ -163,7 +158,8 @@
                             <img class="down" src="/img/icon/chevron-down.svg">
                         </div>
                         <form class="input-wrapper">
-                            <textarea class="chat-input" type="text" placeholder="메시지를 입력하세요."></textarea>
+                            <textarea class="chat-input" type="text" maxlength="300"
+                                placeholder="메시지를 입력하세요."></textarea>
                             <div class="regist-btn">
                                 <div class="btn" id="chat-send">
                                     <img src="/img/icon/send-fill.svg">
@@ -190,6 +186,8 @@
                         </div>
                     </div>
                     <div class="body">
+                        <div id="selectRoom" th:if="${selectRoom}" th:data-id="${selectRoom.id}"
+                            th:data-name="${selectRoom.apartData.name}"></div>
                         <div class="popular">
                             <div class="room" th:each="chatRoom,i : ${top3}" th:data-id="${chatRoom.id}"
                                 th:data-name="${chatRoom.apartData.name}"

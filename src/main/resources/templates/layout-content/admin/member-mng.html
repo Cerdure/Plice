@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/default}">
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/layout-content/admin/member-mng.css">
@@ -25,7 +24,6 @@
         <button class="cancel" onclick="hideAlert(this)">취소</button>
         <button class="okay" onclick="memberModify()">확인</button>
     </div>
-
     <div class="alert-window del-alert">
         <div class="info">
             <div class="text">계정을 삭제하겠습니까?</div>
@@ -34,7 +32,6 @@
         <button class="cancel" onclick="hideAlert()">취소</button>
         <button class="okay" onclick="memberDelete()">확인</button>
     </div>
-
     <div class="alert-window block-alert">
         <div class="info">
             <div class="text">계정을 차단하겠습니까?</div>
@@ -62,7 +59,6 @@
         <button class="cancel" onclick="hideAlert()">취소</button>
         <button class="okay" onclick="block()">확인</button>
     </div>
-
     <div class="alert-window block-cancel-alert">
         <div class="info">
             <div class="text">차단을 해제하겠습니까?</div>
@@ -71,32 +67,26 @@
         <button class="cancel" onclick="hideAlert(this)">취소</button>
         <button class="okay" onclick="blockCancel()">확인</button>
     </div>
-
     <div class="content-wrapper">
-
         <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
-
         <div class="right-side">
-
             <div class="user-management">
                 <div class="head" id="page-title" data-value="회원 관리">ㅣ 회원 관리</div>
                 <div class="body">
                     <div class="search-wrapper">
-                        <form class="search">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox"> 차단 회원 제외
-                            </div>
+                        <form class="search" action="/admin/member-mng">
                             <div class="input-wrapper">
-                                <select class="search-by" name="search-by">
-                                    <option value="id">회원 관리 ID</option>
-                                    <option value="phone">전화번호</option>
-                                    <option value="name">이름</option>
-                                    <option value="nickname">닉네임</option>
-                                    <option value="birth">생년월일</option>
+                                <select class="search-by" name="searchBy">
+                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">회원 관리 ID</option>
+                                    <option value="phone" th:selected="${dataUtil?.searchBy} == 'phone'">전화번호</option>
+                                    <option value="name" th:selected="${dataUtil?.searchBy} == 'name'">이름</option>
+                                    <option value="nickname" th:selected="${dataUtil?.searchBy} == 'nickname'">닉네임
+                                    </option>
                                 </select>
-                                <input class="search-input" type="text">
-                                <img class="reset" src="/img/icon/x-circle.svg">
-                                <img class="icon" src="/img/icon/search-icon.svg">
+                                <input class="search-input" name="keyword" type="text" th:value="${dataUtil?.keyword}">
+                                <img class="reset" src="/img/icon/x-circle.svg"
+                                    onclick="location.href='/admin/member-mng'">
+                                <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">
                             </div>
                         </form>
                     </div>
@@ -110,11 +100,10 @@
                             <div class="birth">생년월일</div>
                             <div class="reg-date">가입일</div>
                         </div>
-
                         <form th:action="'/admin/member-mod'" class="user-info row" th:each="member : ${members}"
-                              id="${member.id}">
+                            id="${member.id}">
                             <div><input id='member-id' name="id" th:value="${member.id}" th:data-value="${member.id}"
-                                        disabled></div>
+                                    disabled></div>
                             <div><input id='access' th:value="${member.blacklist} == null ? '접속 허용' : '차단'" disabled>
                             </div>
                             <div><input name="phone" th:value="${member.phone}"></div>
@@ -125,52 +114,49 @@
                             <a class="btn row-btn-3 modify-btn">수정</a>
                             <a class="btn row-btn-2 delete-btn">삭제</a>
                             <a class="btn row-btn-1" th:text="${member.blacklist} == null ? '계정 차단' : '계정 차단 해제'"
-                               th:classappend="${member.blacklist} == null ? 'block-btn' : 'block-cancel-btn'"
-                               data-type="member"></a>
+                                th:classappend="${member.blacklist} == null ? 'block-btn' : 'block-cancel-btn'"
+                                data-type="member"></a>
                         </form>
-
                         <div class="pagination-wrapper">
-                            <span class="pagination" 
-                                  th:with="start=${T(java.lang.Math).floor(members.number/10)*10 + 1},
+                            <span class="pagination" th:with="start=${T(java.lang.Math).floor(members.number/10)*10 + 1},
                                             last=${members.totalPages},
                                             totalPage=${members.totalPages},
                                             currentPage=${members.number},
                                             isFirst=${members.first},
                                             isLast=${members.last}">
-                                <a th:class="${isFirst} ? 'disable'" th:href="@{/admin/member-mng(page=${currentPage})}">
+                                <a th:class="${isFirst} ? 'disable'"
+                                    th:href="@{/admin/member-mng(page=${currentPage})}">
                                     <img class="controller-btn-left" src="/img/icon/btn_left.png">
                                 </a>
                                 <div class="index-box">
                                     <a th:href="@{/admin/member-mng(page=1)}"
-                                       th:if="${totalPage < 4 ? false :currentPage > 1}" th:text="1" aria-label="First">
+                                        th:if="${totalPage < 4 ? false :currentPage > 1}" th:text="1"
+                                        aria-label="First">
                                     </a>
                                     <span th:if="${totalPage < 4 ? false :currentPage > 1}">...</span>
                                     <a th:each="page: ${#numbers.sequence(start, last)}"
-                                       th:if="${isFirst ? (page == 0 ? false : page < currentPage + 4) :
+                                        th:if="${isFirst ? (page == 0 ? false : page < currentPage + 4) :
                                         (isLast ? page > currentPage - 2 : (page < currentPage + 3) && (page > currentPage - 1))}"
-                                       th:class="${page == currentPage + 1} ? 'active-index'" th:text="${page}"
-                                       th:href="@{/admin/member-mng(page=${page})}">
+                                        th:class="${page == currentPage + 1} ? 'active-index'" th:text="${page}"
+                                        th:href="@{/admin/member-mng(page=${page})}">
                                     </a>
                                     <span th:if="${totalPage < 4 ? false :currentPage < totalPage - 2}">...</span>
                                     <a th:href="@{/admin/member-mng(page=${totalPage})}"
-                                       th:if="${totalPage < 4 ? false :currentPage < totalPage - 2}" th:text="${totalPage}"
-                                       aria-label="Last">
+                                        th:if="${totalPage < 4 ? false :currentPage < totalPage - 2}"
+                                        th:text="${totalPage}" aria-label="Last">
                                     </a>
                                 </div>
                                 <a th:class="${isLast} ? 'disable'"
-                                   th:href="@{/admin/member-mng(page=${currentPage +2})}">
+                                    th:href="@{/admin/member-mng(page=${currentPage +2})}">
                                     <img class="controller-btn-right" src="/img/icon/btn_right.png">
                                 </a>
                             </span>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
 
 </html>

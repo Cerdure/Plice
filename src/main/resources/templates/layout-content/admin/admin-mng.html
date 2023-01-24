@@ -16,7 +16,6 @@
 <div layout:fragment="content">
     <div class="top-space"></div>
     <div class="modal-background"></div>
-
     <div class="alert-window team-create-window">
         <div class="info">
             <div class="text">부서 생성</div>
@@ -28,7 +27,6 @@
         <button class="cancel" onclick="hideAlert(this)">취소</button>
         <button class="okay" onclick="teamCreate()">확인</button>
     </div>
-
     <form class="alert-window admin-create-window" action="/admin/admin-mng/admin-create" method="post">
         <div class="info">
             <div class="text">계정 생성</div>
@@ -54,7 +52,6 @@
         <div class="cancel" onclick="hideAlert(this)">취소</div>
         <button class="okay" type="submit">확인</button>
     </form>
-
     <div class="alert-window del-alert">
         <div class="info">
             <div class="text">계정을 삭제하겠습니까?</div>
@@ -63,11 +60,8 @@
         <button class="cancel" onclick="hideAlert()">취소</button>
         <button class="okay" onclick="adminDelete()">확인</button>
     </div>
-
     <div class="content-wrapper">
-
         <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
-
         <div class="right-side">
             <div class="head" id="page-title" data-value="운영진 관리">ㅣ 운영진 관리</div>
             <div class="body">

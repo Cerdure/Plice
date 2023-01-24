@@ -16,33 +16,24 @@
 <div layout:fragment="content">
     <div class="top-space"></div>
     <div class="modal-background"></div>
-    <div class="inquiry_wrapper">
-        <div class="wrapper">
-            <div>
-                <h1 class="title">MY PLICE</h1>
-                <ul class="item">
-                    <li>
-                        <a href="/my-page">내 정보</a>
-                    </li>
-                    <li>
-                        <a href="/watchlist">관심목록</a>
-                    </li>
-                    <li>
-                        <a href="/inquiry">1:1 문의내역</a>
-                    </li>
-
-
-                </ul>
-            </div>
+    <div class="content-box">
+        <div class="title-wrapper">
+            <h1 class="title">내 정보</h1>
+            <ul class="item">
+                <li>
+                    <a href="/my-page" class="active-index">내 정보</a>
+                </li>
+                <li>
+                    <a href="/inquiry">1:1 문의</a>
+                </li>
+            </ul>
         </div>
-
         <div class="profile_wrapper">
-            <form action="/my-page" method="post" class="profile_wrap">
+            <form action="" method="post" class="profile_wrap">
                 <div class="profile_box">
                     <div class="profile_image" size="96">
                         <img src="/img/icon/profile.png">
                     </div>
-                    <button type="button" id="upload" class="button"></button>
                 </div>
                 <div class="profile_name">
                     <label class="name_label">
@@ -52,106 +43,69 @@
                 </div>
                 <p class="profile_label">비밀번호</p>
                 <div class="input_box">
-                    <div class="input_left">
-                        <input id="pwd1" class="input_label" type="password" name="pw"
-                            placeholder="비밀번호를 수정해주세요">
-                    </div>
-                    <button type="button" id="send" class="button_right" color="gray"><span>확인</span></button>
+                    <input id="pwd1" class="input_label" type="password" name="pw" placeholder="변경할 비밀번호 입력">
                 </div>
                 <p class="profile_label">비밀번호 확인</p>
                 <div class="input_box">
-                    <div class="input_left">
-                        <input id="pwd2" class="input_label" type="password"
-                            placeholder="비밀번호를 수정해주세요">
-                    </div>
-                    <button type="button" id="send" class="button_right" color="gray"><span>확인</span></button>
+                    <input id="pwd2" class="input_label" type="password" placeholder="비밀번호 확인">
                 </div>
                 <div class="alert alert-success" id="alert-success">비밀번호가 일치합니다</div>
                 <div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다</div>
 
-
                 <p class="profile_label">이름</p>
                 <div class="input_box">
-                    <div class="input_left">
-                        <input th:value="${member.name}" class="input_label" type="text" name="name"
-                            placeholder="pw">
-                    </div>
-                    <button type="button" class="button_right" color="gray"><span>확인</span></button>
+                    <input th:value="${member.name}" class="input_label" type="text" name="name" placeholder="pw">
                 </div>
                 <p class="profile_label">닉네임</p>
                 <div class="input_box">
-                    <div class="input_left">
-                        <input th:value="${member.nickname}" class="input_label" type="text"
-                            name="nickname" placeholder="nickname">
-                    </div>
-                    <button type="button" id="send" class="button_right" color="gray"><span>확인</span></button>
+                    <input th:value="${member.nickname}" class="input_label" type="text" name="nickname"
+                        placeholder="nickname">
                 </div>
-                <div class="privacy_label">
-                    <div class="privacy_left">
-                        <p class="title_privacy">
-                            "개인정보 수집 및 이용 동의"
-                            "(선택)"
-                        </p>
-                        <p class="caption_gray">선택정보 제공에 대한 동의를 거부하시는 경우에도</p>
-                        <p class="caption_gray">서비스 이용이 가능합니다.</p>
-                        <button type="button" color="gray" class="button_detail">
-                            <span>상세보기</span>
-                        </button>
-                    </div>
-                    <div class="privacy_right">
-                        <input type="submit" id="submit" color="gray" class="button_right" value="수정">
-                    </div>
+                <div class="btn-box">
+                    <div class="btn row-btn-1 modify-btn">회원 정보 수정</div>
+                    <div class="btn row-btn-2 leave-open-btn">회원 탈퇴</div>
                 </div>
             </form>
-
-
-
-            <div id="container">
-                <button id="btn-modal">회원탈퇴</button>
-            </div>
-
-
-                <div class="modal-window">
-                    <div class="close-area">X</div>
-                    <div class="title">
-                        <h2>회원탈퇴</h2>
-                    </div>
-                    <div class="content">
-                        <p class="content_inner_1">회원탈퇴를 신청하기전에 아래 안내 사항을 한번 더 확인해주세요.</p>
-                        <ul class="content_inner_2">
-                            <li>1. 회원 탈퇴 시, 현재 로그인된 아이디는 즉시 탈퇴 처리됩니다.
-                            </li>
-                            <li>
-                                2. 회원 탈퇴 시, 회원 전용 웹 서비스 이용이 불가합니다.
-                            </li>
-                            <li>
-                                3. 탈퇴 시 회원 정보 및 찜 서비스, 등록한 게시물 이용 기록이 모두 삭제됩니다.
-                            </li>
-                            <li>
-                                4. 회원 정보 및 서비스 이용 기록은 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다.
-                            </li>
-                            <li>
-                                5. 광고를 위한 매물이 등록되어 있을 경우, 탈퇴 시 모든 정보는 삭제 처리됩니다.
-                            </li>
-                        </ul>
-                        <select name="type" class="content_inner_3">
-                            <option>탈퇴사유를 선택해주세요.</option>
+            <div class="modal-window">
+                <img class="close" src="/img/icon/close.png">
+                <div class="title">
+                    <h2>회원탈퇴</h2>
+                </div>
+                <div class="content">
+                    <p class="content_inner_1">탈퇴를 신청하기 전에 아래 사항을 한번 더 확인해주세요.</p>
+                    <ul class="content_inner_2">
+                        <li>1. 회원 탈퇴 시, 현재 로그인된 아이디는 즉시 탈퇴 처리됩니다.
+                        </li>
+                        <li>
+                            2. 회원 탈퇴 시, 회원 전용 웹 서비스 이용이 불가합니다.
+                        </li>
+                        <li>
+                            3. 탈퇴 시 회원 정보 및 찜 서비스, 등록한 게시물 이용 기록이 모두 삭제됩니다.
+                        </li>
+                        <li>
+                            4. 회원 정보 및 서비스 이용 기록은 모두 삭제되며, 복구되지 않습니다.
+                        </li>
+                        <li>
+                            5. 광고를 위한 매물이 등록되어 있을 경우, 탈퇴 시 모든 정보는 삭제 처리됩니다.
+                        </li>
+                    </ul>
+                    <div class="content_inner_3">
+                        <div class="text">* 탈퇴 사유</div>
+                        <select>
                             <option>더 이상 이용하지 않음</option>
                             <option>탈퇴 후 재가입 하려고</option>
                             <option>원하는 정보가 없어서</option>
                             <option>사용하기 불편해서</option>
+                            <option>기타 사유</option>
                         </select>
-                        <textarea name="reason" placeholder="다른 사유가 있다면 입력해주세요." class="content_inner_4">
-                            </textarea>
-                        <label class="content_inner_5">
-                            <input name="isAgree" type="checkbox">
-                            <p>안내사항을 모두 확인하였으며, 이에 동의합니다.</p>
-                        </label>
                     </div>
-                    <form class="modal_bottom" method="get" action="/withdrawal">
-                        <input type="submit" value="탈퇴 완료">
-                    </form>
+                    <label class="content_inner_5">
+                        <input name="isAgree" type="checkbox">
+                        <p>안내사항을 모두 확인하였으며, 이에 동의합니다.</p>
+                    </label>
                 </div>
+                <div class="row-btn-2 leave-btn">탈퇴</div>
+            </div>
         </div>
     </div>
 </div>

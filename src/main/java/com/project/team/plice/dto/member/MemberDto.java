@@ -2,7 +2,6 @@ package com.project.team.plice.dto.member;
 
 import com.project.team.plice.domain.admin.Authority;
 import com.project.team.plice.domain.enums.MemberRole;
-import com.project.team.plice.domain.member.Favorite;
 import com.project.team.plice.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class MemberDto {
@@ -24,7 +22,6 @@ public class MemberDto {
     private String birth;
     private LocalDate regDate;
     private LocalDate delDate;
-    private List<Favorite> favorite;
     private String profileImgPath;
 
     private Long teamNumber;
@@ -38,7 +35,7 @@ public class MemberDto {
     private MemberRole role;
 
     @Builder
-    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, LocalDate regDate, LocalDate delDate, List<Favorite> favorite, String profileImgPath, MemberRole role) {
+    public MemberDto(Long id, String phone, String pw, String name, String nickname, String birth, LocalDate regDate, LocalDate delDate, String profileImgPath, MemberRole role) {
         this.id = id;
         this.phone = phone;
         this.pw = pw;
@@ -47,12 +44,11 @@ public class MemberDto {
         this.birth = birth;
         this.regDate = regDate;
         this.delDate = delDate;
-        this.favorite = favorite;
         this.profileImgPath = profileImgPath;
         this.role = role;
     }
 
-    public Member toEntity(){
+    public Member toEntity() {
         Member build = Member.builder()
                 .id(id)
                 .phone(phone)
@@ -62,14 +58,13 @@ public class MemberDto {
                 .birth(birth)
                 .regDate(regDate)
                 .delDate(delDate)
-                .favorite(favorite)
                 .profileImgPath(profileImgPath)
                 .role(role)
                 .build();
         return build;
     }
 
-    public Member createMember(PasswordEncoder passwordEncoder){
+    public Member createMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .pw(passwordEncoder.encode(this.pw))
                 .phone(this.phone)
@@ -79,12 +74,11 @@ public class MemberDto {
                 .regDate(this.regDate)
                 .delDate(this.delDate)
                 .role(this.role)
-                .favorite(this.favorite)
                 .profileImgPath(this.profileImgPath)
                 .build();
     }
 
-    public Authority getAuthorities(){
+    public Authority getAuthorities() {
         return Authority.builder()
                 .adminMng(this.adminMng)
                 .memberMng(this.memberMng)

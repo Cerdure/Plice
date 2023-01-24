@@ -16,7 +16,6 @@
 <div layout:fragment="content">
     <div class="top-space"></div>
     <div class="modal-background"></div>
-
     <div class="alert-window block-cancel-alert">
         <div class="info">
             <div class="text">차단을 해제하겠습니까?</div>
@@ -25,7 +24,6 @@
         <button class="cancel" onclick="hideAlert(this)">취소</button>
         <button class="okay" onclick="blockCancel()">확인</button>
     </div>
-
     <div class="content-wrapper">
         <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
         <div class="right-side">
@@ -34,21 +32,23 @@
                 <div class="body-head">
                     <div class="sub-head">
                         <a class="text access-log-title" href="/admin/access-mng/log" data-value="log">엑세스 로그</a>
-                        <a class="text member-blacklist-title active-text" href="/admin/access-mng/member" data-value="member">회원 차단 목록</a>
+                        <a class="text member-blacklist-title active-text" href="/admin/access-mng/member"
+                            data-value="member">회원 차단 목록</a>
                         <a class="text ip-blacklist-title" href="/admin/access-mng/ip" data-value="ip">IP 차단 목록</a>
                     </div>
                     <div class="search-wrapper">
                         <form class="search">
                             <div class="input-wrapper">
-                                <select class="search-by" name="search-by">
-                                    <option value="memberId">회원 관리 ID</option>
-                                    <option value="ip">IP</option>
-                                    <option value="regDate">등록 일시</option>
-                                    <option value="expDate">만료 일시</option>
+                                <select class="search-by" name="searchBy">
+                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">차단 관리 ID</option>
+                                    <option value="memberId" th:selected="${dataUtil?.searchBy} == 'memberId'">회원 관리 ID
+                                    </option>
                                 </select>
-                                <input class="search-input" type="text">
-                                <img class="reset" src="/img/icon/x-circle.svg">
-                                <img class="icon" src="/img/icon/search-icon.svg">
+                                <input class="search-input" name="keyword" type="text" placeholder="검색어를 입력하세요."
+                                    th:value="${dataUtil?.keyword}">
+                                <img class="reset" src="/img/icon/x-circle.svg"
+                                    onclick="location.href='/admin/access-mng/member'">
+                                <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">
                             </div>
                         </form>
                     </div>
@@ -63,10 +63,13 @@
                     </div>
                     <row class="member-blacklist row" th:each="blacklist : ${memberBlacklists}" th:id="${blacklist.id}">
                         <div class="blacklist-id" th:text="${blacklist.id}"></div>
-                        <div id="member-id" class="member-id" th:text="${blacklist.member.id}" th:data-value="${blacklist.member.id}"></div>
+                        <div id="member-id" class="member-id" th:text="${blacklist.member.id}"
+                            th:data-value="${blacklist.member.id}"></div>
                         <div class="reason" th:text="${blacklist.reason}"></div>
-                        <div class="reg-date" th:text="${#temporals.format(blacklist.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
-                        <div class="exp-date" th:text="${#temporals.format(blacklist.expDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
+                        <div class="reg-date"
+                            th:text="${#temporals.format(blacklist.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
+                        <div class="exp-date"
+                            th:text="${#temporals.format(blacklist.expDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
                         <a class="btn row-btn-1 block-cancel-btn" data-type="member">차단 해제</a>
                     </row>
                     <div class="pagination-wrapper">
@@ -77,7 +80,8 @@
                         currentPage=${memberBlacklists.number},
                         isFirst=${memberBlacklists.first},
                         isLast=${memberBlacklists.last}">
-                            <a th:class="${isFirst} ? 'disable'" th:href="@{/admin/access-mng/member(page=${currentPage})}">
+                            <a th:class="${isFirst} ? 'disable'"
+                                th:href="@{/admin/access-mng/member(page=${currentPage})}">
                                 <img class="controller-btn-left" src="/img/icon/btn_left.png">
                             </a>
                             <div class="index-box">
@@ -97,7 +101,8 @@
                                     aria-label="Last">
                                 </a>
                             </div>
-                            <a th:class="${isLast} ? 'disable'" th:href="@{/admin/access-mng/member(page=${currentPage +2})}">
+                            <a th:class="${isLast} ? 'disable'"
+                                th:href="@{/admin/access-mng/member(page=${currentPage +2})}">
                                 <img class="controller-btn-right" src="/img/icon/btn_right.png">
                             </a>
                         </span>

@@ -1,17 +1,21 @@
 package com.project.team.plice.domain.chat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.team.plice.domain.member.Member;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberChatRoom {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "member_chat_room_id")
     private Long id;
 

@@ -2,13 +2,17 @@ package com.project.team.plice.service.interfaces;
 
 import com.project.team.plice.domain.inquire.Inquire;
 import com.project.team.plice.dto.inquire.InquireDto;
+import com.project.team.plice.utils.DataUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
-import java.util.List;
-
 public interface InquireService {
-    public void savePost(Authentication authentication,InquireDto inquireDto);
-    public List<InquireDto> getInquireList(Authentication authentication);
-    public void delete(Long inquireId, Authentication authentication);
+    public Page<Inquire> getInquireList(Authentication authentication, Pageable pageable);
     public Inquire getInquireById(Long id);
+    public Page<Inquire> findAllInquire(Pageable pageable);
+    public Inquire findInquire(Long id);
+    public void savePost(Authentication authentication,InquireDto inquireDto);
+    public void delete(Long inquireId, Authentication authentication);
+    public Page<Inquire> searchInquire(DataUtil dataUtil, Pageable pageable);
 }

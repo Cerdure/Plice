@@ -10,11 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SearchKeyword {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "search_keyword_id")
     private Long id;
 
@@ -29,7 +31,7 @@ public class SearchKeyword {
         this.count = count;
     }
 
-    public void countPlus(){
+    public void countPlus() {
         this.count++;
     }
 }

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/layout-content/admin/inquiry-mng.css">
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/js/layout-content/admin/inquiry-mng.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 1:1 문의 관리</title>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="top-space"></div>
+    <div class="modal-background"></div>
+    <div class="alert-window block-alert">
+        <div class="info">
+            <div class="text">계정을 차단하겠습니까?</div>
+            <div class="data"></div>
+            <div class="block-date-box">
+                <div class="label">차단 기간</div>
+                <select id="block-date">
+                    <option value="1">1개월</option>
+                    <option value="2">6개월</option>
+                    <option value="3">1년</option>
+                    <option value="4">3년</option>
+                    <option value="5">영구 차단</option>
+                </select>
+            </div>
+            <div class="block-reason-box">
+                <div class="label">차단 사유</div>
+                <select id="block-reason">
+                    <option value="부정 이용">부정 이용</option>
+                    <option value="부적절한 글·채팅 작성">부적절한 글·채팅 작성</option>
+                    <option value="타인 명의 도용">타인 명의 도용</option>
+                    <option value="기타 운영 규정 위반">기타 운영 규정 위반</option>
+                </select>
+            </div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="complete(true, 1, this); block()">확인</button>
+    </div>
+    <div class="alert-window block-cancel-alert">
+        <div class="info">
+            <div class="text">차단을 해제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="blockCancel()">확인</button>
+    </div>
+    <div class="window-wrapper">
+        <div class="inquiry-window-wrapper" th:if="${inquiry}">
+            <div class="inquiry-window">
+                <div class="title-wrapper">
+                    <div class="title" th:text="'[' + ${inquiry.type} + '] ' + ${inquiry.title}"></div>
+                    <div class="below">
+                        <div class="writer" th:text="${inquiry.member.nickname}"></div>
+                        <div class="split">ㅣ</div>
+                        <div class="reg-date" th:text="${#temporals.format(inquiry.regDate,'yyyy년 MM월 dd일  HH:mm:SS')}">
+                        </div>
+                    </div>
+                </div>
+                <div class="content" th:text="${inquiry.content}"></div>
+            </div>
+        </div>
+        <div class="answer-window-wrapper" th:if="${inquiry}">
+            <form class="answer-window">
+                <div class="title">문의 답변</div>
+                <input name="inquiryId" th:value="${inquiry.id}" type="hidden">
+                <input name="id" th:value="${inquiry.answer?.id}" type="hidden">
+                <textarea class="content" name="content" placeholder="답변 내용을 입력해주세요." resize="false"
+                    th:utext="${inquiry.answer == null ? '' : #strings.replace(inquiry.answer.content, '<br>', '&#10')}"></textarea>
+                <div class="row-btn-1" th:text="${inquiry.answer} ? '수정' : '등록'"
+                    th:classappend="${inquiry.answer} ? 'modify-btn' : 'regist-btn'"></div>
+            </form>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
+        <div class="right-side">
+            <div class="meta-wrapper">
+                <div class="head" id="page-title" data-value="1:1 문의 관리">ㅣ 1:1 문의 관리</div>
+                <div class="body">
+                    <div class="search-wrapper">
+                        <form class="search">
+                            <div action="/admin/inquiry-mng" class="input-wrapper">
+                                <select name="searchBy" class="search-by">
+                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">문의 관리 ID</option>
+                                    <option value="type" th:selected="${dataUtil?.searchBy} == 'type'">문의 유형</option>
+                                    <option value="title" th:selected="${dataUtil?.searchBy} == 'title'">제목</option>
+                                    <option value="memberId" th:selected="${dataUtil?.searchBy} == 'memberId'">작성자 ID
+                                    </option>
+                                </select>
+                                <input name="keyword" class="search-input" type="text" placeholder="검색어를 입력하세요."
+                                    th:value="${dataUtil?.keyword}">
+                                <img class="reset" src="/img/icon/x-circle.svg"
+                                    onclick="location.href='/admin/inquiry-mng'">
+                                <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="contents">
+                        <div class="top">
+                            <div class="state">상태</div>
+                            <div class="id">문의 관리 ID</div>
+                            <div class="type">문의 유형</div>
+                            <div class="title">제목</div>
+                            <div class="writer">작성자 ID</div>
+                            <div class="reg-date">접수 일시</div>
+                        </div>
+                        <row class="inquiry row" th:each="inquiry : ${inquiries}" th:id="${inquiry.id}">
+                            <div th:text="${inquiry.isAnswered} ? '답변 완료' : '미답변'"></div>
+                            <div id="id" th:text="${inquiry.id}" th:data-value="${inquiry.id}"></div>
+                            <div th:text="${inquiry.type}"></div>
+                            <div th:text="${inquiry.title}"></div>
+                            <div th:text="${inquiry.member.id}"></div>
+                            <div th:text="${#temporals.format(inquiry.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
+                            <a class="btn row-btn-1" th:text="${inquiry.isAnswered} ? '답변 수정' : '답변하기'"></a>
+                        </row>
+                        <div class="pagination-wrapper">
+                            <span class="pagination"
+                                th:with="start=${T(java.lang.Math).floor(inquiries.number/10)*10 + 1}, last=(${inquiries.totalPages})">
+                                <a th:class="${inquiries.first} ? 'disable'"
+                                    th:href="@{/admin/inquiry-mng(page=${inquiries.number})}">
+                                    <img class="controller-btn-left" src="/img/icon/btn_left.png">
+                                </a>
+                                <div class="index-box">
+                                    <a th:href="@{/admin/inquiry-mng(page=1)}"
+                                        th:if="${inquiries.totalPages < 4 ? false :inquiries.number > 1}" th:text="1"
+                                        aria-label="First">
+                                    </a>
+                                    <span th:if="${inquiries.totalPages < 4 ? false :inquiries.number > 1}">...</span>
+                                    <a th:each="page: ${#numbers.sequence(start, last)}"
+                                        th:if="${inquiries.first ? (page == 0 ? false : page < inquiries.number + 4) :
+                                            (inquiries.last ? page > inquiries.number - 2 : (page < inquiries.number + 3) && (page > inquiries.number - 1))}"
+                                        th:class="${page == inquiries.number + 1} ? 'active-index'" th:text="${page}"
+                                        th:href="@{/admin/inquiry-mng(page=${page})}">
+                                    </a>
+                                    <span
+                                        th:if="${inquiries.totalPages < 4 ? false :inquiries.number < inquiries.totalPages - 2}">...</span>
+                                    <a th:href="@{/admin/inquiry-mng(page=${inquiries.totalPages})}"
+                                        th:if="${inquiries.totalPages < 4 ? false :inquiries.number < inquiries.totalPages - 2}"
+                                        th:text="${inquiries.totalPages}" aria-label="Last">
+                                    </a>
+                                </div>
+                                <a th:class="${inquiries.last} ? 'disable'"
+                                    th:href="@{/admin/inquiry-mng(page=${inquiries.number +2})}">
+                                    <img class="controller-btn-right" src="/img/icon/btn_right.png">
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

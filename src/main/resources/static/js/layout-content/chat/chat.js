@@ -76,6 +76,20 @@ $(function () {
         initConnect();
         noticeAnimation();
         totalCountAnimation();
+
+        if ($("#selectRoom").length > 0) {
+            (async () => {
+                $(".my-room").removeClass("active-room");
+                if ($(".my-room").get().every(e => { return e.dataset.id != $("#selectRoom").data("id") })) {
+                    newJoin = true;
+                    const memberCount = await fetch("/chat/in?roomId=" + $("#selectRoom").data("id")).then(res => res.text());
+                    $("#selectRoom").attr("data-member-count", memberCount);
+                }
+                myRoomUpdate();
+                $(".my-room:last-child").addClass("active-room");
+                chatRoomOpen("#selectRoom");
+            })();
+        }
     });
 
     document.addEventListener('scroll', function (event) {
@@ -98,7 +112,7 @@ $(function () {
                 .text('참여인원 ' + $(".my-room[data-id=" + currentRoomId + "]").data("member-count") + '명');
             $(".chat-wrapper .chat .head .title .data").text($(_this).data("name"));
             $(".chat-wrapper").stop().fadeOut(200).fadeIn(300);
-            $(".main-wrapper").css({ 'flex-direction': 'row'});
+            $(".main-wrapper").css({ 'flex-direction': 'row' });
             $(".top3-wrapper").hide();
             $(".top3-wrapper .head").stop().animate({ 'margin-bottom': '20px' }, 300);
             $(".top3-wrapper .body").css('height', 'auto');
@@ -127,7 +141,7 @@ $(function () {
 
     function chatRoomClose() {
         $(".my-room").removeClass("active-room");
-        $(".main-wrapper").css({ 'flex-direction': 'column'});
+        $(".main-wrapper").css({ 'flex-direction': 'column' });
         $(".top3-wrapper").hide();
         $(".top3-wrapper .head").stop().animate({ 'margin-bottom': '40px' }, 300);
         $(".top3-wrapper .body").css('height', '100%');
@@ -178,7 +192,7 @@ $(function () {
             $(".search-result-outer-wrapper").hide();
         }
     });
-    
+
     $(".search-input").click(function () {
         if ($(this).val() != '') {
             $(".search-result-wrapper").show();
@@ -193,7 +207,15 @@ let newJoin = false, chatOpen = false,
     st, ih, sh, isFirstMessage = true, selectChatId;
 
 function initConnect() {
-    $(".my-room").get().forEach(e => { subscribe(e.dataset.id) });
+    $(".my-room").get().forEach(e => {
+        if ($("#selectRoom").length > 0) {
+            if (e.dataset.id != $("#selectRoom").data("id")) {
+                subscribe(e.dataset.id);
+            }
+        } else {
+            subscribe(e.dataset.id);
+        }
+    });
 }
 
 function subscribe(_roomId) {
@@ -205,6 +227,7 @@ function subscribe(_roomId) {
         client = Stomp.over(sock);
 
     if (currentSubscribe.get(roomId) != null) {
+        console.log("unsubs")
         currentSubscribe.get(roomId).unsubscribe();
     }
 
@@ -306,7 +329,7 @@ function newMessage(type) {
     if (st + ih >= sh - 1) {
         moveToBottom();
     } else if (!$(".last-chat-viewer").hasClass('isMine') && type == 'NONE') {
-        $(".last-chat-viewer").css('display','flex');
+        $(".last-chat-viewer").css('display', 'flex');
     }
 }
 
@@ -329,7 +352,7 @@ function totalCountAnimation() {
     setTimeout(() => {
         let totalCountUp = setInterval(function () {
             const dataView = $(".current-data-wrapper .data"),
-                  maxNum = dataView.data("num");
+                maxNum = dataView.data("num");
             num++;
             dataView.text(num);
             if (num == maxNum) {
@@ -339,16 +362,16 @@ function totalCountAnimation() {
     }, 700);
 }
 
-function hideAlert(_this){
+function hideAlert(_this) {
     $(".alert-window").hide();
     $(".modal-background").hide();
     $("option:selected").prop("selected", false);
-  }
+}
 
-function chatReport(){
+function chatReport() {
     $(".alert-window").hide();
     fetch(encodeURI("/chat/report?chatId=" + selectChatId + "&reason=" + $("#report-reason option:selected").val()))
-    .then(() => {
-        $(".complete-alert").fadeIn(300);
-    })
+        .then(() => {
+            $(".complete-alert").fadeIn(300);
+        })
 }

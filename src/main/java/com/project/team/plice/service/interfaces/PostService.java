@@ -1,47 +1,35 @@
 package com.project.team.plice.service.interfaces;
 
+import com.project.team.plice.domain.post.Notice;
 import com.project.team.plice.domain.post.Post;
+import com.project.team.plice.dto.post.NoticeDto;
 import com.project.team.plice.dto.post.PostDto;
+import com.project.team.plice.utils.DataUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
+import java.util.List;
+
 public interface PostService {
-
-//    public List<Post> findAllPost();
-
     public Page<Post> findAllPost(Pageable pageable);
     public Post findPostById(Long id);
-    public void savePost(Post post);
-    public void deletePost(Post post);
-    public void updatePost(PostDto postDto);
-
-//  ***************** 페이징 *****************
-
-    public Page <Post> findByMemberId(Long id, Pageable pageable);
-
-    public Page<Post> findByMemberNickname(String memberNickname, Pageable pageable);
-
-    public Page <Post> findByTitle(String title, Pageable pageable);
-
-
-//  public Page<Post> postList(Pageable pageable);
-
-    public Page <Post> findAll(Pageable pageable);
-    //    public Page <Post> findById(Long id, Pageable pageable);
     public Post findPrevPost(Post post);
     public Post findNextPost(Post post);
-    public Post modify(Long id, PostDto postDto, Authentication authentication) throws Exception;
-    public void hitsPlus(Post post);
+    public Page<Post> searchPost(DataUtil dataUtil, Pageable pageable);
+    public void savePost(PostDto postDto, Authentication authentication);
+    public void updatePost(PostDto postDto);
+    public void deletePost(Long id);
+    public void postHitsPlus(Long id);
 
-
-//    시큐리티 관련
-//    public Post modify(Long id, PostDto PostDto, Authentication authentication) throws Exception;
-
-//    public Pageable noticePaging(Pageable pageable);
-
-//    public Long create(PostDto postDto, Authentication authentication);
-//    public void delete(Long inquireId, Authentication authentication) throws Exception;
-
-    public Post findById(Long id);
+    public Page <Notice> findAllNotice(Pageable pageable);
+    public Notice findNoticeById(Long id);
+    public Page<Notice> searchNotice(DataUtil dataUtil, Pageable pageable);
+    public void saveNotice(NoticeDto noticeDto, Authentication authentication);
+    public void updateNotice(NoticeDto noticeDto);
+    public void deleteNotice(Long id);
+    public Notice findPrevNotice(Notice notice);
+    public Notice findNextNotice(Notice notice);
+    public void noticeHitsPlus(Long id);
+    public List<Notice> findLastNotices();
 }

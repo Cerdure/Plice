@@ -3,18 +3,18 @@ package com.project.team.plice.domain.admin;
 import com.project.team.plice.domain.chat.Chat;
 import com.project.team.plice.domain.member.Member;
 import lombok.*;
-import org.apache.xpath.operations.Bool;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Report {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "report_id")
     private Long id;
 
@@ -48,7 +48,7 @@ public class Report {
         this.complete = complete;
     }
 
-    public void changeComplete(Boolean state){
+    public void changeComplete(Boolean state) {
         this.complete = state;
     }
 }

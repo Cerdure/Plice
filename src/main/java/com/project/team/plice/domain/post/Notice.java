@@ -10,7 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Notice {
 
@@ -54,13 +55,15 @@ public class Notice {
         this.modDate = modDate;
     }
 
-    public void changeTitle(String title){
+    public void changeTitle(String title) {
         this.title = title;
     }
-    public void changeContent(String content){
+
+    public void changeContent(String content) {
         this.content = content;
     }
-    public void hitsPlus(){
+
+    public void hitsPlus() {
         this.hits++;
     }
 }

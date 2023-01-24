@@ -23,7 +23,7 @@ public class ApartDataDto {
         this.complexCode = complexCode;
     }
 
-    public ApartData toEntity(){
+    public ApartData toEntity() {
         return ApartData.builder()
                 .id(this.id)
                 .address(this.address)
@@ -33,7 +33,7 @@ public class ApartDataDto {
                 .build();
     }
 
-    public void coincidenceHighlight(String inputVal){
+    public void coincidenceHighlight(String inputVal) {
         inputVal = inputVal.toUpperCase();
         int startIndex = this.name.toUpperCase().indexOf(inputVal);
         int endIndex = startIndex + inputVal.length();

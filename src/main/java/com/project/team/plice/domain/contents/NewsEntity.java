@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Data
@@ -19,7 +18,7 @@ public class NewsEntity {
     private String link;
     private String description;
 
-    public NewsEntity(String title, String link, String description){
+    public NewsEntity(String title, String link, String description) {
         this.title = title;
         this.link = link;
         this.description = description;

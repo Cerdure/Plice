@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReplyService {
     public List<Reply> findAll();
-    public void replySave(ReplyDto replyDto, Long postId, Authentication authentication);
+    public void replySave(ReplyDto replyDto, Authentication authentication);
     public void replyModify(ReplyDto replyDto);
-    public void replyDelete(ReplyDto replyDto);
+    public void replyDelete(Long id);
 }

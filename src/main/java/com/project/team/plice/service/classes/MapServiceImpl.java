@@ -33,7 +33,7 @@ public class MapServiceImpl implements MapService {
 
     @Override
     public List<TradeData> findTradeData(Double startLng, Double endLng, Double startLat, Double endLat) {
-        return tradeDataRepository.findByLngBetweenAndLatBetween(startLng,endLng,startLat,endLat);
+        return tradeDataRepository.findByLngBetweenAndLatBetween(startLng, endLng, startLat, endLat);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class MapServiceImpl implements MapService {
     @Override
     public void saveSearchKeyword(String searchKeyword) {
         SearchKeyword keyword = searchKeywordRepository.findByKeywordContainsIgnoreCase(searchKeyword);
-        if(keyword == null){
+        if (keyword == null) {
             searchKeywordRepository.save(SearchKeyword.builder().keyword(searchKeyword).build());
         } else {
             keyword.countPlus();

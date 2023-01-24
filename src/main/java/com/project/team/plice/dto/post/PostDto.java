@@ -1,9 +1,10 @@
 package com.project.team.plice.dto.post;
 
 import com.project.team.plice.domain.member.Member;
-import com.project.team.plice.domain.post.Reply;
 import com.project.team.plice.domain.post.Post;
-import lombok.*;
+import com.project.team.plice.domain.post.Reply;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -21,11 +22,9 @@ public class PostDto {
     private LocalDateTime regDate;
     private LocalDateTime modDate;
     private List<MultipartFile> imageFiles;
-
     private Integer closed;
     private Integer reFlag;
     private List<Reply> replies;
-
     private Integer searchBy;
     private String input;
 
@@ -45,11 +44,7 @@ public class PostDto {
         this.input = input;
     }
 
-//    a = PostDto.build()
-//            .name(name1)
-//    .title(title156).builder()
-
-    public Post toEntity(){
+    public Post toEntity() {
         return Post.builder()
                 .id(this.id)
                 .member(this.member)

@@ -36,7 +36,7 @@ public class ChatRoomDto {
         this.regDate = regDate;
     }
 
-    public ChatRoom toEntity(){
+    public ChatRoom toEntity() {
         return ChatRoom.builder()
                 .id(this.id)
                 .chats(this.chats)
@@ -47,7 +47,7 @@ public class ChatRoomDto {
                 .build();
     }
 
-    public void coincidenceHighlight(String inputVal){
+    public void coincidenceHighlight(String inputVal) {
         inputVal = inputVal.toUpperCase();
         int startIndex = this.apartData.getName().toUpperCase().indexOf(inputVal);
         int endIndex = startIndex + inputVal.length();

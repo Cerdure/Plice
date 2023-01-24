@@ -4,8 +4,6 @@ import com.project.team.plice.domain.data.AddressData;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class AddressDataDto {
 
@@ -21,7 +19,7 @@ public class AddressDataDto {
         this.address = address;
     }
 
-    public AddressData toEntity(){
+    public AddressData toEntity() {
         return AddressData.builder()
                 .id(this.id)
                 .legalCode(this.legalCode)
@@ -29,7 +27,7 @@ public class AddressDataDto {
                 .build();
     }
 
-    public void coincidenceHighlight(String inputVal){
+    public void coincidenceHighlight(String inputVal) {
         int startIndex = this.address.indexOf(inputVal);
         int endIndex = startIndex + inputVal.length();
         String coincidenceStr = "<strong>" + this.address.substring(startIndex, endIndex) + "</strong>";

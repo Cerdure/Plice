@@ -36,7 +36,7 @@ public class ContentsServiceImpl implements ContentsService {
                         .build()
         ).collect(Collectors.toList());
         articleDtos.forEach(articleDto -> {
-            int totalPage = (int) Math.ceil(searchNewsRes.getTotal()/4);
+            int totalPage = (int) Math.ceil(searchNewsRes.getTotal() / 4);
             articleDto.setPage(searchNewsRes.getStart());
             articleDto.setTotalPage(totalPage > 1000 ? 1000 : totalPage);
         });

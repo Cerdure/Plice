@@ -39,7 +39,7 @@ public class ContentsController {
 
 
     @GetMapping("/contents/search")
-    public String search(@ModelAttribute SearchParamUtil searchParams, Model model) throws Exception{
+    public String search(@ModelAttribute SearchParamUtil searchParams, Model model) throws Exception {
         searchParams.setTotalPage(4);
         searchParams.setSort("sim");
         List<ArticleDto> searchResults = contentsService.search(searchParams);

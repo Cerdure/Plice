@@ -33,8 +33,8 @@ body {
   width: 100%;
   height: 1020px;
   background:
-          linear-gradient(rgba(0, 0, 0, 0), rgb(255, 255, 255)),
-          url("../../../img/images/background.jpg");
+    linear-gradient(rgba(0, 0, 0, 0), rgb(255, 255, 255)),
+    url("../../../img/images/background.jpg");
   background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
@@ -71,8 +71,8 @@ body {
   height: auto;
   padding: 20px 40px;
   background:
-          linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
-          url("../../../img/images/bg.png");
+    linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
+    url("../../../img/images/bg.png");
   background-size: 50%;
 }
 
@@ -190,19 +190,21 @@ body {
   height: 200px;
   background-color: white;
   border-radius: 5px;
-  z-index: 13;
+  z-index: 101;
   text-align: center;
   border: 1px solid silver;
   display: none;
 }
-.alert-window .text{
+
+.alert-window .text {
   position: absolute;
   top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
 }
-.alert-window .cancel{
+
+.alert-window .cancel {
   position: absolute;
   bottom: 40px;
   left: 50px;
@@ -218,12 +220,14 @@ body {
   font-weight: 900;
   cursor: pointer;
 }
-.alert-window .cancel:hover{
+
+.alert-window .cancel:hover {
   background-color: #3b5987;
   color: white;
   transition: 0.5s;
 }
-.alert-window .okay{
+
+.alert-window .okay {
   position: absolute;
   bottom: 40px;
   right: 50px;
@@ -239,11 +243,13 @@ body {
   font-weight: 900;
   cursor: pointer;
 }
+
 .alert-window .okay:hover {
   background-color: #4169fc;
   color: white;
   transition: 0.5s;
 }
+
 .delete-alert {
   display: none;
 }
@@ -289,7 +295,7 @@ body {
   border: 1px solid silver;
   border-bottom: none;
   transform:
-          skew(-40deg) translate(30px, 0px);
+    skew(-40deg) translate(30px, 0px);
   background-color: white;
 }
 
@@ -353,6 +359,7 @@ body {
 
 .frame .head {
   width: 100%;
+  height: 60px;
   padding: 10px 20px;
   display: flex;
   background: linear-gradient(45deg, rgb(122 170 211 / 90%), rgba(53, 94, 252, .90)), url(../../../img/images/bg.png);
@@ -654,6 +661,10 @@ body {
   margin-bottom: 20px;
   line-height: 25px;
   word-break: break-all;
+}
+
+.null-text {
+  color: silver !important;
 }
 
 .my-comment .option {

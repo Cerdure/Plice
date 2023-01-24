@@ -5,6 +5,7 @@ import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.repository.member.MemberRepository;
 import com.project.team.plice.service.interfaces.MemberService;
+import com.project.team.plice.utils.DataUtil;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -18,10 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Transactional
@@ -65,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Page<Member> findByRoles(List<MemberRole> roles, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 12, Sort.by("regDate").descending());
+        pageable = PageRequest.of(page, 12, Sort.by("id").descending());
         return memberRepository.findByRoleIn(roles, pageable);
     }
 
@@ -76,6 +74,24 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member findByPhone(String phone) {
         return memberRepository.findByPhone(phone).get();
+    }
+
+    @Override
+    public Page<Member> searchMember(DataUtil dataUtil, List<MemberRole> roles, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 12, Sort.by("id").descending());
+        String keyword = dataUtil.getKeyword();
+        switch (dataUtil.getSearchBy()) {
+            case "id":
+                return memberRepository.findByIdAndRoleIn(Long.parseLong(keyword), roles, pageable);
+            case "phone":
+                return memberRepository.findByPhoneAndRoleIn(keyword, roles, pageable);
+            case "name":
+                return memberRepository.findByNameContainsIgnoreCaseAndRoleIn(keyword, roles, pageable);
+            case "nickname":
+                return memberRepository.findByNicknameContainsIgnoreCaseAndRoleIn(keyword, roles, pageable);
+        }
+        throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
     }
 
     @Override
@@ -123,9 +139,23 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Boolean advanceValidate(String phone, String pw) {
+        Optional<Member> member = memberRepository.findByPhone(phone);
+        if (!member.isEmpty()) {
+            if (passwordEncoder.matches(pw, member.get().getPw())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public String checkPhone(String idInput) {
         Optional<Member> findMembers = memberRepository.findByPhone(idInput);
-        if (!findMembers.isEmpty()) { // 등록된 회원이 있다.
+        if (!findMembers.isEmpty()) {
             return "ok";
         } else {
             return "no";
@@ -136,7 +166,7 @@ public class MemberServiceImpl implements MemberService {
     public String checkNick(String nickInput) {
         List<Member> byNickname = memberRepository.findByNickname(nickInput);
         if (!byNickname.isEmpty()) {
-            return "ok";    // 회원이 있다.
+            return "ok";
         } else {
             return "no";
         }

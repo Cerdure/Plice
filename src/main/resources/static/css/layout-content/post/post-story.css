@@ -29,8 +29,8 @@ header .post {
     width: 100%;
     height: 1020px;
     background:
-            linear-gradient(rgba(255, 255, 255, 0.5), rgb(255, 255, 255)),
-            url("../../../img/images/background.jpg");
+        linear-gradient(rgba(255, 255, 255, 0.5), rgb(255, 255, 255)),
+        url("../../../img/images/background.jpg");
     background-color: white;
     background-size: cover;
     background-repeat: no-repeat;
@@ -66,8 +66,8 @@ header .post {
     height: auto;
     padding: 20px 40px;
     background:
-            linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
-            url("../../../img/images/bg.png");
+        linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
+        url("../../../img/images/bg.png");
     background-size: 50%;
 }
 
@@ -297,7 +297,7 @@ header .post {
     border: 1px solid silver;
     border-bottom: none;
     transform:
-            skew(-40deg) translate(30px, 0px);
+        skew(-40deg) translate(30px, 0px);
     background-color: white;
 }
 
@@ -512,14 +512,6 @@ header .post {
     min-height: 800px;
 }
 
-.table-footer {
-    width: 100%;
-    height: 80px;
-    border-top: 1px solid lightgray;
-    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.1);
-    background: white;
-}
-
 .table-row {
     width: calc(100% - 80px);
     height: 60px;
@@ -554,19 +546,20 @@ header .post {
     font-weight: 900;
 }
 
-
-
-.post-controller {
-    position: relative;
-    height: 40px;
-    margin: auto;
-    margin-top: 40px;
+.table-footer {
+    width: 100%;
+    height: 80px;
+    border-top: 1px solid lightgray;
+    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.1);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
 .controller {
     position: relative;
-    top: 20px;
     display: inline-block;
     width: 228px;
 }
@@ -579,6 +572,7 @@ header .post {
     width: 20px;
     cursor: pointer;
 }
+
 .controller-btn-right {
     position: absolute;
     top: 2px;
@@ -587,7 +581,8 @@ header .post {
     width: 20px;
     cursor: pointer;
 }
-.controller a{
+
+.controller a {
     display: inline-block;
     width: 19px;
     margin: 0 2px;
@@ -597,6 +592,7 @@ header .post {
     text-decoration: none;
     font-weight: 900;
 }
+
 .index-active {
     background-color: cornflowerblue;
     color: white;

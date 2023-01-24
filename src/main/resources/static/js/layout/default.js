@@ -15,6 +15,7 @@ $(function () {
                 $(".block-alert .text").text("해당 계정을 차단하겠습니까?");
                 break;
         }
+        seletBtn = $(this);
         $(".modal-background").fadeIn(100);
         $(".block-alert").fadeIn(300);
     });
@@ -32,6 +33,7 @@ $(function () {
                 $(".block-cancel-alert .data").text("회원 관리 ID : " + selectId);
                 break;
         }
+        seletBtn = $(this);
         $(".modal-background").fadeIn(100);
         $(".block-cancel-alert").fadeIn(300);
     });
@@ -63,7 +65,17 @@ $(function () {
 
 let selectIp,
     selectId,
+    seletBtn,
     type;
+
+function formSubmit(_this) {
+    const form = $(_this).closest("form");
+    const textareas = form.find("textarea").get();
+    textareas.forEach(e => console.log('bf ' + e.value))
+    textareas.forEach(e => { e.value = e.value.replace(/\n/g, "<br>") });
+    textareas.forEach(e => console.log('af' + e.value))
+    form.submit();
+}
 
 function authorityCheck(page) {
     (async () => {
@@ -87,11 +99,21 @@ function block() {
         const notBlocked = await fetch("/admin/block-check?blockType=" + type + (type == "ip" ? "&ip=" + selectIp : "&id=" + selectId))
             .then(res => res.json());
         if (notBlocked) {
-            location.href = "/admin/block?blockType=" + type
+            await fetch("/admin/block?blockType=" + type
                 + (type == "ip" ? "&ip=" + selectIp : "&id=" + selectId) + ""
-                + (type == "ip" ? "&pageType=accessIp" : "&pageType=accessMember")
                 + "&date=" + $("#block-date option:selected").val()
-                + "&reason=" + $("#block-reason option:selected").val();
+                + "&reason=" + $("#block-reason option:selected").val())
+                .then(res => {
+                    if (res.json()) {
+                        alert(type == 'ip' ? "IP가 차단되었습니다." : "계정이 차단되었습니다.")
+                    } else {
+                        alert("요청이 실패하였습니다.");
+                    }
+                });
+            seletBtn.removeClass("block-btn").addClass("block-cancel-btn");
+            seletBtn.text("차단됨");
+            $(".alert-window").hide();
+            $(".modal-background").hide();
         } else {
             alert("이미 차단된 " + (type == "ip" ? "IP" : "계정") + "입니다.");
         }
@@ -99,7 +121,19 @@ function block() {
 }
 
 function blockCancel() {
-    location.href = "/admin/block-cancel?blockType=" + type
-        + (type == "ip" ? "&ip=" + selectIp : "&id=" + selectId) + ""
-        + (type == "ip" ? "&pageType=accessIp" : "&pageType=accessMember");
+    (async () => {
+        await fetch("/admin/block-cancel?blockType=" + type
+            + (type == "ip" ? "&ip=" + selectIp : "&id=" + selectId))
+            .then(res => {
+                if (res.json()) {
+                    alert("차단이 해제되었습니다.")
+                } else {
+                    alert("요청이 실패하였습니다.");
+                }
+            });
+        seletBtn.removeClass("block-cancel-btn").addClass("block-btn");
+        seletBtn.text(type == 'ip' ? "IP 차단" : "계정 차단");
+        $(".alert-window").hide();
+        $(".modal-background").hide();
+    })();
 }

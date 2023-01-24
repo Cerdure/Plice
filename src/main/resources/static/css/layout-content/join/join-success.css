@@ -8,30 +8,38 @@
   align-items: center;
   position: relative;
 }
+
 .success_img {
   margin-right: 100px;
   width: 40%;
 }
+
 .success_img img {
   width: 700px;
   height: 300px;
   transform: skew(145deg, 31deg);
 }
+
 .success_text {
   width: 60%;
 }
+
 .success_text .title {
   font-size: 30px;
 }
+
 .success_text .sub_title {
   font-size: 20px;
 }
+
 .success_paragraph {
   font-size: 15px;
 }
+
 .text_m {
   margin-bottom: 10px;
 }
+
 .home_btn {
   position: absolute;
   bottom: -150px;

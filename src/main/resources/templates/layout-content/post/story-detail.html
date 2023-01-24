@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/default}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/layout-content/post/story-detail.css">
@@ -11,16 +9,17 @@
 <th:block layout:fragment="script">
     <script src="/js/layout-content/post/story-detail.js"></script>
 </th:block>
-<th:block layout:fragment="title"><title>PLICE ㅣ 이야기</title></th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 이야기</title>
+</th:block>
 
 <div layout:fragment="content">
     <div class="top-space"></div>
     <div class="background"></div>
     <div class="modal-background"></div>
-
-    <!-- 수정 폼   시작-->
     <div class="modify-form-wrapper">
-        <form action="" method="post" class="modify-form">
+        <form action="/post/story/modify" method="post" class="modify-form">
+            <input type="hidden" name="id" th:value="${post.id}">
             <div class="head">
                 <span class="text">이야기 수정</span>
                 <img class="close" src="/img/icon/close.png">
@@ -28,191 +27,160 @@
             <div class="body">
                 <div class="title-wrapper">
                     <div class="label">ㅣ 제목</div>
-                    <textarea name="title" class="title-input" maxlength="30" placeholder="제목을 입력하세요."></textarea>
+                    <textarea name="title" class="title-input" maxlength="30" placeholder="제목을 입력하세요."
+                        th:text="${post.title}" th:value="${post.title}"></textarea>
                 </div>
                 <div class="content-wrapper">
                     <div class="label">ㅣ내용</div>
                     <div class="content-frame">
-                        <textarea name="content" class="content-input" maxlength="3000"
-                                  placeholder="내용을 입력하세요."></textarea>
-                        <div class="count">0/3000</div>
+                        <textarea name="content" class="content-input" maxlength="3000" placeholder="내용을 입력하세요."
+                            th:utext="${#strings.replace(post.content, '<br>', '&#10')}"></textarea>
+                        <div class="count" th:text="${#strings.length(post.content)} + '/3000'"></div>
                     </div>
                 </div>
             </div>
             <div class="regist-button" onclick="formSubmit(this)">등록</div>
         </form>
     </div>
-    <!-- 수정 폼   끝-->
-
     <div class="alert-window close-alert">
         <div class="text">
             글 수정을 취소하겠습니까?
         </div>
-        <button class="cancel" onclick="hideAlert(this)">취소</button>
+        <button class="cancel" onclick="hideAlert()">취소</button>
         <button class="okay" onclick="formClose(this)">확인</button>
     </div>
-
     <div class="alert-window delete-alert">
         <div class="text">
             글을 삭제하시겠습니까?
         </div>
-        <button class="cancel" onclick="hideAlert(this)">취소</button>
-        <button class="okay" onclick="postDelete(this)">확인</button>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" th:onclick="'postDelete(' + ${post.id} + ')'">확인</button>
     </div>
-
     <div class="alert-window reply-delete-alert">
         <div class="text">
             댓글을 삭제하시겠습니까?
         </div>
-        <button class="cancel" onclick="hideAlert(this)">취소</button>
-        <button class="okay" onclick="replyDelete(this)">확인</button>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="replyDelete()">확인</button>
     </div>
-
-
     <div class="meta-wrapper">
-
         <div class="meta-title">
             <div class="story-title">이야기</div>
         </div>
-
         <div class="tag-wrapper story-tag-wrapper active-tag-wrapper">
             <div class="tag story-tag"></div>
             <div class="text">이야기</div>
         </div>
-
-        <div class="tag-wrapper notice-tag-wrapper" onclick="location.href='/post'">
+        <div class="tag-wrapper notice-tag-wrapper" onclick="location.href='/post/notice'">
             <div class="tag notice-tag"></div>
             <div class="text">공지사항</div>
         </div>
-
         <div class="frame">
-
             <div class="story-frame">
                 <div class="head">
                     <div class="back">
                         <img class="icon" src="/img/icon/chevron-left.svg">
-                        <div class="text" onclick="location.href='/post'">목록으로</div>
+                        <div class="text" onclick="location.href='/post/story'">목록으로</div>
                     </div>
                     <div class="btn-wrapper">
-                        <div class="modify-btn btn">
+                        <div class="modify-btn btn" th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''SUPER_ADMIN'')')} ? true
+                                 : (${#authorization.expression('isAnonymous()')} ? false :
+                                 (${#authentication.principal.username} == ${post.member.phone}))">
                             <img src="/img/icon/pencil-square.svg">
                             <div class="text">수정</div>
                         </div>
-                        <div class="delete-btn btn">
+                        <div class="delete-btn btn" th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''SUPER_ADMIN'')')} ? true
+                                 : (${#authorization.expression('isAnonymous()')} ? false :
+                                 (${#authentication.principal.username} == ${post.member.phone}))">
                             <img src="/img/icon/x-square.svg">
                             <div class="text">삭제</div>
                         </div>
                     </div>
                 </div>
-
                 <div class="body">
                     <div class="title-wrapper">
-                        <div class="title">이야기 글 샘플 제목</div>
+                        <div class="title" th:text="${post.title}"></div>
                         <div class="below">
-                            <div class="writer">유저11</div>
+                            <div class="writer" th:text="${post.memberNickname}"></div>
                             <div class="split">ㅣ</div>
-                            <div class="reg-date">2022.12.31 20:13:39</div>
-                            <div class="hits">조회 14</div>
+                            <div class="reg-date"
+                                th:text="${#temporals.format(post.regDate,'yyyy년 MM월 dd일  HH:mm:SS')}"></div>
+                            <div class="hits" th:text="'조회 ' + ${post.hits}"></div>
                             <div class="split">ㅣ</div>
-                            <div class="reply">댓글 3</div>
+                            <div class="reply" th:text="'댓글 ' + ${post.replies.size()}"></div>
                         </div>
                     </div>
-                    <div class="content">
-                        지난 10일 사우디 수도 리야드 국제공항에 도착한 비행기는 활주로에서 착륙하지 못하고 몇바퀴 선회를 했다.<br>
-                        창 밖을 보니 활주로에 빗방울이 엄청나게 쏟아지고 있었다. 사우디에서 소낙비를 맞게 될 줄이야!<br>
-                        이날 새벽부터 낮까지 내린 비로 리야드 시내는 물바다가 돼 버렸다.<br>
-                        불과 10~20mm에 불과한 비에도 배수시설이 부족한 사우디에서는 곳곳에서 맨홀이 역류하고 도로가 끊겼다.
-                    </div>
-
+                    <div class="content" th:utext="${post.content}"></div>
                     <div class="comment-wrapper">
-                        <div class="sum">댓글 3개</div>
-                        <div class="comment-input">
-                            <input id="commentSeq" type="hidden">
-                            <input id="commentLevel" value="0" type="hidden">
-                            <textarea class="comment" name="comment" maxlength="300" onkeydown="resize(this)"
-                                      onkeyup="resize(this)"
-                                      onclick="commentClick(this)" onfocusout="commentFocusout(this)"
-                                      placeholder="내용을 입력해주세요. 최대 300자까지 입력할 수 있습니다."></textarea>
+                        <div class="sum" th:text="'댓글 ' + ${post.replies.size()} + '개'"></div>
+                        <form class="comment-input" action="/post/reply/save" method="post">
+                            <input type="hidden" name="postId" th:value="${post.id}">
+                            <textarea class="comment" name="content" maxlength="300" onkeydown="resize(this)"
+                                onkeyup="resize(this)" onclick="commentClick(this)"
+                                placeholder="내용을 입력해주세요. 최대 300자까지 입력할 수 있습니다."></textarea>
                             <div class="comment-underline">
                                 <div class="comment-underline-back"></div>
                             </div>
-                            <div class="comment-button-save" value="save" onclick="replySave(this)">등록</div>
+                            <div class="comment-button-save" onclick="formSubmit(this)">등록</div>
                             <div class="comment-button-cancel" onclick="commentCancel(this)">취소</div>
+                        </form>
+                        <div th:each="reply : ${post.replies}" th:if="${reply.parent == null}">
+                            <div th:fragment="replyBlock" th:remove="tag">
+                                <div class="my-comment" th:style="${'padding-left:'+40*reply.level+'px;'}"
+                                    th:data-id="${reply.id}" th:data-post-id="${post.id}">
+                                    <div class="main">
+                                        <div class="header">
+                                            <span class="name" th:text="${reply.member?.nickname}"></span>
+                                            <span class="split" th:if="${reply.member}">ㅣ</span>
+                                            <span class="date"
+                                                th:text="${#temporals.format(post.regDate, 'yyyy.MM.dd HH:mm:ss')}"></span>
+                                        </div>
+                                        <div class="body" th:utext="${reply.content}"
+                                            th:classappend="${reply.member} ? '' : 'null-text'"></div>
+                                        <div class="option">
+                                            <img class="opt-btn" src="/img/icon/three-dots-vertical.svg">
+                                            <div class="box">
+                                                <div class="edit"
+                                                    th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''SUPER_ADMIN'')')} ? true
+                                                     : (${#authorization.expression('isAnonymous()')} ? false :
+                                                        (${#authentication.principal.username} == ${reply.member.phone}))">수정</div>
+                                                <div class="remove"
+                                                    th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''SUPER_ADMIN'')')} ? true
+                                                     : (${#authorization.expression('isAnonymous()')} ? false :
+                                                        (${#authentication.principal.username} == ${reply.member.phone}))">삭제</div>
+                                                <div class="reply">답글 달기</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <th:block th:each="children : ${reply.children}">
+                                    <th:block th:with="reply = ${children}" th:include="this :: replyBlock"
+                                        th:remove="tag">
+                                    </th:block>
+                                </th:block>
+                            </div>
                         </div>
-
-<!--                        <div th:each="reply : ${inquire.replies}" th:if="${reply.parent==null}">-->
-
-<!--                            <div th:fragment="replyBlock" th:remove="tag">-->
-
-<!--                                <div class="my-comment" th:style="${'padding-left:'+40*reply.level+'px;'}">-->
-<!--                                    <input id="replyId" th:value="${reply.id}" type="hidden">-->
-<!--                                    <div class="main">-->
-<!--                                        <div class="header">-->
-<!--                                            <span class="name" th:text="${reply.member?.nickname}">유저11</span>-->
-<!--                                            <span class="split" th:if="${reply.member!=null}">ㅣ</span>-->
-<!--                                            <span class="date"-->
-<!--                                                  th:text="${#temporals.format(inquire.regDate, 'yyyy.MM.dd HH:mm:ss')}">2022.12.31-->
-<!--                        14:53:10</span>-->
-<!--                                        </div>-->
-<!--                                        <div class="body" th:utext="${reply.content}">-->
-<!--                                            이란에서 히잡 반대시위로 사회가 혼란스럽고 수많은 여성들이 체포되고 있는데,<br>-->
-<!--                                            이슬람 최대 성지인 메카를 수호하는 보수적인 국가인 사우디인데도 분위기는 사뭇 달랐다.-->
-<!--                                        </div>-->
-<!--                                        <div class="option">-->
-<!--                                            <img class="opt-btn" src="/img/icon/three-dots-vertical.svg">-->
-<!--                                            <div class="box">-->
-<!--                                                <div class="edit"-->
-<!--                                                     th:if="${#authorization.expression('hasRole(''ADMIN'')')} ? true : (${#authentication.principal.username} == ${reply.member?.phone})">-->
-<!--                                                    수정-->
-<!--                                                </div>-->
-<!--                                                <div class="remove"-->
-<!--                                                     th:if="${#authorization.expression('hasRole(''ADMIN'')')} ? true : (${#authentication.principal.username} == ${reply.member?.phone})">-->
-<!--                                                    삭제-->
-<!--                                                </div>-->
-<!--                                                <div class="reply">답글 달기</div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                                <th:block th:each="children : ${reply.children}">-->
-<!--                                    <th:block th:with="reply = ${children}" th:include="this :: replyBlock"-->
-<!--                                              th:remove="tag">-->
-<!--                                    </th:block>-->
-<!--                                </th:block>-->
-
-<!--                            </div>-->
-
-<!--                        </div>-->
-
                     </div>
-
                     <div class="other-story">
                         <div class="next-detail">
                             <span class="next">다음글</span>
-                            <input class="inquireId" type="hidden">
                             <img class="icon" src="/img/icon/chevron-up.svg">
-                            <a class="title">다음글이 없습니다.</a>
-<!--                            <a class="title" th:if="${nextInquire.id!=null}" onclick="inquireDetail(this)"-->
-<!--                               th:text="${nextInquire.title}"></a>-->
+                            <a class="title" th:if="${nextPost.id==null}">다음글이 없습니다.</a>
+                            <a class="title" th:if="${nextPost.id!=null}" th:text="${nextPost.title}"
+                                th:href="'/post/story/detail?id=' + ${nextPost.id}"></a>
                         </div>
-
                         <div class="prev-detail">
                             <span class="prev">이전글</span>
-                            <input class="inquireId" type="hidden">
                             <img class="icon" src="/img/icon/chevron-up.svg">
-                            <a class="title">이전글이 없습니다.</a>
-<!--                            <a class="title" th:if="${prevInquire.id!=null}" onclick="inquireDetail(this)"-->
-<!--                               th:text="${prevInquire.title}"></a>-->
+                            <a class="title" th:if="${prevPost.id==null}">이전글이 없습니다.</a>
+                            <a class="title" th:if="${prevPost.id!=null}" th:text="${prevPost.title}"
+                                th:href="'/post/story/detail?id=' + ${prevPost.id}"></a>
                         </div>
                     </div>
-
-                    <div class="back-btn" onclick="location.href='/post'">목록으로</div>
+                    <div class="back-btn" onclick="location.href='/post/story'">목록으로</div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
 

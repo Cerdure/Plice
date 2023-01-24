@@ -1,78 +1,35 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/default}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
 
-<th:block layout:fragment="css"><link rel="stylesheet" href="/css/layout-content/post/post-notice.css"></th:block>
-<th:block layout:fragment="script"><script src="/js/layout-content/post/post-notice.js"></script></th:block>
-<th:block layout:fragment="title"><title>PLICE ㅣ 공지사항</title></th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/layout-content/post/post-notice.css">
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/js/layout-content/post/post-notice.js"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 공지사항</title>
+</th:block>
 
 <div layout:fragment="content">
     <div class="top-space"></div>
     <div class="background"></div>
-
-    <!-- 공지사항 등록 폼   시작-->
-    <div class="notice-write-wrapper write-form-wrapper">
-        <form action="" method="story" class="notice-write-form write-form">
-            <div class="head">
-                <span class="text">공지사항 등록</span>
-                <img class="close" src="/img/icon/close.png">
-            </div>
-            <div class="body">
-                <div class="title-wrapper">
-                    <div class="label">ㅣ 제목</div>
-                    <textarea name="title" class="title-input" maxlength="30" placeholder="제목을 입력하세요."></textarea>
-                </div>
-                <div class="content-wrapper">
-                    <div class="label">ㅣ내용</div>
-                    <div class="content-frame">
-                        <textarea name="content" class="content-input" maxlength="3000"
-                                  placeholder="내용을 입력하세요."></textarea>
-                        <div class="count">0/3000</div>
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="regist-button disable">등록</button>
-        </form>
-    </div>
-    <!-- 공지사항 등록 폼   끝-->
-
-
-    <!-- 취소 알림창  시작-->
-    <div class="close-alert-wrapper">
-        <div class="close-alert">
-            <div class="text">
-                작성한 내용은 저장되지 않습니다.<br>
-                취소하겠습니까?
-            </div>
-            <button class="cancel" onclick="hideAlert()">취소</button>
-            <button class="okay" onclick="formClose()">확인</button>
-        </div>
-    </div>
-    <!-- 취소 알림창  끝-->
-
-
     <div class="meta-wrapper">
-
         <div class="meta-title">
             <div class="story-title">이야기</div>
             <div class="notice-title">공지사항</div>
         </div>
-
-        <div class="tag-wrapper story-tag-wrapper" onclick="location.href='post-story'">
+        <div class="tag-wrapper story-tag-wrapper" onclick="location.href='/post/story'">
             <div class="tag story-tag"></div>
             <div class="text">이야기</div>
         </div>
-
         <div class="tag-wrapper notice-tag-wrapper active-tag-wrapper">
             <div class="tag notice-tag"></div>
             <div class="text">공지사항</div>
         </div>
-
         <div class="frame">
-
             <div class="notice-frame">
                 <div class="head">
                     <div class="count-wrapper">
@@ -80,25 +37,18 @@
                         <div class="unit">건</div>
                     </div>
                     <div class="search-wrapper">
-                        <form action="" class="search">
+                        <form action="/post/notice" class="search">
                             <select name="searchBy" class="search-by">
-                                <option value="nickname">작성자</option>
-                                <option value="title">제목</option>
-                                <option value="content">내용</option>
+                                <option value="nickname" th:selected="${dataUtil?.searchBy} == 'nickname'">작성자</option>
+                                <option value="title" th:selected="${dataUtil?.searchBy} == 'title'">제목</option>
+                                <option value="content" th:selected="${dataUtil?.searchBy} == 'content'">내용</option>
                             </select>
-                            <input type="text" placeholder="검색어를 입력하세요.">
+                            <input name="keyword" type="text" placeholder="검색어를 입력하세요." th:value="${dataUtil?.keyword}">
                             <img class="reset" src="/img/icon/x-circle.svg">
-                            <img class="icon" src="/img/icon/search-icon.svg">
+                            <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">
                         </form>
                     </div>
-                    <!--<div class="write-btn-wrapper">
-                        <div class="write-btn notice-write-btn">
-                            <img src="/img/icon/pencil-square.svg">
-                            <div class="text" sec:authorize="hasRole('ADMIN')">공지 등록</div>
-                        </div>
-                    </div>-->
                 </div>
-
                 <div class="body">
                     <div class="table-head">
                         <div class="number">번호</div>
@@ -107,10 +57,9 @@
                         <div class="reg-date">등록일</div>
                         <div class="hits">조회수</div>
                     </div>
-
                     <div class="table-body">
-
-                        <a class="table-row" href='/notice-detail' th:each="notice,i : ${notices}" th:href="${'/notice-detail?id='+notice.id}">
+                        <a class="table-row" th:each="notice,i : ${notices}"
+                            th:href="'/post/notice/detail?id=' + ${notice.id}">
                             <div class="number" th:text="${notice.id}"></div>
                             <div class="title">
                                 <div class="text" th:text="${notice.title}"></div>
@@ -119,54 +68,42 @@
                             <div class="reg-date" th:text="${#temporals.format(notice.regDate, 'yyyy-MM-dd')}"></div>
                             <div class="hits" th:text="${notice.hits}">0</div>
                         </a>
-
                     </div>
-
-                    <div class="notice-controller">
-                      <span class="controller"
-                            th:with="start=${T(java.lang.Math).floor(notices.number/10)*10 + 1}, last=(${notices.totalPages})">
-
-                         <a th:class="${notices.first} ? 'disable'"
-                            th:href="@{/post-notice(page=${notices.number})}">
-                           <img class="controller-btn-left" src="/img/icon/btn_left.png">
-                         </a>
-
-                        <a th:href="@{/post-notice(page=1)}"
-                           th:if="${notices.totalPages < 4 ? false :notices.number > 1}"
-                           th:text="1" aria-label="First">
-                        </a>
-
-                        <span th:if="${notices.totalPages < 4 ? false :notices.number > 1}">...</span>
-
-                         <a th:each="page: ${#numbers.sequence(start, last)}"
-                            th:if="${notices.first ? (page == 0 ? false : page < notices.number + 4) :
-                            (notices.last ? page > notices.number - 2 : (page < notices.number + 3) && (page > notices.number - 1))}"
-                            th:class="${page == notices.number + 1} ? 'index-active'"
-                            th:text="${page}" th:href="@{/post-notice(page=${page})}">
-                         </a>
-
-                        <span th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}">...</span>
-
-                        <a th:href="@{/post-notice(page=${notices.totalPages})}"
-                           th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}"
-                           th:text="${notices.totalPages}" aria-label="Last" >
-                        </a>
-
-                        <a th:class="${notices.last} ? 'disable'"
-                           th:href="@{/post-notice(page=${notices.number +2})}">
-                          <img class="controller-btn-right" src="/img/icon/btn_right.png">
-                        </a>
-
-                      </span>
+                    <div class="table-footer">
+                        <div class="notice-controller">
+                            <span class="controller"
+                                th:with="start=${T(java.lang.Math).floor(notices.number/10)*10 + 1}, last=(${notices.totalPages})">
+                                <a th:class="${notices.first} ? 'disable'"
+                                    th:href="@{/post/notice(page=${notices.number})}">
+                                    <img class="controller-btn-left" src="/img/icon/btn_left.png">
+                                </a>
+                                <a th:href="@{/post/notice(page=1)}"
+                                    th:if="${notices.totalPages < 4 ? false :notices.number > 1}" th:text="1"
+                                    aria-label="First">
+                                </a>
+                                <span th:if="${notices.totalPages < 4 ? false :notices.number > 1}">...</span>
+                                <a th:each="page: ${#numbers.sequence(start, last)}"
+                                    th:if="${notices.first ? (page == 0 ? false : page < notices.number + 4) :
+                                  (notices.last ? page > notices.number - 2 : (page < notices.number + 3) && (page > notices.number - 1))}"
+                                    th:class="${page == notices.number + 1} ? 'index-active'" th:text="${page}"
+                                    th:href="@{/post/notice(page=${page})}">
+                                </a>
+                                <span
+                                    th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}">...</span>
+                                <a th:href="@{/post/notice(page=${notices.totalPages})}"
+                                    th:if="${notices.totalPages < 4 ? false :notices.number < notices.totalPages - 2}"
+                                    th:text="${notices.totalPages}" aria-label="Last">
+                                </a>
+                                <a th:class="${notices.last} ? 'disable'"
+                                    th:href="@{/post/notice(page=${notices.number +2})}">
+                                    <img class="controller-btn-right" src="/img/icon/btn_right.png">
+                                </a>
+                            </span>
+                        </div>
                     </div>
-
-                    <div class="table-footer"></div>
-
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
 

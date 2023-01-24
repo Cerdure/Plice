@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/default}">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  layout:decorate="~{layout/default}">
 
 <th:block layout:fragment="css">
   <link rel="stylesheet" href="/css/layout-content/login/pw-reset.css">
@@ -17,22 +14,22 @@
 </th:block>
 
 <div layout:fragment="content">
-  <div class="top-space" ></div>
-  <!--<input th:value="${phone}">-->
+  <div class="top-space"></div>
   <main class="reset_main">
     <h1 class="reset_header">비밀번호 재설정</h1>
     <form action="/login/pass-update" method="post" class="reset_form">
       <div class="reset_container">
         <input name="phone" type="hidden" th:value="${phone}">
-        <h1 class="reset_title" >새로운 비밀번호<span class="new_pw hidden_text"></span></h1>
+        <h1 class="reset_title">새로운 비밀번호<span class="new_pw hidden_text"></span></h1>
         <input class="reset_input" type="password" name="pw" id="reset_pw" placeholder="문자, 숫자, 특수문자 포함(8~16자)"
-               minlength="8" maxlength="16">
+          minlength="8" maxlength="16">
         <h1 class="reset_title titlemg">비밀번호 재입력<span class="new_repw hidden_text"></span></h1>
-        <input class="reset_input" type="password" id="reset_repw" placeholder="문자, 숫자, 특수문자 포함(8~16자)"
-               minlength="8" maxlength="16">
+        <input class="reset_input" type="password" id="reset_repw" placeholder="문자, 숫자, 특수문자 포함(8~16자)" minlength="8"
+          maxlength="16">
       </div>
       <button type="submit" class="reset_btn" disabled>설정완료</button>
     </form>
   </main>
 </div>
+
 </html>

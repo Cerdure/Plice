@@ -128,7 +128,7 @@ public class ChatServiceImpl implements ChatService {
                 .regDate(LocalDateTime.now())
                 .type(message.getType().toString())
                 .build();
-        if(message.getType().equals(TrayIcon.MessageType.NONE)){
+        if (message.getType().equals(TrayIcon.MessageType.NONE)) {
             chatRoom.chatCountPlus();
             chatRoomRepository.save(chatRoom);
         }
@@ -190,13 +190,13 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public Map<Integer,List<Chat>> chatsGroupByDay(String roomId) {
+    public Map<Integer, List<Chat>> chatsGroupByDay(String roomId) {
         List<Chat> chats = findChatsByRoomId(roomId);
         Map<Integer, List<Chat>> chatsMap = new HashMap<>();
         List<Integer> days = new ArrayList<>();
         for (Chat chat : chats) {
             int day = chat.getRegDate().getDayOfMonth();
-            if(!days.contains(day)){
+            if (!days.contains(day)) {
                 days.add(day);
             }
         }
@@ -209,13 +209,13 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public Map<Integer,List<Chat>> chatsGroupByDay(Long chatId) {
+    public Map<Integer, List<Chat>> chatsGroupByDay(Long chatId) {
         List<Chat> chats = findChatsByRoomId(findChatRoomByChatId(chatId).getId());
         Map<Integer, List<Chat>> chatsMap = new HashMap<>();
         List<Integer> days = new ArrayList<>();
         for (Chat chat : chats) {
             int day = chat.getRegDate().getDayOfMonth();
-            if(!days.contains(day)){
+            if (!days.contains(day)) {
                 days.add(day);
             }
         }

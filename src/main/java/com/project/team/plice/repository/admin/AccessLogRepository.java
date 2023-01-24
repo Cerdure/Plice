@@ -1,7 +1,7 @@
 package com.project.team.plice.repository.admin;
 
 import com.project.team.plice.domain.admin.AccessLog;
-import com.project.team.plice.domain.admin.Blacklist;
+import com.project.team.plice.domain.admin.IP;
 import com.project.team.plice.domain.member.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +14,7 @@ public interface AccessLogRepository extends JpaRepository<AccessLog, Long> {
     public AccessLog findTopByMemberOrderByRegDateDesc(Member member);
     public Page<AccessLog> findAllByOrderByRegDateDesc(Pageable pageable);
     public List<AccessLog> findByRegDateAfter(LocalDateTime localDateTime);
-    public Long countByRegDateBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
-    public Long countByUriContainingIgnoreCaseAndRegDateBetween(String uri ,LocalDateTime startDateTime, LocalDateTime endDateTime);
+    public Page<AccessLog> findById(Long id, Pageable pageable);
+    public Page<AccessLog> findByMember(Member member, Pageable pageable);
+    public Page<AccessLog> findByIp(IP ip, Pageable pageable);
 }

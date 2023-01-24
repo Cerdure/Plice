@@ -7,7 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class ApartData {
@@ -29,7 +30,7 @@ public class ApartData {
         this.complexCode = complexCode;
     }
 
-    public ApartDataDto toDto(){
+    public ApartDataDto toDto() {
         return ApartDataDto.builder()
                 .id(this.id)
                 .address(this.address)

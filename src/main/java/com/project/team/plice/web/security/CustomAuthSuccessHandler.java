@@ -1,6 +1,5 @@
 package com.project.team.plice.web.security;
 
-import com.project.team.plice.domain.enums.MemberRole;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,8 +34,8 @@ public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHand
             request.getSession().removeAttribute("prevPage");
         }
         String uri = "/home";
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
-            || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"))){
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
+                || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SUPER_ADMIN"))) {
             uri = "/admin";
         } else {
             if (savedRequest != null) {

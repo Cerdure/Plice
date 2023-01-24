@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -18,7 +17,7 @@ public class SearchNewsRes {
     private List<SearchLocalItem> items;
 
     @Data
-    public static class SearchLocalItem{
+    public static class SearchLocalItem {
         private String title;
         private String link;
         private String description;

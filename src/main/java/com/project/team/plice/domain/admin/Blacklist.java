@@ -1,17 +1,21 @@
 package com.project.team.plice.domain.admin;
 
 import com.project.team.plice.domain.member.Member;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Blacklist {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "black_list_id")
     private Long id;
 

@@ -94,20 +94,20 @@ $(function () {
       let form = document.createElement("form");
       form.setAttribute('class', 'inner-comment');
       form.innerHTML =
-          '<input id="parentId" type="hidden" value="' + parentId + '">' +
-          '<img src="/img/icon/arrow-return-right.svg">' +
-          '<textarea class="comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
-          'onkeyup="resize(this)" onclick="commentClick(this)" onfocusout="commentFocusout(this)" ' +
-          'placeholder="내용을 입력해주세요."></textarea>' +
-          '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
-          '<div class="comment-button-save" value="save" onclick="replySave(this)">등록</div>' +
-          '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
+        '<input id="parentId" type="hidden" value="' + parentId + '">' +
+        '<img src="/img/icon/arrow-return-right.svg">' +
+        '<textarea class="comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
+        'onkeyup="resize(this)" onclick="commentClick(this)" onfocusout="commentFocusout(this)" ' +
+        'placeholder="내용을 입력해주세요."></textarea>' +
+        '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
+        '<div class="comment-button-save" value="save" onclick="replySave(this)">등록</div>' +
+        '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
       $(this).closest('.my-comment').append(form);
     });
 
     $(document).on("click", ".my-comment .edit", function () {
       $(this).closest(".my-comment").find(".option").hide();
-      origin = $(this).closest(".my-comment").find(".body"); //+origin.text().length
+      origin = $(this).closest(".my-comment").find(".body");
       originText = origin.text(); console.log(originText);
       if (origin.find("strong").text() == '') {
         console.log('if')
@@ -119,12 +119,12 @@ $(function () {
       let form = document.createElement("form");
       form.setAttribute('class', 'inner-comment');
       form.innerHTML =
-          '<textarea class="mod-comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
-          'onkeyup="resize(this)" onclick="commentClick(this)" onfocusout="commentFocusout(this)" ' +
-          'placeholder="수정할 내용을 입력해주세요."></textarea>' +
-          '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
-          '<div class="comment-button-save" value="save" onclick="replyModify(this)">수정</div>' +
-          '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
+        '<textarea class="mod-comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
+        'onkeyup="resize(this)" onclick="commentClick(this)" onfocusout="commentFocusout(this)" ' +
+        'placeholder="수정할 내용을 입력해주세요."></textarea>' +
+        '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
+        '<div class="comment-button-save" value="save" onclick="replyModify(this)">수정</div>' +
+        '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
       $(this).closest('.my-comment').find(".body").append(form);
       $(".mod-comment").text(commentBodyText.replace(/\s/gi, ""));
       resize(document.querySelector(".mod-comment"));
@@ -158,8 +158,8 @@ $(function () {
 let headerPassed = true;
 let mainPassed = true;
 
-function registCheck(...passed){
-  if(passed.every(e => {return e;})) {
+function registCheck(...passed) {
+  if (passed.every(e => { return e; })) {
     $(".regist-button").removeClass("disable");
   } else {
     $(".regist-button").addClass("disable");

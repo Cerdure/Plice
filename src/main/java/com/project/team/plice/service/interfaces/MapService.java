@@ -8,7 +8,6 @@ import com.project.team.plice.dto.data.ApartDataDto;
 import java.util.List;
 
 public interface MapService {
-
     public List<TradeData> findTradeData();
     public List<TradeData> findTradeData(Double neLng, Double neLat, Double swLng, Double swLat);
     public List<TradeData> findAllTradeDataOrderByPriceDesc();

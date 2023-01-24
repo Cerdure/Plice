@@ -16,9 +16,7 @@
 <div layout:fragment="content">
     <div class="top-space"></div>
     <div class="content-wrapper">
-
         <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
-
         <div class="right-side">
             <div class="head" id="page-title" data-value="사이트 통계">ㅣ 사이트 통계</div>
             <div class="body">
@@ -32,8 +30,8 @@
                                     <div class="text" data-type="year">연간 방문 추이</div>
                                 </div>
                                 <div class="chart-type">
-                                   <div class="type" data-type="total">전체</div>
-                                   <div class="type active-text" data-type="page">페이지별</div>
+                                    <div class="type" data-type="total">전체</div>
+                                    <div class="type active-text" data-type="page">페이지별</div>
                                 </div>
                             </div>
                             <div id="chart"></div>
@@ -61,6 +59,5 @@
         </div>
     </div>
 </div>
-
 
 </html>

@@ -16,7 +16,6 @@
 <div layout:fragment="content">
     <div class="top-space"></div>
     <div class="modal-background"></div>
-
     <div class="alert-window block-alert">
         <div class="info">
             <div class="text">계정을 차단하겠습니까?</div>
@@ -44,8 +43,6 @@
         <button class="cancel" onclick="hideAlert()">취소</button>
         <button class="okay" onclick="complete(true, 1, this); block()">확인</button>
     </div>
-
-
     <div class="chat-wrapper">
         <div class="chat" id="chat" data-id="">
             <div class="head">
@@ -73,20 +70,21 @@
                                 <img th:src="${member.profileImgPath}">
                             </div>
                             <div class="name-date-box">
-                                <strong th:text="${member.nickname}" id="member-id" th:data-value="${member.id}"></strong>
+                                <strong th:text="${member.nickname}" id="member-id"
+                                    th:data-value="${member.id}"></strong>
                                 <div class='date'
                                     th:text="(${hour} <= 12 ? '오전 ' + ${hour} : '오후 ' + (${hour} - 12))
                                                                 + ':' + (${minute} < 10 ? '0' + ${minute} : ${minute})">
                                 </div>
                             </div>
-                            <div class='content block-btn' th:text="${chat.content}" th:data-member-id="${member.id}" data-type="member"></div>
+                            <div class='content block-btn' th:text="${chat.content}" th:data-member-id="${member.id}"
+                                data-type="member"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="alert-window block-cancel-alert">
         <div class="info">
             <div class="text">차단을 해제하겠습니까?</div>
@@ -95,28 +93,25 @@
         <button class="cancel" onclick="hideAlert()">취소</button>
         <button class="okay" onclick="blockCancel()">확인</button>
     </div>
-
     <div class="content-wrapper">
-
         <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
-
         <div class="right-side">
-
             <div class="meta-wrapper">
                 <div class="head" id="page-title" data-value="채팅 관리">ㅣ 채팅 관리</div>
                 <div class="body">
                     <div class="search-wrapper">
                         <form class="search">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox"> 처리 완료 제외
-                            </div>
                             <div class="input-wrapper">
-                                <select class="search-by" name="search-by">
-                                    <option value="id">신고 관리 ID</option>
+                                <select class="search-by" name="searchBy">
+                                    <option value="id" th:selected="${dataUtil?.searchBy} == 'id'">신고 관리 ID</option>
+                                    <option value="reporterId" th:selected="${dataUtil?.searchBy} == 'reporterId'">신고자
+                                        ID</option>
                                 </select>
-                                <input class="search-input" type="text">
-                                <img class="reset" src="/img/icon/x-circle.svg">
-                                <img class="icon" src="/img/icon/search-icon.svg">
+                                <input class="search-input" name="keyword" type="text" placeholder="검색어를 입력하세요."
+                                    th:value="${dataUtil?.keyword}">
+                                <img class="reset" src="/img/icon/x-circle.svg"
+                                    onclick="location.href='/admin/chat-mng'">
+                                <img class="icon" src="/img/icon/search-icon.svg" onclick="submit()">
                             </div>
                         </form>
                     </div>
@@ -130,7 +125,6 @@
                             <div class="reporter">신고자 ID</div>
                             <div class="reg-date">신고 일시</div>
                         </div>
-
                         <row class="report row" th:each="report : ${reports}" th:id="${report.id}">
                             <div th:text="${report.complete} ? '처리 완료' : '접수'"></div>
                             <div id="report-id" th:text="${report.id}" th:data-value="${report.id}"></div>
@@ -141,9 +135,8 @@
                             <div th:text="${#temporals.format(report.regDate, 'yyyy년 MM월 dd일  HH:mm:ss')}"></div>
                             <a class="btn row-btn-1 chat-open-btn">채팅 보기</a>
                             <a class="btn row-btn-2 complete-btn" th:text="${report.complete} ? '처리 취소' : '완료 처리'"
-                            th:onclick="${report.complete} ? 'complete(false, 0, this)' : 'complete(true, 0, this)'"></a>
+                                th:onclick="${report.complete} ? 'complete(false, 0, this)' : 'complete(true, 0, this)'"></a>
                         </row>
-
                         <div class="pagination-wrapper">
                             <span class="pagination"
                                 th:with="start=${T(java.lang.Math).floor(reports.number/10)*10 + 1}, last=(${reports.totalPages})">
@@ -182,6 +175,5 @@
         </div>
     </div>
 </div>
-
 
 </html>

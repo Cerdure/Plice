@@ -1,17 +1,21 @@
 package com.project.team.plice.domain.admin;
 
 import com.project.team.plice.domain.member.Member;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Authority {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "authority_id")
     private Long id;
 
@@ -48,7 +52,7 @@ public class Authority {
         this.modDate = modDate;
     }
 
-    public void updateAuthorities(Authority authority){
+    public void updateAuthorities(Authority authority) {
         this.adminMng = authority.getAdminMng() == null ? false : authority.getAdminMng();
         this.memberMng = authority.getMemberMng() == null ? false : authority.getMemberMng();
         this.chatMng = authority.getChatMng() == null ? false : authority.getChatMng();

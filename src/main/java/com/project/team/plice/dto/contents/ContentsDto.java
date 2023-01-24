@@ -19,7 +19,7 @@ public class ContentsDto {
         this.theme = theme;
     }
 
-    public Contents toEntity(){
+    public Contents toEntity() {
         return Contents.builder()
                 .id(this.id)
                 .member(this.member)

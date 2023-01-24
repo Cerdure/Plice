@@ -134,7 +134,7 @@ google.charts.setOnLoadCallback(drawPieChart);
 function drawPieChart() {
   (async () => {
     const pageCount = await fetch("/admin/logCount/daily").then(res => res.json());
-    let home, map, chat, post, contents; 
+    let home, map, chat, post, contents;
     $.each(pageCount.home, (key, value) => home = value);
     $.each(pageCount.map, (key, value) => map = value);
     $.each(pageCount.chat, (key, value) => chat = value);
@@ -149,7 +149,7 @@ function drawPieChart() {
       ['이야기', post],
       ['컨텐츠', contents]
     ]);
-  
+
     var options = {
       chartArea: { width: '800px' },
       width: '100%',
@@ -162,7 +162,7 @@ function drawPieChart() {
       pieSliceBorderColor: 'cornflowerblue',
       pieSliceTextStyle: { fontSize: 20 }
     };
-  
+
     var chart = new google.visualization.PieChart(document.getElementById('day-chart'));
     chart.draw(data, options);
     const texts = $("#day-chart g text").get();
@@ -183,11 +183,11 @@ function drawVisualization() {
     let increase, prev = 50;
     $.each(memberCount, (key, value) => {
       day = (new Date(key).getMonth() + 1).toString() + '월 ' + new Date(key).getDate().toString() + '일';
-      increase = value-prev;
+      increase = value - prev;
       data.addRow([day, value, increase]);
       prev = value;
     });
-  
+
     var options = {
       width: '100%',
       height: '100%',
@@ -195,9 +195,9 @@ function drawVisualization() {
       series: { 1: { type: 'bars' } },
       colors: ['#6885ff', '#77d5f2'],
       chartArea: { top: 60, left: 100, width: '70%', height: '70%', marginBottom: 0 },
-      legend:{position:'top'}
+      legend: { position: 'top' }
     };
-  
+
     var chart = new google.visualization.ComboChart(document.getElementById('join-chart'));
     chart.draw(data, options);
   })();
@@ -212,10 +212,10 @@ function drawChart() {
   (async () => {
     const result = await fetch("/admin/keywords").then(res => res.json());
     var data = new google.visualization.DataTable();
-    data.addColumn('string','keyword');
-    data.addColumn('string','parent');
-    data.addColumn('number','volume');
-    data.addColumn('number','increase/decrease');
+    data.addColumn('string', 'keyword');
+    data.addColumn('string', 'parent');
+    data.addColumn('number', 'volume');
+    data.addColumn('number', 'increase/decrease');
     data.addRow(['키워드', null, 0, 0]);
     result.forEach(e => {
       data.addRow([e.keyword, '키워드', e.count, e.count]);

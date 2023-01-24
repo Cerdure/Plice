@@ -22,7 +22,7 @@ public class SearchNewsReq {
         this.sort = sort;
     }
 
-    public MultiValueMap<String, String> toMultiValueMap(){
+    public MultiValueMap<String, String> toMultiValueMap() {
         var map = new LinkedMultiValueMap<String, String>();
         map.add("query", query);
         map.add("display", String.valueOf(display));

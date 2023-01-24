@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AdminTeam {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "admin_team_id")
     private Long id;
 

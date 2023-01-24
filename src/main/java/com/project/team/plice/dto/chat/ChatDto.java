@@ -1,7 +1,9 @@
 package com.project.team.plice.dto.chat;
 
 import com.project.team.plice.domain.member.Member;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.awt.*;
 import java.time.LocalDateTime;

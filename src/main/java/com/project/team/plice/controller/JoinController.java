@@ -1,6 +1,5 @@
 package com.project.team.plice.controller;
 
-import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.service.interfaces.AdminService;
 import com.project.team.plice.service.interfaces.MemberService;
@@ -20,19 +19,19 @@ public class JoinController {
     private final MemberService memberService;
 
     @GetMapping("/sign-up")
-    public String signUpForm(HttpServletRequest request, Authentication authentication){
+    public String signUpForm(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
         return "layout-content/join/sign-up";
     }
 
     @GetMapping("/join")
-    public String joinForm(HttpServletRequest request, Authentication authentication){
+    public String joinForm(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
         return "layout-content/join/join";
     }
 
     @PostMapping("/join")
-    public String joinMember(@ModelAttribute MemberDto memberDto){
+    public String joinMember(@ModelAttribute MemberDto memberDto) {
         memberService.join(memberDto);
         return "layout-content/join/join-success";
     }
@@ -58,25 +57,25 @@ public class JoinController {
     }
 
     @GetMapping("/term-service")
-    public String termServiceForm(HttpServletRequest request, Authentication authentication){
+    public String termServiceForm(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
         return "layout-content/join/term-service";
     }
 
     @GetMapping("/use-personal")
-    public String usePersonalForm(HttpServletRequest request, Authentication authentication){
+    public String usePersonalForm(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
         return "layout-content/join/use-personal";
     }
 
     @GetMapping("/marketing")
-    public String marketingForm(HttpServletRequest request, Authentication authentication){
+    public String marketingForm(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
         return "layout-content/join/marketing";
     }
 
     @GetMapping("/term-of-service")
-    public String termOfServiceForm(HttpServletRequest request, Authentication authentication){
+    public String termOfServiceForm(HttpServletRequest request, Authentication authentication) {
         adminService.logAccess(request, authentication);
         return "layout-content/join/term-of-service";
     }

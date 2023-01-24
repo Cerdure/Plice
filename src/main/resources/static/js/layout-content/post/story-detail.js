@@ -1,14 +1,5 @@
 $(function () {
 
-  $(".search").mouseover(function () {
-    $(".search .reset").stop().fadeIn(200);
-  }).mouseleave(function () {
-    $(".search .reset").stop().fadeOut(200);
-  });
-  $(".search .reset").click(function () {
-    $(this).closest(".search").find("input").val("");
-  });
-
   $(".modify-btn").click(function () {
     $(".modify-form-wrapper").fadeIn(300);
   });
@@ -18,10 +9,10 @@ $(function () {
     $(".close-alert").fadeIn(300);
   });
 
-
-
-
-
+  $(".delete-btn").click(function () {
+    $(".modal-background").fadeIn(200);
+    $(".delete-alert").fadeIn(300);
+  });
 
   $(document).ready(function () {
 
@@ -70,42 +61,52 @@ $(function () {
     $(document).on("click", ".reply", function () {
       $(".box").fadeOut(0);
       $(".inner-comment").remove();
-      let parent = $(this).closest(".my-comment");
-      let parentId = parent.find("#replyId").val();
+      const parent = $(this).closest(".my-comment");
+      const parentId = parent.data("id");
+      const postId = parent.data("post-id");
       let form = document.createElement("form");
+      form.action = "/post/reply/save";
+      form.method = "post";
       form.setAttribute('class', 'inner-comment');
       form.innerHTML =
-          '<input id="parentId" type="hidden" value="' + parentId + '">' +
-          '<img src="../static/img/icon/arrow-return-right.svg">' +
-          '<textarea class="comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
-          'onkeyup="resize(this)" onclick="commentClick(this)" onfocusout="commentFocusout(this)" ' +
-          'placeholder="내용을 입력해주세요."></textarea>' +
-          '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
-          '<div class="comment-button-save" value="save" onclick="replySave(this)">등록</div>' +
-          '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
+        '<input name="postId" type="hidden" value="' + postId + '">' +
+        '<input name="parentId" type="hidden" value="' + parentId + '">' +
+        '<img src="/img/icon/arrow-return-right.svg">' +
+        '<textarea class="comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
+        'onkeyup="resize(this)" onclick="commentClick(this)"' +
+        'placeholder="내용을 입력해주세요."></textarea>' +
+        '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
+        '<div class="comment-button-save" value="save" onclick="formSubmit(this)">등록</div>' +
+        '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
       $(this).closest('.my-comment').append(form);
     });
 
     $(document).on("click", ".my-comment .edit", function () {
-      $(this).closest(".my-comment").find(".option").hide();
-      origin = $(this).closest(".my-comment").find(".body"); //+origin.text().length
-      originText = origin.text(); console.log(originText);
+      const myComment = $(this).closest(".my-comment");
+      const postId = myComment.data("post-id");
+      const id = myComment.data("id");
+      myComment.find(".option").hide();
+      origin = myComment.find(".body");
+      originText = origin.text();
       if (origin.find("strong").text() == '') {
-        console.log('if')
         commentBodyText = origin.text();
       } else {
         commentBodyText = origin.text().substring(origin.text().indexOf(" ") + 1, origin.text().length);
       }
       origin.text('');
       let form = document.createElement("form");
+      form.action = "/post/reply/modify";
+      form.method = "post";
       form.setAttribute('class', 'inner-comment');
       form.innerHTML =
-          '<textarea class="mod-comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
-          'onkeyup="resize(this)" onclick="commentClick(this)" onfocusout="commentFocusout(this)" ' +
-          'placeholder="수정할 내용을 입력해주세요."></textarea>' +
-          '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
-          '<div class="comment-button-save" value="save" onclick="replyModify(this)">수정</div>' +
-          '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
+        '<input name="postId" type="hidden" value="' + postId + '">' +
+        '<input name="replyId" type="hidden" value=' + id + '>' +
+        '<textarea class="mod-comment" name="content" maxlength="300" onkeydown="resize(this)" ' +
+        'onkeyup="resize(this)" onclick="commentClick(this)"' +
+        'placeholder="수정할 내용을 입력해주세요."></textarea>' +
+        '<div class="comment-underline"><div class="comment-underline-back"></div></div>' +
+        '<div class="comment-button-save" value="save" onclick="formSubmit(this)">수정</div>' +
+        '<div class="comment-button-cancel" onclick="myCommentCancel(this)">취소</div>';
       $(this).closest('.my-comment').find(".body").append(form);
       $(".mod-comment").text(commentBodyText.replace(/\s/gi, ""));
       resize(document.querySelector(".mod-comment"));
@@ -115,7 +116,7 @@ $(function () {
     });
 
     $(document).on("click", ".my-comment .remove", function () {
-      replyId = $(this).closest(".my-comment").find("#replyId").val();
+      selectReplyId = $(this).closest(".my-comment").data("id");
       $(".modal-background").fadeIn(200);
       $(".reply-delete-alert").fadeIn(300);
     });
@@ -129,18 +130,13 @@ $(function () {
     }
   });
 
-
-
-
-
 });
 
+let headerPassed = true, mainPassed = true,
+  origin, originText, selectReplyId
 
-let headerPassed = true;
-let mainPassed = true;
-
-function registCheck(...passed){
-  if(passed.every(e => {return e;})) {
+function registCheck(...passed) {
+  if (passed.every(e => { return e; })) {
     $(".regist-button").removeClass("disable");
   } else {
     $(".regist-button").addClass("disable");
@@ -161,24 +157,36 @@ function hideAlert() {
   $(".alert-window").fadeOut(100);
 }
 
+function postDelete(id) {
+  location.href = "/post/story/delete?id=" + id;
+}
+
 function resize(_this) {
   _this.style.height = "1px";
   _this.style.height = (12 + _this.scrollHeight) + "px";
 }
 
 function commentClick(_this) {
-  $(_this).parent().find(".comment-underline-back").stop().animate({ 'width': '100%' }, 200, 'easeInOutQuad');
-  $(_this).parent().find(".comment-button-save").stop().fadeIn(300);
-  $(_this).parent().find(".comment-button-cancel").stop().fadeIn(300);
+  (async () => {
+    const loginCheck = await fetch("/chat/login-check").then(res => res.text());
+    if (loginCheck == "ok") {
+      $(".comment-underline-back").stop().animate({ 'width': '0%' }, 100);
+      $(".comment-button-save").stop().fadeOut(100);
+      $(".comment-button-cancel").stop().fadeOut(100);
+      $(_this).parent().find(".comment-underline-back").stop().animate({ 'width': '100%' }, 200);
+      $(_this).parent().find(".comment-button-save").stop().fadeIn(300);
+      $(_this).parent().find(".comment-button-cancel").stop().fadeIn(300);
+    } else {
+      alert('로그인 후 이용 가능합니다.');
+      location.href = "/login";
+    }
+  })();
 }
-
-let origin;
-let originText;
 
 function commentCancel(_this) {
   let textarea = $(_this).parent().find("textarea");
   textarea.val('');
-  $(_this).parent().find(".comment-underline-back").stop().animate({ 'width': '0%' }, 100, 'easeInOutQuad');
+  $(_this).parent().find(".comment-underline-back").stop().animate({ 'width': '0%' }, 100);
   $(_this).parent().find(".comment-button-save").stop().fadeOut(100);
   $(_this).parent().find(".comment-button-cancel").stop().fadeOut(100);
   textarea.css('height', '1px');
@@ -190,72 +198,13 @@ function myCommentCancel(_this) {
   $(_this).parent().remove();
 }
 
-
-function postDelete() {
-  // $.ajax({
-  //     url: "/post-delete/"+inquireId,
-  //     type: "post",
-  //     error: function (xhr, status, error) {
-  //         console.log(error);
-  //     }
-  // }).done(function(result){
-  //     document.location.replace("/inquire");
-  // });
-}
-
-function replySave(_this){
-  let data = {
-    content: $(_this).parent().find(".comment").val(),
-    parentId: $(_this).parent().find("#parentId").val()
-  };
-  $.ajax({
-    url: "/reply/" + $("#post-id").val(),
-    type: "post",
-    data: data,
-    dataType: "html",
-    async: true,
-    error: function (xhr, status, error) {
-      console.log(error);
+function replyDelete() {
+  fetch("/post/reply/delete?id=" + selectReplyId).then(res => {
+    if (res.json()) {
+      alert("댓글이 삭제되었습니다.");
+      location.reload();
+    } else {
+      alert("요청이 실패하였습니다.");
     }
-  }).done(function (replies) {
-    document.location.replace("/story-detail/"+$("#post-id").val());
-  });
-}
-
-
-function replyModify(_this){
-  let data = {
-    replyId: $(_this).closest(".my-comment").find("#replyId").val(),
-    content: $(_this).parent().find(".mod-comment").val(),
-  };
-  $.ajax({
-    url: "/reply-modify/" + $("#inquireId").val(),
-    type: "post",
-    data: data,
-    dataType: "html",
-    async: true,
-    error: function (xhr, status, error) {
-      console.log(error);
-    }
-  }).done(function (replies) {
-    document.location.replace("/inquire-detail/"+$("#inquireId").val());
-  });
-}
-
-function replyDelete(_this){
-  let data = {
-    replyId: replyId,
-  };
-  $.ajax({
-    url: "/reply-delete/" + $("#inquireId").val(),
-    type: "post",
-    data: data,
-    dataType: "html",
-    async: true,
-    error: function (xhr, status, error) {
-      console.log(error);
-    }
-  }).done(function (replies) {
-    document.location.replace("/inquire-detail/"+$("#inquireId").val());
   });
 }

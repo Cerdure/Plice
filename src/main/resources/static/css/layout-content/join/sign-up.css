@@ -5,16 +5,19 @@
   padding: 50px 45px;
   position: relative;
 }
+
 .sign_title {
   font-size: 30px;
   border-bottom: 1px solid #c9d5ff;
   padding-bottom: 30px;
   margin-bottom: 30px;
 }
+
 .sign_subtitle {
   font-size: 15px;
   margin-bottom: 40px;
 }
+
 .sign_all_checkbox {
   display: flex;
   align-items: center;
@@ -23,24 +26,29 @@
   margin-bottom: 20px;
   border-bottom: 1px solid #c9d5ff;
 }
+
 .term_check {
   margin-right: 5px;
 }
+
 .sign_term_column {
   display: flex;
   align-items: center;
   font-size: 16px;
   margin-bottom: 12px;
 }
+
 .fa-chevron-right {
   float: right;
   cursor: pointer;
 }
+
 .small_term_text {
   margin-bottom: 5px;
   opacity: 0.6;
   font-size: 12px;
 }
+
 .sign_term_btn {
   background-color: #dfdfdf;
   color: white;

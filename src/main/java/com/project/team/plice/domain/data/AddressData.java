@@ -7,12 +7,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class AddressData {
 
-    @Id @Column(name = "address_data_id")
+    @Id
+    @Column(name = "address_data_id")
     private Long id;
     private String address;
     private String legalCode;
@@ -24,7 +26,7 @@ public class AddressData {
         this.legalCode = legalCode;
     }
 
-    public AddressDataDto toDto(){
+    public AddressDataDto toDto() {
         return AddressDataDto.builder()
                 .id(this.id)
                 .legalCode(this.legalCode)

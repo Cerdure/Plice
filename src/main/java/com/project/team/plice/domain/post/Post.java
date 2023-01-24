@@ -12,11 +12,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "post_id")
     private Long id;
 
@@ -36,9 +38,6 @@ public class Post {
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<UploadFile> files = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")
     private List<Reply> replies = new ArrayList<>();
@@ -61,16 +60,15 @@ public class Post {
         this.modDate = modDate;
     }
 
-    public void changeTitle(String title){
+    public void changeTitle(String title) {
         this.title = title;
     }
-    public void changeContent(String content){
+
+    public void changeContent(String content) {
         this.content = content;
     }
-    public void hitsPlus(){
+
+    public void hitsPlus() {
         this.hits++;
-    }
-    public void changeFiles(List<UploadFile> files){
-        this.files = files;
     }
 }

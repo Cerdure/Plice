@@ -1,5 +1,5 @@
-// 비밀번호
 $(function () {
+
   $("#reset_pw").on("input", function () {
     const pwdRgx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
     const pwdInput = document.querySelector("#reset_pw").value;
@@ -27,7 +27,6 @@ $(function () {
     }
   });
 
-  // 비밀번호 확인
   $("#reset_repw").on("keyup", function () {
     const pwdInput = document.querySelector("#reset_pw").value;
     const repwd = document.querySelector("#reset_repw").value;
@@ -46,7 +45,6 @@ $(function () {
     }
   });
 
-  // 활성화 버튼
   $(".reset_input").on("keyup", function () {
     const pwdRgx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
     const pwdInput = document.querySelector("#reset_pw").value;

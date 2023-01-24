@@ -4,9 +4,12 @@ package com.project.team.plice.domain.data;
 import com.project.team.plice.dto.data.TradeDataDto;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class TradeData {
@@ -46,7 +49,7 @@ public class TradeData {
         this.tradeYearMonth = tradeYearMonth;
     }
 
-    public TradeDataDto toDto(){
+    public TradeDataDto toDto() {
         return TradeDataDto.builder()
                 .id(this.id)
                 .lng(this.lng)

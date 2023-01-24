@@ -815,18 +815,22 @@ clusterUnit {
     display: flex;
     flex-direction: column;
 }
-.apart-detail .body .title-wrapper .right-box .name{
+
+.apart-detail .body .title-wrapper .right-box .name {
     white-space: nowrap;
 }
-.apart-detail .body .title-wrapper .right-box .address{
+
+.apart-detail .body .title-wrapper .right-box .address {
     white-space: nowrap;
 }
-.apart-detail .body .title-wrapper .favorite-btn-wrapper{
+
+.apart-detail .body .title-wrapper {
     width: 100%;
     height: 100%;
     justify-content: end;
 }
-.apart-detail .body .title-wrapper .favorite-btn-wrapper .favorite-btn{
+
+.apart-detail .body .title-wrapper {
     align-items: center;
     justify-content: center;
     height: 36px;
@@ -834,7 +838,8 @@ clusterUnit {
     border: 1px solid #4169fc;
     border-radius: 5px;
 }
-.apart-detail .body .title-wrapper .favorite-btn-wrapper .favorite-btn:hover{
+
+.apart-detail .body .title-wrapper {
     background-color: #4169fc;
     color: white;
     transition: 0.5s;

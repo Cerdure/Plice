@@ -1,43 +1,31 @@
 $(function () {
 
-    $(".search").mouseover(function(){
+    $(".search").mouseover(function () {
         $(".search .reset").stop().fadeIn(200);
-    }).mouseleave(function(){
+    }).mouseleave(function () {
         $(".search .reset").stop().fadeOut(200);
     });
-    $(".search .reset").click(function(){
-        $(this).closest(".search").find("input").val("");
+
+    $(".search .reset").click(function () {
+        location.href = "/post/story";
     });
 
-    $(".story-write-btn").click(function(){
-        $(".story-write-wrapper").fadeIn(300);
+    $(".story-write-btn").click(function () {
+        (async () => {
+            const loginCheck = await fetch("/chat/login-check").then(res => res.text());
+            if (loginCheck == "ok") {
+                $(".story-write-wrapper").fadeIn(300);
+            } else {
+                alert('로그인 후 이용 가능합니다.');
+                location.href = "/login";
+            }
+        })();
     });
 
-    $(".write-form .close").click(function(){
+    $(".write-form .close").click(function () {
         $(".close-alert-wrapper").fadeIn(300);
     });
 
-
-    $(".story-tag-wrapper").click(function(){
-        if(!$(this).hasClass("active-tag-wrapper")){
-            $(".notice-title").hide();
-            $(".story-title").show();
-            $(".tag-wrapper").removeClass("active-tag-wrapper");
-            $(this).addClass("active-tag-wrapper");
-            $(".notice-frame").stop().hide();
-            $(".story-frame").stop().fadeIn(300);
-        }
-    });
-    // $(".notice-tag-wrapper").click(function(){
-    //   if(!$(this).hasClass("active-tag-wrapper")){
-    //     $(".story-title").hide();
-    //     $(".notice-title").show();
-    //     $(".tag-wrapper").removeClass("active-tag-wrapper");
-    //     $(this).addClass("active-tag-wrapper");
-    //     $(".story-frame").stop().hide();
-    //     $(".notice-frame").stop().fadeIn(300);
-    //   }
-    // });
 
     $(document).on("keyup", ".title-input", function () {
         let val = $(this).val();
@@ -65,8 +53,8 @@ $(function () {
 let headerPassed = false;
 let mainPassed = false;
 
-function registCheck(...passed){
-    if(passed.every(e => {return e;})) {
+function registCheck(...passed) {
+    if (passed.every(e => { return e; })) {
         $(".regist-button").removeClass("disable");
     } else {
         $(".regist-button").addClass("disable");
@@ -82,6 +70,6 @@ function formClose() {
     mainPassed = false;
 }
 
-function hideAlert(){
+function hideAlert() {
     $(".close-alert-wrapper").fadeOut(100);
 }

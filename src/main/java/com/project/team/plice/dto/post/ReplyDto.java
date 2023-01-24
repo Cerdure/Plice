@@ -16,25 +16,27 @@ public class ReplyDto {
     private Member member;
     private LocalDateTime regDate;
     private String content;
+    private Long postId;
     private Long replyId;
+    private Long parentId;
     private Reply parent;
     private Integer level;
-    private Long parentId;
 
     @Builder
-    public ReplyDto(Long id, Post post, Member member, LocalDateTime regDate, String content, Long replyId, Reply parent, Integer level, Long parentId) {
+    public ReplyDto(Long id, Post post, Member member, LocalDateTime regDate, String content, Long postId, Long replyId, Long parentId, Reply parent, Integer level) {
         this.id = id;
         this.post = post;
         this.member = member;
         this.regDate = regDate;
         this.content = content;
+        this.postId = postId;
         this.replyId = replyId;
+        this.parentId = parentId;
         this.parent = parent;
         this.level = level;
-        this.parentId = parentId;
     }
 
-    public Reply toEntity(){
+    public Reply toEntity() {
         return Reply.builder()
                 .id(this.id)
                 .post(this.post)

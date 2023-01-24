@@ -5,22 +5,26 @@
   padding: 50px 45px;
   position: relative;
 }
+
 .join_title {
   font-size: 30px;
   border-bottom: 1px solid #c9d5ff;
   margin-bottom: 30px;
   padding-bottom: 30px;
 }
+
 .join_subtitle {
   font-size: 15px;
   margin-bottom: 30px;
 }
+
 #join_form label {
   float: left;
   font-size: 15px;
   margin-bottom: 5px;
   width: 100%;
 }
+
 #join_form input {
   float: left;
   margin-bottom: 20px;
@@ -30,6 +34,7 @@
   width: 100%;
   transition: all 1s;
 }
+
 #join_form input:focus {
   outline: none;
   border-color: #326cf9;
@@ -46,6 +51,7 @@
   padding-bottom: 20px;
   transition: all 1s;
 }
+
 #join_form .birth_1 {
   width: 50%;
   border: none;
@@ -58,13 +64,16 @@
   border: none;
   margin-bottom: -20px;
 }
+
 #join_form .join_birth:focus-within {
   border-color: #326cf9;
   border-radius: 5px;
 }
+
 #join_form .birth_2::placeholder {
   color: black;
 }
+
 #join_form .birth_line {
   width: 10%;
   padding-top: 20px;
@@ -79,6 +88,7 @@
   padding: 20px 0px;
   font-size: 18px;
 }
+
 .join_btn {
   width: 100%;
   background-color: #3b5987;
@@ -86,11 +96,13 @@
   padding: 20px 0px;
   font-size: 18px;
 }
+
 /* JavaScript */
 .hidden_text {
   font-size: 13px;
   margin-left: 10px;
 }
+
 .id_success_text,
 .name_success_text,
 .nick_success_text,
@@ -102,6 +114,7 @@
   color: #4169fc;
   display: none;
 }
+
 .id_failed_text,
 .name_failed_text,
 .nick_failed_text,
@@ -164,7 +177,7 @@
 }
 
 .btn_disable {
-pointer-events: none;
+  pointer-events: none;
 }
 
 .able {

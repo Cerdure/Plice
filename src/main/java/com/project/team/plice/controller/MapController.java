@@ -1,13 +1,11 @@
 package com.project.team.plice.controller;
 
-import com.project.team.plice.domain.admin.SearchKeyword;
 import com.project.team.plice.domain.data.TradeData;
 import com.project.team.plice.dto.data.AddressDataDto;
 import com.project.team.plice.dto.data.ApartDataDto;
 import com.project.team.plice.dto.data.TradeDataDto;
 import com.project.team.plice.dto.utils.DataUtil;
 import com.project.team.plice.service.interfaces.AdminService;
-import com.project.team.plice.service.interfaces.FavoriteService;
 import com.project.team.plice.service.interfaces.MapService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +27,6 @@ public class MapController {
 
     private final AdminService adminService;
     private final MapService mapService;
-    private final FavoriteService favoriteService;
 
     @GetMapping("/map")
     public String map(HttpServletRequest request, Authentication authentication, Model model) {
@@ -42,6 +39,13 @@ public class MapController {
         dataUtil.setTradeMin(priceAscList.get(0));
         model.addAttribute("dataUtil", dataUtil);
         model.addAttribute("searchKeywords", mapService.searchKeywordTop10());
+        if (request.getParameter("keyword") != null) {
+            model.addAttribute("keyword", request.getParameter("keyword"));
+        } else if (request.getParameter("apart") != null) {
+            model.addAttribute("apart", request.getParameter("apart"));
+        } else if (request.getParameter("address") != null) {
+            model.addAttribute("address", request.getParameter("address"));
+        }
         return "layout-content/map/map";
     }
 
@@ -49,7 +53,7 @@ public class MapController {
     @ResponseBody
     public List<Object> findData(@RequestParam(name = "region") String region, Model model) {
         List<Object> result = new ArrayList<>();
-        List<ApartDataDto> apartDataList = mapService.findApartByAddressOrName(region,"");
+        List<ApartDataDto> apartDataList = mapService.findApartByAddressOrName(region, "");
         List<TradeData> tradeDataList = mapService.findTradeData();
         List<TradeDataDto> tradeDataDtoList = new ArrayList<>();
         for (TradeData tradeData : tradeDataList) {
@@ -63,7 +67,7 @@ public class MapController {
     @GetMapping("/find-apart")
     @ResponseBody
     public List<ApartDataDto> findApart(@RequestParam(name = "region") String region,
-                                  @RequestParam(name = "apart") String apartName, Model model) {
+                                        @RequestParam(name = "apart") String apartName, Model model) {
         region = region == null ? "" : region;
         apartName = apartName == null ? "" : apartName;
         List<ApartDataDto> apartDataList = mapService.findApartByAddressOrName(region, apartName);
@@ -72,13 +76,13 @@ public class MapController {
 
     @GetMapping("/map/input-search")
     public String homeSearchInput(@RequestParam(name = "inputVal") String inputVal, Model model) {
-        if(inputVal!=""){
+        if (inputVal != "") {
             List<AddressDataDto> addressDataList = mapService.findAddressDataByAddress(inputVal);
-            List<ApartDataDto> apartDataList = mapService.findApartByAddressOrName("",inputVal);
-            if(addressDataList != null){
+            List<ApartDataDto> apartDataList = mapService.findApartByAddressOrName("", inputVal);
+            if (addressDataList != null) {
                 addressDataList.forEach(e -> e.coincidenceHighlight(inputVal));
             }
-            if(apartDataList != null){
+            if (apartDataList != null) {
                 apartDataList.forEach(e -> e.coincidenceHighlight(inputVal));
             }
             model.addAttribute("addressDataList", addressDataList);
@@ -87,15 +91,8 @@ public class MapController {
         return "layout-content/map/map :: #search-input-results";
     }
 
-
-    @GetMapping("/map/favorite")
-    public boolean favoriteSave(@RequestParam("apartName") String apartName, Authentication authentication) {
-        favoriteService.favoriteSave(apartName, authentication);
-        return true;
-    }
-
     @GetMapping("/map/keyword-save")
-    public String keywordSave(@RequestParam("keyword") String keyword){
+    public String keywordSave(@RequestParam("keyword") String keyword) {
         mapService.saveSearchKeyword(keyword);
         return "layout-content/map/map :: #trend";
 

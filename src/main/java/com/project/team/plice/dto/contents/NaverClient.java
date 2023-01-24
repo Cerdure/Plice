@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class NaverClient {
 
-    public ResponseEntity<SearchNewsRes> searchLocal(SearchNewsReq searchNLocalReq){
+    public ResponseEntity<SearchNewsRes> searchLocal(SearchNewsReq searchNLocalReq) {
         ByteBuffer buffer = StandardCharsets.UTF_8.encode(searchNLocalReq.getQuery());
         String encode = StandardCharsets.UTF_8.decode(buffer).toString();
 
@@ -34,7 +34,7 @@ public class NaverClient {
                 .build();
 
         ResponseEntity<SearchNewsRes> responseEntity = new RestTemplate().exchange(req, SearchNewsRes.class);
-        return  responseEntity;
+        return responseEntity;
     }
 
 }

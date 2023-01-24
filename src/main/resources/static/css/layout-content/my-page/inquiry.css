@@ -1,21 +1,12 @@
-body {
-    font-family: 'Pretendard-Regular';
-    color: #3b5987;
-
+header .my-page {
+    color: #5575ff;
 }
-*{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-a{
-    padding: 0;
-}
-/* header */
 
+.top-space {
+    height: 60px;
+}
 
-#content{
+#content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -23,35 +14,33 @@ a{
     min-width: 1200px;
     min-height: 100%;
 }
-.wrapper{
-    width: 100%;
 
-}
-.wrapper div{
+.title-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    height: 278px;
 }
-.title{
-    margin: 79px 0 71px;
-    font-size: 46px;
-    line-height: 50px;
-    letter-spacing: -1px;
+
+.title {
+    font-size: 40px;
+    margin: 40px;
 }
-.item{
+
+.item {
     flex: 0 0 auto;
     display: flex;
     width: 1180px;
     height: 64px;
     margin: 0px auto;
 }
-.item li{
+
+.item li {
     width: 100%;
     height: 100%;
 }
-.item li a{
+
+.item li a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,54 +49,44 @@ a{
     line-height: 26px;
     border: 1px solid rgb(237, 237, 237);
     text-decoration: none;
-    color: black;
 }
 
 /* main */
-.inquiry_wrapper{
-    height: calc(100vh - 220px);
+.inquiry_wrapper {
+    min-height: calc(100vh - 220px);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.content p{
+
+.content p {
     color: rgb(134, 134, 134);
     font-size: 14px;
     font-weight: 400;
     padding-left: 8px;
     line-height: 20px;
-    position: relative;}
+    position: relative;
+}
 
-.inquiry_content{
+.inquiry_content {
     flex: 0 0 auto;
     display: flex;
     padding-top: 50px;
     width: 1180px;
-
 }
-.inquiry_content a{
-        border: 0px;
-        border-radius: 2px;
-        background-color: rgb(50, 108, 249);
-        color: rgb(255, 255, 255);
-        font-size: 14px;
-        font-weight: 400;
-        display: flex;
-        -webkit-box-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        align-items: center;
-        width: 140px;
-        height: 44px;
-        margin-top: auto;
-        margin-left: auto;
-        text-align: center;
-        text-decoration: none;
+
+.inquiry_content .content {
+    width: 100%;
+}
+
+.row-btn-1 {
+    padding: 9px 30px;
+    white-space: nowrap;
 }
 
 /* inquiry */
-.inquiry{
+.inquiry {
     -webkit-box-flex: 1;
     flex-grow: 1;
     display: flex;
@@ -115,59 +94,67 @@ a{
     margin-top: 50px;
     width: 1180px;
 }
-.inquiry-title{
+
+.inquiry-title {
     display: flex;
     width: 100%;
     height: 60px;
-    border-top: 1px solid rgb(34, 34, 34);
-    border-bottom: 1px solid rgb(204, 204, 204);
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #ededed;
 }
-.top{
-    color: rgb(34, 34, 34);
+
+.top {
     font-size: 15px;
     font-weight: 400;
     padding-top: 19px;
     padding-bottom: 19px;
     line-height: 22px;
 }
-.top.type{
+
+.top.type {
     width: 150px;
     margin-left: 72px;
 }
-.top.name{
+
+.top.name {
     width: 500px;
 }
-.top.regdate{
+
+.top.regdate {
     width: 200px;
     margin-left: 10px;
 }
-.top.answer{
+
+.top.answer {
     width: 200px;
     margin-left: 72px;
 }
-.inquiry_bottom{
+
+.inquiry_bottom {
     display: flex;
     flex-direction: column;
 }
-.bottom_contents{
+
+.bottom_contents {
     display: flex;
     border-bottom: 1px solid rgb(238, 238, 238);
 }
-.bottom{
+
+.bottom {
     padding-top: 19px;
     padding-bottom: 19px;
     line-height: 22px;
     cursor: pointer;
 }
-.bottom.type_2{
-    color: rgb(101, 101, 101);
+
+.bottom.type_2 {
     font-size: 15px;
     font-weight: 400;
     width: 150px;
     margin-left: 72px;
 }
-.bottom.name_2{
-    color: rgb(34, 34, 34);
+
+.bottom.name_2 {
     font-size: 16px;
     font-weight: 400;
     width: 500px;
@@ -176,14 +163,15 @@ a{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.bottom.regdate_2{
-    color: rgb(101, 101, 101);
+
+.bottom.regdate_2 {
     font-size: 15px;
     font-weight: 400;
     width: 200px;
     margin-left: 10px;
 }
-.answer_2{
+
+.answer_2 {
     width: 200px;
     margin-left: 72px;
     padding-top: 19px;
@@ -194,32 +182,36 @@ a{
     font-size: 15px;
     font-weight: 400;
 }
-.inquiry_box{
+
+.inquiry_box {
     padding: 40px 50px;
     border-bottom: 1px solid rgb(238, 238, 238);
     background-color: rgb(250, 250, 250);
     display: none;
 }
-.inquiry_box_1{
-    color: rgb(34, 34, 34);
+
+.inquiry_box_1 {
     font-size: 15px;
     font-weight: 700;
     line-height: 22px;
 }
-.inquiry_box_2{
-    color: rgb(101, 101, 101);
-    font-size: 15px;
-    font-weight: 400;
+
+.inquiry_box_2 {
     padding-top: 10px;
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: 400;
 }
-.inquiry_change{
+
+.inquiry_change {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     margin-top: 20px;
     cursor: pointer;
 }
-.inquiry_change a{
+
+.inquiry_change a {
     color: rgb(134, 134, 134);
     font-size: 13px;
     font-weight: 400;
@@ -228,13 +220,15 @@ a{
     border: 0px;
     background-color: transparent;
 }
-.inquiry_change p{
+
+.inquiry_change p {
     margin: 0px 16px;
     width: 1px;
     height: 16px;
     background-color: rgb(221, 221, 221);
 }
-.inquiry_change button{
+
+.inquiry_change button {
     color: rgb(134, 134, 134);
     font-size: 13px;
     font-weight: 400;
@@ -242,4 +236,37 @@ a{
     line-height: 19px;
     border: 0px;
     background-color: transparent;
+}
+
+.answer-box {
+    margin-top: 40px;
+    display: flex;
+}
+
+.answer-box img {
+    margin-top: 8px;
+    align-self: flex-start;
+}
+
+.answer-box b {
+    position: relative;
+    bottom: 2px;
+    font-size: 12px;
+    margin: 10px;
+    padding: 3px;
+    background-color: white;
+    border: 1px solid #5575ff;
+    color: #5575ff;
+}
+
+.answer-box .answer {
+    line-height: 30px;
+}
+
+.pagination-wrapper {
+    position: relative !important;
+    left: auto !important;
+    bottom: 0 !important;
+    transform: none !important;
+    margin-bottom: 40px;
 }

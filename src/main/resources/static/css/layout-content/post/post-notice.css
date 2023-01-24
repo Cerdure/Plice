@@ -29,230 +29,11 @@ header .post {
     width: 100%;
     height: 1020px;
     background:
-            linear-gradient(rgba(255, 255, 255, 0.5), rgb(255, 255, 255)),
-            url("../../../img/images/background.jpg");
+        linear-gradient(rgba(255, 255, 255, 0.5), rgb(255, 255, 255)),
+        url("../../../img/images/background.jpg");
     background-color: white;
     background-size: cover;
     background-repeat: no-repeat;
-}
-
-.write-form-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 11;
-    display: none;
-}
-
-.write-form {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 742px;
-    background-color: white;
-    border-radius: 5px;
-    overflow: hidden;
-    z-index: 12;
-}
-
-.write-form .head {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding: 20px 40px;
-    background:
-            linear-gradient(rgba(53, 94, 252, .90), rgba(53, 94, 252, .90)),
-            url("../../../img/images/bg.png");
-    background-size: 50%;
-}
-
-.write-form .head .text {
-    position: relative;
-    font-size: 20px;
-    font-weight: 900;
-    display: inline-block;
-    color: white;
-}
-
-.write-form .head .close {
-    position: absolute;
-    right: 40px;
-    width: 20px;
-    display: inline-block;
-    cursor: pointer;
-    filter: invert(100%) sepia(10%) saturate(7425%) hue-rotate(295deg) brightness(119%) contrast(104%);
-}
-
-.write-form .body {
-    padding: 20px 40px;
-}
-
-.write-form .write-title {
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 30px;
-}
-
-.write-form .label {
-    font-size: 14px;
-    font-family: 'KOHIBaeumOTF';
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
-
-.write-form .title-input {
-    width: 100%;
-    height: 40px;
-    font-size: 14px;
-    border: 1px solid silver;
-    border-radius: 10px;
-    resize: none;
-    outline: none;
-    line-height: 40px;
-    text-indent: 20px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.write-form .title-input::placeholder {
-    color: rgb(150, 150, 150);
-}
-
-.write-form .content-wrapper {
-    position: relative;
-    width: 100%;
-    margin-bottom: 30px;
-}
-
-.write-form .content-frame {
-    width: 100%;
-    height: 400px;
-    border: 1px solid silver;
-    border-radius: 10px;
-    padding: 15px 20px;
-}
-
-.write-form .content-input {
-    width: 100%;
-    height: 350px;
-    font-size: 14px;
-    border: none;
-    resize: none;
-    outline: none;
-    line-height: 20px;
-}
-
-.write-form .content-input::placeholder {
-    color: rgb(150, 150, 150);
-}
-
-.write-form .content-input::-webkit-scrollbar {
-    width: 3px;
-}
-
-.write-form .content-input::-webkit-scrollbar-thumb {
-    height: 30%;
-    background: cornflowerblue;
-    border-radius: 10px;
-}
-
-.regist-button {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 40px;
-    background-color: #4169fc;
-    color: white;
-    text-align: center;
-    line-height: 40px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-}
-
-.close-alert-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 13;
-    display: none;
-}
-
-.close-alert {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 360px;
-    height: 200px;
-    background-color: white;
-    border-radius: 5px;
-    z-index: 13;
-    text-align: center;
-    border: 1px solid silver;
-}
-
-.close-alert .text {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-}
-
-.close-alert .cancel {
-    position: absolute;
-    bottom: 40px;
-    left: 50px;
-    width: 120px;
-    height: 40px;
-    border: none;
-    outline: none;
-    background-color: white;
-    color: #3b5987;
-    border: 1px solid #3b5987;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 900;
-    cursor: pointer;
-}
-
-.close-alert .okay {
-    position: absolute;
-    bottom: 40px;
-    right: 50px;
-    width: 120px;
-    height: 40px;
-    border: none;
-    outline: none;
-    background-color: white;
-    color: #4169fc;
-    border: 1px solid #4169fc;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 900;
-    cursor: pointer;
-}
-
-.close-alert .okay:hover {
-    background-color: #4169fc;
-    color: white;
-    transition: 0.5s;
-}
-
-.close-alert .cancel:hover {
-    background-color: #3b5987;
-    color: white;
-    transition: 0.5s;
 }
 
 .meta-wrapper {
@@ -297,7 +78,7 @@ header .post {
     border: 1px solid silver;
     border-bottom: none;
     transform:
-            skew(-40deg) translate(30px, 0px);
+        skew(-40deg) translate(30px, 0px);
     background-color: white;
 }
 
@@ -512,14 +293,6 @@ header .post {
     min-height: 800px;
 }
 
-.table-footer {
-    width: 100%;
-    height: 80px;
-    border-top: 1px solid lightgray;
-    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.1);
-    background: white;
-}
-
 .table-row {
     width: calc(100% - 80px);
     height: 60px;
@@ -554,19 +327,20 @@ header .post {
     font-weight: 900;
 }
 
-
-
-.notice-controller {
-    position: relative;
-    height: 40px;
-    margin: auto;
-    margin-top: 40px;
+.table-footer {
+    width: 100%;
+    height: 80px;
+    border-top: 1px solid lightgray;
+    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.1);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
 .controller {
     position: relative;
-    top: 20px;
     display: inline-block;
     width: 228px;
 }
@@ -579,6 +353,7 @@ header .post {
     width: 20px;
     cursor: pointer;
 }
+
 .controller-btn-right {
     position: absolute;
     top: 2px;
@@ -587,7 +362,8 @@ header .post {
     width: 20px;
     cursor: pointer;
 }
-.controller a{
+
+.controller a {
     display: inline-block;
     width: 19px;
     margin: 0 2px;
@@ -597,6 +373,7 @@ header .post {
     text-decoration: none;
     font-weight: 900;
 }
+
 .index-active {
     background-color: cornflowerblue;
     color: white;

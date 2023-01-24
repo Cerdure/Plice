@@ -3,11 +3,9 @@ package com.project.team.plice.dto.inquire;
 import com.project.team.plice.domain.inquire.Answer;
 import com.project.team.plice.domain.inquire.Inquire;
 import com.project.team.plice.domain.member.Member;
-import com.project.team.plice.dto.member.MemberDto;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -34,7 +32,7 @@ public class InquireDto {
         this.answer = answer;
     }
 
-    public Inquire toEntity(){
+    public Inquire toEntity() {
         return Inquire.builder()
                 .id(this.id)
                 .member(this.member)

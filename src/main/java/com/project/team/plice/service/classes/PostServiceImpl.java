@@ -1,10 +1,15 @@
 package com.project.team.plice.service.classes;
 
+import com.project.team.plice.domain.member.Member;
+import com.project.team.plice.domain.post.Notice;
 import com.project.team.plice.domain.post.Post;
+import com.project.team.plice.dto.post.NoticeDto;
 import com.project.team.plice.dto.post.PostDto;
 import com.project.team.plice.repository.post.NoticeRepository;
 import com.project.team.plice.repository.post.PostRepository;
+import com.project.team.plice.service.interfaces.MemberService;
 import com.project.team.plice.service.interfaces.PostService;
+import com.project.team.plice.utils.DataUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
@@ -23,24 +29,13 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
-    private final NoticeRepository NoticeRepository;
-
-//    @Override
-//    public List<Post> findAllPost() {
-//        return postRepository.findAll();
-//    }
-
-    @Override
-    public Page<Post> findAll(Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() -1);
-        pageable = PageRequest.of(page, 12, Sort.by("id").descending());
-        return postRepository.findAll(pageable);
-    }
+    private final NoticeRepository noticeRepository;
+    private final MemberService memberService;
 
     @Override
     public Page<Post> findAllPost(Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-        pageable = PageRequest.of(page, 8, Sort.by("id").descending());
+        pageable = PageRequest.of(page, 12, Sort.by("id").descending());
         return postRepository.findAll(pageable);
     }
 
@@ -49,50 +44,12 @@ public class PostServiceImpl implements PostService {
         return postRepository.findById(id).get();
     }
 
-    //  게시판 CRUD
-    @Override /* 삽입 + 수정 */
-    public void savePost(Post post) {
-        postRepository.save(post);
-    } // DB에 저장할때는 반환타입 의미없음. 로그찍기라도 하려면 String으로 하는데, 어차피 저장하면 끝이니까 그냥 void 해도 됨
-
-    @Override
-    public void deletePost(Post post) {
-
-        postRepository.delete(post);
-    }
-
-    @Override
-    public void updatePost(PostDto postDto) {
-    }
-
-//  **************************************** 검색 관련 ***************************************
-
-    @Override
-    public Page<Post> findByMemberId(Long id, Pageable pageable) {
-        return postRepository.findById(id, pageable);
-    }
-
-    @Override
-    public Page<Post> findByMemberNickname(String memberNickname, Pageable pageable) {
-        return postRepository.findByMemberNicknameContainsIgnoreCase(memberNickname, pageable);
-    }
-
-    @Override
-    public Page<Post> findByTitle(String title, Pageable pageable) {
-        return postRepository.findByTitleContainingIgnoreCase(title, pageable);
-    }
-
-//  **************************************** 페이징 관련 ***************************************
-
     @Override
     public Post findPrevPost(Post post) {
         LocalDateTime regDate = post.getRegDate();
         List<Post> findResult = postRepository.findByRegDateBeforeOrderByRegDateDesc(regDate);
-        findResult.forEach(e -> System.out.println("e.getId() = " + e.getId()));
-
-        if(findResult == null || findResult.size() == 0){
+        if (findResult == null || findResult.size() == 0) {
             return post.builder().build();
-
         } else {
             return findResult.get(0);
         }
@@ -102,7 +59,7 @@ public class PostServiceImpl implements PostService {
     public Post findNextPost(Post post) {
         LocalDateTime regDate = post.getRegDate();
         List<Post> findResult = postRepository.findByRegDateAfter(regDate);
-        if(findResult == null || findResult.size() == 0){
+        if (findResult == null || findResult.size() == 0) {
             return post.builder().build();
 
         } else {
@@ -111,40 +68,136 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post modify(Long id, PostDto postDto, Authentication authentication) throws Exception {
-        return null;
+    public Page<Post> searchPost(DataUtil dataUtil, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 12, Sort.by("id").descending());
+        String keyword = dataUtil.getKeyword();
+        switch (dataUtil.getSearchBy()) {
+            case "id":
+                return postRepository.findById(Long.parseLong(keyword), pageable);
+            case "nickname":
+                return postRepository.findByMemberNicknameContainsIgnoreCase(keyword, pageable);
+            case "title":
+                return postRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+            case "content":
+                return postRepository.findByContentContainingIgnoreCase(keyword, pageable);
+        }
+        throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
     }
 
     @Override
-    public void hitsPlus(Post post) {
-        post.hitsPlus();
+    public void savePost(PostDto postDto, Authentication authentication) {
+        Member member = memberService.findMember(authentication);
+        postDto.setMember(member);
+        postDto.setMemberNickname(member.getNickname());
+        postRepository.save(postDto.toEntity());
+    }
+
+    @Override
+    public void updatePost(PostDto postDto) {
+        Post post = postRepository.findById(postDto.getId()).get();
+        post.changeTitle(postDto.getTitle());
+        post.changeContent(postDto.getContent());
         postRepository.save(post);
     }
 
     @Override
-    public Post findById(Long id) {
-        return postRepository.findById(id).get();
+    public void deletePost(Long id) {
+        postRepository.delete(postRepository.findById(id).get());
     }
 
-    /*    @PostMapping("/post-detail")
-    public String updatePost(@ModelAttribute PostDto postDto, Model model) { // controller에서 view로 넘어갈 때 값을 보내주는 역할이 Model
-        Long id = postDto.getId(); *//* 서비스에서 로직 처리하게끔 분리하기*//*
-        Post post = postService.findPostById(id);
-        post.changeTitle(postDto.getTitle());
-        post.changeContent(postDto.getContent());
-        postService.savePost(post);
-        model.addAttribute("post", post);
-        return "redirect:/post-detail?id=" + id;
+    @Override
+    public void postHitsPlus(Long id) {
+        Post post = postRepository.findById(id).get();
+        post.hitsPlus();
+        postRepository.save(post);
     }
 
 
-    //    @Override
-    public Post updatePost(Post post) { // controller에서 view로 넘어갈 때 값을 보내주는 역할이 Model
-        Long id = post.getId();
-        post = postRepository.findById(id).get();
-        post.changeTitle(post.getTitle());
-        post.changeContent(post.getContent());
-        return postRepository.save(post);
-    }*/
+    @Override
+    public Page<Notice> findAllNotice(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 12, Sort.by("id").descending());
+        return noticeRepository.findAll(pageable);
+    }
+
+    @Override
+    public Notice findNoticeById(Long id) {
+        return noticeRepository.findById(id).get();
+    }
+
+    @Override
+    public Page<Notice> searchNotice(DataUtil dataUtil, Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 12, Sort.by("id").descending());
+        String keyword = dataUtil.getKeyword();
+        switch (dataUtil.getSearchBy()) {
+            case "id":
+                return noticeRepository.findById(Long.parseLong(keyword), pageable);
+            case "nickname":
+                return noticeRepository.findByMemberNicknameContainsIgnoreCase(keyword, pageable);
+            case "title":
+                return noticeRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+            case "content":
+                return noticeRepository.findByContentContainingIgnoreCase(keyword, pageable);
+        }
+        throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
+    }
+
+    @Override
+    public Notice findPrevNotice(Notice notice) {
+        LocalDateTime regDate = notice.getRegDate();
+        List<Notice> findResult = noticeRepository.findByRegDateBeforeOrderByRegDateDesc(regDate);
+        if (findResult == null || findResult.size() == 0) {
+            return notice.builder().build();
+        } else {
+            return findResult.get(0);
+        }
+    }
+
+    @Override
+    public Notice findNextNotice(Notice notice) {
+        LocalDateTime regDate = notice.getRegDate();
+        List<Notice> findResult = noticeRepository.findByRegDateAfter(regDate);
+        if (findResult == null || findResult.size() == 0) {
+            return notice.builder().build();
+
+        } else {
+            return findResult.get(0);
+        }
+    }
+
+    @Override
+    public void saveNotice(NoticeDto noticeDto, Authentication authentication) {
+        Member member = memberService.findMember(authentication);
+        noticeDto.setMember(member);
+        noticeDto.setMemberNickname(member.getNickname());
+        noticeRepository.save(noticeDto.toEntity());
+    }
+
+    @Override
+    public void updateNotice(NoticeDto noticeDto) {
+        Notice notice = noticeRepository.findById(noticeDto.getId()).get();
+        notice.changeTitle(noticeDto.getTitle());
+        notice.changeContent(noticeDto.getContent());
+        noticeRepository.save(notice);
+    }
+
+    @Override
+    public void deleteNotice(Long id) {
+        noticeRepository.delete(noticeRepository.findById(id).get());
+    }
+
+    @Override
+    public void noticeHitsPlus(Long id) {
+        Notice notice = noticeRepository.findById(id).get();
+        notice.hitsPlus();
+        noticeRepository.save(notice);
+    }
+
+    @Override
+    public List<Notice> findLastNotices() {
+        return noticeRepository.findTop5ByOrderByRegDateDesc();
+    }
 
 }

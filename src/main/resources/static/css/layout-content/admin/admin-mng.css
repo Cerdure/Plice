@@ -1,4 +1,4 @@
-@media only screen and (max-width:1400px) {
+@media only screen and (max-width: 1400px) {
     body {
         width: 1385px;
     }
@@ -45,10 +45,11 @@ body {
     align-items: end;
 }
 
-.btn-box{
+.btn-box {
     display: flex;
     justify-content: end;
 }
+
 .right-side .body .create-admin-btn,
 .right-side .body .create-team-btn {
     padding: 8px 30px;
@@ -58,16 +59,19 @@ body {
     margin-bottom: 20px;
     font-size: 20px;
 }
+
 .right-side .body .create-team-btn {
     background-color: white;
     border: 1px solid #63788b;
     margin-right: 20px;
 }
+
 .right-side .body .create-admin-btn:hover {
     background-color: #3662ff;
     color: white;
     transition: 0.3s;
 }
+
 .right-side .body .create-team-btn:hover {
     background-color: #165692;
     color: white;
@@ -114,16 +118,19 @@ body {
     border-bottom: 1px solid #d3ddff;
     display: flex;
 }
+
 .right-side .body .accounts-wrapper .inner-box .title .text {
     width: 100%;
     display: flex;
     align-items: center;
 }
+
 .team-box {
     width: 100%;
     display: flex;
     justify-content: end;
 }
+
 .team-box .label {
     margin-bottom: 0 !important;
     margin-right: 20px;
@@ -131,6 +138,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .team-box .team {
     padding: 5px;
     font-size: 18px;
@@ -147,25 +155,30 @@ body {
 .right-side .body .accounts-wrapper .inner-box .label {
     margin-bottom: 20px;
 }
+
 .team-group .members {
     width: 100%;
     padding: 0 40px;
 }
+
 .team-group .member {
     margin: 10px 0;
     font-size: 18px;
     white-space: nowrap;
 }
+
 .team-group .member:hover {
     color: #3662ff;
     transform: scale(1.01);
     transition: 0.3s;
 }
+
 .info-box {
     width: 100%;
     height: 100%;
     display: flex;
 }
+
 .info-group {
     width: 100%;
     height: 100%;
@@ -175,24 +188,27 @@ body {
 }
 
 
-
 .authority {
     display: flex;
     margin: 10px 0;
     font-size: 18px;
     white-space: nowrap;
 }
+
 .authority input {
     margin-right: 10px;
 }
+
 .info-group .reg,
 .info-group .mod,
 .info-group .access {
     margin-bottom: 20px;
 }
+
 .info-box .info {
     font-size: 14px;
 }
+
 .info-box .info .date,
 .info-box .info .member,
 .info-box .info .ip {
@@ -204,20 +220,19 @@ body {
     width: 80px;
     white-space: nowrap;
 }
+
 .info-box .info .data {
     white-space: nowrap;
 }
 
 
-
-
-
-.inner-box .btn-box{
+.inner-box .btn-box {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .inner-box .btn-box .save-btn {
     width: 140px;
     padding: 9px 30px;
@@ -225,27 +240,28 @@ body {
     color: white;
     background-color: #316ea5cc;
     border: 1px solid #316ea5cc;
-    border-radius: 5px;   
+    border-radius: 5px;
     margin-right: 40px;
 }
+
 .inner-box .btn-box .save-btn:hover {
     background-color: #0f3c63cc;
     transition: 0.3s;
 }
+
 .inner-box .btn-box .delete-btn {
     width: 140px;
     padding: 9px 30px;
     color: white;
     background-color: rgb(243, 101, 129);
-    border: 1px solid crimson; 
-    border-radius: 5px;   
+    border: 1px solid crimson;
+    border-radius: 5px;
 }
+
 .inner-box .btn-box .delete-btn:hover {
     background-color: crimson;
     transition: 0.3s;
 }
-
-
 
 
 .alert-window {
@@ -261,8 +277,9 @@ body {
     text-align: center;
     border: 1px solid silver;
     display: none;
-  }
-  .alert-window .info{
+}
+
+.alert-window .info {
     position: absolute;
     top: 30%;
     left: 50%;
@@ -270,43 +287,48 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-  }
-  .alert-window .info .text {
+}
+
+.alert-window .info .text {
     margin-bottom: 20px;
     font-size: 20px;
     font-weight: 900;
-  }
-  .alert-window .info .data {
+}
+
+.alert-window .info .data {
     color: #ff0046;
-  }
-  .alert-window .input-box {
+}
+
+.alert-window .input-box {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .alert-window .info .label {
+}
+
+.alert-window .info .label {
     margin-right: 20px;
-  }
-  .alert-window input,
-  .alert-window select {
+}
+
+.alert-window input,
+.alert-window select {
     width: 200px;
     height: 40px;
     border: 1px solid silver;
     font-size: 20px;
     text-indent: 20px;
     border-radius: 5px;
-  }
+}
 
-  .alert-window input::placeholder {
+.alert-window input::placeholder {
     color: rgb(181, 181, 181);
     font-size: 16px;
-  }
+}
 
-  .alert-window select {
+.alert-window select {
     font-size: 16px;
-  }
+}
 
-  .alert-window .cancel{
+.alert-window .cancel {
     position: absolute;
     bottom: 40px;
     left: 50px;
@@ -322,13 +344,15 @@ body {
     font-weight: 900;
     line-height: 38px;
     cursor: pointer;
-  }
-  .alert-window .cancel:hover{
+}
+
+.alert-window .cancel:hover {
     background-color: #3b5987;
     color: white;
     transition: 0.5s;
-  }
-  .alert-window .okay{
+}
+
+.alert-window .okay {
     position: absolute;
     bottom: 40px;
     right: 50px;
@@ -344,36 +368,37 @@ body {
     font-weight: 900;
     line-height: 38px;
     cursor: pointer;
-  } 
-  .alert-window .okay:hover {
+}
+
+.alert-window .okay:hover {
     background-color: #4169fc;
     color: white;
     transition: 0.5s;
-  }
- 
-  .admin-create-window {
+}
+
+.admin-create-window {
     width: 400px;
     height: 420px;
-  }
+}
 
-  .admin-create-window .info {
+.admin-create-window .info {
     top: 40%;
-  }
+}
 
-  .admin-create-window .input-box {
+.admin-create-window .input-box {
     align-items: center;
     justify-content: center;
     margin: 10px;
-  }
+}
 
-  .admin-create-window .label {
+.admin-create-window .label {
     width: 100px;
     display: flex;
     justify-content: start;
     margin-right: 0 !important;
-  }
+}
 
-  .admin-create-window .okay,
-  .admin-create-window .cancel {
+.admin-create-window .okay,
+.admin-create-window .cancel {
     width: 140px;
-  }
+}

@@ -5,8 +5,8 @@ spring:
     username: root
     password: 1234
 
-  profiles:
-    include: oauth
+#  profiles:
+#    include: oauth
 
   jpa:
 #    open-in-view: false

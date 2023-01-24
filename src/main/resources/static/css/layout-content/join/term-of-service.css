@@ -17,13 +17,16 @@
 .service_content {
   margin-bottom: 5px;
 }
+
 .service_subtitle {
   margin-bottom: 20px;
   font-size: 15px;
 }
+
 .service_order_list {
   padding: 0px 16px;
 }
+
 .service_list {
   list-style: decimal;
   margin-bottom: 5px;

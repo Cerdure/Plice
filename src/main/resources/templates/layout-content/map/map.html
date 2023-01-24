@@ -1,36 +1,44 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/default}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorate="~{layout/default}">
 
-<th:block layout:fragment="css"><link rel="stylesheet" th:href="@{/css/layout-content/map/map.css}"></th:block>
-<th:block layout:fragment="script"><script th:src="@{/js/layout-content/map/map.js}"></script></th:block>
-<th:block layout:fragment="title"><title>PLICE ㅣ 지도</title></th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/layout-content/map/map.css}">
+</th:block>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/layout-content/map/map.js}"></script>
+</th:block>
+<th:block layout:fragment="title">
+    <title>PLICE ㅣ 지도</title>
+</th:block>
 
 <div layout:fragment="content">
     <div class="top-space"></div>
     <form class="top-wrapper" onsubmit="return false">
         <div class="left-box">
             <img class="icon" src="/img/icon/search-icon.svg">
-            <input class="search-input" type="text" placeholder="아파트, 지역으로 검색">
+            <input class="search-input" type="text" placeholder="아파트, 지역으로 검색"
+                th:value="${keyword == null ? '' : keyword}">
+            <div id="search-input-apart" type="hidden" th:data-value="${apart == null ? '' : apart}"></div>
+            <div id="search-input-address" type="hidden" th:data-value="${address == null ? '' : address}"></div>
             <img class="reset" src="/img/icon/x-circle.svg">
-
             <div class="search-result-outer-wrapper">
                 <div class="search-result-wrapper" id="search-input-results">
                     <div class="search-result-apart-wrapper">
-                        <div class="search-result-apart" th:each="apartData : ${apartDataList}" th:data-value="${apartData.name}">
-                             <div class="inner-wrapper">
+                        <div class="search-result-apart" th:each="apartData : ${apartDataList}"
+                            th:data-value="${apartData.name}">
+                            <div class="inner-wrapper">
                                 <div class="title">아파트</div>
                                 <div id="apart-box">
                                     <span class="data" th:utext="${apartData.highlightName}"></span>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                     </div>
                     <div class="search-result-address-wrapper">
-                        <div class="search-result-address" th:each="addressData : ${addressDataList}" th:data-value="${addressData.address}">
+                        <div class="search-result-address" th:each="addressData : ${addressDataList}"
+                            th:data-value="${addressData.address}">
                             <img src="/img/icon/geo-alt-fill.svg">
                             <span class="data" th:utext="${addressData.highlightAddress}"></span>
                         </div>
@@ -45,7 +53,6 @@
                     <input type="checkbox" value="직거래">직거래
                     <input type="checkbox" value="중개거래">중개거래
                 </div>
-               
                 <div class="area">
                     <div class="text">전용면적</div>
                     <input type="checkbox" value="1">60㎡ 이하
@@ -53,14 +60,12 @@
                     <input type="checkbox" value="3">86㎡ ~ 135㎡
                     <input type="checkbox" value="4">136㎡ 이상
                 </div>
-        
             </div>
             <div class="right">
                 <div class="reset-btn">초기화</div>
             </div>
         </div>
     </form>
-
     <div class="contents-warpper">
         <div class="left-box">
             <div class="trend-wrapper" id="trend">
@@ -76,7 +81,6 @@
                     </li>
                 </ul>
             </div>
-
             <div class="date-chart-back">
                 <div class="date-wrapper">
                     <div>
@@ -84,7 +88,6 @@
                         <span class="text">기준</span>
                     </div>
                 </div>
-
                 <div class="chart-wrapper">
                     <div class="chart">
                         <span class="text">전국 거래수</span>
@@ -96,8 +99,8 @@
                         <span class="data topData" th:text="${((dataUtil.tradeMin.price / 10000) < 1 ? '' : #numbers.formatInteger((dataUtil.tradeMin.price / 10000),1) + ' 억')
                             + ((dataUtil.tradeMin.price % 10000) / 1000 < 1 ? '' : #numbers.formatInteger(((dataUtil.tradeMin.price % 10000) / 1000),1) + ' 천')
                             + (dataUtil.tradeMin.price < 1000 ? dataUtil.tradeMin.price + ' 만' : '만')}"
-                              th:data-lat="${dataUtil.tradeMin.lat}" th:data-lng="${dataUtil.tradeMin.lng}">
-                              <div class="move">이동 &gt;</div>
+                            th:data-lat="${dataUtil.tradeMin.lat}" th:data-lng="${dataUtil.tradeMin.lng}">
+                            <div class="move">이동 &gt;</div>
                         </span>
                         <span class="unit">원</span>
                     </div>
@@ -105,23 +108,23 @@
                         <span class="text">최고 거래가</span>
                         <span class="data topData" th:text="${((dataUtil.tradeMax.price / 10000) < 1 ? '' : #numbers.formatInteger((dataUtil.tradeMax.price / 10000),1) + ' 억')
                         + ((dataUtil.tradeMax.price % 10000) / 1000 < 1 ? '' : ' ' + #numbers.formatInteger(((dataUtil.tradeMax.price % 10000) / 1000),1) + ' 천')
-                        + (dataUtil.tradeMax.price < 1000 ? dataUtil.tradeMax.price + ' 만' : '만')}"
-                              th:data-lat="${dataUtil.tradeMax.lat}" th:data-lng="${dataUtil.tradeMax.lng}">
-                              <div class="move">이동 &gt;</div>
+                        + (dataUtil.tradeMax.price < 1000 ? dataUtil.tradeMax.price + ' 만' : '')}"
+                            th:data-lat="${dataUtil.tradeMax.lat}" th:data-lng="${dataUtil.tradeMax.lng}">
+                            <div class="move">이동 &gt;</div>
                         </span>
                         <span class="unit">원</span>
                     </div>
                 </div>
             </div>
             <div class="search-result-chart">
-                    <div class="left-side">
-                        <div class="data">'당산동'</div>
-                        <div class="text">검색결과</div>
-                    </div>
-                    <div class="right-side">
-                        <div class="data">29</div>
-                        <div class="text">건</div>
-                    </div>
+                <div class="left-side">
+                    <div class="data">'당산동'</div>
+                    <div class="text">검색결과</div>
+                </div>
+                <div class="right-side">
+                    <div class="data">29</div>
+                    <div class="text">건</div>
+                </div>
             </div>
             <div class="item-wrapper" id="items">
                 <div class="loading">0%</div>
@@ -131,10 +134,9 @@
                 </div>
             </div>
         </div>
-
         <div class="right-box">
             <div id="map">
-            <div class="loading"></div>
+                <div class="loading"></div>
             </div>
             <div class="centerAddr-wrapper">
                 <div id="centerAddr"></div>
@@ -145,8 +147,6 @@
             <img class="roadview-close" src="/img/icon/close.png">
         </div>
     </div>
-
-
     <div class="apart-detail-wrapper">
         <div class="inner-wrapper">
             <div class="apart-detail">
@@ -160,9 +160,6 @@
                         <div class="right-box">
                             <div class="name"></div>
                             <div class="address"></div>
-                        </div>
-                        <div class="favorite-btn-wrapper">
-                            <div class="favorite-btn">관심목록</div>
                         </div>
                     </div>
                     <div class="codeSaleNm">
@@ -274,4 +271,5 @@
         </div>
     </div>
 </div>
+
 </html>

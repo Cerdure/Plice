@@ -1,16 +1,19 @@
 package com.project.team.plice.domain.chat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.team.plice.domain.data.ApartData;
 import com.project.team.plice.dto.chat.ChatRoomDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoom {
 
@@ -49,7 +52,7 @@ public class ChatRoom {
         this.regDate = regDate;
     }
 
-    public ChatRoomDto toDto(){
+    public ChatRoomDto toDto() {
         return ChatRoomDto.builder()
                 .id(this.id)
                 .apartData(this.apartData)
@@ -60,22 +63,27 @@ public class ChatRoom {
                 .build();
     }
 
-    public void memberCountPlus(){
+    public void memberCountPlus() {
         this.memberCount++;
     }
-    public void memberCountMinus(){
+
+    public void memberCountMinus() {
         this.memberCount--;
     }
-    public void changeMemberCount(Integer memberCount){
+
+    public void changeMemberCount(Integer memberCount) {
         this.memberCount = memberCount;
     }
-    public void chatCountPlus(){
+
+    public void chatCountPlus() {
         this.chatCount++;
     }
-    public void chatCountMinus(){
+
+    public void chatCountMinus() {
         this.chatCount--;
     }
-    public void changechatCount(Integer chatCount){
+
+    public void changechatCount(Integer chatCount) {
         this.chatCount = chatCount;
     }
 }

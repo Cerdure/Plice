@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.awt.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Chat {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "chat_id")
     private Long id;
 

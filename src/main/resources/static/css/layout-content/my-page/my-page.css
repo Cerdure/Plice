@@ -1,22 +1,12 @@
-body {
-    font-family: 'Pretendard-Regular';
-    color: #3b5987;
-
+header .my-page {
+    color: #5575ff;
 }
-*{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+.top-space {
+    height: 60px;
 }
-a{
-    padding: 0;
-}
-/* header */
 
-
-
-#content{
+#content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,35 +14,46 @@ a{
     min-width: 1200px;
     min-height: 100%;
 }
-.wrapper{
+
+.wrapper {
     width: 100%;
 
 }
-.wrapper div{
+
+.wrapper div {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 278px;
 }
-.title{
-    margin: 79px 0 71px;
-    font-size: 46px;
-    line-height: 50px;
-    letter-spacing: -1px;
+
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-.item{
+
+.title {
+    font-size: 40px;
+    margin: 40px;
+}
+
+.item {
     flex: 0 0 auto;
     display: flex;
     width: 1180px;
     height: 64px;
     margin: 0px auto;
 }
-.item li{
+
+.item li {
     width: 100%;
     height: 100%;
 }
-.item li a{
+
+.item li a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,68 +62,65 @@ a{
     line-height: 26px;
     border: 1px solid rgb(237, 237, 237);
     text-decoration: none;
-    color: black;
 }
 
-
-
-
 /* 프로필 */
-.profile_wrapper{
+.profile_wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100%;
     height: 100%;
+    margin-bottom: 40px;
 }
-.profile_wrap{
+
+.profile_wrap {
     display: flex;
     flex-direction: column;
     width: 588px;
-    margin: 80px auto 0px;
     padding: 64px;
-    border: 1px solid rgb(245, 245, 245);
 }
-.profile_box{
+
+.profile_box {
     width: 100%;
-    margin-bottom: 64px;
+    margin-bottom: 20px;
     text-align: center;
     position: relative;
 }
-.input_box{
+
+.input_box {
     display: flex;
     justify-content: space-between;
 }
-.input_label{
+
+.input_label {
     width: 250px;
 }
-.profile_image{
+
+.profile_image {
     position: relative;
 }
+
 .profile_image img {
     width: 50px;
 }
-.button{
-    position: absolute;
-    margin: 80px 0 0 40px;
-}
-.input_name{
+
+.input_name {
     width: 460px;
     height: 44px;
     padding: 10px 16px;
-    color: rgb(34, 34, 34);
     font-size: 14px;
     line-height: 24px;
     border: 1px solid rgb(237, 237, 237);
     border-radius: 2px;
     background-color: rgb(255, 255, 255);
 }
-.input_label{
-    width: 394px;
+
+.input_label {
+    width: 100%;
     height: 44px;
     padding: 10px 16px;
-    color: rgb(34, 34, 34);
     font-size: 14px;
     line-height: 24px;
     border: 1px solid rgb(237, 237, 237);
@@ -130,13 +128,14 @@ a{
     background-color: rgb(255, 255, 255);
     transition: all 150ms ease-out 0s;
 }
-.input_label:disabled{
-        color: rgb(204, 204, 204);
-        border-color: rgb(237, 237, 237);
-        background-color: rgb(252, 252, 252);
+
+.input_label:disabled {
+    color: rgb(204, 204, 204);
+    border-color: rgb(237, 237, 237);
+    background-color: rgb(252, 252, 252);
 }
 
-.button_right{
+.button_right {
     font-weight: 700;
     border: 1px solid rgb(223, 223, 223);
     background-color: rgb(255, 255, 255);
@@ -145,83 +144,55 @@ a{
     cursor: pointer;
 
 }
-.profile_name{
+
+.profile_name {
     display: inline-flex;
     flex-direction: column;
     margin-top: 0px;
     margin-bottom: 0px;
 }
-.profile_name .name_label .label_text{
+
+.profile_name .name_label .label_text {
     margin-bottom: 8px;
     font-weight: 700;
     font-size: 14px;
     line-height: 24px;
 }
-.profile_label{
+
+.btn-box {
+    display: flex;
+    margin-top: 40px;
+}
+
+.btn {
+    width: 100%;
+    padding: 9px 30px;
+    border-radius: 5px;
+}
+
+.row-btn-1 {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row-btn-2 {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_label {
     margin-top: 24px;
     margin-bottom: 8px;
     font-weight: 700;
     font-size: 14px;
     line-height: 24px;
 }
-.privacy_label{
-    display: flex;
-    margin-top: 40px;
-    padding-top: 40px;
-    border-top: 1px solid rgb(245, 245, 245);
-    justify-content: space-between;
-}
-.title_privacy{
-    font-size: 14px;
-    line-height: 24px;
-    font-weight: 700;
-    margin-bottom: 7px;
-}
-.caption_gray{
-    font-size: 12px;
-    color: rgb(151, 151, 151);
-    line-height: 20px;
-}
-.button_detail{
-    display: inline-flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    min-width: 80px;
-    padding: 0px 16px;
-    font-weight: 700;
-    vertical-align: middle;
-    transition: all 150ms ease-out 0s;
-    cursor: pointer;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(223, 223, 223);
-    border-radius: 2px;
-    color: rgb(34, 34, 34);
-    height: 28px;
-}
-#btn-modal{
-    display: inline-flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    font-weight: 700;
-    vertical-align: middle;
-    transition: all 150ms ease-out 0s;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    color: rgb(34, 34, 34);
-    height: 28px;
-    margin-top: 50px;
-    margin-left: 400px;
-    font-size: 12px;
-}
 
-/* MODAL창 띄우기 */
-
-div{
+div {
     margin: 0px;
     padding: 0px;
     border: 0px;
@@ -234,108 +205,96 @@ div{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 560px;
-    height: 632px;
-    padding: 10px;
-    background: rgba(255,255,255);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(13.5px);
-    -webkit-backdrop-filter: blur(13.5px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    z-index: 101;
+    padding: 40px;
+    background: white;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100;
+    opacity: 0;
     display: none;
 }
 
 .modal-window .title {
     display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    height: 82px;
-    border-bottom: 1px solid rgb(235, 235, 235);
+    align-self: flex-start;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 40px;
 }
 
 .modal-window .title h2 {
     display: inline;
-    font-size: 22px;
+    font-size: 25px;
     font-weight: 700;
 
 }
-.modal-window .close-area {
-    width: 16px;
-    height: 16px;
-    margin-left: auto;
-    border: 0px;
-    background-color: transparent;
+
+.modal-window .close {
     position: absolute;
-    top: 28px;
-    right: 30px;
+    top: 40px;
+    right: 40px;
+    width: 20px;
+    height: 20px;
+    filter: invert(28%) sepia(99%) saturate(314%) hue-rotate(177deg) brightness(94%) contrast(88%);
 }
 
 .modal-window .content {
-    padding: 30px 30px 50px;
+    display: flex;
+    flex-direction: column;
 }
-.modal-window .content .content_inner_1{
-    color: rgb(21, 100, 249);
-    font-size: 16px;
-    font-weight: 500;
+
+.modal-window .content .content_inner_1 {
+    font-size: 18px;
+    font-weight: 900;
     line-height: 24px;
+    margin-bottom: 10px;
 }
-.modal-window .content .content_inner_2{
+
+.modal-window .content .content_inner_2 {
     margin-top: 10px;
     margin-bottom: 30px;
     font-size: 14px;
 }
-.modal-window .content .content_inner_3{
-    padding: 0px 8px 0px 10px;
-    color: rgb(76, 76, 76);
-    font-size: 14px;
-    border: 1px solid rgb(223, 223, 223);
-    border-radius: 2px;
-    box-sizing: border-box;
-    background: url(/static/media/select_arrow.95d6586e.svg) right 8px center / 10px 6px no-repeat rgb(255, 255, 255);
-    outline: none;
-    appearance: none;
-    width: 100%;
-    height: 46px;
+
+.modal-window .content .content_inner_2 li {
+    height: 30px;
 }
-.modal-window .content .content_inner_4{
-padding: 12px 16px;
-    color: rgb(76, 76, 76);
-    font-size: 14px;
-    border: 1px solid rgb(223, 223, 223);
-    border-radius: 2px;
-    background-color: rgb(255, 255, 255);
-    resize: none;
+
+.modal-window .content .content_inner_3 {
     width: 100%;
-    height: 120px;
-    margin-top: 20px;
-}
-.modal-window .content .content_inner_5{
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
-    margin-top: 15px;
-}
-.modal-window .modal_bottom{
-    height: 70px;
-}
-.modal-window .modal_bottom button{
-    width: 100%;
-    height: 100%;
-    color: rgb(255, 255, 255);
-    font-size: 17px;
-    font-weight: 500;
-    border: 0px;
-    background-color: rgb(26, 90, 232);
-    margin: 0px;
-    padding: 0px;
-    border-radius: 0px;
-    cursor: pointer;
-    outline: none;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
 }
 
+.modal-window .content .content_inner_3 .text {
+    margin-right: 20px;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 20px;
+}
 
+.modal-window .content .content_inner_3 select {
+    width: 200px;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.modal-window .content .content_inner_5 {
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.modal-window .content .content_inner_5 p {
+    margin-left: 10px;
+}
+
+.modal-window .leave-btn {
+    margin: 0;
+    width: 160px;
+    padding: 9px 30px;
+    border-radius: 5px;
+}

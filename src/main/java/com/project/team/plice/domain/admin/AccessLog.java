@@ -6,12 +6,14 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class AccessLog {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "access_log_id")
     private Long id;
 

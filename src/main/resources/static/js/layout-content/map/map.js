@@ -67,10 +67,6 @@ $(function () {
             moveToPlace(this);
         });
 
-        $(document).on("click", ".favorite-btn", function(){
-            fetch("/map/favorite?apartName=" + $(".apart-detail-wrapper .name").text()).then(console.log("success"));
-        });
-
         $(document).on("mouseover", ".item, .custom-overlay-apart", function () {
             pinOverlaies.forEach(e => e.setMap(null));
             const place = apartCoords[$(this).data('id')];
@@ -94,31 +90,26 @@ $(function () {
         $(document).on("click", ".trend-wrapper .fold", function () {
             if (!$(this).hasClass("clicked")) {
                 clearInterval(trendInterval);
-                $(this).addClass("clicked").css({'transform':'translateY(-50%) rotate(180deg)', 'top':'20px'});
+                $(this).addClass("clicked").css({ 'transform': 'translateY(-50%) rotate(180deg)', 'top': '20px' });
                 $(".trend-wrapper ul").css('bottom', '0px');
                 trendIdx = 1;
-                $(".trend-wrapper").animate({'height':'500px'}, 300);
+                $(".trend-wrapper").animate({ 'height': '500px' }, 300);
             } else {
                 trendInterval = setInterval(trendAnimation, 3000);
-                $(".trend-wrapper").animate({'height':'50px'}, 300, function(){
-                    $(".trend-wrapper .fold").removeClass("clicked").css({'transform':'translateY(-50%) rotate(0)', 'top':'50%'});
+                $(".trend-wrapper").animate({ 'height': '50px' }, 300, function () {
+                    $(".trend-wrapper .fold").removeClass("clicked").css({ 'transform': 'translateY(-50%) rotate(0)', 'top': '50%' });
                 });
             }
         });
 
         $(document).on("click", ".search-result-apart", function () {
-            (async () => {
-                $(".custom-overlay-apart").remove();
-                let apartName = $(this).data("value");
-                $(".search-input").val(apartName);
-                currentItemsIdx = 0;
-                update = true;
-                findApartData('', apartName);
-                moveToPlace(this);
-                const result = fetch("/map/keyword-save?keyword=" + apartName).then(res => res.text());
-                $("#trend").replaceWith(result);
-            })();
-           
+            $(".custom-overlay-apart").remove();
+            let apartName = $(this).data("value");
+            $(".search-input").val(apartName);
+            currentItemsIdx = 0;
+            update = true;
+            findApartData('', apartName);
+            moveToPlace(this);
         });
 
         $(document).on("click", ".search-result-address", function () {
@@ -129,8 +120,6 @@ $(function () {
             update = true;
             findApartData(address, '');
             searchRegion(address);
-            const result = fetch("/map/keyword-save?keyword=" + address.substring(address.indexOf(" "))).then(res => res.text());
-            $("#trend").replaceWith(result);
         });
     });
 
@@ -148,24 +137,22 @@ $(function () {
         averageCenter: true,
         minLevel: 6,
         gridSize: 200,
-        styles: [
-            {
-                padding: '30px',
-                paddingTop: '10px',
-                paddingBottom: '17px',
-                lineHeight: '20px',
-                backgroundImage: 'url("/img/icon/window2.png")',
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                fontSize: '16px',
-                textAlign: 'center',
-                color: 'white',
-                textShadow: '0 0 5px black',
-                filter: 'drop-shadow(rgba(0, 0, 0, 0.4) 2px 4px 2px) saturate(0.7) brightness(1.1)',
-                animation: 'floating 1s infinite'
-            }
-        ]
+        styles: [{
+            padding: '30px',
+            paddingTop: '10px',
+            paddingBottom: '17px',
+            lineHeight: '20px',
+            backgroundImage: 'url("/img/icon/window2.png")',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            fontSize: '16px',
+            textAlign: 'center',
+            color: 'white',
+            textShadow: '0 0 5px black',
+            filter: 'drop-shadow(rgba(0, 0, 0, 0.4) 2px 4px 2px) saturate(0.7) brightness(1.1)',
+            animation: 'floating 1s infinite'
+        }]
     });
 
     clusterer.setTexts(function (size) {
@@ -174,16 +161,23 @@ $(function () {
         return text;
     });
 
-    const findData = region => fetch("/find-data?region=" + region).then(res => res.json());
     const apartDetailData = kaptCode => fetch('http://apis.data.go.kr/1613000/AptBasisInfoService1/getAphusBassInfo'
         + '?' + encodeURIComponent('serviceKey') + '=' + 't6FF%2FNmZ7E6CgombvVgPJl7z0Yv5oDesGF%2Bm78Hv%2BT5IMNGTDRd53t0wkPd9%2FoEx7X522aovCygHADH31fbWTg%3D%3D'
         + '&' + encodeURIComponent('kaptCode') + '=' + encodeURIComponent(kaptCode)).then(res => res.text());
+
+    const searchInput = $(".search-input");
+    const searchInputVal = searchInput.val();
+    const searchApart = $("#search-input-apart");
+    const searchApartVal = searchApart.data("value");
+    const searchAddress = $("#search-input-address");
+    const searchAddressVal = searchAddress.data("value");
+    updateData(searchInputVal != '' ? searchInputVal : "당산동");
 
     function updateData(region) {
         (async () => {
             try {
                 let markers = [], idx = 0; customOverlaies = [];
-                findDataList = await findData(region);
+                findDataList = await fetch("/find-data?region=" + region).then(res => res.json());
                 for (const tradeData of findDataList[0]) {
                     if (!isNaN(tradeData.price)) {
                         markers.push(new kakao.maps.Marker({
@@ -233,16 +227,39 @@ $(function () {
                 }
                 apartDataList = findDataList[1];
                 currentItemsIdx = 0;
-                appendApartList();
+
+                if (searchInputVal != '') {
+                    currentItemsIdx = 0;
+                    moveToPlace(searchInput);
+                    findApartData(searchInputVal, '');
+                    keySearch(searchInputVal);
+                    $(".search-result-outer-wrapper").hide();
+                } else if (searchApartVal != '' && searchApartVal != null) {
+                    $(".custom-overlay-apart").remove();
+                    $(".search-input").val(searchApartVal);
+                    currentItemsIdx = 0;
+                    update = true;
+                    findApartData('', searchApartVal);
+                    moveToPlace("#search-input-apart");
+                } else if (searchAddressVal != '' && searchAddressVal != null) {
+                    $(".custom-overlay-apart").remove();
+                    $(".search-input").val(searchAddressVal);
+                    currentItemsIdx = 0;
+                    update = true;
+                    findApartData(searchAddressVal, '');
+                    searchRegion(searchAddressVal);
+                } else {
+                    appendApartList();
+                }
             } catch (e) {
                 console.log(e);
             }
         })();
     }
-    updateData("당산동");
 
     function appendApartList() {
         (async () => {
+            console.log("appendApart")
             let endNum = currentItemsIdx + 12 <= apartDataList.length ? currentItemsIdx + 12 : apartDataList.length;
             $(".item-wrapper .loading").stop().show();
             if (update) {
@@ -520,13 +537,12 @@ $(function () {
         }
     });
 
-    const resResult = inputVal => fetch("/map/input-search?inputVal=" + inputVal).then(res => res.text());
     let prevResult;
 
     function keySearch(inputVal) {
         (async () => {
             try {
-                let result = await resResult(inputVal);
+                let result = await fetch("/map/input-search?inputVal=" + inputVal).then(res => res.text());
                 $('#search-input-results').replaceWith(result);
                 $(".search-result-apart-wrapper").css('display', $(".search-result-apart-wrapper").children().length == 0 ? 'none' : 'flex');
                 $(".search-result-address-wrapper").css('display', $(".search-result-address-wrapper").children().length == 0 ? 'none' : 'flex');
@@ -594,12 +610,10 @@ $(function () {
         searchRegion(currentCenterAddr);
     });
 
-    const findApart = (address, apartName) => fetch("/find-apart?region=" + address + "&apart=" + apartName).then(res => res.json());
-
     function findApartData(address, apartName) {
         (async () => {
             $(".item-wrapper .null").hide();
-            apartDataList = await findApart(address, apartName);
+            apartDataList = await fetch("/find-apart?region=" + address + "&apart=" + apartName).then(res => res.json());
             $(".search-result-chart .left-side .data").text("'" + address + apartName + "'");
             $(".search-result-chart .right-side .data").text(apartDataList.length);
             appendApartList();
@@ -736,26 +750,22 @@ $(function () {
         toggleRoadview();
     });
 
-
 });
 
 
-// -----------------------------------------------------------------------------------------------------
-
-let options, map, searchType, keyword, apartCoords, currentCenterAddr, 
+let options, map, searchType, keyword, apartCoords, currentCenterAddr,
     findDataList, tradeDataList, apartDataList, apartDetailXmls, currentItemsIdx,
-    customOverlaies = [], apartOverlaies = [], regionOverlaies = [], 
+    customOverlaies = [], apartOverlaies = [], regionOverlaies = [],
     pinOverlaies = [], rvCustomOverlaies = [], rvApartOverlaies = [],
     ps = new kakao.maps.services.Places(), geocoder = new kakao.maps.services.Geocoder(),
     trendIdx = 1, trendInterval;
-
-// -----------------------------------------------------------------------------------------------------
 
 
 function moveToPlace(_this) {
     (async () => {
         $(".search-result-wrapper").hide();
         $(".search-result-outer-wrapper").hide();
+        console.log(_this)
         if ($(_this).prop('tagName') == 'DIV') {
             searchType = 'apt';
             keyword = $(_this).data("value");
@@ -881,17 +891,3 @@ function trendAnimation() {
         }
     });
 }
-
-$(function(){
-    $(".favorite-btn").click(function(){
-        (async () => {
-            const loginCheck = await fetch("/chat/login-check").then(res => res.text());
-            if(loginCheck == "ok"){
-                location.href = "/my-page";
-            } else {
-                alert('로그인 후 이용 가능합니다.');
-                location.href = "/login";
-            }
-        })();
-    });
-});

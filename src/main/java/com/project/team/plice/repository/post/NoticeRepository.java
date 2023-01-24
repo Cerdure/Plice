@@ -10,8 +10,10 @@ import java.util.List;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
     public List<Notice> findByRegDateBeforeOrderByRegDateDesc(LocalDateTime regDate);
-    public List <Notice> findByRegDateAfter(LocalDateTime regDate);
+    public List<Notice> findByRegDateAfter(LocalDateTime regDate);
+    public Page<Notice> findById(Long id, Pageable pageable);
     public Page<Notice> findByTitleContainingIgnoreCase(String title, Pageable pageable);
-    public Page <Notice> findById(Long id, Pageable pageable);
-    public Page <Notice> findByMemberNicknameContainsIgnoreCase(String nickname, Pageable pageable);
+    public Page<Notice> findByContentContainingIgnoreCase(String content, Pageable pageable);
+    public Page<Notice> findByMemberNicknameContainsIgnoreCase(String nickname, Pageable pageable);
+    public List<Notice> findTop5ByOrderByRegDateDesc();
 }

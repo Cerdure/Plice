@@ -1,16 +1,14 @@
 package com.project.team.plice.controller;
 
-import com.project.team.plice.domain.admin.AccessLog;
 import com.project.team.plice.domain.admin.Report;
 import com.project.team.plice.domain.enums.MemberRole;
 import com.project.team.plice.domain.member.Member;
 import com.project.team.plice.dto.admin.BlockDto;
+import com.project.team.plice.dto.inquire.AnswerDto;
 import com.project.team.plice.dto.member.MemberDto;
 import com.project.team.plice.dto.post.NoticeDto;
-import com.project.team.plice.service.interfaces.AdminService;
-import com.project.team.plice.service.interfaces.ChatService;
-import com.project.team.plice.service.interfaces.MapService;
-import com.project.team.plice.service.interfaces.MemberService;
+import com.project.team.plice.service.interfaces.*;
+import com.project.team.plice.utils.DataUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +31,8 @@ public class AdminController {
     private final MemberService memberService;
     private final MapService mapService;
     private final ChatService chatService;
-//    private final PostService postService;
+    private final PostService postService;
+    private final InquireService inquireService;
 
     @GetMapping(value = {"/admin/authority-check"})
     @ResponseBody
@@ -149,14 +147,19 @@ public class AdminController {
     }
 
     @GetMapping("/admin/member-mng")
-    public String memberMng(Model model, Pageable pageable) {
-        List<MemberRole> memberRoles = new ArrayList<>();
-        memberRoles.add(MemberRole.USER);
-        Page<Member> members = memberService.findByRoles(memberRoles, pageable);
-        model.addAttribute("members", members);
+    public String memberMng(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            List<MemberRole> memberRoles = new ArrayList<>();
+            memberRoles.add(MemberRole.USER);
+            model.addAttribute("members", memberService.findByRoles(memberRoles, pageable));
+        } else {
+            List<MemberRole> memberRoles = new ArrayList<>();
+            memberRoles.add(MemberRole.USER);
+            model.addAttribute("members", memberService.searchMember(dataUtil, memberRoles, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
         return "layout-content/admin/member-mng";
     }
-
 
     @GetMapping("/admin/member-mod")
     public String memberMod(@ModelAttribute MemberDto memberDto) {
@@ -171,27 +174,46 @@ public class AdminController {
     }
 
     @GetMapping("/admin/access-mng/log")
-    public String accessMngLog(Model model, Pageable pageable) {
-        model.addAttribute("accessList", adminService.findAllAccessLog(pageable));
+    public String accessMngLog(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            model.addAttribute("accessList", adminService.findAllAccessLog(pageable));
+        } else {
+            model.addAttribute("accessList", adminService.searchAccessLog(dataUtil, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
         return "layout-content/admin/access-mng-log";
     }
 
     @GetMapping("/admin/access-mng/member")
-    public String accessMngBlacklistMember(Model model, Pageable pageable) {
-        model.addAttribute("memberBlacklists", adminService.findAllMemberBlacklist(pageable));
+    public String accessMngBlacklistMember(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            model.addAttribute("memberBlacklists", adminService.findAllMemberBlacklist(pageable));
+        } else {
+            model.addAttribute("memberBlacklists", adminService.searchMemberBlacklist(dataUtil, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
         return "layout-content/admin/access-mng-member";
     }
 
     @GetMapping("/admin/access-mng/ip")
-    public String accessMngBlacklistIp(Model model, Pageable pageable) {
-        model.addAttribute("ipBlacklists", adminService.findAllIpBlacklist(pageable));
+    public String accessMngBlacklistIp(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            model.addAttribute("ipBlacklists", adminService.findAllIpBlacklist(pageable));
+        } else {
+            model.addAttribute("ipBlacklists", adminService.searchIpBlacklist(dataUtil, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
         return "layout-content/admin/access-mng-ip";
     }
 
     @GetMapping("/admin/chat-mng")
-    public String chatMng(Model model, Pageable pageable) {
-        Page<Report> reports = adminService.findAllReport(pageable);
-        model.addAttribute("reports", reports);
+    public String chatMng(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            model.addAttribute("reports", adminService.findAllReport(pageable));
+        } else {
+            model.addAttribute("reports", adminService.searchReport(dataUtil, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
         return "layout-content/admin/chat-mng";
     }
 
@@ -214,21 +236,44 @@ public class AdminController {
     }
 
     @GetMapping("/admin/post-mng/story")
-    public String postMngStory(Model model, Pageable pageable) {
-        model.addAttribute("posts", adminService.findAllPost(pageable));
+    public String postMngStory(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            model.addAttribute("posts", postService.findAllPost(pageable));
+        } else {
+            model.addAttribute("posts", postService.searchPost(dataUtil, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
         return "layout-content/admin/post-mng-story";
     }
 
+    @GetMapping("/admin/post-mng/story/detail")
+    public String postMngStoryDetail(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("post", postService.findPostById(id));
+        return "layout-content/admin/post-mng-story :: #post";
+    }
+
     @GetMapping("/admin/post-mng/story/delete")
-    public String deleteStory(@RequestParam("id") Long id) {
-        adminService.deleteStory(id);
-        return "redirect:/admin/post-mng/story";
+    @ResponseBody
+    public Boolean deleteStory(@RequestParam("id") Long id) {
+        postService.deletePost(id);
+        return true;
     }
 
     @GetMapping("/admin/post-mng/notice")
-    public String postMngNotice(Model model, Pageable pageable) {
-        model.addAttribute("notices", adminService.findAllNotice(pageable));
+    public String postMngNotice(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            model.addAttribute("notices", postService.findAllNotice(pageable));
+        } else {
+            model.addAttribute("notices", postService.searchNotice(dataUtil, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
         return "layout-content/admin/post-mng-notice";
+    }
+
+    @GetMapping("/admin/post-mng/notice/detail")
+    public String postMngNoticeDetail(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("notice", postService.findNoticeById(id));
+        return "layout-content/admin/post-mng-notice :: #post";
     }
 
     @PostMapping("/admin/post-mng/notice")
@@ -237,10 +282,55 @@ public class AdminController {
         return "redirect:/admin/post-mng/notice";
     }
 
+    @GetMapping("/admin/post-mng/notice/modify")
+    public String loadNotice(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("notice", postService.findNoticeById(id));
+        return "layout-content/admin/post-mng-notice :: .notice-write-wrapper";
+    }
+
+    @PostMapping("/admin/post-mng/notice/modify")
+    @ResponseBody
+    public Boolean modifyNotice(@ModelAttribute NoticeDto noticeDto, Model model) {
+        postService.updateNotice(noticeDto);
+        return true;
+    }
+
     @GetMapping("/admin/post-mng/notice/delete")
-    public String deleteNotice(@RequestParam("id") Long id) {
+    @ResponseBody
+    public Boolean deleteNotice(@RequestParam("id") Long id) {
         adminService.deleteNotice(id);
-        return "redirect:/admin/post-mng/notice";
+        return true;
+    }
+
+    @GetMapping("/admin/inquiry-mng")
+    public String inquiryMng(@ModelAttribute DataUtil dataUtil, Model model, Pageable pageable) {
+        if (dataUtil.getKeyword() == null) {
+            model.addAttribute("inquiries", inquireService.findAllInquire(pageable));
+        } else {
+            model.addAttribute("inquiries", inquireService.searchInquire(dataUtil, pageable));
+            model.addAttribute("dataUtil", dataUtil);
+        }
+        return "layout-content/admin/inquiry-mng";
+    }
+
+    @GetMapping("/admin/inquiry-mng/detail")
+    public String inquiryMngDetail(@RequestParam("id") Long id, Model model) {
+        model.addAttribute("inquiry", inquireService.findInquire(id));
+        return "layout-content/admin/inquiry-mng :: .window-wrapper";
+    }
+
+    @PostMapping("/admin/inquiry-mng/answer")
+    @ResponseBody
+    public Boolean saveAnswer(@ModelAttribute AnswerDto answerDto, Authentication authentication) {
+        adminService.saveAnswer(answerDto, authentication);
+        return true;
+    }
+
+    @PostMapping("/admin/inquiry-mng/answer/modify")
+    @ResponseBody
+    public Boolean modifyAnswer(@ModelAttribute AnswerDto answerDto, Authentication authentication) {
+        adminService.modifyAnswer(answerDto, authentication);
+        return true;
     }
 
     @GetMapping("/admin/block-check")
@@ -250,7 +340,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/block")
-    public String block(@ModelAttribute BlockDto blockDto, Model model) {
+    @ResponseBody
+    public Boolean block(@ModelAttribute BlockDto blockDto, Model model) {
         switch (blockDto.getBlockType()) {
             case "ip":
                 adminService.ipBlock(blockDto.getIp(), blockDto.getDate(), blockDto.getReason());
@@ -259,23 +350,12 @@ public class AdminController {
                 adminService.memberBlock(blockDto.getId(), blockDto.getDate(), blockDto.getReason());
                 break;
         }
-        switch (blockDto.getPageType()) {
-            case "member":
-                return "redirect:/admin/member-mng";
-            case "accessMember":
-                return "redirect:/admin/access-mng/member";
-            case "accessIp":
-                return "redirect:/admin/access-mng/ip";
-            case "chat":
-                model.addAttribute("blockComplete", true);
-                return "redirect:/admin/chat-mng";
-            default:
-                return "redirect:/admin/access-mng/log";
-        }
+        return true;
     }
 
     @GetMapping("/admin/block-cancel")
-    public String blockCancel(@ModelAttribute BlockDto blockDto) {
+    @ResponseBody
+    public Boolean blockCancel(@ModelAttribute BlockDto blockDto) {
         switch (blockDto.getBlockType()) {
             case "ip":
                 adminService.ipBlockCancel(blockDto.getIp());
@@ -284,16 +364,7 @@ public class AdminController {
                 adminService.memberBlockCancel(blockDto.getId());
                 break;
         }
-        switch (blockDto.getPageType()) {
-            case "member":
-                return "redirect:/admin/member-mng";
-            case "accessMember":
-                return "redirect:/admin/access-mng/member";
-            case "accessIp":
-                return "redirect:/admin/access-mng/ip";
-            default:
-                return "redirect:/admin/access-mng/log";
-        }
+        return true;
     }
 }
 

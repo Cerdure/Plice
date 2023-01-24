@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -38,8 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/term-service/**", "/term-of-service/**", "/marketing/**", "/use-personal/**",
             "/map/**", "/markers/**", "/find-data/**", "/find-apart/**",
             "/chat/**", "/webjars/**", "**/websocket/**", "/ws/**",
-            "/post/**", "/story-detail/**", "/notice-detail/**",
-            "/contents/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**",
+            "/post/**", "/contents/**", "/inquiry/**", "/inquiry_write/**", "/watchlist/**",
             "/openapi.molit.go.kr/**", "/apis.data.go.kr/**", "/favicon.ico",
             "/dapi.kakao.com/**", "/map.kakao.com/**", "/t1.daumcdn.net/**"
     };
@@ -77,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .logoutSuccessUrl("/home")
                 .and()
                     .rememberMe()
+                        .rememberMeParameter("rememberMe")
                         .key("rememberMe")
                         .tokenValiditySeconds(3600)
                         .alwaysRemember(false)
@@ -103,7 +102,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(loginService).passwordEncoder(passwordEncoder());
     }
-
-
-
 }

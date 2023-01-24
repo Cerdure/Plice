@@ -11,7 +11,8 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity @Getter
+@Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reply {
 
@@ -64,13 +65,15 @@ public class Reply {
         this.level = level;
     }
 
-    public void changeLevel(Integer level){
+    public void changeLevel(Integer level) {
         this.level = level;
     }
-    public void changeContent(String content){
+
+    public void changeContent(String content) {
         this.content = content;
     }
-    public void delete(){
+
+    public void delete() {
         this.member = null;
         this.regDate = null;
         this.content = "삭제된 댓글입니다.";

@@ -15,6 +15,7 @@
 
 <div layout:fragment="content">
   <div class="top-space"></div>
+  <div class="modal-background"></div>
   <div class="contents-wrapper">
     <section class="cd-slider">
       <ul>
@@ -51,17 +52,34 @@
     <div class="search-wrapper">
       <div class="head">
         <div class="title">찾으시는 것이 있나요?</div>
-        <div class="below">
-          <div class="text apartData active-sort">아파트</div>
-          <div class="text chart">채팅방</div>
-        </div>
       </div>
       <div class="body">
-        <form class="search-form">
+        <div class="search-form">
           <img class="icon" src="/img/icon/search-icon.svg">
-          <input type="text" placeholder="아파트 또는 지역명으로 검색">
+          <input class="search-input" type="text" placeholder="아파트 또는 지역명으로 검색">
           <img class="reset" src="/img/icon/x-circle.svg">
-        </form>
+        </div>
+        <div class="search-result-outer-wrapper">
+          <div class="search-result-wrapper" id="search-input-results">
+            <div class="search-result-apart-wrapper">
+              <div class="search-result-apart" th:each="apartData : ${apartDataList}" th:data-value="${apartData.name}">
+                <div class="inner-wrapper">
+                  <div class="title">아파트</div>
+                  <div id="apart-box">
+                    <span class="data" th:utext="${apartData.highlightName}"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="search-result-address-wrapper">
+              <div class="search-result-address" th:each="addressData : ${addressDataList}"
+                th:data-value="${addressData.address}">
+                <img src="/img/icon/geo-alt-fill.svg">
+                <span class="data" th:utext="${addressData.highlightAddress}"></span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="top3-wrapper">
@@ -73,80 +91,18 @@
       </div>
       <div class="body">
         <div class="popular">
-          <div class="room">
+          <div class="room" th:each="chatRoom,i : ${chatRooms}" th:data-id="${chatRoom.id}"
+            th:data-name="${chatRoom.apartData.name}" th:data-member-count="${chatRoom.memberCount}">
             <div class="back"></div>
             <div class="title">
-              <div class="number">1</div>
-              <div class="name">일원동 래미안개포루체하임</div>
+              <div class="number" th:text="${i.count}"></div>
+              <div class="name" th:text="${chatRoom.apartData.name}"></div>
             </div>
             <div class="info">
               <img class="icon" src="/img/icon/people-fill.svg">
-              <div class="data">523</div>
+              <div class="text">현재</div>
+              <div class="data" th:text="${chatRoom.memberCount}"></div>
               <div class="unit">명 참여중</div>
-            </div>
-            <div class="enter">입장하기 &gt;</div>
-          </div>
-          <div class="room">
-            <div class="back"></div>
-            <div class="title">
-              <div class="number">2</div>
-              <div class="name">잠실동 리센츠</div>
-            </div>
-            <div class="info">
-              <img class="icon" src="/img/icon/people-fill.svg">
-              <div class="data">475</div>
-              <div class="unit">명 참여중</div>
-            </div>
-            <div class="enter">입장하기 &gt;</div>
-          </div>
-          <div class="room">
-            <div class="back"></div>
-            <div class="title">
-              <div class="number">3</div>
-              <div class="name">삼성동 삼성포스코더샵</div>
-            </div>
-            <div class="info">
-              <img class="icon" src="/img/icon/people-fill.svg">
-              <div class="data">298</div>
-              <div class="unit">명 참여중</div>
-            </div>
-            <div class="enter">입장하기 &gt;</div>
-          </div>
-        </div>
-        <div class="lastest">
-          <div class="room">
-            <div class="back"></div>
-            <div class="title">
-              <div class="number">1</div>
-              <div class="name">잠원동 신반포메이플자이</div>
-            </div>
-            <div class="info">
-              <div class="data">22.12.26</div>
-              <div class="unit">OPEN</div>
-            </div>
-            <div class="enter">입장하기 &gt;</div>
-          </div>
-          <div class="room">
-            <div class="back"></div>
-            <div class="title">
-              <div class="number">2</div>
-              <div class="name">여의도동 아크로여의도더원</div>
-            </div>
-            <div class="info">
-              <div class="data">22.12.24</div>
-              <div class="unit">OPEN</div>
-            </div>
-            <div class="enter">입장하기 &gt;</div>
-          </div>
-          <div class="room">
-            <div class="back"></div>
-            <div class="title">
-              <div class="number">3</div>
-              <div class="name">삼성동 삼성포스코더샵</div>
-            </div>
-            <div class="info">
-              <div class="data">22.12.22</div>
-              <div class="unit">OPEN</div>
             </div>
             <div class="enter">입장하기 &gt;</div>
           </div>
@@ -166,98 +122,130 @@
       </div>
       <div class="body">
         <div class="article-wrapper">
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
-            </div>
+          <a class="article" th:each="searchResult: ${articles}" th:href="${searchResult.link}"
+            th:data-page="${searchResult.page}" th:data-total-page="${searchResult.totalPage}">
+            <div class="title" th:utext="${searchResult.title}"></div>
             <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
+              <li th:utext="${searchResult.description}"></li>
             </div>
-            <div class="date">SEP 6, 2022</div>
-          </div>
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
-            </div>
-            <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
-            </div>
-            <div class="date">SEP 6, 2022</div>
-          </div>
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
-            </div>
-            <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
-            </div>
-            <div class="date">SEP 6, 2022</div>
-          </div>
-          <div class="article">
-            <div class="title">
-              국내 <b>주식</b>형펀드서 사흘째 자금 순유출
-            </div>
-            <div class="description">
-              국내 <b>주식</b>형 펀드에서 사흘째 자금이 빠져나갔다.
-              26일 금융투자협회에 따르면 지난 22일 상장지수펀드(ETF)를 제외한
-              국내 <b>주식</b>형 펀드에서 126억원이 순유출됐다.
-              472억원이 들어오고 598억원이 펀드...
-            </div>
-            <div class="date">SEP 6, 2022</div>
-          </div>
+            <div class="date" th:text="${#dates.format(searchResult.date, 'yyyy년 MM월 dd일 HH:mm:ss')}"></div>
+          </a>
         </div>
         <div class="youtube-wrapper">
           <div class="row-1">
-            <div class="youtube">
-              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
-                xml:space="preserve">
-                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
-                  C97.3,23.7,75.7,2.3,49.9,2.5" />
-                <path class="icon" fill="#ddbe72"
-                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
-              </svg>
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
             </div>
-            <div class="youtube">
-              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
-                xml:space="preserve">
-                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
-                  C97.3,23.7,75.7,2.3,49.9,2.5" />
-                <path class="icon" fill="#ddbe72"
-                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
-              </svg>
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row-2">
-            <div class="youtube">
-              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
-                xml:space="preserve">
-                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
-                  C97.3,23.7,75.7,2.3,49.9,2.5" />
-                <path class="icon" fill="#ddbe72"
-                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
-              </svg>
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
             </div>
-            <div class="youtube">
-              <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" height="100px" width="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100"
-                xml:space="preserve">
-                <path class="stroke-solid" fill="none" stroke="#ddbe72" d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
-                  C97.3,23.7,75.7,2.3,49.9,2.5" />
-                <path class="icon" fill="#ddbe72"
-                  d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
-              </svg>
+            <div class="youtube-box">
+              <div class="iframe-wrapper">
+                <img class="iframe-close" src="/img/icon/close.png">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </div>
+              <div class="youtube">
+                <svg version="1.1" id="play" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="120px" width="120px"
+                  viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="stroke-solid" fill="none" stroke="#ddbe72"
+                    d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7 C97.3,23.7,75.7,2.3,49.9,2.5" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                  <path class="icon" fill="#ddbe72"
+                    d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z" />
+                </svg>
+              </div>
+              <div class="info-box">
+                <div class="title"></div>
+                <div class="sub-info">
+                  <div class="channel"></div>
+                  <div class="date"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -268,12 +256,10 @@
         <img src="/img/icon/notice.png">
         <div class="text">[공지사항]</div>
         <ul>
-          <li>공지사항 샘플 제목 1</li>
-          <li>공지사항 샘플 제목 2</li>
-          <li>공지사항 샘플 제목 3</li>
-          <li>공지사항 샘플 제목 4</li>
-          <li>공지사항 샘플 제목 5</li>
-          <li>공지사항 샘플 제목 1</li>
+          <a th:each="notice: ${notices}" th:text="${notice.title}"
+            th:href="'/post/notice/detail?id=' + ${notice.id}"></a>
+          <a th:each="notice,i: ${notices}" th:text="${notice.title}" th:href="'/post/notice/detail?id=' + ${notice.id}"
+            th:if="${i.count} == 1"></a>
         </ul>
       </div>
     </div>
