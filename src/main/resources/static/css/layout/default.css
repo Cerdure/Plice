@@ -113,7 +113,8 @@ li {
 }
 
 input,
-select {
+select,
+textarea {
     outline: none;
 }
 

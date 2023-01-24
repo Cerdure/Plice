@@ -38,13 +38,12 @@
                 </li>
                 <li class="wrapper_inner_list">
                     <div class="list_left">문의내용</div>
-                    <input name="content" type="textarea" class="list_content" th:value="${inquire?.content}">
+                    <textarea name="content" class="list_content"
+                              th:utext="${#strings.replace(inquire?.content, '<br>', '&#10')}"></textarea>
                 </li>
             </ul>
             <div class="wrapper_inner_3">
-                <button type="submit" class="row-btn-1">
-                    문의하기
-                </button>
+                <div class="row-btn-1" onclick="formSubmit(this)">문의하기</div>
             </div>
         </form>
     </div>

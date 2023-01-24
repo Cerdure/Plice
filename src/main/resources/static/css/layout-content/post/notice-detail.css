@@ -573,6 +573,12 @@ header .post {
   filter: invert(100%) sepia(10%) saturate(7425%) hue-rotate(295deg) brightness(119%) contrast(104%);
 }
 
+.next-detail:hover a,
+.prev-detail:hover a {
+  color: white;
+  transition: 0.5s;
+}
+
 .back-btn {
   width: 150px;
   height: 40px;

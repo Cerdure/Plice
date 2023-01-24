@@ -143,11 +143,11 @@
                                                 <div class="edit"
                                                     th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''SUPER_ADMIN'')')} ? true
                                                      : (${#authorization.expression('isAnonymous()')} ? false :
-                                                        (${#authentication.principal.username} == ${reply.member.phone}))">수정</div>
+                                                        (${#authentication.principal.username} == ${reply.member?.phone}))">수정</div>
                                                 <div class="remove"
                                                     th:if="${#authorization.expression('hasAnyRole(''ADMIN'', ''SUPER_ADMIN'')')} ? true
                                                      : (${#authorization.expression('isAnonymous()')} ? false :
-                                                        (${#authentication.principal.username} == ${reply.member.phone}))">삭제</div>
+                                                        (${#authentication.principal.username} == ${reply.member?.phone}))">삭제</div>
                                                 <div class="reply">답글 달기</div>
                                             </div>
                                         </div>

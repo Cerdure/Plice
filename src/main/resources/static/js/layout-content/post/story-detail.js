@@ -41,9 +41,11 @@ $(function () {
       $(".option img:not(.clicked)").stop().fadeOut(100);
       $(this).find(".option img").stop().fadeIn(300);
     });
+
     $(document).on("mouseleave", ".my-comment", function () {
       $(".option img:not(.clicked)").stop().fadeOut(100);
     });
+
     $(document).on("click", ".opt-btn", function () {
       if (!$(this).hasClass("clicked")) {
         $(".opt-btn").stop().fadeOut(0);
@@ -58,6 +60,7 @@ $(function () {
         $(".clicked").removeClass("clicked");
       }
     });
+
     $(document).on("click", ".reply", function () {
       $(".box").fadeOut(0);
       $(".inner-comment").remove();
@@ -111,6 +114,7 @@ $(function () {
       $(".mod-comment").text(commentBodyText.replace(/\s/gi, ""));
       resize(document.querySelector(".mod-comment"));
     });
+    
     $(document).on("focus", ".mod-comment", function () {
       resize(this);
     });
