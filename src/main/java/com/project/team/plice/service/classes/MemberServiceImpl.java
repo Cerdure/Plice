@@ -142,11 +142,7 @@ public class MemberServiceImpl implements MemberService {
     public Boolean advanceValidate(String phone, String pw) {
         Optional<Member> member = memberRepository.findByPhone(phone);
         if (!member.isEmpty()) {
-            if (passwordEncoder.matches(pw, member.get().getPw())) {
-                return true;
-            } else {
-                return false;
-            }
+            return passwordEncoder.matches(pw, member.get().getPw());
         } else {
             return false;
         }

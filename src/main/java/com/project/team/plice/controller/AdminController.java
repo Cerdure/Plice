@@ -142,9 +142,17 @@ public class AdminController {
     }
 
     @GetMapping("/admin/admin-mng/delete")
-    public String adminDelete(@RequestParam("memberId") Long id) {
+    @ResponseBody
+    public Boolean adminDelete(@RequestParam("memberId") Long id) {
         adminService.deleteAdmin(id);
-        return "redirect:/admin/admin-mng";
+        return true;
+    }
+
+    @GetMapping("/admin/admin-mng/delete/team")
+    @ResponseBody
+    public Boolean adminTeamDelete(@RequestParam("teamId") Long id) {
+        adminService.deleteTeam(id);
+        return true;
     }
 
     @GetMapping("/admin/member-mng")

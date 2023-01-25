@@ -43,7 +43,6 @@ public interface AdminService {
 
     public Page<Blacklist> findAllMemberBlacklist(Pageable pageable);
     public Page<Blacklist> findAllIpBlacklist(Pageable pageable);
-    public Blacklist findBlacklistByIp(String ip);
     public Page<Blacklist> searchMemberBlacklist(SearchUtils searchUtils, Pageable pageable);
     public Page<Blacklist> searchIpBlacklist(SearchUtils searchUtils, Pageable pageable);
 
@@ -57,6 +56,7 @@ public interface AdminService {
     public void updateAdmin(MemberDto memberDto);
     public void deleteAdmin(Long id);
     public void createTeam(String teamName);
+    public void deleteTeam(Long id);
 
     public void saveNotice(NoticeDto noticeDto, Authentication authentication);
     public void deleteNotice(Long id);

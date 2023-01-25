@@ -367,11 +367,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Blacklist findBlacklistByIp(String ip) {
-        return blacklistRepository.findByIp(ipRepository.findByIp(ip));
-    }
-
-    @Override
     public Page<Blacklist> searchMemberBlacklist(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
@@ -482,6 +477,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void createTeam(String teamName) {
         adminTeamRepository.save(AdminTeam.builder().name(teamName).build());
+    }
+
+    @Override
+    public void deleteTeam(Long id) {
+        adminTeamRepository.delete(adminTeamRepository.findById(id).get());
     }
 
     @Override

@@ -60,6 +60,14 @@
         <button class="cancel" onclick="hideAlert()">취소</button>
         <button class="okay" onclick="adminDelete()">확인</button>
     </div>
+    <div class="alert-window del-team-alert">
+        <div class="info">
+            <div class="text">부서를 삭제하겠습니까?</div>
+            <div class="data"></div>
+        </div>
+        <button class="cancel" onclick="hideAlert()">취소</button>
+        <button class="okay" onclick="teamDelete()">확인</button>
+    </div>
     <div class="content-wrapper">
         <div th:replace="/layout/fragments/admin-nav :: admin-nav"></div>
         <div class="right-side">
@@ -74,7 +82,11 @@
                         <div class="inner-box">
                             <div class="title">운영진 목록</div>
                             <div class="team-group" th:each="team : ${teams}">
-                                <div class="label" th:text="${team.name}"></div>
+                                <div class="label-box" th:data-id="${team.id}" th:data-name="${team.name}"
+                                th:data-member-count="${team.members.size()}">
+                                    <div class="label" th:text="${team.name}"></div>
+                                    <div class="team-delete-btn row-btn-6">부서 삭제</div>
+                                </div>
                                 <div class="members">
                                     <div class="member" th:each="admin,i : ${admins}"
                                         th:text="${admin.name} + ' [' + ${admin.role} + ']'"
@@ -168,8 +180,12 @@
                                 </div>
                             </div>
                             <div class="btn-box">
-                                <div class="save-btn">저장</div>
-                                <div class="delete-btn">계정 삭제</div>
+                                <div class="save-btn"
+                                     th:if="${adminDetail?.role == T(com.project.team.plice.domain.enums.MemberRole).SUPER_ADMIN} ?
+                                     ${#authorization.expression('hasRole(''SUPER_ADMIN'')')} : true">저장</div>
+                                <div class="delete-btn"
+                                     th:if="${adminDetail?.role == T(com.project.team.plice.domain.enums.MemberRole).SUPER_ADMIN} ?
+                                     ${#authorization.expression('hasRole(''SUPER_ADMIN'')')} : true">계정 삭제</div>
                             </div>
                         </form>
                     </div>

@@ -39,7 +39,7 @@ public class Post {
 
     private LocalDateTime modDate;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
     @PrePersist
