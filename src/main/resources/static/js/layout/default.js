@@ -125,6 +125,7 @@ function blockCancel() {
             .then(res => {
                 if (res.json()) {
                     alert("차단이 해제되었습니다.")
+                    location.reload();
                 } else {
                     alert("요청이 실패하였습니다.");
                 }

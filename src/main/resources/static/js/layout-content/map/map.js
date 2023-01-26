@@ -161,10 +161,14 @@ $(function () {
         return text;
     });
 
-    const apartDetailData = kaptCode => fetch('http://apis.data.go.kr/1613000/AptBasisInfoService1/getAphusBassInfo'
-        + '?' + encodeURIComponent('serviceKey') + '=' + 't6FF%2FNmZ7E6CgombvVgPJl7z0Yv5oDesGF%2Bm78Hv%2BT5IMNGTDRd53t0wkPd9%2FoEx7X522aovCygHADH31fbWTg%3D%3D'
-        + '&' + encodeURIComponent('kaptCode') + '=' + encodeURIComponent(kaptCode)).then(res => res.text());
-
+    const serviceKey = 't6FF%2FNmZ7E6CgombvVgPJl7z0Yv5oDesGF%2Bm78Hv%2BT5IMNGTDRd53t0wkPd9%2FoEx7X522aovCygHADH31fbWTg%3D%3D';
+    
+    const apartDetailData = kaptCode => 
+        fetch('http://apis.data.go.kr/1613000/AptBasisInfoService1/getAphusBassInfo'
+                + '?' + encodeURIComponent('serviceKey') + '=' + serviceKey
+                + '&' + encodeURIComponent('kaptCode') + '=' + encodeURIComponent(kaptCode))
+        .then(res => res.text());
+    
     const searchInput = $(".search-input");
     const searchInputVal = searchInput.val();
     const searchApart = $("#search-input-apart");
@@ -398,9 +402,7 @@ $(function () {
                         case '2': return (tradeDataArea > 60 && tradeDataArea <= 85);
                         case '3': return (tradeDataArea > 85 && tradeDataArea <= 135);
                         case '4': return (tradeDataArea > 135);
-                    }
-                }))
-            ) {
+                    }}))) {
                 if (!isNaN(tradeData.price)) {
                     markers.push(new kakao.maps.Marker({
                         position: new kakao.maps.LatLng(tradeData.lat, tradeData.lng),

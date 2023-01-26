@@ -812,6 +812,7 @@ clusterUnit {
 }
 
 .apart-detail .body .title-wrapper .right-box {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -828,21 +829,6 @@ clusterUnit {
     width: 100%;
     height: 100%;
     justify-content: end;
-}
-
-.apart-detail .body .title-wrapper {
-    align-items: center;
-    justify-content: center;
-    height: 36px;
-    padding: 7px 10px;
-    border: 1px solid #4169fc;
-    border-radius: 5px;
-}
-
-.apart-detail .body .title-wrapper {
-    background-color: #4169fc;
-    color: white;
-    transition: 0.5s;
 }
 
 .apart-detail .body .name {

@@ -36,7 +36,10 @@ public class ReplyServiceImpl implements ReplyService {
             Reply parent = replyRepository.findById(replyDto.getParentId()).get();
             replyDto.setParent(parent);
             replyDto.setLevel(parent.getLevel() + 1);
-            replyDto.setContent("<strong>@" + parent.getMember().getNickname() + "</strong> " + replyDto.getContent());
+            replyDto.setContent(
+                    "<strong>@" + parent.getMember().getNickname() + "</strong> "
+                    + replyDto.getContent()
+            );
         }
         replyDto.setPost(post);
         replyDto.setMember(memberRepository.findByPhone(authentication.getName()).get());

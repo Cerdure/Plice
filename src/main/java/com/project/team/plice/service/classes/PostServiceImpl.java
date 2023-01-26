@@ -71,7 +71,9 @@ public class PostServiceImpl implements PostService {
     public Page<Post> searchPost(SearchUtils searchUtils, Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("id").descending());
+
         String keyword = searchUtils.getKeyword();
+
         switch (searchUtils.getSearchBy()) {
             case "id":
                 return postRepository.findById(Long.parseLong(keyword), pageable);
@@ -81,8 +83,9 @@ public class PostServiceImpl implements PostService {
                 return postRepository.findByTitleContainingIgnoreCase(keyword, pageable);
             case "content":
                 return postRepository.findByContentContainingIgnoreCase(keyword, pageable);
+
+            default: throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
         }
-        throw new NoSuchElementException("일치하는 검색 유형이 없습니다.");
     }
 
     @Override

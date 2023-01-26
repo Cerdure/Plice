@@ -147,7 +147,8 @@ public class AdminServiceImpl implements AdminService {
         days.forEach(day -> {
             result.put(day, accessLogs.stream()
                     .filter(accessLog ->
-                            accessLog.getRegDate().toLocalDate().equals(day) && accessLog.getUri().contains(page))
+                            accessLog.getRegDate().toLocalDate().equals(day)
+                                    && accessLog.getUri().contains(page))
                     .count()
             );
         });

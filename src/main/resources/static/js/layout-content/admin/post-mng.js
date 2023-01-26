@@ -19,6 +19,7 @@ $(function () {
   });
 
   $(".create-btn").click(function () {
+    $(".notice-write-wrapper .head .text").text("공지사항 등록");
     $(".notice-write-wrapper").fadeIn(300);
   });
 
@@ -30,6 +31,7 @@ $(function () {
       const result = await fetch("/admin/post-mng/notice/modify?id=" + id).then(res => res.text());
       row.addClass("active-row");
       form.replaceWith(result);
+      $(".notice-write-wrapper .head .text").text("공지사항 수정");
       $(".notice-write-wrapper").fadeIn(300);
     })();
   });
@@ -191,9 +193,9 @@ let selectRow, selectPostId, selectMemberId, windowOpen = false,
 
 function registCheck(...passed) {
   if (passed.every(e => { return e; })) {
-    $(".regist-button").removeClass("disable");
+    $(".notice-write-form .row-btn-2").removeClass("disable");
   } else {
-    $(".regist-button").addClass("disable");
+    $(".notice-write-form .row-btn-2").addClass("disable");
   }
 }
 

@@ -116,16 +116,19 @@ $(function () {
 
 });
 
-const resResult = inputVal => fetch("/map/input-search?inputVal=" + inputVal).then(res => res.text());
 let prevResult;
 
 function keySearch(inputVal) {
     (async () => {
         try {
-            let result = await resResult(inputVal);
+            const result = await fetch("/map/input-search?inputVal=" + inputVal).then(res => res.text());
             $('#search-input-results').replaceWith(result);
-            $(".search-result-apart-wrapper").css('display', $(".search-result-apart-wrapper").children().length == 0 ? 'none' : 'flex');
-            $(".search-result-address-wrapper").css('display', $(".search-result-address-wrapper").children().length == 0 ? 'none' : 'flex');
+
+            $(".search-result-apart-wrapper")
+                .css('display', $(".search-result-apart-wrapper").children().length == 0 ? 'none' : 'flex');
+            $(".search-result-address-wrapper")
+                .css('display', $(".search-result-address-wrapper").children().length == 0 ? 'none' : 'flex');
+                
             if (result != prevResult) {
                 $(".search-result-outer-wrapper").show();
                 prevResult = result;

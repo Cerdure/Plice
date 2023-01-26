@@ -38,7 +38,9 @@ public class LoginController {
     }
 
     @GetMapping("/login/block-check")
-    public String blockCheck(@RequestParam("prevPage") String prevPage, HttpServletRequest request, Authentication authentication, Model model) throws Exception {
+    public String blockCheck(@RequestParam("prevPage") String prevPage,
+                             HttpServletRequest request,
+                             Authentication authentication, Model model) {
         Member member = memberService.findMember(authentication);
         Blacklist blacklist = member.getBlacklist();
         if (blacklist != null) {
