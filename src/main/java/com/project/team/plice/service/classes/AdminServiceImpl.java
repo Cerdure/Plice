@@ -327,6 +327,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Blacklist findBlacklistByMember(Member member) {
+        return blacklistRepository.findByMember(member);
+    }
+
+    @Override
     public Page<Blacklist> findAllMemberBlacklist(Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 12, Sort.by("regDate").descending());

@@ -19,7 +19,6 @@ public class TradeDataDto {
     private String tradeDay;
     private String tradeType;
     private String tradeYearMonth;
-
     private String southWestLat;
     private String southWestLng;
     private String northEastLat;

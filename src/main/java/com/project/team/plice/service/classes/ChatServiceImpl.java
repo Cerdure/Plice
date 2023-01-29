@@ -117,7 +117,6 @@ public class ChatServiceImpl implements ChatService {
         return memberChatRoomRepository.findByMember(member);
     }
 
-
     @Override
     public Chat chatSave(ChatDto message, Member member) {
         ChatRoom chatRoom = chatRoomRepository.findById(message.getChatRoomId()).get();
@@ -169,7 +168,6 @@ public class ChatServiceImpl implements ChatService {
             return true;
         }
     }
-
 
     @Override
     public void chatRoomExit(Member member, String roomId) {

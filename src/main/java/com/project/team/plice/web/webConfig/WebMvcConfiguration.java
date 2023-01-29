@@ -23,14 +23,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(blockCheckInterceptor);
     }
 
-    @Bean
-    public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-        commonsMultipartResolver.setDefaultEncoding("UTF-8");
-        commonsMultipartResolver.setMaxUploadSizePerFile(20 * 1024 * 1024); //20MB
-        return commonsMultipartResolver;
-    }
-
     String PermittedPath = "file:///" + System.getProperty("user.dir") + "/src/main/resources/static/";
 
     @Override

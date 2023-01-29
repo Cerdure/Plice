@@ -42,7 +42,7 @@ public class LoginController {
                              HttpServletRequest request,
                              Authentication authentication, Model model) {
         Member member = memberService.findMember(authentication);
-        Blacklist blacklist = member.getBlacklist();
+        Blacklist blacklist = adminService.findBlacklistByMember(member);
         if (blacklist != null) {
             String expDate = blacklist.getExpDate().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
             String alertText = "관리자에 의해 차단된 아이디입니다.\\n"

@@ -41,6 +41,7 @@ public interface AdminService {
     public void ipBlock(String ip, int date, String reason);
     public void ipBlockCancel(String ip);
 
+    public Blacklist findBlacklistByMember(Member member);
     public Page<Blacklist> findAllMemberBlacklist(Pageable pageable);
     public Page<Blacklist> findAllIpBlacklist(Pageable pageable);
     public Page<Blacklist> searchMemberBlacklist(SearchUtils searchUtils, Pageable pageable);

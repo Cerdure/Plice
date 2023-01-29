@@ -47,6 +47,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                 uri += "?prevPage=" + prevPage;
             }
         }
+        logger.info("uri = " + uri);
         redirectStrategy.sendRedirect(request, response, uri);
     }
 

@@ -188,7 +188,6 @@ public class AdminController {
             model.addAttribute("accessList", adminService.findAllAccessLog(pageable));
         } else {
             Page<AccessLog> accessLogs = adminService.searchAccessLog(searchUtils, pageable);
-            System.out.println("accessLogs = " + accessLogs);
             model.addAttribute("accessList", accessLogs);
             model.addAttribute("searchUtils", searchUtils);
         }

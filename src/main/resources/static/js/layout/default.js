@@ -38,6 +38,17 @@ $(function () {
         $(".block-cancel-alert").fadeIn(300);
     });
 
+    $(".search-input").keyup(function() {
+        const searchType = $(".search-by option:selected").val();
+        const numRgx = /^[0-9]+$/; 
+        if(searchType == 'id' || searchType == 'memberId'){
+            if(!numRgx.test($(this).val())){
+                alert("관리 ID는 숫자만 입력 가능합니다.");
+                $(this).val('');
+            } 
+        }
+    });
+
     $("header .my-page").click(function () {
         (async () => {
             const loginCheck = await fetch("/chat/login-check").then(res => res.text());

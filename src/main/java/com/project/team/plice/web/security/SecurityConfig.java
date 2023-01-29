@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -25,8 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final LoginServiceImpl loginService;
     private final DataSource dataSource;
-    private final AuthenticationSuccessHandler loginSuccessHandler;
-    private final AuthenticationFailureHandler loginFailureHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
 
     private static final String[] STATIC_WHITELIST = {
             "/img/**", "/css/**", "/js/**", "/upload-img/**"
@@ -68,7 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .passwordParameter("pw")
                         .loginProcessingUrl("/loginProc")
                         .successHandler(loginSuccessHandler)
-                        .failureHandler(loginFailureHandler)
                 .and()
                     .logout()
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -99,7 +95,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(loginService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(loginService).passwordEncoder(passwordEncoder());
     }
 }
