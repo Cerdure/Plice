@@ -44,8 +44,8 @@
 
 #### Frontend
 - HTML/CSS
-- JavaScript(ES6)
-- JQuery
+- JavaScript ES6
+- JQuery 3.3.1
 
 
 <br/>
