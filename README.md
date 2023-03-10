@@ -14,7 +14,7 @@
 | :-: | :-: | :-: | :-: |
 | ![110950838](https://user-images.githubusercontent.com/110950838/223305940-0a52c72e-18a9-4956-9c6d-a2964eff0fd7.png) | ![114133589](https://user-images.githubusercontent.com/110950838/223305874-3078d5e5-9dfb-4c36-81cc-a6ce7caa5408.png) | ![114133291](https://user-images.githubusercontent.com/110950838/223305773-2105b126-9e73-4c67-a31a-0530c40be323.png) | ![83555445](https://user-images.githubusercontent.com/110950838/223305674-272752a2-cb7f-418c-b583-bcb8f85a7abb.png) |
 | [@Cerdure](https://github.com/Cerdure) | [@yoonsuho2](https://github.com/yoonsuho2) | [@HQ9999Lee](https://github.com/HQ9999Lee) | [@taewoong3](https://github.com/taewoong3) |
-| PM, FrontEnd, BackEnd | BackEnd(부동산 컨텐츠 크롤링, 마이페이지) | BackEnd(게시판 CRUD) | BackEnd(회원가입, 로그인) |
+| PM, FrontEnd(전반), BackEnd(전반) | BackEnd(부동산 컨텐츠 크롤링, 마이페이지) | BackEnd(게시판 CRUD) | BackEnd(회원가입, 로그인) |
 
 <br/>
 
